@@ -1,0 +1,48 @@
+{{ $s := .Site.Params.htvwork }}
+{{ if $s.enable }}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<section id="htv" class="specialty-section">
+  <div class="container">
+    <h3 class="text-center specialty-title">{{ $s.title }}</h3>
+    {{ if $s.intro }}<p class="text-center specialty-intro">{{ $s.intro }}</p>{{ end }}
+    <div class="feature-swiper-wrapper">
+      <div class="swiper" id="specialty-swiper-htv">
+        <div class="swiper-wrapper">
+          {{ range $s.items }}
+          <div class="swiper-slide">
+            <div class="feature-card">
+              <div class="feature-card-image">
+                <img src="{{ .image | relURL }}" alt="{{ .title }}">
+              </div>
+              <div class="feature-card-content">
+                <h4 class="feature-card-title">{{ .title }}</h4>
+                <p class="feature-card-description">{{ .content }}</p>
+                {{ if .tags }}
+                <div class="feature-card-skills">
+                  {{ range .tags }}<span class="skill-chip skill-{{ .color }}">{{ .name }}</span>{{ end }}
+                </div>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+          {{ end }}
+        </div>
+        <div class="swiper-pagination" id="specialty-pagination-htv"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  new Swiper('#specialty-swiper-htv', {
+    loop: true,
+    pagination: { el: '#specialty-pagination-htv', clickable: true },
+    autoplay: { delay: 5000, disableOnInteraction: false },
+  });
+});
+</script>
+{{ end }}

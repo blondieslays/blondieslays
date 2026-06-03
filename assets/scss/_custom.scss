@@ -1,0 +1,85 @@
+// Blondie Slays Apparel custom styles
+
+// Hot pink hero section
+.hero {
+  background: #FF1493 !important;
+  color: #FFFFFF !important;
+  padding: 6rem 0 !important;
+}
+
+.hero h1,
+.hero h2,
+.hero h3,
+.hero p,
+.hero .intro,
+.hero .subtitle,
+.hero .content {
+  color: #FFFFFF !important;
+}
+
+.hero .btn,
+.hero button {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  font-weight: 700 !important;
+  padding: 0.75rem 2rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.hero .btn:hover,
+.hero button:hover {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+}
+
+.hero img {
+  max-width: 300px !important;
+  margin: 0 auto 2rem !important;
+  display: block !important;
+}
+
+.hero .social-links a {
+  color: #FFFFFF !important;
+  font-size: 1.5rem !important;
+  margin: 0 0.5rem !important;
+}
+
+// Section accents
+h2.section-title,
+.section h2 {
+  color: #000000 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+// Skill badges
+.skill, .badge {
+  background: #FF1493 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+// Links
+a {
+  color: #FF1493 !important;
+}
+
+a:hover {
+  color: #000000 !important;
+}
+
+// Buttons throughout the site
+.btn-primary {
+  background: #FF1493 !important;
+  border-color: #FF1493 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-primary:hover {
+  background: #000000 !important;
+  border-color: #000000 !important;
+}

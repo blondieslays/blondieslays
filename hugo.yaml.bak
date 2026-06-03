@@ -1,0 +1,231 @@
+baseURL: "https://blondieslays.ca"
+languageCode: "en-ca"
+title: "Blondie Slays Apparel"
+theme: hugo-profile
+
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+
+outputs:
+  home:
+    - "HTML"
+    - "RSS"
+    - "JSON"
+  page:
+    - "HTML"
+    - "RSS"
+
+enableRobotsTXT: true
+
+pagination:
+  pagerSize: 3
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  title: "Blondie Slays Apparel"
+  description: "Independent content consultancy and custom apparel. Sarnia, Ontario."
+  favicon: "/images/logo.png"
+
+  useBootstrapCDN: false
+  mathjax: false
+  animate: true
+
+  theme:
+    disableThemeToggle: true
+    defaultTheme: "light"
+
+  font:
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.5
+    textAlign: left
+
+  color:
+    textColor: "#000000"
+    secondaryTextColor: "#444444"
+    textLinkColor: "#FF1493"
+    backgroundColor: "#FFFFFF"
+    secondaryBackgroundColor: "#FFE5F1"
+    primaryColor: "#FF1493"
+    secondaryColor: "#000000"
+
+  navbar:
+    align: ms-auto
+    brandLogo: "/images/logo.png"
+    showBrandLogo: true
+    brandName: "Blondie Slays Apparel"
+    disableSearch: true
+    stickyNavBar:
+      enable: true
+      showOnScrollUp: true
+    enableSeparator: false
+    menus:
+      disableAbout: false
+      disableExperience: false
+      disableEducation: true
+      disableProjects: false
+      disableAchievements: true
+      disableContact: false
+
+  hero:
+    enable: true
+    intro: "Welcome to"
+    title: "Blondie Slays Apparel."
+    subtitle: "Independent. Canadian. Built to slay."
+    content: "An independent content consultancy and custom apparel studio based in Sarnia, Ontario. Serving sports media, editorial brands, and small business with content that converts and apparel that lasts."
+    image: /images/logo.png
+    bottomImage:
+      enable: false
+    button:
+      enable: true
+      name: "Shop coming soon"
+      url: "#contact"
+      download: false
+      newPage: false
+    socialLinks:
+      fontAwesomeIcons:
+        - icon: fab fa-instagram
+          url: https://instagram.com/blondieslaysapparel
+        - icon: fab fa-linkedin
+          url: https://linkedin.com/in/elisemarion
+
+  about:
+    enable: true
+    title: "About"
+    image: "/images/logo.png"
+    content: |-
+      Blondie Slays Apparel is the independent studio of Elise Marion, a content strategist and editorial consultant with 8+ years driving audience growth through data-led content, SEO, and AI-assisted workflows.
+
+      Recent work includes a 400% lift in pageviews and 133% growth in unique users for InMobi, plus end-to-end content and brand production for the Canadian National Pickleball League. Custom apparel work runs alongside the consultancy, producing branded merchandise, team gear, and one-off custom pieces from a Cricut and heat press studio in Sarnia, Ontario.
+    skills:
+      enable: true
+      title: "What I bring to the table:"
+      items:
+        - "Content Strategy"
+        - "Editorial Production"
+        - "Prompt Engineering"
+        - "SEO & Analytics"
+        - "Brand Identity"
+        - "Custom Apparel Production"
+
+  experience:
+    enable: true
+    title: "Services"
+    items:
+      - company: "Content & Editorial Consulting"
+        companyUrl: ""
+        jobs:
+          - name: "For sports media, editorial brands, and digital publishers"
+            date: "Available now"
+            content: |
+              End-to-end content production, audience growth strategy, and editorial operations.
+
+              - Data-led content strategy and SEO
+              - Editorial production and freelancer management
+              - AI-assisted workflows and prompt engineering
+              - Social media campaigns and brand voice development
+
+      - company: "Custom Apparel & Merchandise"
+        companyUrl: ""
+        jobs:
+          - name: "Branded apparel, team gear, and custom pieces"
+            date: "Available now"
+            content: |
+              Small-batch custom apparel production using premium blanks, vinyl, and heat press techniques.
+
+              - Branded merchandise and team apparel
+              - One-off custom designs
+              - Event and promotional gear
+              - Canadian sourcing, made in Sarnia, Ontario
+
+projects:
+    enable: true
+    title: "Featured Work"
+    items:
+      - title: Canadian National Pickleball League
+        content: End-to-end content production for league events, social media campaigns, and sponsorship activations. Blog posts, matchday graphics, promotional materials, and full brand assets across the 2026 season.
+        images:
+          - /images/projects/cnpl-content/01.png
+          - /images/projects/cnpl-content/02.png
+          - /images/projects/cnpl-content/03.png
+        skills:
+          - name: Content Strategy
+            color: pink
+          - name: Social Media
+            color: blue
+          - name: Sports Media
+            color: mint
+          - name: Graphic Design
+            color: lavender
+
+      - title: InMobi Audience Growth
+        content: Increased daily pageviews by 400% and unique users by 133% through data-driven content strategy, GenAI workflows, and editorial team management across a 170-site portfolio.
+        images:
+          - /images/projects/inmobi-growth/01.png
+          - /images/projects/inmobi-growth/02.png
+        skills:
+          - name: Content Strategy
+            color: pink
+          - name: SEO
+            color: blue
+          - name: Editorial Ops
+            color: mint
+          - name: GenAI Workflows
+            color: lavender
+
+      - title: CNPL Custom Apparel
+        content: Branded merchandise production for the Canadian National Pickleball League. Custom tees, towels, and event apparel designed and produced in-studio using Cricut and heat press techniques.
+        images:
+          - /images/projects/cnpl-apparel/01.png
+          - /images/projects/cnpl-apparel/02.png
+          - /images/projects/cnpl-apparel/03.png
+        skills:
+          - name: Custom Apparel
+            color: pink
+          - name: Brand Production
+            color: blue
+          - name: Sports Merch
+            color: mint
+          - name: Cricut & HTV
+            color: lavender
+
+
+  contact:
+    enable: true
+    title: "Get in touch"
+    content: "Inbox is open for new projects, custom apparel orders, and collaborations. Based in Sarnia, Ontario, working with clients across Canada and beyond."
+    btnName: "Email Elise"
+    btnLink: "mailto:elisedaniellemarion@gmail.com"
+
+  footer:
+    socialNetworks:
+      linkedin: https://linkedin.com/in/elisemarion
+      instagram: https://instagram.com/blondieslaysapparel
+
+  listPages:
+    disableFeaturedImage: false
+
+  singlePages:
+    socialShare: true
+    readTime:
+      enable: true
+      content: "min read"
+    scrollprogress:
+      enable: true
+    tags:
+      openInNewTab: true
+
+  terms:
+    read: "Read"
+    toc: "Table Of Contents"
+    copyright: "All rights reserved"
+    emailText: "Check out this site"
+
+  datesFormat:
+    article: "Jan 2, 2006"
+    articleList: "Jan 2, 2006"
+    articleRecent: "Jan 2, 2006"

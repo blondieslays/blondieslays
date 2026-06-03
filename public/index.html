@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="generator" content="Hugo 0.135.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+<link rel="icon" href="/images/logo.png" type="image/gif">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+</noscript>
+
+
+<link rel="stylesheet" href="/css/font.css" media="all">
+
+
+
+<meta property="og:url" content="http://localhost:1313/">
+  <meta property="og:site_name" content="Blondie Slays Apparel">
+  <meta property="og:title" content="Blondie Slays Apparel">
+  <meta property="og:description" content="Independent content consultancy and custom apparel. Sarnia, Ontario.">
+  <meta property="og:locale" content="en_ca">
+  <meta property="og:type" content="website">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Blondie Slays Apparel">
+  <meta name="twitter:description" content="Independent content consultancy and custom apparel. Sarnia, Ontario.">
+
+
+
+
+
+<link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
+<link rel="stylesheet" href="/css/language-switcher.css" media="all">
+<link rel="stylesheet" href="/css/footer.css" media="all">
+
+
+<link rel="stylesheet" href="/css/theme.css" media="all">
+
+<style>
+    :root {
+        --text-color: #000000;
+        --text-secondary-color: #444444;
+        --text-link-color: #FF1493;
+        --background-color: #FFFFFF;
+        --secondary-background-color: #FFE5F1;
+        --primary-color: #FF1493;
+        --secondary-color: #000000;
+
+         
+        --text-color-dark: #e4e6eb;
+        --text-secondary-color-dark: #b0b3b8;
+        --text-link-color-dark: #ffffff;
+        --background-color-dark: #18191a;
+        --secondary-background-color-dark: #212529;
+        --primary-color-dark: #ffffff;
+        --secondary-color-dark: #212529;
+    }
+    body {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    html {
+        background-color: var(--background-color) !important;
+    }
+
+    body::-webkit-scrollbar {
+        height: 0px;
+        width: 8px;
+        background-color: var(--background-color);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background: #b0b0b0;
+        outline: 1px solid var(--background-color);
+    }
+
+    #search-content::-webkit-scrollbar {
+        width: .5em;
+        height: .1em;
+        background-color: var(--background-color);
+    }
+</style>
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  
+  
+
+  <title>
+  </title>
+</head>
+
+<body class="light">
+  
+  
+<script>
+    let localStorageValue = localStorage.getItem("pref-theme");
+    let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    switch (localStorageValue) {
+        case "dark":
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+            break;
+        case "light":
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            break;
+        default:
+            if (mediaQuery) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+            }
+            break;
+    }
+</script>
+
+
+
+
+<script>
+    var prevScrollPos = window.pageYOffset;
+    window.addEventListener("scroll", function showHeaderOnScroll() {
+        let profileHeaderElem = document.getElementById("profileHeader");
+        let currentScrollPos = window.pageYOffset;
+        let resetHeaderStyle = false;
+        let showNavBarOnScrollUp =  true ;
+        let showNavBar = showNavBarOnScrollUp ? prevScrollPos > currentScrollPos : currentScrollPos > 0;
+        if (showNavBar) {
+            profileHeaderElem.classList.add("showHeaderOnTop");
+        } else {
+            resetHeaderStyle = true;
+        }
+        if(currentScrollPos === 0) {
+            resetHeaderStyle = true;
+        }
+        if(resetHeaderStyle) {
+            profileHeaderElem.classList.remove("showHeaderOnTop");
+        }
+        prevScrollPos = currentScrollPos;
+    });
+</script>
+
+
+
+<header id="profileHeader">
+    <nav class="pt-3 navbar navbar-expand-lg animate">
+        <div class="container-fluid mx-xs-2 mx-sm-5 mx-md-5 mx-lg-5">
+            
+            <a class="navbar-brand primary-font text-wrap" href="/">
+                
+                <img src="/images/logo.png" width="30" height="30"
+                    class="d-inline-block align-top">
+                Blondie Slays Apparel
+                
+            </a>
+
+            
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true">
+                    <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"></path>
+                </svg>
+            </button>
+
+            
+            <div class="collapse navbar-collapse text-wrap primary-font" id="navbarContent">
+                <ul class="navbar-nav ms-auto text-center">
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#contact"
+                            aria-label="contact">
+                            Get in touch
+                        </a>
+                    </li>
+                    
+
+                    
+
+                    
+                    
+
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<div id="content"><section id="hero" class="pt-5 pb-0">
+    <div class="container pb-0 px-3 px-sm-5 px-md-5 px-lg-5 pt-lg-3">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-8 content animate" id="primary-font">
+                <span class="subtitle">
+                    
+                </span>
+                <h1>
+                    Make it real.<br>Make it yours.
+                </h1>
+                <h2>
+                    Custom HTV apparel, made in Sarnia, Ontario.
+                </h2>
+                <p class="hero-content">
+                    Pick your colours, choose your font, and add your text — Elise will press and ship your custom tee within 48 hours. One-off pieces, team orders, and branded merch welcome.
+                </p>
+                <div class="hero-cta-row">
+                    <a href="#shirt-builder" class="hero-builder-btn">Design Your Tee &rarr;</a>
+                    <a href="https://linkedin.com/in/elisemarion" class="hero-linkedin-btn" target="_blank" rel="noopener" aria-label="LinkedIn">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 d-flex align-items-center">
+                <div class="hero-carousel-wrap">
+                    <div class="swiper hero-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="/images/htv/custom-pieces.png" alt="Custom pieces" class="hero-carousel-img"></div>
+                            <div class="swiper-slide"><img src="/images/htv/team-apparel.png" alt="Team apparel" class="hero-carousel-img"></div>
+                        </div>
+                        <div class="swiper-pagination hero-swiper-dots"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  new Swiper(".hero-swiper", {
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: ".hero-swiper-dots", clickable: true }
+  });
+});
+</script>
+</section>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime&family=Kiwi+Maru&family=Teko:wght@400;600&family=DM+Serif+Display&family=Inter&family=Montserrat:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<section id="shirt-builder" class="shirt-builder-section">
+  <div class="container">
+    <p class="text-center custom-order-intro">Pick your colours, add your text, and choose a placement — then send your order request and Elise will be in touch within 48 hours.</p>
+
+    <div class="bldr">
+      <div class="slide-side">
+        <div class="mockup-carousel">
+          <div class="mockup-frame" id="mockup-frame">
+            <div class="mockup-placeholder" id="mockup-placeholder">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8L6 16V20L12 21V42H36V21L42 20V16L34 8Q31 4 24 4Q17 4 14 8Z" fill="#e5e7eb" stroke="#d1d5db" stroke-width="1.5"/><path d="M18 8Q21 13 24 13Q27 13 30 8" fill="none" stroke="#d1d5db" stroke-width="1.5"/></svg>
+              <span>Add your Canva mockups to</span>
+              <span style="color:#FF1493;font-size:11px">static/images/builder/</span>
+            </div>
+            <img id="mockup-img" src="" alt="shirt mockup" style="display:none"/>
+          </div>
+          <div class="mockup-nav">
+            <button class="snav-btn" id="mprev" aria-label="Previous">&#8592;</button>
+            <div class="mockup-dots" id="mdots"></div>
+            <button class="snav-btn" id="mnext" aria-label="Next">&#8594;</button>
+          </div>
+          <p class="slide-label" id="mockup-label">Browse examples</p>
+          <div class="builder-combo-note">Mix &amp; match any colour, font &amp; placement — these are just examples.</div>
+        </div>
+      </div>
+
+      <div class="ctrl-side">
+        <div>
+          <span class="bcl">Shirt colour</span>
+          <div class="bcolor-list" id="swatches">
+            <div class="bcolor-btn on" data-b="#f5f0e8" data-n="Natural"><span class="bcolor-dot" style="background:#f5f0e8;border:1px solid #ddd"></span>Natural</div>
+            <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
+            <div class="bcolor-btn" data-b="#1e3a5f" data-n="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
+            <div class="bcolor-btn" data-b="#1a1a1a" data-n="Black"><span class="bcolor-dot" style="background:#1a1a1a"></span>Black</div>
+            <div class="bcolor-btn" data-b="#15803d" data-n="Forest Green"><span class="bcolor-dot" style="background:#15803d"></span>Forest Green</div>
+            <div class="bcolor-btn" data-b="#dc2626" data-n="Red"><span class="bcolor-dot" style="background:#dc2626"></span>Red</div>
+            <div class="bcolor-btn" data-b="#7c3aed" data-n="Purple"><span class="bcolor-dot" style="background:#7c3aed"></span>Purple</div>
+            <div class="bcolor-btn" data-b="#f472b6" data-n="Pink"><span class="bcolor-dot" style="background:#f472b6"></span>Pink</div>
+            <div class="bcolor-btn" data-b="#f59e0b" data-n="Gold"><span class="bcolor-dot" style="background:#f59e0b"></span>Gold</div>
+            <div class="bcolor-btn" data-b="#f97316" data-n="Orange"><span class="bcolor-dot" style="background:#f97316"></span>Orange</div>
+            <div class="bcolor-btn" data-b="#7f1d1d" data-n="Maroon"><span class="bcolor-dot" style="background:#7f1d1d"></span>Maroon</div>
+            <div class="bcolor-btn btd" data-b="tiedye" data-n="Tie-Dye (+$15)"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#bbf7d0,#fde68a,#f9a8d4)"></span>Tie-Dye +$15</div>
+          </div>
+          <div id="tdnote" class="btd-note" style="display:none">Each tie-dye is hand-made and unique — +$15 upcharge applies.</div>
+        </div>
+
+        <div>
+          <span class="bcl">Your text</span>
+          <input class="btxt-in" id="btxtin" maxlength="28" placeholder="e.g. Sam &amp; Mark 2025"/>
+        </div>
+
+        <div class="bvinyl-font-row">
+          <div class="bvinyl-col">
+          <span class="bcl">Vinyl colour</span>
+          <div class="bcolor-list" id="bvcs">
+            <div class="bvc bcolor-btn on" data-v="Black"><span class="bcolor-dot" style="background:#1a1a1a"></span>Black</div>
+            <div class="bvc bcolor-btn" data-v="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
+            <div class="bvc bcolor-btn" data-v="Red"><span class="bcolor-dot" style="background:#cc1111"></span>Red</div>
+            <div class="bvc bcolor-btn" data-v="Hot Pink"><span class="bcolor-dot" style="background:#FF1493"></span>Hot Pink</div>
+            <div class="bvc bcolor-btn" data-v="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
+            <div class="bvc bcolor-btn" data-v="Royal Blue"><span class="bcolor-dot" style="background:#1a56db"></span>Royal Blue</div>
+            <div class="bvc bcolor-btn" data-v="Forest Green"><span class="bcolor-dot" style="background:#166534"></span>Forest Green</div>
+            <div class="bvc bcolor-btn" data-v="Purple"><span class="bcolor-dot" style="background:#6d28d9"></span>Purple</div>
+            <div class="bvc bcolor-btn" data-v="Orange"><span class="bcolor-dot" style="background:#ea580c"></span>Orange</div>
+            <div class="bvc bcolor-btn" data-v="Brown"><span class="bcolor-dot" style="background:#78350f"></span>Brown</div>
+            <div class="bvc bcolor-btn" data-v="Teal"><span class="bcolor-dot" style="background:#0f766e"></span>Teal</div>
+          </div>
+          <div class="bcolor-list bcolor-list-wrap" id="bvcs-special">
+            <div class="bvc bcolor-btn bvc-metallic" data-v="Gold Metallic"><span class="bcolor-dot" style="background:linear-gradient(135deg,#f5f0d0,#d4af37,#f5f0d0)"></span>Gold Metallic</div>
+            <div class="bvc bcolor-btn bvc-metallic" data-v="Silver Metallic"><span class="bcolor-dot" style="background:linear-gradient(135deg,#fff,#c0c0c0,#fff)"></span>Silver Metallic</div>
+            <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Gold"><span class="bcolor-dot" style="background:linear-gradient(135deg,#fde68a,#d4af37,#fde68a)"></span>Glitter Gold +$2</div>
+            <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Silver"><span class="bcolor-dot" style="background:linear-gradient(135deg,#f1f5f9,#c0c0c0,#f1f5f9)"></span>Glitter Silver +$2</div>
+            <div class="bvc bcolor-btn bvc-holo" data-v="Holographic"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)"></span>Holographic +$2</div>
+          </div>
+          </div>
+          <div class="bfont-col">
+          <span class="bcl">Font style</span>
+          <div class="bfont-row" id="bfonts">
+            <div class="bfo on" data-f="High Tide" style="font-family:'Bebas Neue',sans-serif">High Tide</div>
+            <div class="bfo" data-f="Typewriter" style="font-family:'Courier Prime',monospace">Typewriter</div>
+            <div class="bfo" data-f="Kiwi Maru" style="font-family:'Kiwi Maru',serif">Kiwi Maru</div>
+            <div class="bfo" data-f="DTC Barn Acre" style="font-family:'Teko',sans-serif">DTC Barn Acre</div>
+            <div class="bfo" data-f="Quinn Type" style="font-family:'DM Serif Display',serif">Quinn Type</div>
+            <div class="bfo" data-f="Montserrat" style="font-family:'Montserrat',sans-serif">Montserrat</div>
+            <div class="bfo" data-f="Dragonlord" style="font-family:'UnifrakturMaguntia',cursive">Dragonlord</div>
+          </div>
+          </div>
+        </div>
+
+        <div>
+          <span class="bcl">Text placement</span>
+          <div class="bplacement-row" id="bplacements">
+            <div class="bpl on" data-p="Centre chest">Centre chest</div>
+            <div class="bpl" data-p="Centre back">Centre back</div>
+            <div class="bpl" data-p="Right sleeve">Right sleeve</div>
+            <div class="bpl" data-p="Left sleeve">Left sleeve</div>
+          </div>
+        </div>
+
+        <div class="bsummary" id="bsummary">
+          Shirt: <strong id="bs-colour">Natural</strong> &nbsp;|&nbsp;
+          Text: <strong id="bs-text">—</strong><br>
+          Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
+          Font: <strong id="bs-font">High Tide</strong><br>
+          Placement: <strong id="bs-place">Centre chest</strong>
+        </div>
+
+        <button class="bobtn" id="bsubmit">Send my order request &rarr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var mockups = [
+    {label:'Natural + Navy — High Tide',         img:'/images/builder/mockup-1.jpg'},
+    {label:'Black + Gold Metallic — Dragonlord', img:'/images/builder/mockup-2.jpg'},
+    {label:'Navy + White — Typewriter',          img:'/images/builder/mockup-3.jpg'},
+    {label:'White + Hot Pink — Kiwi Maru',       img:'/images/builder/mockup-4.jpg'},
+    {label:'Maroon + Gold Metallic — Quinn Type', img:'/images/builder/mockup-5.jpg'},
+    {label:'Black + White — Cricut Sans',        img:'/images/builder/mockup-6.jpg'},
+  ];
+  var mcur = 0;
+  var S = {colour:'Natural', text:'', vinyl:'Black', font:'High Tide'};
+
+  function buildMDots(){
+    var d=document.getElementById('mdots');
+    d.innerHTML='';
+    mockups.forEach(function(_,i){
+      var dot=document.createElement('div');
+      dot.className='bsdot'+(i===mcur?' on':'');
+      dot.addEventListener('click',function(){goMockup(i);});
+      d.appendChild(dot);
+    });
+  }
+
+  function goMockup(i){
+    mcur=i;
+    var m=mockups[i];
+    var img=document.getElementById('mockup-img');
+    var ph=document.getElementById('mockup-placeholder');
+    img.src=m.img;
+    img.style.display='block';
+    ph.style.display='none';
+    img.onerror=function(){img.style.display='none';ph.style.display='flex';};
+    document.getElementById('mockup-label').textContent=m.label;
+    buildMDots();
+  }
+
+  document.getElementById('mprev').addEventListener('click',function(){goMockup((mcur-1+mockups.length)%mockups.length);});
+  document.getElementById('mnext').addEventListener('click',function(){goMockup((mcur+1)%mockups.length);});
+
+  document.getElementById('swatches').addEventListener('click',function(e){
+    var sw=e.target.closest('.bcolor-btn');if(!sw||!sw.dataset.b)return;
+    document.querySelectorAll('#swatches .bcolor-btn').forEach(function(x){x.classList.remove('on');});
+    sw.classList.add('on');
+    S.colour=sw.dataset.n;
+    document.getElementById('bs-colour').textContent=S.colour;
+    document.getElementById('tdnote').style.display=sw.dataset.b==='tiedye'?'block':'none';
+  });
+
+  document.getElementById('btxtin').addEventListener('input',function(){
+    S.text=this.value;
+    document.getElementById('bs-text').textContent=S.text||'—';
+  });
+
+  document.getElementById('bvcs').addEventListener('click',function(e){
+    var v=e.target.closest('.bvc');if(!v)return;
+    document.querySelectorAll('.bvc').forEach(function(x){x.classList.remove('on');});
+    v.classList.add('on');S.vinyl=v.dataset.v;
+    document.getElementById('bs-vinyl').textContent=S.vinyl;
+  });
+
+  document.getElementById('bfonts').addEventListener('click',function(e){
+    var f=e.target.closest('.bfo');if(!f)return;
+    document.querySelectorAll('.bfo').forEach(function(x){x.classList.remove('on');});
+    f.classList.add('on');S.font=f.dataset.f;
+    document.getElementById('bs-font').textContent=S.font;
+  });
+
+  document.getElementById('bplacements').addEventListener('click',function(e){
+    var p=e.target.closest('.bpl');if(!p)return;
+    document.querySelectorAll('.bpl').forEach(function(x){x.classList.remove('on');});
+    p.classList.add('on');
+    S.placement=p.dataset.p;
+    document.getElementById('bs-place').textContent=S.placement;
+  });
+
+  document.getElementById('bsubmit').addEventListener('click',function(){
+    var form=document.querySelector('#custom-order form');
+    if(form){
+      var nameEl=form.querySelector('[name="name"]');
+      var designEl=form.querySelector('[name="design"]');
+      var summary='Shirt colour: '+S.colour+'\nText: '+(S.text||'(none)')+'\nVinyl: '+S.vinyl+'\nFont: '+S.font+'\nPlacement: '+S.placement;
+      if(designEl){ designEl.value=summary; }
+      form.scrollIntoView({behavior:'smooth',block:'start'});
+      if(nameEl){ nameEl.focus(); }
+    }
+  });
+
+  buildMDots();
+  goMockup(0);
+})();
+</script>
+
+  </div><footer>
+    
+
+
+ 
+
+<div class="text-center pt-2">
+    
+
+    
+    <span class="px-1">
+        <a href="https://linkedin.com/in/elisemarion" target="_blank" aria-label="linkedin">
+            <svg xmlns="http://www.w3.org/2000/svg" width='2.4em' height='2.4em' fill="#fff" aria-label="LinkedIn"
+                viewBox="0 0 512 512">
+                <rect width="512" height="512" fill="#0077b5" rx="15%" />
+                <circle cx="142" cy="138" r="37" />
+                <path stroke="#fff" stroke-width="66" d="M244 194v198M142 194v198" />
+                <path d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32" />
+            </svg>
+        </a>
+    </span>
+    
+
+    
+
+    
+
+    
+</div><div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-center">
+            
+                <div class="pb-2">
+                    <a href="http://localhost:1313/" title="Blondie Slays Apparel">
+                        <img alt="Footer logo" src="/images/logo.png"
+                            height="40px" width="40px">
+                    </a>
+                </div>
+            
+            &copy; 2026  All rights reserved
+            <div class="text-secondary">
+                Made with
+                <span class="text-danger">
+                    &#10084;
+                </span>
+                and
+                <a href="https://github.com/gurusabarish/hugo-profile" target="_blank"
+                    title="Designed and developed by gurusabarish">
+                    Hugo Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</footer><script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (document.body.className.includes("dark")) {
+        document.body.classList.remove('dark');
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem("pref-theme", 'light');
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <section id="search-content" class="py-2">
+    <div class="container" id="search-results"></div>
+  </section>
+</body>
+
+</html>

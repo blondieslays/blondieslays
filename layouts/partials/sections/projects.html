@@ -1,0 +1,61 @@
+{{ if .Site.Params.projects.enable }}
+<section id="projects" class="projects-feature">
+    <div class="container">
+        <h3 class="text-center projects-title">
+            {{- if .Site.Params.projects.title -}}
+                {{ .Site.Params.projects.title }}
+            {{- else -}}
+                Projects
+            {{- end -}}
+        </h3>
+
+        <div class="feature-swiper-wrapper">
+            <div class="swiper feature-swiper">
+                <div class="swiper-wrapper">
+                    {{ range $index, $project := .Site.Params.projects.items }}
+                    <div class="swiper-slide">
+                        <div class="feature-card">
+                            <div class="feature-card-image">
+                                {{ if $project.images }}
+                                <img src="{{ index $project.images 0 | relURL }}" alt="{{ $project.title }}">
+                                {{ end }}
+                            </div>
+                            <div class="feature-card-content">
+                                <h4 class="feature-card-title">{{ $project.title }}</h4>
+                                <p class="feature-card-description">{{ $project.content }}</p>
+                                {{ if $project.skills }}
+                                <div class="feature-card-skills">
+                                    {{ range $project.skills }}
+                                    <span class="skill-chip skill-{{ .color }}">{{ .name }}</span>
+                                    {{ end }}
+                                </div>
+                                {{ end }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+                <div class="swiper-pagination feature-pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    new Swiper('.feature-swiper', {
+        loop: true,
+        pagination: {
+            el: '.feature-pagination',
+            clickable: true,
+        },
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+        },
+    });
+});
+</script>
+{{ end }}

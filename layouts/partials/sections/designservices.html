@@ -1,0 +1,142 @@
+{{ $web := .Site.Params.webdesign }}
+{{ $digital := .Site.Params.digitaldesign }}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+{{ if $web.enable }}
+<section id="webdesign" class="specialty-section">
+  <div class="container">
+    <h3 class="text-center specialty-title">{{ $web.title }}</h3>
+    {{ if $web.intro }}<p class="text-center specialty-intro">{{ $web.intro }}</p>{{ end }}
+    <div class="feature-swiper-wrapper">
+      <div class="swiper" id="specialty-swiper-web">
+        <div class="swiper-wrapper">
+          {{ range $web.items }}
+          <div class="swiper-slide">
+            <div class="feature-card">
+              <div class="feature-card-image">
+                <img src="{{ .image | relURL }}" alt="{{ .title }}">
+              </div>
+              <div class="feature-card-content">
+                <h4 class="feature-card-title">{{ .title }}</h4>
+                <p class="feature-card-description">{{ .content }}</p>
+                {{ if .tags }}
+                <div class="feature-card-skills">
+                  {{ range .tags }}<span class="skill-chip skill-{{ .color }}">{{ .name }}</span>{{ end }}
+                </div>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+          {{ end }}
+        </div>
+        <div class="swiper-pagination" id="specialty-pagination-web"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{ if $digital.enable }}
+<section id="digitaldesign" class="specialty-section">
+  <div class="container">
+    <h3 class="text-center specialty-title">{{ $digital.title }}</h3>
+    {{ if $digital.intro }}<p class="text-center specialty-intro">{{ $digital.intro }}</p>{{ end }}
+    <div class="feature-swiper-wrapper">
+      <div class="swiper" id="specialty-swiper-digital">
+        <div class="swiper-wrapper">
+          {{ range $digital.items }}
+          <div class="swiper-slide">
+            <div class="feature-card">
+              <div class="feature-card-image">
+                <img src="{{ .image | relURL }}" alt="{{ .title }}">
+              </div>
+              <div class="feature-card-content">
+                <h4 class="feature-card-title">{{ .title }}</h4>
+                <p class="feature-card-description">{{ .content }}</p>
+                {{ if .tags }}
+                <div class="feature-card-skills">
+                  {{ range .tags }}<span class="skill-chip skill-{{ .color }}">{{ .name }}</span>{{ end }}
+                </div>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+          {{ end }}
+        </div>
+        <div class="swiper-pagination" id="specialty-pagination-digital"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- Design CTA contact banner -->
+<section class="design-cta-section">
+  <div class="design-cta-banner">
+
+    <div class="design-cta-bolt-left">
+      <img src="/images/lightning.svg" alt="" aria-hidden="true">
+    </div>
+
+    <div class="design-cta-inner">
+      <h3 class="design-cta-title">Let's build something together.</h3>
+      <p class="design-cta-body">Whether you need a website, social graphics, or a full brand kit — it starts with a conversation. Based in Sarnia, Ontario, working with clients across Canada.</p>
+
+      <form action="https://formspree.io/f/xwvzyblg" method="POST" class="design-cta-form">
+        <div class="dcta-row">
+          <div class="dcta-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="dcta-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@email.com" required>
+          </div>
+        </div>
+        <div class="dcta-group dcta-full">
+          <label>What are you looking for?</label>
+          <select name="service">
+            <option value="">Select a service...</option>
+            <option>Website Design</option>
+            <option>Social Media Graphics</option>
+            <option>Event Flyers & Promo Assets</option>
+            <option>Brand Asset Package</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="dcta-group dcta-full">
+          <label>Tell me more</label>
+          <textarea name="message" rows="3" placeholder="What's the vision? Any timeline, budget, or details that would help..." required></textarea>
+        </div>
+        <div class="dcta-submit-wrap">
+          <button type="submit" class="dcta-btn">Send it &rarr;</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="design-cta-bolt-right">
+      <img src="/images/lightning.svg" alt="" aria-hidden="true">
+    </div>
+
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var pairs = [
+    ['#specialty-swiper-web', '#specialty-pagination-web'],
+    ['#specialty-swiper-digital', '#specialty-pagination-digital'],
+  ];
+  pairs.forEach(function(p) {
+    var el = document.querySelector(p[0]);
+    if (!el) return;
+    new Swiper(p[0], {
+      loop: true,
+      pagination: { el: p[1], clickable: true },
+      autoplay: { delay: 5000, disableOnInteraction: false },
+    });
+  });
+});
+</script>

@@ -1,0 +1,319 @@
+baseURL: "https://blondieslays.ca"
+languageCode: "en-ca"
+title: "Blondie Slays Apparel"
+theme: hugo-profile
+
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+
+outputs:
+  home:
+    - "HTML"
+    - "RSS"
+    - "JSON"
+  page:
+    - "HTML"
+    - "RSS"
+
+enableRobotsTXT: true
+
+pagination:
+  pagerSize: 3
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  title: "Blondie Slays Apparel"
+  description: "Independent content consultancy and custom apparel. Sarnia, Ontario."
+  favicon: "/images/logo.png"
+
+  useBootstrapCDN: false
+  mathjax: false
+  animate: true
+
+  theme:
+    disableThemeToggle: true
+    defaultTheme: "light"
+
+  font:
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.5
+    textAlign: left
+
+  color:
+    textColor: "#000000"
+    secondaryTextColor: "#444444"
+    textLinkColor: "#FF1493"
+    backgroundColor: "#FFFFFF"
+    secondaryBackgroundColor: "#FFE5F1"
+    primaryColor: "#FF1493"
+    secondaryColor: "#000000"
+
+  navbar:
+    align: ms-auto
+    brandLogo: "/images/logo.png"
+    showBrandLogo: true
+    brandName: "Blondie Slays Apparel"
+    disableSearch: true
+    customLinks:
+      - name: "Let's Build Something"
+        url: /lets-build-something/
+        style: "btn"
+    stickyNavBar:
+      enable: true
+      showOnScrollUp: true
+    enableSeparator: false
+    menus:
+      disableAbout: true
+      disableExperience: false
+      disableEducation: true
+      disableProjects: false
+      disableAchievements: true
+      disableContact: false
+
+  hero:
+    enable: true
+    intro: ""
+    title: "Make it real.<br>Make it yours."
+    subtitle: "Custom HTV apparel, made in Sarnia, Ontario."
+    content: "Pick your colours, choose your font, and add your text — Elise will press and ship your custom tee within 48 hours. One-off pieces, team orders, and branded merch welcome."
+    image: /images/logo.png
+    bottomImage:
+      enable: false
+    button:
+      enable: true
+      name: "Who is Elise? →"
+      url: "#about"
+      download: false
+      newPage: false
+    socialLinks:
+      fontAwesomeIcons:
+        - icon: fab fa-linkedin
+          url: https://linkedin.com/in/elisemarion
+
+  about:
+    enable: true
+    title: "About"
+    image: "/images/logo.png"
+    content: |-
+      Blondie Slays Apparel is the independent studio of Elise Marion, a content strategist and editorial consultant with 8+ years driving audience growth through data-led content, SEO, and AI-assisted workflows.
+
+      Recent work includes a 400% lift in pageviews and 133% growth in unique users for InMobi, plus end-to-end content and brand production for the Canadian National Pickleball League. Custom apparel work runs alongside the consultancy, producing branded merchandise, team gear, and one-off custom pieces from a Cricut and heat press studio in Sarnia, Ontario.
+    skills:
+      enable: true
+      title: "What I bring to the table:"
+      items:
+        - "Content Strategy"
+        - "Editorial Production"
+        - "Prompt Engineering"
+        - "SEO & Analytics"
+        - "Brand Identity"
+        - "Custom Apparel Production"
+
+  experience:
+    enable: false
+
+  htvwork:
+    enable: true
+    title: "Custom HTV Work"
+    intro: "Small-batch custom apparel made in Sarnia, Ontario. Branded merch, team gear, and one-off pieces — designed with AI, pressed by hand using premium blanks, vinyl, and a heat press studio."
+    items:
+      - title: Team & Event Apparel
+        content: Custom tees, hoodies, and hats for sports teams, corporate events, and brand activations. Designed to order, produced in-studio.
+        image: /images/htv/team-apparel.png
+        tags:
+          - name: Heat Press
+            color: pink
+          - name: Team Gear
+            color: blue
+          - name: Event Ready
+            color: mint
+
+      - title: Branded Merchandise
+        content: Logo tees, staff uniforms, and branded giveaways for small businesses and creators. Canadian sourcing, fast turnaround.
+        image: /images/htv/branded-merch.png
+        tags:
+          - name: Small Business
+            color: pink
+          - name: Custom Vinyl
+            color: lavender
+          - name: Made in Canada
+            color: mint
+
+      - title: One-Off Custom Pieces
+        content: Got a vision? Bring it. One-of-a-kind designs for birthdays, gifts, personal projects, and anything in between.
+        image: /images/htv/custom-pieces.png
+        tags:
+          - name: Cricut
+            color: pink
+          - name: HTV Vinyl
+            color: blue
+          - name: Gift Ready
+            color: lavender
+
+  webdesign:
+    enable: true
+    title: "Website Design"
+    intro: "Clean, fast, scroll-stopping websites built with AI-assisted design and hand-tuned for your brand. From portfolio sites to small business landing pages — no bloated builders, no template jail."
+    items:
+      - title: Small Business Sites
+        content: One-page and multi-page websites for local businesses, service providers, and creators who need a professional online presence without the agency price tag.
+        image: /images/web/small-biz.png
+        tags:
+          - name: Hugo
+            color: pink
+          - name: AI-Assisted
+            color: blue
+          - name: Fast & Clean
+            color: mint
+
+      - title: Portfolio & Personal Brand
+        content: Show your work the way it deserves to be shown. Custom-designed portfolio sites built to reflect your aesthetic and convert visitors into clients.
+        image: /images/web/portfolio.png
+        tags:
+          - name: Personal Brand
+            color: lavender
+          - name: Custom Design
+            color: pink
+          - name: Mobile-First
+            color: mint
+
+      - title: Landing Pages
+        content: Single-purpose pages built to convert — for product launches, event signups, lead gen, or anything that needs to make an impression fast.
+        image: /images/web/landing.png
+        tags:
+          - name: Conversion
+            color: blue
+          - name: AI Copy
+            color: pink
+          - name: Quick Launch
+            color: lavender
+
+  digitaldesign:
+    enable: true
+    title: "Digital Design Studio"
+    intro: "Social graphics, event flyers, pitch decks, and brand assets — designed in Canva with a sharp eye and AI-powered speed. Consistent, on-brand, and ready to post."
+    items:
+      - title: Social Media Graphics
+        content: Scroll-stopping post templates, story sets, and campaign graphics for Instagram, Facebook, and LinkedIn. Designed to match your brand and built to batch.
+        image: /images/digital/social.png
+        tags:
+          - name: Canva
+            color: pink
+          - name: Instagram
+            color: blue
+          - name: Brand Kit
+            color: mint
+
+      - title: Event Flyers & Promo Assets
+        content: Event posters, digital invitations, and promotional graphics for leagues, venues, and small businesses. Fast turnaround, print and digital formats.
+        image: /images/digital/events.png
+        tags:
+          - name: Event Design
+            color: lavender
+          - name: Print Ready
+            color: pink
+          - name: Fast Turnaround
+            color: blue
+
+      - title: Brand Asset Packages
+        content: Logos, colour palettes, font pairings, and template sets to keep your brand consistent everywhere. Delivered as editable Canva templates.
+        image: /images/digital/brand.png
+        tags:
+          - name: Brand Identity
+            color: mint
+          - name: Canva Templates
+            color: lavender
+          - name: AI-Assisted
+            color: pink
+
+  projects:
+    enable: false
+    title: "Featured Work"
+    items:
+      - title: Canadian National Pickleball League
+        content: End-to-end content production for league events, social media campaigns, and sponsorship activations. Blog posts, matchday graphics, promotional materials, and full brand assets across the 2026 season.
+        images:
+          - /images/projects/cnpl-content/01.png
+          - /images/projects/cnpl-content/02.png
+          - /images/projects/cnpl-content/03.png
+        skills:
+          - name: Content Strategy
+            color: pink
+          - name: Social Media
+            color: blue
+          - name: Sports Media
+            color: mint
+          - name: Graphic Design
+            color: lavender
+
+      - title: InMobi Audience Growth
+        content: Increased daily pageviews by 400% and unique users by 133% through data-driven content strategy, GenAI workflows, and editorial team management across a 170-site portfolio.
+        images:
+          - /images/projects/inmobi-growth/01.png
+          - /images/projects/inmobi-growth/02.png
+        skills:
+          - name: Content Strategy
+            color: pink
+          - name: SEO
+            color: blue
+          - name: Editorial Ops
+            color: mint
+          - name: GenAI Workflows
+            color: lavender
+
+      - title: CNPL Custom Apparel
+        content: Branded merchandise production for the Canadian National Pickleball League. Custom tees, towels, and event apparel designed and produced in-studio using Cricut and heat press techniques.
+        images:
+          - /images/projects/cnpl-apparel/01.png
+          - /images/projects/cnpl-apparel/02.png
+          - /images/projects/cnpl-apparel/03.png
+        skills:
+          - name: Custom Apparel
+            color: pink
+          - name: Brand Production
+            color: blue
+          - name: Sports Merch
+            color: mint
+          - name: "Cricut & HTV"
+            color: lavender
+
+  contact:
+    enable: true
+    title: "Get in touch"
+    content: "Inbox is open for new projects, custom apparel orders, and collaborations. Based in Sarnia, Ontario, working with clients across Canada and beyond."
+    btnName: "Email Elise"
+    btnLink: "mailto:elisedaniellemarion@gmail.com"
+
+  footer:
+    socialNetworks:
+      linkedin: https://linkedin.com/in/elisemarion
+
+  listPages:
+    disableFeaturedImage: false
+
+  singlePages:
+    socialShare: true
+    readTime:
+      enable: true
+      content: "min read"
+    scrollprogress:
+      enable: true
+    tags:
+      openInNewTab: true
+
+  terms:
+    read: "Read"
+    toc: "Table Of Contents"
+    copyright: "All rights reserved"
+    emailText: "Check out this site"
+
+  datesFormat:
+    article: "Jan 2, 2006"
+    articleList: "Jan 2, 2006"
+    articleRecent: "Jan 2, 2006"
+
