@@ -427,10 +427,6 @@
     <button class="btn" id="searchBtn">Search</button>
   </div>
 
-  <div class="jumpwrap">
-    <button class="jumpbtn" id="jumpAdd">＋ Add cards</button>
-  </div>
-
   <div id="notes"></div>
 
   <section id="searchSection" hidden>
@@ -449,42 +445,6 @@
     shown in CAD using a daily exchange rate. Reference only — not a formal appraisal.
   </p>
 
-  <details class="owner" id="ownerTools">
-    <summary>＋ Owner tools — add cards</summary>
-    <div class="panel">
-      <h3>Bulk import / add cards</h3>
-      <p class="hint">
-        Paste cards as <code>Name | Set | Number | Qty | Finish</code> — one per line, the same format as your
-        collection file. Hit <strong>Resolve</strong> to look each one up live (image + current price). With
-        <strong>Append mode</strong> on (the default), you get just the new entry lines to paste above the closing
-        <code>];</code> of <code>MY_CARDS</code> — so you add cards without touching the ones already there. Turn it
-        off to regenerate the whole block. This panel isn't password-protected (a static site can't be), but only you
-        can publish changes by pushing to GitHub.
-      </p>
-      <textarea id="impIn" placeholder="Shaymin | Prismatic Evolutions | 087/131 | 1 | Normal
-Garganacl | Paradox Rift | 104/182 | 1 | Holofoil"></textarea>
-      <div class="row">
-        <button class="btn2" id="impRun">Resolve</button>
-        <label style="display:inline-flex; align-items:center; gap:.4rem; font-size:.76rem; font-weight:600; color:#b06a92; cursor:pointer;">
-          <input type="checkbox" id="impAppend" checked> Append mode — output only the new lines to add
-        </label>
-        <span class="progress" id="impProg"></span>
-      </div>
-      <div class="reslist" id="impList"></div>
-      <div class="out" id="impOutWrap" hidden>
-        <h3 id="impOutTitle">New lines — paste just above the closing <code>];</code></h3>
-        <p class="hint" id="impOutHint">These are ready-to-add <code>MY_CARDS</code> entries. Paste them on their own lines just before the
-          <code>];</code> that closes the list — your existing cards stay exactly as they are. Lines marked
-          <code>// UNMATCHED</code> couldn't be found — fix the set name or number and re-resolve.</p>
-        <textarea id="impOut" readonly></textarea>
-        <div class="row">
-          <button class="btn2" id="impCopy">Copy block</button>
-          <button class="btn2" id="impDownload">⬇ Download updated page</button>
-          <button class="btn2 ghost" id="impClear">Clear</button>
-        </div>
-      </div>
-    </div>
-  </details>
 </main>
 
 <button class="totop" id="toTop" aria-label="Back to top">↑ Top</button>
@@ -991,18 +951,13 @@ async function doSearch() {
     d.data.forEach((card) => {
       if (!fx) return;
       const t = cardTile(card, 1, "");
-      const btn = document.createElement("button");
-      btn.className = "add";
-      btn.textContent = "Add to my view";
-      btn.onclick = () => addToPortfolio(card, t.el, btn);
       const idline = document.createElement("div");
       idline.className = "idline";
       idline.textContent = `id: ${card.id}`;
       const copy = document.createElement("button");
       copy.className = "copybtn";
-      copy.textContent = "Copy MY_CARDS line";
+      copy.textContent = "Copy line to send";
       copy.onclick = () => copyText(`  { id: "${card.id}", qty: 1, note: "" },`, copy);
-      t.el.appendChild(btn);
       t.el.appendChild(idline);
       t.el.appendChild(copy);
       sg.appendChild(t.el);
@@ -1011,19 +966,6 @@ async function doSearch() {
     console.error("[SEARCH] failed:", e.message);
     sg.innerHTML = `<div class="empty">Search failed. Please try again in a moment.</div>`;
   }
-}
-
-// Session-only add: shows the card in the portfolio + reminds you to make it permanent.
-function addToPortfolio(card, srcTile, btn) {
-  const t = cardTile(card, 1, "");
-  t.el.classList.add("added");
-  $("grid").prepend(t.el);
-  btn.textContent = "Added ✓ — paste id into MY_CARDS to keep";
-  btn.disabled = true;
-  // bump the hero total
-  const cur = parseFloat($("total").textContent.replace(/[^0-9.]/g, "")) || 0;
-  $("total").innerHTML = `<span class="cur">CA$</span>${cad(cur + t.value)}`;
-  console.log(`[ADD] ${card.name} (${card.id}) — add this to MY_CARDS:  { id: "${card.id}", qty: 1, note: "" },`);
 }
 
 /* ---------- Clipboard helper ---------- */
@@ -1041,161 +983,10 @@ function copyText(text, btn) {
   }
 }
 
-/* ---------- Bulk import / add tool (owner) ---------- */
+/* ---------- helpers ---------- */
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// COLLECTR labels that pokemontcg.io spells differently.
-const SET_ALIAS = {
-  "sv: 151": "151",
-  "151": "151",
-  "sword & shield base set": "Sword & Shield",
-  "scarlet & violet base set": "Scarlet & Violet",
-  "base set (unlimited)": "Base",
-  "base set": "Base",
-  "pokemon go": "Pokémon GO",
-  "pokémon go": "Pokémon GO",
-};
-
-function parseNum(raw) {
-  let n = String(raw || "").split("/")[0].trim();
-  if (/^\d+$/.test(n)) n = String(parseInt(n, 10));
-  return n.toLowerCase();
-}
-function setQueryFor(label) {
-  const key = String(label || "").trim().toLowerCase();
-  return SET_ALIAS[key] || String(label || "").trim();
-}
-
-const _setCache = {}; // query -> array of cards
-async function getSetCards(label) {
-  const q = setQueryFor(label);
-  if (q in _setCache) return _setCache[q];
-  let cards = await fetchSetByName(q);
-  if (!cards.length) cards = await fetchSetByName("*" + q + "*"); // looser fallback
-  _setCache[q] = cards;
-  return cards;
-}
-async function fetchSetByName(name) {
-  let page = 1, all = [], more = true;
-  while (more && page <= 4) {
-    const url = `${API}?q=set.name:"${encodeURIComponent(name)}"&pageSize=250&page=${page}`;
-    let r;
-    try { r = await fetch(url, { headers }); } catch (e) { break; }
-    if (!r.ok) break;
-    const d = await r.json();
-    all = all.concat(d.data || []);
-    more = (d.data || []).length === 250;
-    page++;
-  }
-  return all;
-}
-
-function parseImportLine(line) {
-  const parts = line.split("|").map((s) => s.trim());
-  if (parts.length < 3) return null;
-  const name = parts[0], set = parts[1], number = parts[2];
-  const qty = parts[3] ? (parseInt(parts[3], 10) || 1) : 1;
-  let finish = parts[4] || "";
-  finish = finish.replace(/\(.*?\)/g, "").trim(); // drop "(Illustration Rare)" etc.
-  if (!set || !number) return null;
-  return { name, set, number, qty, finish };
-}
-
-async function runImport() {
-  const lines = $("impIn").value.split("\n")
-    .map((s) => s.trim())
-    .filter((s) => s && s.includes("|") && !s.startsWith("#") && !s.startsWith("//"))
-    .map(parseImportLine).filter(Boolean);
-
-  const list = $("impList"), prog = $("impProg");
-  list.innerHTML = ""; $("impOutWrap").hidden = true;
-  if (!lines.length) { prog.textContent = "Nothing to resolve — paste lines as  Name | Set | Number | Qty | Finish"; return; }
-  if (!fx) await getFx();
-
-  const out = [];
-  let done = 0, ok = 0;
-  for (const ln of lines) {
-    prog.textContent = `Resolving ${done + 1} of ${lines.length}…`;
-    let card = null;
-    try {
-      const cards = await getSetCards(ln.set);
-      const want = parseNum(ln.number);
-      card = cards.find((c) => parseNum(c.number) === want) || null;
-    } catch (e) { card = null; }
-
-    const row = document.createElement("div");
-    row.className = "resrow" + (card ? "" : " bad");
-    if (card) {
-      ok++;
-      const price = usdMarket(card, ln.finish);
-      const cadv = toCad(price);
-      const finStr = ln.finish ? `, finish: "${ln.finish}"` : "";
-      out.push(`  { id: "${card.id}", qty: ${ln.qty}${finStr}, note: "" },  // ${card.name} · ${ln.set} ${ln.number}`);
-      row.innerHTML =
-        `<img src="${card.images && card.images.small ? card.images.small : ''}" alt="">` +
-        `<div><div class="rn">${card.name} <span class="badge ok">match</span></div>` +
-        `<div class="rs">${ln.set} · ${ln.number}${ln.finish ? ' · ' + ln.finish : ''} · <code>${card.id}</code></div></div>` +
-        `<div class="rprice">${cadv != null ? 'CA$' + cad(cadv * ln.qty) : '—'}</div>`;
-    } else {
-      out.push(`  // UNMATCHED — ${ln.name} | ${ln.set} | ${ln.number}  (set or number not found — check spelling)`);
-      row.innerHTML =
-        `<div><div class="rn">${ln.name} <span class="badge no">no match</span></div>` +
-        `<div class="rs">${ln.set} · ${ln.number} — not found in the database</div></div>`;
-    }
-    list.appendChild(row);
-    done++;
-    await sleep(90); // be gentle on the keyless API
-  }
-
-  prog.textContent = `Done — ${ok} matched, ${lines.length - ok} unmatched.`;
-  const append = $("impAppend") && $("impAppend").checked;
-  if (append) {
-    $("impOutTitle").innerHTML = 'New lines — paste just above the closing <code>];</code>';
-    $("impOutHint").innerHTML = 'These are ready-to-add <code>MY_CARDS</code> entries. Paste them on their own lines just before the <code>];</code> that closes the list — your existing cards stay exactly as they are. Lines marked <code>// UNMATCHED</code> couldn\'t be found — fix the set name or number and re-resolve.';
-    $("impOut").value = out.join("\n");
-  } else {
-    $("impOutTitle").innerHTML = 'MY_CARDS block — replaces the whole list';
-    $("impOutHint").innerHTML = 'Replace the existing <code>const MY_CARDS = [ … ];</code> with this entire block. Lines marked <code>// UNMATCHED</code> couldn\'t be found — fix the set name or number and re-resolve.';
-    $("impOut").value = "const MY_CARDS = [\n" + out.join("\n") + "\n];";
-  }
-  lastResolved = out.join("\n");
-  $("impOutWrap").hidden = false;
-}
-
-// Splice the just-resolved lines into a fresh copy of this page's own source
-// (read from disk, not the live DOM) and download a ready-to-commit index.html.
-async function downloadUpdatedPage() {
-  if (!lastResolved.trim()) {
-    $("impProg").textContent = "Resolve some cards first, then download.";
-    return;
-  }
-  let html;
-  try {
-    const res = await fetch(location.href, { cache: "no-store" });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    html = await res.text();
-  } catch (e) {
-    $("impProg").textContent = "Couldn't read the page source — open this on the served/live site, not a file:// path.";
-    return;
-  }
-  const start = html.indexOf("const MY_CARDS = [");
-  const close = start === -1 ? -1 : html.indexOf("\n];", start);
-  if (close === -1) {
-    $("impProg").textContent = "Couldn't find the MY_CARDS list in the page source.";
-    return;
-  }
-  const updated = html.slice(0, close) + "\n" + lastResolved + html.slice(close);
-  const blob = new Blob([updated], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "index.html";
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
-  $("impProg").textContent = "Downloaded index.html — drop it in static/pokemon/, then commit & push.";
-}
-
 /* ---------- boot ---------- */
-let lastResolved = "";
 $("searchBtn").addEventListener("click", doSearch);
 $("q").addEventListener("keydown", (e) => { if (e.key === "Enter") doSearch(); });
 $("backToCollection").addEventListener("click", () => {
@@ -1204,22 +995,6 @@ $("backToCollection").addEventListener("click", () => {
   $("q").value = "";
   const c = $("myCollection");
   if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
-});
-$("jumpAdd").addEventListener("click", () => {
-  const o = $("ownerTools");
-  if (!o) return;
-  o.open = true;
-  // let the panel finish expanding before scrolling, or it lands short
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    o.scrollIntoView({ behavior: "smooth", block: "start" });
-  }));
-});
-$("impRun").addEventListener("click", runImport);
-$("impCopy").addEventListener("click", () => copyText($("impOut").value, $("impCopy")));
-$("impDownload").addEventListener("click", downloadUpdatedPage);
-$("impClear").addEventListener("click", () => {
-  $("impIn").value = ""; $("impList").innerHTML = "";
-  $("impOutWrap").hidden = true; $("impProg").textContent = ""; lastResolved = "";
 });
 
 const toTop = $("toTop");
