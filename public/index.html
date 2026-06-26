@@ -106,6 +106,53 @@
 </style>
 
 <link rel="stylesheet" href="/css/custom.css">
+<style>
+  #dl-nav-btn, #dl-nav-btn:link, #dl-nav-btn:visited { color: #FF1493 !important; }
+  #dl-nav-btn:hover, #dl-nav-btn:active { color: #ffffff !important; }
+</style>
+<script>
+  var btnStyle = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:none;line-height:1;";
+  var btnHover = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#FF1493;color:#ffffff;box-shadow:none;line-height:1;";
+
+  function styleBtn(el, extraStyle) {
+    var s = btnStyle + (extraStyle || "");
+    el.setAttribute("style", s);
+    el.addEventListener("mouseenter", function() { el.setAttribute("style", btnHover + (extraStyle || "")); });
+    el.addEventListener("mouseleave", function() { el.setAttribute("style", s); });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    var nav = document.querySelector("ul.navbar-nav.ms-auto, nav .navbar-nav, nav ul.navbar-nav");
+    if (!nav) nav = document.querySelector("nav");
+    if (nav) {
+      var btn = document.createElement("a");
+      btn.id = "dl-nav-btn";
+      btn.href = "/downloads/";
+      btn.textContent = "Digital Downloads";
+      styleBtn(btn, "margin-left:0.75rem;");
+      nav.appendChild(btn);
+
+      
+      var poke = document.createElement("a");
+      poke.id = "poke-nav-btn";
+      poke.href = "/pokemon/";
+      poke.setAttribute("aria-label", "My Pokémon card collection");
+      poke.setAttribute("title", "Pokémon collection");
+      poke.innerHTML = '<img src="/images/pokeball.png" alt="Pokémon collection" style="display:block;height:30px;width:auto;"/>';
+      poke.setAttribute("style", "display:inline-flex;align-items:center;justify-content:center;align-self:center;margin-left:0.75rem;padding:0;line-height:0;text-decoration:none;transition:transform .15s ease, filter .15s ease;");
+      poke.addEventListener("mouseenter", function(){ poke.style.transform = "scale(1.12)"; poke.style.filter = "drop-shadow(0 2px 5px rgba(255,20,147,.5))"; });
+      poke.addEventListener("mouseleave", function(){ poke.style.transform = "scale(1)"; poke.style.filter = "none"; });
+      nav.appendChild(poke);
+    }
+
+    
+    var heroBtn = document.querySelector('.hero-builder-btn');
+    if (heroBtn) {
+      styleBtn(heroBtn, "");
+    }
+  });
+</script>
 
 
 
@@ -244,7 +291,7 @@
                     Pick your colours, choose your font, and add your text — Elise will press and ship your custom tee within 48 hours. One-off pieces, team orders, and branded merch welcome.
                 </p>
                 <div class="hero-cta-row">
-                    <a href="#shirt-builder" class="hero-builder-btn">Design Your Tee &rarr;</a>
+                    <a href="#shirt-builder" class="hero-builder-btn" id="hero-builder-btn" style="display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:none;line-height:1;">Design Your Tee</a>
                     <a href="https://linkedin.com/in/elisemarion" class="hero-linkedin-btn" target="_blank" rel="noopener" aria-label="LinkedIn">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     </a>
@@ -278,6 +325,17 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 </section>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime&family=Kiwi+Maru&family=Teko:wght@400;600&family=DM+Serif+Display&family=Inter&family=Montserrat:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+<style>
+  .bsa-details { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem 1rem; margin: 1rem 0 .75rem; }
+  .bsa-field { display: flex; flex-direction: column; gap: 4px; }
+  .bsa-field-full { grid-column: 1 / -1; }
+  #bsa-order-form .btxt-in { font-size: 13px; }
+  #bsa-order-form select.btxt-in { background: #fff; }
+  #bo-success a { text-decoration: underline; }
+  @media (max-width: 768px) { .bsa-details { grid-template-columns: 1fr; } }
+</style>
+
 <section id="shirt-builder" class="shirt-builder-section">
   <div class="container">
     <p class="text-center custom-order-intro">Pick your colours, add your text, and choose a placement — then send your order request and Elise will be in touch within 48 hours.</p>
@@ -299,26 +357,34 @@ document.addEventListener("DOMContentLoaded", function() {
             <button class="snav-btn" id="mnext" aria-label="Next">&#8594;</button>
           </div>
           <p class="slide-label" id="mockup-label">Browse examples</p>
-          <div class="builder-combo-note">Mix &amp; match any colour, font &amp; placement — these are just examples.</div>
+
         </div>
+          <div class="builder-aside">
+            <div class="builder-aside-block">
+              <span class="ba-eyebrow">Digital downloads</span>
+              <div class="ba-title">Printables, ready now</div>
+              <p class="ba-text">Fillable recipe cards and the 2026 Cheese of the Month Club — instant download, nothing to ship.</p>
+              <a class="ba-btn" href="/downloads/">Browse downloads &rarr;</a>
+            </div>
+            <div class="builder-aside-block ba-soon">
+              <span class="ba-eyebrow">Coming soon</span>
+              <div class="ba-title">Grad &amp; wedding towel builder <span class="ba-pill">Soon</span></div>
+              <p class="ba-text">Personalised grad and wedding towels — design yours right here, launching soon.</p>
+            </div>
+          </div>
       </div>
 
       <div class="ctrl-side">
         <div>
           <span class="bcl">Shirt colour</span>
           <div class="bcolor-list" id="swatches">
-            <div class="bcolor-btn on" data-b="#f5f0e8" data-n="Natural"><span class="bcolor-dot" style="background:#f5f0e8;border:1px solid #ddd"></span>Natural</div>
+            <div class="bcolor-btn on" data-b="#f5ede0" data-n="Natural"><span class="bcolor-dot" style="background:#f5ede0;border:1px solid #ddd"></span>Natural</div>
             <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
-            <div class="bcolor-btn" data-b="#1e3a5f" data-n="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
-            <div class="bcolor-btn" data-b="#1a1a1a" data-n="Black"><span class="bcolor-dot" style="background:#1a1a1a"></span>Black</div>
-            <div class="bcolor-btn" data-b="#15803d" data-n="Forest Green"><span class="bcolor-dot" style="background:#15803d"></span>Forest Green</div>
-            <div class="bcolor-btn" data-b="#dc2626" data-n="Red"><span class="bcolor-dot" style="background:#dc2626"></span>Red</div>
-            <div class="bcolor-btn" data-b="#7c3aed" data-n="Purple"><span class="bcolor-dot" style="background:#7c3aed"></span>Purple</div>
-            <div class="bcolor-btn" data-b="#f472b6" data-n="Pink"><span class="bcolor-dot" style="background:#f472b6"></span>Pink</div>
-            <div class="bcolor-btn" data-b="#f59e0b" data-n="Gold"><span class="bcolor-dot" style="background:#f59e0b"></span>Gold</div>
-            <div class="bcolor-btn" data-b="#f97316" data-n="Orange"><span class="bcolor-dot" style="background:#f97316"></span>Orange</div>
-            <div class="bcolor-btn" data-b="#7f1d1d" data-n="Maroon"><span class="bcolor-dot" style="background:#7f1d1d"></span>Maroon</div>
-            <div class="bcolor-btn btd" data-b="tiedye" data-n="Tie-Dye (+$15)"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#bbf7d0,#fde68a,#f9a8d4)"></span>Tie-Dye +$15</div>
+            <div class="bcolor-btn" data-b="#2b3a5c" data-n="Navy"><span class="bcolor-dot" style="background:#2b3a5c"></span>Navy</div>
+            <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
+            <div class="bcolor-btn" data-b="#f4634a" data-n="Coral"><span class="bcolor-dot" style="background:#f4634a"></span>Coral</div>
+            <div class="bcolor-btn" data-b="#7c1e3a" data-n="Maroon"><span class="bcolor-dot" style="background:#7c1e3a"></span>Maroon</div>
+            <div class="bcolor-btn" data-b="#f5e88a" data-n="Cornsilk"><span class="bcolor-dot" style="background:#f5e88a;border:1px solid #ddd"></span>Cornsilk</div>
           </div>
           <div id="tdnote" class="btd-note" style="display:none">Each tie-dye is hand-made and unique — +$15 upcharge applies.</div>
         </div>
@@ -330,61 +396,109 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <div class="bvinyl-font-row">
           <div class="bvinyl-col">
-          <span class="bcl">Vinyl colour</span>
-          <div class="bcolor-list" id="bvcs">
-            <div class="bvc bcolor-btn on" data-v="Black"><span class="bcolor-dot" style="background:#1a1a1a"></span>Black</div>
-            <div class="bvc bcolor-btn" data-v="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
-            <div class="bvc bcolor-btn" data-v="Red"><span class="bcolor-dot" style="background:#cc1111"></span>Red</div>
-            <div class="bvc bcolor-btn" data-v="Hot Pink"><span class="bcolor-dot" style="background:#FF1493"></span>Hot Pink</div>
-            <div class="bvc bcolor-btn" data-v="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
-            <div class="bvc bcolor-btn" data-v="Royal Blue"><span class="bcolor-dot" style="background:#1a56db"></span>Royal Blue</div>
-            <div class="bvc bcolor-btn" data-v="Forest Green"><span class="bcolor-dot" style="background:#166534"></span>Forest Green</div>
-            <div class="bvc bcolor-btn" data-v="Purple"><span class="bcolor-dot" style="background:#6d28d9"></span>Purple</div>
-            <div class="bvc bcolor-btn" data-v="Orange"><span class="bcolor-dot" style="background:#ea580c"></span>Orange</div>
-            <div class="bvc bcolor-btn" data-v="Brown"><span class="bcolor-dot" style="background:#78350f"></span>Brown</div>
-            <div class="bvc bcolor-btn" data-v="Teal"><span class="bcolor-dot" style="background:#0f766e"></span>Teal</div>
-          </div>
-          <div class="bcolor-list bcolor-list-wrap" id="bvcs-special">
-            <div class="bvc bcolor-btn bvc-metallic" data-v="Gold Metallic"><span class="bcolor-dot" style="background:linear-gradient(135deg,#f5f0d0,#d4af37,#f5f0d0)"></span>Gold Metallic</div>
-            <div class="bvc bcolor-btn bvc-metallic" data-v="Silver Metallic"><span class="bcolor-dot" style="background:linear-gradient(135deg,#fff,#c0c0c0,#fff)"></span>Silver Metallic</div>
-            <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Gold"><span class="bcolor-dot" style="background:linear-gradient(135deg,#fde68a,#d4af37,#fde68a)"></span>Glitter Gold +$2</div>
-            <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Silver"><span class="bcolor-dot" style="background:linear-gradient(135deg,#f1f5f9,#c0c0c0,#f1f5f9)"></span>Glitter Silver +$2</div>
-            <div class="bvc bcolor-btn bvc-holo" data-v="Holographic"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)"></span>Holographic +$2</div>
-          </div>
+            <span class="bcl">Vinyl colour</span>
+            <div class="bcolor-list" id="bvcs">
+              <div class="bvc bcolor-btn" data-v="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
+              <div class="bvc bcolor-btn" data-v="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
+              <div class="bvc bcolor-btn" data-v="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
+              <div class="bvc bcolor-btn" data-v="Blue"><span class="bcolor-dot" style="background:#29abe2"></span>Blue</div>
+              <div class="bvc bcolor-btn" data-v="Gold"><span class="bcolor-dot" style="background:#c9a96e"></span>Gold</div>
+              <div class="bvc bcolor-btn" data-v="Pink"><span class="bcolor-dot" style="background:#f4a7b9"></span>Pink</div>
+              <div class="bvc bcolor-btn" data-v="Yellow"><span class="bcolor-dot" style="background:#f5e642"></span>Yellow</div>
+              <div class="bvc bcolor-btn" data-v="Green"><span class="bcolor-dot" style="background:#00a651"></span>Green</div>
+              <div class="bvc bcolor-btn" data-v="Silver"><span class="bcolor-dot" style="background:#c0c8c8;border:1px solid #ddd"></span>Silver</div>
+              <div class="bvc bcolor-btn" data-v="Red"><span class="bcolor-dot" style="background:#e8393e"></span>Red</div>
+              <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Gold"><span class="bcolor-dot" style="background:linear-gradient(135deg,#fde68a,#d4af37,#fde68a)"></span>Glitter Gold +$2</div>
+              <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Silver"><span class="bcolor-dot" style="background:linear-gradient(135deg,#f1f5f9,#c0c0c0,#f1f5f9)"></span>Glitter Silver +$2</div>
+              <div class="bvc bcolor-btn bvc-holo" data-v="Holographic"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)"></span>Holographic +$2</div>
+            </div>
           </div>
           <div class="bfont-col">
-          <span class="bcl">Font style</span>
-          <div class="bfont-row" id="bfonts">
-            <div class="bfo on" data-f="High Tide" style="font-family:'Bebas Neue',sans-serif">High Tide</div>
-            <div class="bfo" data-f="Typewriter" style="font-family:'Courier Prime',monospace">Typewriter</div>
-            <div class="bfo" data-f="Kiwi Maru" style="font-family:'Kiwi Maru',serif">Kiwi Maru</div>
-            <div class="bfo" data-f="DTC Barn Acre" style="font-family:'Teko',sans-serif">DTC Barn Acre</div>
-            <div class="bfo" data-f="Quinn Type" style="font-family:'DM Serif Display',serif">Quinn Type</div>
-            <div class="bfo" data-f="Montserrat" style="font-family:'Montserrat',sans-serif">Montserrat</div>
-            <div class="bfo" data-f="Dragonlord" style="font-family:'UnifrakturMaguntia',cursive">Dragonlord</div>
-          </div>
-          </div>
-        </div>
-
-        <div>
-          <span class="bcl">Text placement</span>
-          <div class="bplacement-row" id="bplacements">
-            <div class="bpl on" data-p="Centre chest">Centre chest</div>
-            <div class="bpl" data-p="Centre back">Centre back</div>
-            <div class="bpl" data-p="Right sleeve">Right sleeve</div>
-            <div class="bpl" data-p="Left sleeve">Left sleeve</div>
+            <span class="bcl">Font style</span>
+            <div class="bfont-row" id="bfonts">
+                <div class="bfo on" data-f="Dragonlord">Dragonlord</div>
+                <div class="bfo" data-f="High Tide">High Tide</div>
+                <div class="bfo" data-f="Typewriter">Typewriter</div>
+                <div class="bfo" data-f="Kiwi Maru">Kiwi Maru</div>
+                <div class="bfo" data-f="Cricut Sans">Cricut Sans</div>
+                <div class="bfo" data-f="Barn Acre">Barn Acre</div>
+            </div>
+            <div class="bplace-col">
+              <span class="bcl">Text placement</span>
+              <div class="bplacement-row" id="bplacements">
+                <div class="bpl on" data-p="Centre chest">Centre chest</div>
+                <div class="bpl" data-p="Centre back">Centre back</div>
+                <div class="bpl" data-p="Right sleeve">Right sleeve</div>
+                <div class="bpl" data-p="Left sleeve">Left sleeve</div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="bsummary" id="bsummary">
           Shirt: <strong id="bs-colour">Natural</strong> &nbsp;|&nbsp;
-          Text: <strong id="bs-text">—</strong><br>
+          Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
           Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
-          Font: <strong id="bs-font">High Tide</strong><br>
+          Font: <strong id="bs-font">High Tide</strong> &nbsp;|&nbsp;
           Placement: <strong id="bs-place">Centre chest</strong>
         </div>
 
-        <button class="bobtn" id="bsubmit">Send my order request &rarr;</button>
+        <form id="bsa-order-form" action="https://formspree.io/f/xwvzyblg" method="POST" novalidate>
+          <div class="bsa-details">
+            <div class="bsa-field">
+              <span class="bcl">Your name *</span>
+              <input class="btxt-in" type="text" name="name" id="bo-name" placeholder="First &amp; last" required/>
+            </div>
+            <div class="bsa-field">
+              <span class="bcl">Email *</span>
+              <input class="btxt-in" type="email" name="email" id="bo-email" placeholder="you@email.com" required/>
+            </div>
+            <div class="bsa-field">
+              <span class="bcl">Size *</span>
+              <select class="btxt-in" name="size" id="bo-size" required>
+                <option value="" disabled selected>Choose…</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>2XL</option>
+                <option>3XL</option>
+                <option>Youth S</option>
+                <option>Youth M</option>
+                <option>Youth L</option>
+              </select>
+            </div>
+            <div class="bsa-field">
+              <span class="bcl">Quantity *</span>
+              <input class="btxt-in" type="number" name="quantity" id="bo-qty" min="1" value="1" required/>
+            </div>
+            <div class="bsa-field bsa-field-full">
+              <span class="bcl">Notes (optional)</span>
+              <textarea class="btxt-in" name="notes" id="bo-notes" rows="2" placeholder="Anything else Elise should know"></textarea>
+            </div>
+          </div>
+
+          
+          <input type="hidden" name="Shirt colour" id="hf-colour"/>
+          <input type="hidden" name="Text" id="hf-text"/>
+          <input type="hidden" name="Vinyl" id="hf-vinyl"/>
+          <input type="hidden" name="Font" id="hf-font"/>
+          <input type="hidden" name="Placement" id="hf-place"/>
+          <input type="hidden" name="_subject" id="hf-subject" value="New tee order request"/>
+          
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;"/>
+
+          <div class="btd-note" id="bo-error" style="display:none;background:#fff0f0;border-color:#f5b5b5;color:#b91c1c;margin-bottom:.6rem;"></div>
+
+          <button class="bobtn" id="bsubmit" type="submit">Send my order request &rarr;</button>
+        </form>
+
+        <div id="bo-success" style="display:none;text-align:center;background:#FFF0F6;border:1px solid #f9a8d4;border-radius:12px;padding:1.25rem;color:#be185d;line-height:1.6;">
+          <strong style="display:block;font-size:1rem;margin-bottom:.4rem;">Order request sent! 🎉</strong>
+          Thanks — Elise will be in touch at the email you gave within 48 hours with your total and a PayPal link
+          (<a href="https://paypal.me/blondieslaysapparel" target="_blank" rel="noopener" style="color:#FF1493;font-weight:700;">paypal.me/blondieslaysapparel</a>).
+        </div>
       </div>
     </div>
   </div>
@@ -393,15 +507,12 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 (function(){
   var mockups = [
-    {label:'Natural + Navy — High Tide',         img:'/images/builder/mockup-1.jpg'},
-    {label:'Black + Gold Metallic — Dragonlord', img:'/images/builder/mockup-2.jpg'},
-    {label:'Navy + White — Typewriter',          img:'/images/builder/mockup-3.jpg'},
-    {label:'White + Hot Pink — Kiwi Maru',       img:'/images/builder/mockup-4.jpg'},
-    {label:'Maroon + Gold Metallic — Quinn Type', img:'/images/builder/mockup-5.jpg'},
-    {label:'Black + White — Cricut Sans',        img:'/images/builder/mockup-6.jpg'},
+    {label:'Shirt Colours',  img:'/images/builder/shirts.png'},
+    {label:'Vinyl Colours',   img:'/images/builder/vinyl.png'},
+    {label:'Font Styles',     img:'/images/builder/fonts.png'},
   ];
   var mcur = 0;
-  var S = {colour:'Natural', text:'', vinyl:'Black', font:'High Tide'};
+  var S = {colour:'Natural', text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest'};
 
   function buildMDots(){
     var d=document.getElementById('mdots');
@@ -466,16 +577,71 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('bs-place').textContent=S.placement;
   });
 
-  document.getElementById('bsubmit').addEventListener('click',function(){
-    var form=document.querySelector('#custom-order form');
-    if(form){
-      var nameEl=form.querySelector('[name="name"]');
-      var designEl=form.querySelector('[name="design"]');
-      var summary='Shirt colour: '+S.colour+'\nText: '+(S.text||'(none)')+'\nVinyl: '+S.vinyl+'\nFont: '+S.font+'\nPlacement: '+S.placement;
-      if(designEl){ designEl.value=summary; }
-      form.scrollIntoView({behavior:'smooth',block:'start'});
-      if(nameEl){ nameEl.focus(); }
+  
+  var form        = document.getElementById('bsa-order-form');
+  var errBox      = document.getElementById('bo-error');
+  var successBox  = document.getElementById('bo-success');
+  var summaryBox  = document.getElementById('bsummary');
+  var submitBtn   = document.getElementById('bsubmit');
+
+  function showErr(msg){ errBox.textContent=msg; errBox.style.display='block'; }
+  function clearErr(){ errBox.style.display='none'; errBox.textContent=''; }
+  function resetBtn(){ submitBtn.disabled=false; submitBtn.innerHTML='Send my order request &rarr;'; }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearErr();
+
+    var name  = document.getElementById('bo-name').value.trim();
+    var email = document.getElementById('bo-email').value.trim();
+    var size  = document.getElementById('bo-size').value;
+
+    if(!name || !email || !size){
+      showErr('Please add your name, email, and size so Elise can reach you.');
+      return;
     }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+      showErr('That email doesn\u2019t look quite right \u2014 mind double-checking it?');
+      return;
+    }
+
+    
+    document.getElementById('hf-colour').value  = S.colour;
+    document.getElementById('hf-text').value    = S.text || '(none)';
+    document.getElementById('hf-vinyl').value   = S.vinyl;
+    document.getElementById('hf-font').value    = S.font;
+    document.getElementById('hf-place').value   = S.placement;
+    document.getElementById('hf-subject').value = 'New tee order request \u2014 ' + name;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending\u2026';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res){
+      if(res.ok){
+        form.style.display = 'none';
+        summaryBox.style.display = 'none';
+        successBox.style.display = 'block';
+        successBox.scrollIntoView({behavior:'smooth', block:'center'});
+      } else {
+        return res.json().then(function(data){
+          var msg = (data && data.errors && data.errors.length)
+            ? data.errors.map(function(x){return x.message;}).join(', ')
+            : 'Something went wrong sending your request. Please try again.';
+          showErr(msg);
+          resetBtn();
+        }).catch(function(){
+          showErr('Something went wrong sending your request. Please try again.');
+          resetBtn();
+        });
+      }
+    }).catch(function(){
+      showErr('Network hiccup \u2014 please try again in a moment.');
+      resetBtn();
+    });
   });
 
   buildMDots();
@@ -483,61 +649,35 @@ document.addEventListener("DOMContentLoaded", function() {
 })();
 </script>
 
-  </div><footer>
-    
-
-
- 
-
-<div class="text-center pt-2">
-    
-
-    
-    <span class="px-1">
-        <a href="https://linkedin.com/in/elisemarion" target="_blank" aria-label="linkedin">
-            <svg xmlns="http://www.w3.org/2000/svg" width='2.4em' height='2.4em' fill="#fff" aria-label="LinkedIn"
-                viewBox="0 0 512 512">
-                <rect width="512" height="512" fill="#0077b5" rx="15%" />
-                <circle cx="142" cy="138" r="37" />
-                <path stroke="#fff" stroke-width="66" d="M244 194v198M142 194v198" />
-                <path d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32" />
-            </svg>
-        </a>
-    </span>
-    
-
-    
-
-    
-
-    
-</div><div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-4 text-center">
-            
-                <div class="pb-2">
-                    <a href="http://localhost:1313/" title="Blondie Slays Apparel">
-                        <img alt="Footer logo" src="/images/logo.png"
-                            height="40px" width="40px">
-                    </a>
-                </div>
-            
-            &copy; 2026  All rights reserved
-            <div class="text-secondary">
-                Made with
-                <span class="text-danger">
-                    &#10084;
-                </span>
-                and
-                <a href="https://github.com/gurusabarish/hugo-profile" target="_blank"
-                    title="Designed and developed by gurusabarish">
-                    Hugo Profile
-                </a>
-            </div>
-        </div>
+  </div><footer style="background:#FFF8F5 !important; margin-top:4rem; width:100%;">
+  <div style="max-width:900px; margin:0 auto; padding:2.5rem 1.5rem 1.5rem; text-align:center; background:#FFF8F5 !important;">
+    <a href="/">
+      <img src="/images/logo.png" alt="Blondie Slays Apparel" height="60px" style="margin-bottom:1rem;">
+    </a>
+    <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+      <a href="/#projects" style="font-family:Montserrat,sans-serif; font-size:0.78rem; font-weight:600; color:#1a1a1a; text-decoration:none; letter-spacing:0.04em; text-transform:uppercase;">Shop</a>
+      <a href="/downloads/" style="font-family:Montserrat,sans-serif; font-size:0.78rem; font-weight:600; color:#1a1a1a; text-decoration:none; letter-spacing:0.04em; text-transform:uppercase;">Digital Downloads</a>
+      <a href="/#contact" style="font-family:Montserrat,sans-serif; font-size:0.78rem; font-weight:600; color:#1a1a1a; text-decoration:none; letter-spacing:0.04em; text-transform:uppercase;">Get in Touch</a>
     </div>
-</div>
-</footer><script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:1.5rem;">
+      
+      <a href="https://linkedin.com/in/elisemarion" target="_blank" aria-label="linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.8rem" height="1.8rem" viewBox="0 0 512 512">
+          <rect width="512" height="512" fill="#0077b5" rx="15%"/>
+          <circle cx="142" cy="138" r="37" fill="#fff"/>
+          <path stroke="#fff" stroke-width="66" d="M244 194v198M142 194v198"/>
+          <path fill="#fff" d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32"/>
+        </svg>
+      </a>
+      
+      
+    </div>
+    <div style="font-family:Montserrat,sans-serif; font-size:0.72rem; color:#aaa; padding-top:0.5rem;">
+      &copy; 2026 Blondie Slays Apparel. All rights reserved.
+    </div>
+  </div>
+</footer>
+<script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
 <script>
     if (document.body.className.includes("dark")) {
         document.body.classList.remove('dark');

@@ -105,6 +105,53 @@
 </style>
 
 <link rel="stylesheet" href="/css/custom.css">
+<style>
+  #dl-nav-btn, #dl-nav-btn:link, #dl-nav-btn:visited { color: #FF1493 !important; }
+  #dl-nav-btn:hover, #dl-nav-btn:active { color: #ffffff !important; }
+</style>
+<script>
+  var btnStyle = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:none;line-height:1;";
+  var btnHover = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#FF1493;color:#ffffff;box-shadow:none;line-height:1;";
+
+  function styleBtn(el, extraStyle) {
+    var s = btnStyle + (extraStyle || "");
+    el.setAttribute("style", s);
+    el.addEventListener("mouseenter", function() { el.setAttribute("style", btnHover + (extraStyle || "")); });
+    el.addEventListener("mouseleave", function() { el.setAttribute("style", s); });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    var nav = document.querySelector("ul.navbar-nav.ms-auto, nav .navbar-nav, nav ul.navbar-nav");
+    if (!nav) nav = document.querySelector("nav");
+    if (nav) {
+      var btn = document.createElement("a");
+      btn.id = "dl-nav-btn";
+      btn.href = "/downloads/";
+      btn.textContent = "Digital Downloads";
+      styleBtn(btn, "margin-left:0.75rem;");
+      nav.appendChild(btn);
+
+      
+      var poke = document.createElement("a");
+      poke.id = "poke-nav-btn";
+      poke.href = "/pokemon/";
+      poke.setAttribute("aria-label", "My Pokémon card collection");
+      poke.setAttribute("title", "Pokémon collection");
+      poke.innerHTML = '<img src="/images/pokeball.png" alt="Pokémon collection" style="display:block;height:30px;width:auto;"/>';
+      poke.setAttribute("style", "display:inline-flex;align-items:center;justify-content:center;align-self:center;margin-left:0.75rem;padding:0;line-height:0;text-decoration:none;transition:transform .15s ease, filter .15s ease;");
+      poke.addEventListener("mouseenter", function(){ poke.style.transform = "scale(1.12)"; poke.style.filter = "drop-shadow(0 2px 5px rgba(255,20,147,.5))"; });
+      poke.addEventListener("mouseleave", function(){ poke.style.transform = "scale(1)"; poke.style.filter = "none"; });
+      nav.appendChild(poke);
+    }
+
+    
+    var heroBtn = document.querySelector('.hero-builder-btn');
+    if (heroBtn) {
+      styleBtn(heroBtn, "");
+    }
+  });
+</script>
 
 
 <meta name="description" content=Independent&#32;content&#32;consultancy&#32;and&#32;custom&#32;apparel.&#32;Sarnia,&#32;Ontario.>
@@ -236,61 +283,35 @@ Page not found | Blondie Slays Apparel
     <h1>Page not found</h1>
 </div>
 
-  </div><footer>
-    
-
-
- 
-
-<div class="text-center pt-2">
-    
-
-    
-    <span class="px-1">
-        <a href="https://linkedin.com/in/elisemarion" target="_blank" aria-label="linkedin">
-            <svg xmlns="http://www.w3.org/2000/svg" width='2.4em' height='2.4em' fill="#fff" aria-label="LinkedIn"
-                viewBox="0 0 512 512">
-                <rect width="512" height="512" fill="#0077b5" rx="15%" />
-                <circle cx="142" cy="138" r="37" />
-                <path stroke="#fff" stroke-width="66" d="M244 194v198M142 194v198" />
-                <path d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32" />
-            </svg>
-        </a>
-    </span>
-    
-
-    
-
-    
-
-    
-</div><div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-4 text-center">
-            
-                <div class="pb-2">
-                    <a href="http://localhost:1313/" title="Blondie Slays Apparel">
-                        <img alt="Footer logo" src="/images/logo.png"
-                            height="40px" width="40px">
-                    </a>
-                </div>
-            
-            &copy; 2026  All rights reserved
-            <div class="text-secondary">
-                Made with
-                <span class="text-danger">
-                    &#10084;
-                </span>
-                and
-                <a href="https://github.com/gurusabarish/hugo-profile" target="_blank"
-                    title="Designed and developed by gurusabarish">
-                    Hugo Profile
-                </a>
-            </div>
-        </div>
+  </div><footer style="background:#FFF8F5 !important; margin-top:4rem; width:100%;">
+  <div style="max-width:900px; margin:0 auto; padding:2.5rem 1.5rem 1.5rem; text-align:center; background:#FFF8F5 !important;">
+    <a href="/">
+      <img src="/images/logo.png" alt="Blondie Slays Apparel" height="60px" style="margin-bottom:1rem;">
+    </a>
+    <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+      <a href="/#projects" style="font-family:Montserrat,sans-serif; font-size:0.78rem; font-weight:600; color:#1a1a1a; text-decoration:none; letter-spacing:0.04em; text-transform:uppercase;">Shop</a>
+      <a href="/downloads/" style="font-family:Montserrat,sans-serif; font-size:0.78rem; font-weight:600; color:#1a1a1a; text-decoration:none; letter-spacing:0.04em; text-transform:uppercase;">Digital Downloads</a>
+      <a href="/#contact" style="font-family:Montserrat,sans-serif; font-size:0.78rem; font-weight:600; color:#1a1a1a; text-decoration:none; letter-spacing:0.04em; text-transform:uppercase;">Get in Touch</a>
     </div>
-</div>
-</footer><script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:1.5rem;">
+      
+      <a href="https://linkedin.com/in/elisemarion" target="_blank" aria-label="linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.8rem" height="1.8rem" viewBox="0 0 512 512">
+          <rect width="512" height="512" fill="#0077b5" rx="15%"/>
+          <circle cx="142" cy="138" r="37" fill="#fff"/>
+          <path stroke="#fff" stroke-width="66" d="M244 194v198M142 194v198"/>
+          <path fill="#fff" d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32"/>
+        </svg>
+      </a>
+      
+      
+    </div>
+    <div style="font-family:Montserrat,sans-serif; font-size:0.72rem; color:#aaa; padding-top:0.5rem;">
+      &copy; 2026 Blondie Slays Apparel. All rights reserved.
+    </div>
+  </div>
+</footer>
+<script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
 <script>
     if (document.body.className.includes("dark")) {
         document.body.classList.remove('dark');

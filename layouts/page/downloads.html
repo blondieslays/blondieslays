@@ -1,0 +1,138 @@
+{{ define "main" }}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+  .dl-page { background: #FFF8F5; min-height: 100vh; padding: 4rem 0 6rem; }
+  .dl-container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* Header */
+  .dl-header { text-align: center; margin-bottom: 1.5rem; }
+  .dl-header h1 { font-family: Montserrat, sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: 0.02em; color: #1a1a1a; margin-bottom: 0.5rem; }
+  .dl-header p { font-family: Montserrat, sans-serif; font-size: 0.95rem; color: #888; }
+  .dl-header-rule { display: none; }
+  .dl-crown { display: block; margin: 0.75rem auto 0; height: 40px; width: auto; }
+
+  /* Cards */
+  .dl-card { background: #fff; border-radius: 12px; padding: 2.5rem; margin-bottom: 2rem; display: flex; gap: 2.5rem; align-items: center; box-shadow: 0 4px 24px rgba(255,20,147,0.07); border: 1px solid #f5e4ec; }
+  .dl-card-text { flex: 1; }
+  .dl-tag { display: inline-block; background: #FFF0F6; color: #FF1493; font-family: Montserrat, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 20px; margin-bottom: 0.75rem; }
+  .dl-card h2 { font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin: 0 0 0.6rem; }
+  .dl-card p.desc { font-family: Montserrat, sans-serif; font-size: 0.88rem; color: #666; line-height: 1.7; margin: 0 0 1.5rem; }
+  .dl-buy-row { display: flex; align-items: center; gap: 1.25rem; }
+  .dl-price { font-family: Montserrat, sans-serif; font-size: 1.3rem; font-weight: 700; color: #1a1a1a; }
+  .dl-btn { background: transparent; color: #FF1493; font-family: Montserrat, sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.6rem 1.4rem; text-decoration: none; border-radius: 4px; border: 2px solid #FF1493; transition: all 0.2s; }
+  .dl-btn:hover { background: #FF1493; color: #fff; }
+  .dl-note { font-family: Montserrat, sans-serif; font-size: 0.72rem; color: #aaa; margin: 0.9rem 0 0; }
+
+  /* Preview */
+  .dl-preview { position: relative; flex-shrink: 0; cursor: pointer; background: #FFF8F5; padding: 10px; border-radius: 10px; border: 2px solid transparent; transition: border-color 0.2s; }
+  .dl-preview:hover { border-color: #FF1493; }
+  .dl-preview img { display: block; border-radius: 6px; }
+  .dl-preview-hint { position: absolute; bottom: 10px; left: 10px; right: 10px; text-align: center; font-family: Montserrat, sans-serif; font-size: 0.65rem; font-weight: 700; color: #fff; background: rgba(0,0,0,0.4); padding: 3px 0; border-radius: 3px; }
+  .dl-preview.portrait img { width: 150px; height: 210px; object-fit: contain; }
+  .dl-preview.landscape img { width: 240px; height: 160px; object-fit: contain; }
+
+  /* Already purchased */
+  .dl-already { background: #fff; border-radius: 12px; padding: 2rem 2.5rem; border: 1px solid #f5e4ec; box-shadow: 0 4px 24px rgba(255,20,147,0.05); }
+  .dl-already h3 { font-family: Montserrat, sans-serif; font-size: 1rem; font-weight: 700; color: #1a1a1a; margin: 0 0 0.4rem; }
+  .dl-already p { font-family: Montserrat, sans-serif; font-size: 0.82rem; color: #999; margin: 0 0 1.25rem; }
+  .dl-already ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .dl-already a { font-family: Montserrat, sans-serif; font-size: 0.88rem; font-weight: 600; color: #FF1493; text-decoration: none; }
+  .dl-already a:hover { text-decoration: underline; }
+
+  /* Lightbox */
+  .lb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; }
+  .lb-overlay.active { display: flex; }
+  .lb-img { max-width: 90vw; max-height: 88vh; border-radius: 6px; object-fit: contain; }
+  .lb-close { position: fixed; top: 1.5rem; right: 1.5rem; font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none; }
+  .lb-prev, .lb-next { position: fixed; top: 50%; transform: translateY(-50%); font-size: 2.5rem; color: #fff; cursor: pointer; background: none; border: none; padding: 0 1rem; }
+  .lb-prev { left: 0.5rem; } .lb-next { right: 0.5rem; }
+
+  @media (max-width: 640px) {
+    .dl-card { flex-direction: column; }
+    .dl-preview.portrait img, .dl-preview.landscape img { width: 100%; height: auto; }
+  }
+</style>
+
+<div class="lb-overlay" id="lightbox">
+  <button class="lb-close" onclick="closeLB()">&#x2715;</button>
+  <button class="lb-prev" onclick="moveLB(-1)">&#x2039;</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+  <button class="lb-next" onclick="moveLB(1)">&#x203a;</button>
+</div>
+
+<div class="dl-page">
+  <div class="dl-container">
+
+    <div class="dl-header">
+      <h1>Digital Downloads</h1>
+      <p>Instant download after payment &mdash; print, fill, and keep forever.</p>
+
+    </div>
+
+    <div class="dl-card">
+      <div class="dl-card-text">
+        <span class="dl-tag">Fillable PDF</span>
+        <h2>Family Recipe Cookbook</h2>
+        <p class="desc">A beautifully designed fillable PDF to preserve your family&rsquo;s recipes forever. Type directly in Adobe Reader &mdash; no printing required. Makes the perfect heartfelt gift.</p>
+        <div class="dl-buy-row">
+          <span class="dl-price">$5.65 CAD</span>
+          <a class="dl-btn" href="https://www.paypal.com/paypalme/blondieslaysapparel/5.65CAD?note=recipes-pdf" target="_blank">Buy Now &rarr;</a>
+        </div>
+        <p class="dl-note">After payment, return to this page and use the download link below.</p>
+      </div>
+      <div class="dl-preview portrait" onclick="openLB('recipes',0)">
+        <img src="/images/downloads/recipes-1.png" alt="Recipe cookbook preview">
+        <span class="dl-preview-hint">1 of 3 &mdash; click to browse</span>
+      </div>
+    </div>
+
+    <div class="dl-card">
+      <div class="dl-card-text">
+        <span class="dl-tag">2026 Guide</span>
+        <h2>Cheese of the Month Club</h2>
+        <p class="desc">A gorgeously designed 2026 PDF guide to a full year of cheese &mdash; tasting notes, pairings, and monthly picks. Perfect for cheese lovers and foodie gift boxes.</p>
+        <div class="dl-buy-row">
+          <span class="dl-price">$5.65 CAD</span>
+          <a class="dl-btn" href="https://www.paypal.com/paypalme/blondieslaysapparel/5.65CAD?note=cheese-2026-pdf" target="_blank">Buy Now &rarr;</a>
+        </div>
+        <p class="dl-note">After payment, return to this page and use the download link below.</p>
+      </div>
+      <div class="dl-preview landscape" onclick="openLB('cheese',0)">
+        <img src="/images/downloads/January.png" alt="Cheese of the month preview">
+        <span class="dl-preview-hint">1 of 3 &mdash; click to browse</span>
+      </div>
+    </div>
+
+    <div class="dl-already">
+      <h3>Already purchased?</h3>
+      <p>Your download links are permanent &mdash; bookmark this page for easy access.</p>
+      <ul>
+        <li><a href="/downloads/xk7q2/recipes.pdf">&darr; Family Recipe Cookbook PDF</a></li>
+        <li><a href="/downloads/xk7q2/cheese-2026.pdf">&darr; Cheese of the Month Club 2026 PDF</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const galleries = {
+    recipes: ['/images/downloads/recipes-1.png','/images/downloads/recipes-2.png','/images/downloads/recipes-3.png'],
+    cheese: ['/images/downloads/January.png','/images/downloads/February.png','/images/downloads/March.png']
+  };
+  let currentGallery = '', currentIndex = 0;
+  function openLB(gallery, index) {
+    currentGallery = gallery; currentIndex = index;
+    document.getElementById('lb-img').src = galleries[gallery][index];
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLB() { document.getElementById('lightbox').classList.remove('active'); }
+  function moveLB(dir) {
+    const imgs = galleries[currentGallery];
+    currentIndex = (currentIndex + dir + imgs.length) % imgs.length;
+    document.getElementById('lb-img').src = imgs[currentIndex];
+  }
+  document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLB(); });
+</script>
+{{ end }}

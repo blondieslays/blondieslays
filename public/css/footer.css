@@ -61,3 +61,40 @@ footer .card > .card-header .card-img-top {
     object-fit: cover;
     background-color: transparent !important;
 }
+/* Custom footer override */
+footer {
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+}
+footer * {
+  background-color: transparent !important;
+}
+footer .container, footer div {
+  background-color: transparent !important;
+}
+
+footer, footer > * {
+  background-color: #FFF0F6 !important;
+}
+
+footer, footer > * {
+  background-color: #FFF8F5 !important;
+}
+
+/* Solid pink footer block */
+footer {
+  background-color: #FFF8F5 !important;
+  
+}
+
+footer, footer > *, footer div, footer .container {
+  background-color: #FFF8F5 !important;
+}
+
+footer {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}

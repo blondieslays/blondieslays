@@ -1,0 +1,67 @@
+# Builds the Hugo site and publishes it to GitHub Pages.
+# Runs on every push to main, and can also be started by hand from the
+# Actions tab ("Run workflow").
+name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# Permissions the deploy step needs to publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one production deploy at a time; don't cancel one that's mid-flight.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.163.2
+      HUGO_ENVIRONMENT: production
+      TZ: America/Toronto
+    steps:
+      - name: Install Hugo CLI (extended)
+        run: |
+          wget -O "${{ runner.temp }}/hugo.deb" \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb" \
+          && sudo dpkg -i "${{ runner.temp }}/hugo.deb"
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive   # pulls in the hugo-profile theme submodule
+          fetch-depth: 0          # full history (needed for .Lastmod / .GitInfo)
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Build with Hugo
+        # baseURL comes from hugo.yaml (https://blondieslays.ca), which is
+        # correct for the custom domain — no need to override it here.
+        run: hugo --gc --minify
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

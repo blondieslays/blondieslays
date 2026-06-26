@@ -1,0 +1,11 @@
+# Hugo build output — regenerated fresh by the GitHub Actions build, never commit it
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# macOS junk
+.DS_Store
+
+# editor / script backups
+*.bak
+*.bak[0-9]

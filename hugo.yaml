@@ -63,6 +63,9 @@ params:
       - name: "Let's Build Something"
         url: /lets-build-something/
         style: "btn"
+      - name: "Shop Etsy"
+        url: /downloads/
+        style: "btn"
     stickyNavBar:
       enable: true
       showOnScrollUp: true

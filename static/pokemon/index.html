@@ -1,0 +1,1233 @@
+<!-- ===================================================================
+     Blondie Slays — Pokémon Collection Value Page
+     Drop this in your Hugo site at:  static/pokemon/index.html
+     It will then be served at:        https://blondieslays.ca/pokemon/
+     (static/ files are copied as-is, so they bypass the theme wrapper)
+
+     HOW TO ADD YOUR CARDS
+     ---------------------
+     1. Edit the MY_CARDS list below. Each entry is { id, qty, note }.
+     2. Don't know a card's id? Use the search box on the page — type a
+        name, and each result shows its id and an "Add" button. "Add"
+        shows it on the page for this session; to keep it permanently,
+        paste the printed id line into MY_CARDS here and re-deploy.
+
+     Prices: TCGPlayer market value (USD) from pokemontcg.io, converted
+     to CAD with a live daily rate. Values are a market reference, not
+     an appraisal.
+     =================================================================== -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Pokémon Collection — Blondie Slays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --pink:        #FF1493;
+    --pink-bg:     #FFF0F6;
+    --pink-med:    #f9a8d4;
+    --pink-dark:   #be185d;
+    --pink-chip:   #FFD1E8;
+    --aqua:        #c8f0fb;
+    --ink:         #3a1028;
+    --card:        #ffffff;
+    --shadow:      0 8px 28px rgba(255, 20, 147, 0.14);
+    --shadow-sm:   0 3px 12px rgba(190, 24, 93, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--pink-bg);
+    color: var(--ink);
+    font-family: 'Montserrat', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Signature: 80s sunset header with horizon grid ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-height: clamp(260px, 25vw, 340px);
+    background: linear-gradient(160deg, var(--pink) 0%, #ff5fb0 45%, var(--aqua) 130%);
+    color: #fff;
+  }
+  /* grid floor hidden — the header image is the hero backdrop now */
+  .hero::after { display: none; }
+  .hero > * { position: relative; z-index: 1; }
+
+  /* header banner image fills the hero; info overlays the built-in circle */
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    margin: 0;
+  }
+
+  /* collection info, overlaid on the image's pale centre circle */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .hero-info {
+    position: relative;
+    padding: 1rem 1.2rem;
+    max-width: min(74%, 270px);
+    color: var(--pink-dark);
+  }
+  .hero-info .eyebrow {
+    color: var(--pink-dark);
+    letter-spacing: .14em;
+    font-size: clamp(.66rem, 1.8vw, .9rem);
+    margin-bottom: .15rem;
+  }
+  .hero-info .total {
+    color: var(--pink);
+    font-size: clamp(2.3rem, 7vw, 3.9rem);
+    text-shadow: 0 2px 0 rgba(190, 24, 93, .28);
+  }
+  .hero-info .subline {
+    color: var(--pink-dark);
+    opacity: .9;
+    font-size: clamp(.6rem, 1.6vw, .74rem);
+  }
+
+  .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: .22em;
+    font-size: clamp(.95rem, 2.4vw, 1.15rem);
+    text-transform: uppercase;
+    opacity: .92;
+    margin: 0 0 .35rem;
+  }
+  .total {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.4rem, 13vw, 6rem);
+    line-height: .95;
+    margin: 0;
+    text-shadow: 0 3px 0 var(--pink-dark), 0 12px 26px rgba(0,0,0,.18);
+    letter-spacing: .01em;
+  }
+  .total .cur { font-size: .42em; vertical-align: super; opacity: .9; margin-right: .12em; }
+  .subline {
+    margin: .55rem 0 0;
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    opacity: .95;
+  }
+  .subline .dot { opacity: .55; margin: 0 .5em; }
+
+  /* ---------- Search ---------- */
+  .wrap { max-width: 980px; margin: 0 auto; padding: 1.6rem 1.1rem 3.5rem; }
+
+  .searchbar {
+    display: flex; gap: .5rem;
+    margin: .6rem auto 1.6rem;
+    max-width: 560px;
+    position: relative; z-index: 2;
+  }
+  .searchbar input {
+    flex: 1;
+    border: 2px solid var(--pink-med);
+    background: #fff;
+    border-radius: 999px;
+    padding: .8rem 1.2rem;
+    font: 600 .95rem 'Montserrat', sans-serif;
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+    outline: none;
+  }
+  .searchbar input:focus { border-color: var(--pink); }
+  .searchbar input::placeholder { color: #c98bb0; font-weight: 500; }
+  .btn {
+    border: none; cursor: pointer;
+    background: var(--pink); color: #fff;
+    border-radius: 999px;
+    padding: 0 1.4rem;
+    font: 700 .8rem 'Montserrat', sans-serif;
+    letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, transform .1s ease;
+  }
+  .btn:hover { background: var(--pink-dark); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  /* jump-to-add-cards pill (top shortcut) */
+  .jumpwrap { text-align: center; margin: -0.4rem 0 1.3rem; }
+  .jumpbtn {
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .5rem 1.15rem; cursor: pointer;
+    font: 700 .78rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease;
+  }
+  .jumpbtn:hover { background: var(--pink); color: #fff; }
+  .jumpbtn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  /* floating back-to-top button */
+  .totop {
+    position: fixed;
+    right: 1.1rem; bottom: 1.1rem;
+    z-index: 50;
+    border: none; cursor: pointer;
+    background: var(--pink); color: #fff;
+    border-radius: 999px;
+    padding: .6rem .95rem;
+    font: 700 .76rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  }
+  .totop.show { opacity: 1; visibility: visible; transform: none; }
+  .totop:hover { background: var(--pink-dark); }
+  .totop:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  /* Pokémon-style "back home" text bubble */
+  .homebubble-wrap { display: flex; justify-content: flex-end; margin: -.3rem 0 .5rem; }
+  .homebubble {
+    position: relative;
+    display: block;
+    max-width: min(270px, 100%);
+    text-decoration: none;
+    background: #fff;
+    color: var(--ink);
+    border: 2px solid var(--pink-med);
+    border-radius: 16px;
+    padding: .6rem 1.85rem .65rem .8rem;
+    font: 600 .71rem 'Montserrat', sans-serif;
+    line-height: 1.4;
+    box-shadow: 0 5px 14px rgba(190,24,93,.12);
+    transition: transform .14s ease, box-shadow .14s ease;
+  }
+  .homebubble:hover { transform: translateY(-1px) rotate(-.4deg); box-shadow: 0 8px 18px rgba(255,20,147,.18); }
+  .homebubble:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+  .homebubble b { color: var(--pink-dark); }
+
+  /* mini Poké Ball "press" cue in the corner (echoes the header) */
+  .hb-ball {
+    position: absolute; right: .5rem; bottom: .45rem;
+    width: 17px; height: 17px; border-radius: 50%;
+    background: linear-gradient(var(--pink) 0 calc(50% - 1px), var(--ink) calc(50% - 1px) calc(50% + 1px), #fff calc(50% + 1px) 100%);
+    border: 1.5px solid var(--ink);
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    transition: transform .2s ease;
+  }
+  .hb-ball::after {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 4px; height: 4px; transform: translate(-50%, -50%);
+    background: #fff; border: 1.5px solid var(--ink); border-radius: 50%;
+  }
+  .homebubble:hover .hb-ball { transform: rotate(18deg) scale(1.08); }
+
+  /* small tail pointing up toward the header */
+  .homebubble::before {
+    content: ""; position: absolute; top: -13px; right: 28px;
+    border: 8px solid transparent; border-bottom-color: var(--pink-med);
+  }
+  .homebubble::after {
+    content: ""; position: absolute; top: -8px; right: 30px;
+    border: 6px solid transparent; border-bottom-color: #fff;
+  }
+
+  /* back-to-collection button (shown with search results) */
+  .backbtn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .4rem .95rem; cursor: pointer;
+    font: 700 .74rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    margin: 0 0 1rem; box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease;
+  }
+  .backbtn:hover { background: var(--pink); color: #fff; }
+  .backbtn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  /* ---------- Section labels ---------- */
+  .label {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: .14em;
+    font-size: 1.25rem;
+    color: var(--pink-dark);
+    text-transform: uppercase;
+    margin: 1.8rem 0 .9rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .label::after { content: ""; flex: 1; height: 2px; background: var(--pink-chip); border-radius: 2px; }
+
+  /* ---------- Card grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .tile {
+    background: var(--card);
+    border-radius: 16px;
+    padding: .7rem .7rem .9rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+    display: flex; flex-direction: column;
+    animation: rise .45s ease both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .tile a.img { display: block; border-radius: 10px; overflow: hidden; line-height: 0; }
+  .tile img { width: 100%; height: auto; display: block; }
+  .tile .name {
+    font-weight: 700; font-size: .82rem;
+    margin: .6rem 0 .1rem; color: var(--ink);
+    line-height: 1.2;
+  }
+  .tile .meta { font-size: .68rem; color: #b06a92; font-weight: 600; letter-spacing: .02em; }
+  .tile .qty { font-size: .66rem; color: var(--pink-dark); font-weight: 700; margin-top: .15rem; }
+  .value {
+    margin-top: auto; padding-top: .6rem;
+  }
+  .value .cad {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; line-height: 1;
+    color: #fff; background: var(--pink);
+    border-radius: 8px; padding: .18em .5em;
+    letter-spacing: .02em;
+  }
+  .value .variant { display: block; font-size: .6rem; color: #c98bb0; margin-top: .3rem; font-weight: 600; }
+  .tile.err .name { color: var(--pink-dark); }
+  .tile.err .errmsg { font-size: .72rem; color: #b06a92; padding: 1.2rem .4rem; }
+  .tile.added { box-shadow: 0 0 0 2px var(--aqua), var(--shadow); }
+
+  /* search results add-button */
+  .tile .add {
+    margin-top: .55rem;
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .35rem; cursor: pointer;
+    font: 700 .72rem 'Montserrat', sans-serif; letter-spacing: .03em;
+  }
+  .tile .add:hover { background: var(--pink); color: #fff; }
+  .tile .idline { font-size: .58rem; color: #c98bb0; margin-top: .3rem; word-break: break-all; }
+
+  /* ---------- States ---------- */
+  .note {
+    background: var(--card); border-left: 4px solid #89c4e1;
+    color: #3a7fa3; background: #eef7fc;
+    border-radius: 10px; padding: .7rem 1rem;
+    font-size: .8rem; font-weight: 600; margin: 1rem 0;
+  }
+  .note.warn { background: #fff7e6; border-color: #e1b889; color: #a3793a; }
+  .empty { text-align: center; color: #b06a92; font-weight: 600; padding: 2rem 1rem; }
+  .footnote { text-align: center; font-size: .72rem; color: #c98bb0; margin-top: 2.4rem; font-weight: 600; }
+  .footnote a { color: var(--pink-dark); }
+
+  .spinner {
+    width: 34px; height: 34px; margin: 2rem auto;
+    border: 4px solid var(--pink-chip); border-top-color: var(--pink);
+    border-radius: 50%; animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile, .spinner { animation: none; }
+  }
+
+  /* ---------- Copy button (search results) ---------- */
+  .copybtn {
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .3rem .7rem; cursor: pointer;
+    font: 700 .68rem 'Montserrat', sans-serif; letter-spacing: .03em; margin-top: .4rem;
+  }
+  .copybtn:hover { background: var(--pink); color: #fff; }
+  .copybtn.done { background: var(--aqua); color: var(--ink); border-color: var(--aqua); }
+
+  /* ---------- Owner tools (collapsible) ---------- */
+  .owner { margin-top: 2.6rem; border-top: 2px dashed var(--pink-chip); padding-top: 1.1rem; }
+  .owner > summary {
+    cursor: pointer; list-style: none;
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: .12em;
+    font-size: 1rem; color: var(--pink-dark); text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .4rem .9rem; border: 2px solid var(--pink-chip); border-radius: 999px;
+    user-select: none;
+  }
+  .owner > summary::-webkit-details-marker { display: none; }
+  .owner > summary:hover { border-color: var(--pink-med); }
+  .owner[open] > summary { background: var(--pink-chip); }
+  .owner .panel { margin-top: 1rem; background: #fff; border-radius: 14px; padding: 1.1rem; box-shadow: var(--shadow-sm); }
+  .owner h3 { margin: .2rem 0 .4rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: .1em; color: var(--pink-dark); font-size: 1.1rem; }
+  .owner p.hint { font-size: .76rem; color: #b06a92; font-weight: 600; margin: .2rem 0 .8rem; line-height: 1.55; }
+  .owner code, .resrow code { background: var(--pink-bg); padding: .05em .35em; border-radius: 4px; font-size: .92em; }
+  .owner textarea {
+    width: 100%; min-height: 130px; resize: vertical;
+    border: 2px solid var(--pink-med); border-radius: 10px; padding: .7rem .85rem;
+    font: 500 .8rem ui-monospace, Menlo, Consolas, monospace; color: var(--ink);
+    outline: none; line-height: 1.45;
+  }
+  .owner textarea:focus { border-color: var(--pink); }
+  .owner .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-top: .7rem; }
+  .owner .btn2 {
+    border: none; cursor: pointer; background: var(--pink); color: #fff;
+    border-radius: 999px; padding: .55rem 1.1rem;
+    font: 700 .78rem 'Montserrat', sans-serif; letter-spacing: .03em; box-shadow: var(--shadow-sm);
+  }
+  .owner .btn2.ghost { background: #fff; color: var(--pink-dark); border: 2px solid var(--pink); }
+  .owner .btn2:hover { filter: brightness(.96); }
+  .owner .btn2.done { background: var(--aqua); color: var(--ink); }
+  .owner .progress { font-size: .76rem; font-weight: 700; color: var(--pink-dark); }
+  .owner .out { margin-top: 1rem; }
+  .owner .out textarea { min-height: 160px; background: #fff7fb; }
+  .reslist { margin-top: .9rem; display: flex; flex-direction: column; gap: .4rem; }
+  .resrow {
+    display: flex; align-items: center; gap: .6rem;
+    background: var(--pink-bg); border-radius: 10px; padding: .4rem .6rem; font-size: .76rem;
+  }
+  .resrow img { width: 34px; height: auto; border-radius: 4px; display: block; }
+  .resrow .rn { font-weight: 700; }
+  .resrow .rs { color: #b06a92; font-weight: 600; }
+  .resrow .rprice { margin-left: auto; font-weight: 800; color: var(--pink-dark); white-space: nowrap; }
+  .resrow.bad { background: #fff7e6; }
+  .resrow.bad .rs { color: #a3793a; }
+  .badge { font-size: .58rem; font-weight: 800; letter-spacing: .04em; padding: .12em .5em; border-radius: 999px; text-transform: uppercase; }
+  .badge.ok { background: #d8f5e3; color: #1c7a48; }
+  .badge.no { background: #ffe0e0; color: #b53a3a; }
+</style>
+
+<header class="hero">
+  <img class="hero-img" src="pokemon-header.png" alt="Blondie Slays — Pokémon collection">
+  <div class="hero-overlay">
+    <div class="hero-info">
+      <p class="eyebrow">My Collection · Live Value</p>
+      <h1 class="total" id="total"><span class="cur">CA$</span>—</h1>
+      <p class="subline" id="subline">Loading the latest market prices…</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="homebubble-wrap">
+    <a class="homebubble" href="/">
+      <span class="hb-text">Huh? How'd you wander into <b>Elise's Pokémon collection?</b> No worries — tap here to head back home!</span>
+      <span class="hb-ball" aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="Search a card by name… e.g. Charizard" autocomplete="off">
+    <button class="btn" id="searchBtn">Search</button>
+  </div>
+
+  <div class="jumpwrap">
+    <button class="jumpbtn" id="jumpAdd">＋ Add cards</button>
+  </div>
+
+  <div id="notes"></div>
+
+  <section id="searchSection" hidden>
+    <h2 class="label">Search Results</h2>
+    <button class="backbtn" id="backToCollection">← Back to my collection</button>
+    <div class="grid" id="searchGrid"></div>
+  </section>
+
+  <h2 class="label" id="myCollection">Portfolio</h2>
+  <div id="status"><div class="spinner"></div></div>
+  <div class="grid" id="grid"></div>
+
+  <p class="footnote">
+    Prices are TCGPlayer market values via
+    <a href="https://pokemontcg.io" target="_blank" rel="noopener">pokemontcg.io</a>,
+    shown in CAD using a daily exchange rate. Reference only — not a formal appraisal.
+  </p>
+
+  <details class="owner" id="ownerTools">
+    <summary>＋ Owner tools — add cards</summary>
+    <div class="panel">
+      <h3>Bulk import / add cards</h3>
+      <p class="hint">
+        Paste cards as <code>Name | Set | Number | Qty | Finish</code> — one per line, the same format as your
+        collection file. Hit <strong>Resolve</strong> to look each one up live (image + current price). With
+        <strong>Append mode</strong> on (the default), you get just the new entry lines to paste above the closing
+        <code>];</code> of <code>MY_CARDS</code> — so you add cards without touching the ones already there. Turn it
+        off to regenerate the whole block. This panel isn't password-protected (a static site can't be), but only you
+        can publish changes by pushing to GitHub.
+      </p>
+      <textarea id="impIn" placeholder="Shaymin | Prismatic Evolutions | 087/131 | 1 | Normal
+Garganacl | Paradox Rift | 104/182 | 1 | Holofoil"></textarea>
+      <div class="row">
+        <button class="btn2" id="impRun">Resolve</button>
+        <label style="display:inline-flex; align-items:center; gap:.4rem; font-size:.76rem; font-weight:600; color:#b06a92; cursor:pointer;">
+          <input type="checkbox" id="impAppend" checked> Append mode — output only the new lines to add
+        </label>
+        <span class="progress" id="impProg"></span>
+      </div>
+      <div class="reslist" id="impList"></div>
+      <div class="out" id="impOutWrap" hidden>
+        <h3 id="impOutTitle">New lines — paste just above the closing <code>];</code></h3>
+        <p class="hint" id="impOutHint">These are ready-to-add <code>MY_CARDS</code> entries. Paste them on their own lines just before the
+          <code>];</code> that closes the list — your existing cards stay exactly as they are. Lines marked
+          <code>// UNMATCHED</code> couldn't be found — fix the set name or number and re-resolve.</p>
+        <textarea id="impOut" readonly></textarea>
+        <div class="row">
+          <button class="btn2" id="impCopy">Copy block</button>
+          <button class="btn2" id="impDownload">⬇ Download updated page</button>
+          <button class="btn2 ghost" id="impClear">Clear</button>
+        </div>
+      </div>
+    </div>
+  </details>
+</main>
+
+<button class="totop" id="toTop" aria-label="Back to top">↑ Top</button>
+
+<script>
+/* ============================ CONFIG ============================ */
+
+// Optional: a free pokemontcg.io key raises your rate limits.
+// Leave "" to run keyless (fine for a small collection). Get one at
+// https://dev.pokemontcg.io — note it IS visible in page source.
+const API_KEY = "";
+
+// YOUR CARDS — replace these examples with your own (use search to find ids).
+// id     = pokemontcg.io card id (e.g. "base1-4")
+// qty    = how many you own (default 1)
+// finish = optional: "Normal" | "Holofoil" | "Reverse Holofoil" — picks the
+//          matching price so the value reflects the version you actually own
+// note   = optional label shown on the tile (condition, grade, etc.)
+//
+// These three are placeholders — use the Owner tools panel at the bottom of the
+// page to resolve your real list, then paste the generated block over this one.
+const MY_CARDS = [
+  { id: "me3-2", qty: 1, note: "" },  // Ariados · Perfect Order 002/088
+  { id: "swsh9-58", qty: 1, note: "" },  // Baltoy · Brilliant Stars 058/172
+  { id: "sv8pt5-87", qty: 1, note: "" },  // Shaymin · Prismatic Evolutions 087/131
+  { id: "sv8pt5-130", qty: 1, note: "" },  // Techno Radar · Prismatic Evolutions 130/131
+  { id: "swsh12pt5-61", qty: 1, note: "" },  // Girafarig · Crown Zenith 061/159
+  { id: "swsh7-96", qty: 1, note: "" },  // Nuzleaf · Evolving Skies 096/203
+  { id: "sv8pt5-53", qty: 1, note: "" },  // Hippowdon · Prismatic Evolutions 053/131
+  { id: "swsh12-107", qty: 1, note: "" },  // Honchkrow · Silver Tempest 107/195
+  { id: "swsh12pt5-2", qty: 2, note: "" },  // Gloom · Crown Zenith 002/159
+  { id: "sv7-7", qty: 2, note: "" },  // Carnivine · Stellar Crown 007/142
+  { id: "me2-58", qty: 1, note: "" },  // Honchkrow · Phantasmal Flames 058/094
+  { id: "me3-60", qty: 1, note: "" },  // Rattata · Perfect Order 060/088
+  { id: "me4-62", qty: 1, note: "" },  // Ferroseed · Chaos Rising 062/086
+  { id: "sv8pt5-2", qty: 1, note: "" },  // Exeggutor · Prismatic Evolutions 002/131
+  { id: "zsv10pt5-77", qty: 1, note: "" },  // Rufflet · Black Bolt 077/086
+  { id: "zsv10pt5-71", qty: 1, note: "" },  // Pidove · Black Bolt 071/086
+  { id: "me1-43", qty: 1, note: "" },  // Frosmoth · Mega Evolution 043/132
+  { id: "me1-91", qty: 1, note: "" },  // Shroodle · Mega Evolution 091/132
+  { id: "swsh45-63", qty: 2, note: "" },  // Team Yell Towel · Shining Fates 063/072
+  { id: "me3-34", qty: 1, note: "" },  // Meowstic · Perfect Order 034/088
+  { id: "swsh12pt5-35", qty: 1, note: "" },  // Luvdisc · Crown Zenith 035/159
+  { id: "me3-40", qty: 1, note: "" },  // Hippowdon · Perfect Order 040/088
+  { id: "me3-17", qty: 2, note: "" },  // Turtonator · Perfect Order 017/088
+  { id: "me2-49", qty: 1, note: "" },  // Gligar · Phantasmal Flames 049/094
+  { id: "me3-39", qty: 2, note: "" },  // Hippopotas · Perfect Order 039/088
+  { id: "sv3-19", qty: 1, note: "" },  // Smoliv · Obsidian Flames 019/197
+  { id: "sv8pt5-39", qty: 1, note: "" },  // Aromatisse · Prismatic Evolutions 039/131
+  { id: "sv8pt5-93", qty: 1, note: "" },  // Amarys · Prismatic Evolutions 093/131
+  { id: "me1-53", qty: 1, note: "" },  // Heliolisk · Mega Evolution 053/132
+  { id: "sv7-92", qty: 1, note: "" },  // Swalot · Stellar Crown 092/142
+  { id: "sv8-13", qty: 1, note: "" },  // Rellor · Surging Sparks 013/191
+  { id: "sv9-109", qty: 1, note: "" },  // Cufant · Journey Together 109/159
+  { id: "sv8pt5-20", qty: 1, note: "" },  // Goldeen · Prismatic Evolutions 020/131
+  { id: "me3-73", qty: 1, note: "" },  // Energy Swatter · Perfect Order 073/088
+  { id: "sv5-82", qty: 1, note: "" },  // Meditite · Temporal Forces 082/162
+  { id: "sv5-35", qty: 1, note: "" },  // Turtonator · Temporal Forces 035/162
+  { id: "me1-78", qty: 1, note: "" },  // Croagunk · Mega Evolution 078/132
+  { id: "sv8-120", qty: 1, note: "" },  // Shroodle · Surging Sparks 120/191
+  { id: "sv4-19", qty: 1, note: "" },  // Magby · Paradox Rift 019/182
+  { id: "sv8-19", qty: 1, note: "" },  // Ho-Oh · Surging Sparks 019/191
+  { id: "me3-66", qty: 1, note: "" },  // Fletchling · Perfect Order 066/088
+  { id: "me3-46", qty: 1, note: "" },  // Hawlucha · Perfect Order 046/088
+  { id: "me4-54", qty: 1, note: "" },  // Skuntank · Chaos Rising 054/086
+  { id: "me4-30", qty: 1, note: "" },  // Emolga · Chaos Rising 030/086
+  { id: "me4-74", qty: 1, note: "" },  // Adversity Policy · Chaos Rising 074/086
+  { id: "me2-80", qty: 1, note: "" },  // Smeargle · Phantasmal Flames 080/094
+  { id: "sv3pt5-100", qty: 1, note: "" },  // Voltorb · SV: 151 100/165
+  { id: "sv6-102", qty: 1, note: "" },  // Probopass · Twilight Masquerade 102/167
+  { id: "sv5-2", qty: 1, note: "" },  // Pineco · Temporal Forces 002/162
+  { id: "swsh4-108", qty: 1, note: "" },  // Krokorok · Vivid Voltage 108/185
+  { id: "sv3pt5-69", qty: 1, note: "" },  // Bellsprout · SV: 151 069/165
+  { id: "me4-63", qty: 1, note: "" },  // Ferrothorn · Chaos Rising 063/086
+  { id: "swsh1-183", qty: 2, note: "" },  // Switch · Sword & Shield Base Set 183/202
+  { id: "me1-101", qty: 1, note: "" },  // Latios · Mega Evolution 101/132
+  { id: "zsv10pt5-11", qty: 1, note: "" },  // Amoonguss · Black Bolt 011/086
+  { id: "me3-18", qty: 1, note: "" },  // Seel · Perfect Order 018/088
+  { id: "sv6pt5-35", qty: 1, note: "" },  // Yveltal · Shrouded Fable 035/064
+  { id: "me4-14", qty: 1, note: "" },  // Litleo · Chaos Rising 014/086
+  { id: "me4-69", qty: 1, note: "" },  // Tauros · Chaos Rising 069/086
+  { id: "sv6pt5-43", qty: 1, note: "" },  // Varoom · Shrouded Fable 043/064
+  { id: "sv8-101", qty: 1, note: "" },  // Paldean Tauros · Surging Sparks 101/191
+  { id: "me4-49", qty: 1, note: "" },  // Zubat · Chaos Rising 049/086
+  { id: "swsh12pt5-142", qty: 1, note: "" },  // Rescue Carrier · Crown Zenith 142/159
+  { id: "sv5-87", qty: 1, note: "" },  // Golett · Temporal Forces 087/162
+  { id: "me2-15", qty: 1, note: "" },  // Darumaka · Phantasmal Flames 015/094
+  { id: "swsh6-26", qty: 1, note: "" },  // Scorbunny · Chilling Reign 026/198
+  { id: "swsh12-168", qty: 1, note: "" },  // Regenerative Energy · Silver Tempest 168/195
+  { id: "me4-76", qty: 2, note: "" },  // AZ's Tranquility · Chaos Rising 076/086
+  { id: "sv3pt5-126", qty: 1, note: "" },  // Magmar · SV: 151 126/165
+  { id: "sv4-104", qty: 1, finish: "Holofoil", note: "" },  // Garganacl · Paradox Rift 104/182
+  { id: "swsh4-158", qty: 1, note: "" },  // Opal · Vivid Voltage 158/185
+  { id: "me4-43", qty: 1, note: "" },  // Sudowoodo · Chaos Rising 043/086
+  { id: "me3-57", qty: 1, note: "" },  // Doublade · Perfect Order 057/088
+  { id: "me3-9", qty: 2, note: "" },  // Vivillon · Perfect Order 009/088
+  { id: "me2-35", qty: 1, note: "" },  // Misdreavus · Phantasmal Flames 035/094
+  { id: "sv8pt5-9", qty: 1, note: "" },  // Applin · Prismatic Evolutions 009/131
+  { id: "sv10-133", qty: 1, note: "" },  // Marnie's Scrafty · Destined Rivals 133/182
+  { id: "sv7-141", qty: 1, note: "" },  // Payapa Berry · Stellar Crown 141/142
+  { id: "sv3pt5-48", qty: 1, note: "" },  // Venonat · SV: 151 048/165
+  { id: "me4-57", qty: 1, note: "" },  // Garbodor · Chaos Rising 057/086
+  { id: "me4-9", qty: 1, note: "" },  // Ninetales · Chaos Rising 009/086
+  { id: "sv3pt5-50", qty: 1, note: "" },  // Diglett · SV: 151 050/165
+  { id: "swsh11-14", qty: 1, note: "" },  // Roselia · Lost Origin 014/196
+  { id: "sv3pt5-75", qty: 1, note: "" },  // Graveler · SV: 151 075/165
+  { id: "sv6pt5-3", qty: 1, note: "" },  // Rowlet · Shrouded Fable 003/064
+  { id: "sv7-99", qty: 1, note: "" },  // Klink · Stellar Crown 099/142
+  { id: "me1-21", qty: 1, note: "" },  // Numel · Mega Evolution 021/132
+  { id: "me4-20", qty: 1, note: "" },  // Froakie · Chaos Rising 020/086
+  { id: "me4-88", qty: 2, finish: "Holofoil", est: 19.54, name: "Froakie", setLabel: "Chaos Rising · 088/086", note: "Illustration Rare" },  // Froakie · Chaos Rising 088/086
+  { id: "me4-71", qty: 1, note: "" },  // Watchog · Chaos Rising 071/086
+  { id: "sv4-151", qty: 1, note: "" },  // Spinda · Paradox Rift 151/182
+  { id: "sv8pt5-114", qty: 1, note: "" },  // Lacey · Prismatic Evolutions 114/131
+  { id: "swsh9-49", qty: 1, note: "" },  // Shinx · Brilliant Stars 049/172
+  { id: "sv10-94", qty: 1, note: "" },  // Team Rocket's Larvitar · Destined Rivals 094/182
+  { id: "sv8pt5-123", qty: 1, note: "" },  // Professor's Research · Prismatic Evolutions 123/131
+  { id: "sv3pt5-78", qty: 1, note: "" },  // Rapidash · SV: 151 078/165
+  { id: "sv8pt5-124", qty: 1, note: "" },  // Professor's Research · Prismatic Evolutions 124/131
+  { id: "sv10-125", qty: 1, note: "" },  // Team Rocket's Koffing · Destined Rivals 125/182
+  { id: "sv5-102", qty: 1, note: "" },  // Gastly · Temporal Forces 102/162
+  { id: "sv5-115", qty: 1, note: "" },  // Metagross · Temporal Forces 115/162
+  { id: "sv4-36", qty: 1, finish: "Holofoil", note: "" },  // Milotic · Paradox Rift 036/182
+  { id: "me1-118", qty: 1, note: "" },  // Iron Defender · Mega Evolution 118/132
+  { id: "me3-29", qty: 1, note: "" },  // Dedenne · Perfect Order 029/088
+  { id: "me4-75", qty: 1, note: "" },  // Ange Floette · Chaos Rising 075/086
+  { id: "sv5-112", qty: 1, note: "" },  // Mawile · Temporal Forces 112/162
+  { id: "sv5-79", qty: 1, note: "" },  // Iron Valiant · Temporal Forces 079/162
+  { id: "sv5-127", qty: 1, note: "" },  // Noctowl · Temporal Forces 127/162
+  { id: "sv8pt5-102", qty: 1, note: "" },  // Bug Catching Set · Prismatic Evolutions 102/131
+  { id: "swsh9-55", qty: 1, note: "" },  // Starmie · Brilliant Stars 055/172
+  { id: "sv8pt5-113", qty: 1, note: "" },  // Kieran · Prismatic Evolutions 113/131
+  { id: "sv6-119", qty: 1, note: "" },  // Skarmory · Twilight Masquerade 119/167
+  { id: "me3-27", qty: 2, note: "" },  // Luxio · Perfect Order 027/088
+  { id: "me4-4", qty: 2, note: "" },  // Carnivine · Chaos Rising 004/086
+  { id: "sv3pt5-55", qty: 1, note: "" },  // Golduck · SV: 151 055/165
+  { id: "swsh45-60", qty: 3, note: "" },  // Professor's Research · Shining Fates 060/072
+  { id: "swsh7-113", qty: 1, note: "" },  // Deino · Evolving Skies 113/203
+  { id: "sv6-103", qty: 1, finish: "Reverse Holofoil", note: "" },  // Timburr · Twilight Masquerade 103/167
+  { id: "sv5-138", qty: 1, finish: "Holofoil", note: "" },  // Drampa · Temporal Forces 138/162
+  { id: "me4-8", qty: 1, note: "" },  // Vulpix · Chaos Rising 008/086
+  { id: "me4-59", qty: 1, note: "" },  // Beldum · Chaos Rising 059/086
+  { id: "swsh1-164", qty: 2, note: "" },  // Great Ball · Sword & Shield Base Set 164/202
+  { id: "me3-52", qty: 1, note: "" },  // Drapion · Perfect Order 052/088
+  { id: "me4-11", qty: 1, note: "" },  // Fennekin · Chaos Rising 011/086
+  { id: "sv3-72", qty: 1, finish: "Holofoil", note: "" },  // Toxtricity · Obsidian Flames 072/197
+  { id: "me3-85", qty: 1, note: "" },  // Tarragon · Perfect Order 085/088
+  { id: "sv6-17", qty: 1, note: "" },  // Applin · Twilight Masquerade 017/167
+  { id: "me4-7", qty: 1, finish: "Holofoil", note: "" },  // Chesnaught · Chaos Rising 007/086
+  { id: "me4-51", qty: 1, finish: "Holofoil", note: "" },  // Crobat · Chaos Rising 051/086
+  { id: "me4-31", qty: 2, note: "" },  // Deoxys · Chaos Rising 031/086
+  { id: "me4-2", qty: 1, note: "" },  // Kakuna · Chaos Rising 002/086
+  { id: "me4-47", qty: 1, note: "" },  // Claydol · Chaos Rising 047/086
+  { id: "me4-40", qty: 1, note: "" },  // Pumpkaboo · Chaos Rising 040/086
+  { id: "me3-54", qty: 1, finish: "Holofoil", note: "" },  // Chien-Pao · Perfect Order 054/088
+  { id: "sv8-177", qty: 1, note: "" },  // Gravity Mountain · Surging Sparks 177/191
+  { id: "me4-32", qty: 1, note: "" },  // Deoxys · Chaos Rising 032/086
+  { id: "swsh9-108", qty: 1, note: "" },  // Gabite · Brilliant Stars 108/172
+  { qty: 1, est: 0.25, name: "Psychic Energy", setLabel: "Sword & Shield Base Set · basic", note: "Basic Energy" },  // Psychic Energy · SWSH Base · unnumbered basic — no live id, est CA$
+  { id: "swsh2-169", qty: 3, note: "" },  // Training Court · Rebel Clash 169/192
+  { id: "sv8pt5-10", qty: 1, note: "" },  // Dipplin · Prismatic Evolutions 010/131
+  { id: "me4-12", qty: 1, note: "" },  // Braixen · Chaos Rising 012/086
+  { id: "swsh7-102", qty: 1, note: "" },  // Zorua · Evolving Skies 102/203
+  { id: "me4-1", qty: 1, note: "" },  // Weedle · Chaos Rising 001/086
+  { id: "me4-28", qty: 1, note: "" },  // Flaaffy · Chaos Rising 028/086
+  { id: "me3-10", qty: 1, note: "" },  // Rowlet · Perfect Order 010/088
+  { id: "sv1-185", qty: 1, finish: "Reverse Holofoil", note: "" },  // Poké Ball · Scarlet & Violet Base Set 185/198
+  { id: "swsh9-110", qty: 3, note: "" },  // Axew · Brilliant Stars 110/172
+  { id: "me4-52", qty: 2, note: "" },  // Qwilfish · Chaos Rising 052/086
+  { id: "zsv10pt5-81", qty: 1, note: "" },  // Energy Coin · Black Bolt 081/086
+  { id: "sv8pt5-85", qty: 1, note: "" },  // Fan Rotom · Prismatic Evolutions 085/131
+  { id: "me3-84", qty: 1, note: "" },  // Rosa's Encouragement · Perfect Order 084/088
+  { id: "sv6-80", qty: 1, note: "" },  // Abra · Twilight Masquerade 080/167
+  { id: "me4-24", qty: 1, note: "" },  // Avalugg · Chaos Rising 024/086
+  { id: "me3-49", qty: 1, note: "" },  // Haunter · Perfect Order 049/088
+  { id: "swsh12-50", qty: 1, note: "" },  // Raichu · Silver Tempest 050/195
+  { id: "me4-25", qty: 1, finish: "Reverse Holofoil", note: "" },  // Wimpod · Chaos Rising 025/086
+  { id: "sv8pt5-111", qty: 1, finish: "Reverse Holofoil", note: "" },  // Haban Berry · Prismatic Evolutions 111/131
+  { id: "rsv10pt5-6", qty: 1, note: "" },  // Deerling · White Flare 006/086
+  { id: "swsh12pt5-47", qty: 1, note: "" },  // Emolga · Crown Zenith 047/159
+  { id: "sv6-117", qty: 1, note: "" },  // Scolipede · Twilight Masquerade 117/167
+  { id: "me4-34", qty: 2, note: "" },  // Deoxys · Chaos Rising 034/086
+  { id: "me3-23", qty: 1, note: "" },  // Amaura · Perfect Order 023/088
+  { id: "sv8-175", qty: 1, note: "" },  // Dusk Ball · Surging Sparks 175/191
+  { id: "sv8-100", qty: 1, note: "" },  // Annihilape · Surging Sparks 100/191
+  { id: "sv8-170", qty: 1, note: "" },  // Cyrano · Surging Sparks 170/191
+  { id: "me4-67", qty: 2, note: "" },  // Sliggoo · Chaos Rising 067/086
+  { id: "sv4-64", qty: 1, note: "" },  // Joltik · Paradox Rift 064/182
+  { id: "swsh1-179", qty: 4, note: "" },  // Quick Ball · Sword & Shield Base Set 179/202
+  { id: "swsh1-171", qty: 1, note: "" },  // Ordinary Rod · Sword & Shield Base Set 171/202
+  { id: "swsh7-76", qty: 1, note: "" },  // Pumpkaboo · Evolving Skies 076/203
+  { id: "pgo-20", qty: 1, note: "" },  // Slowbro · Pokemon Go 020/078
+  { id: "sv6-51", qty: 1, note: "" },  // Snorunt · Twilight Masquerade 051/167
+  { id: "me4-19", qty: 1, finish: "Holofoil", note: "" },  // Keldeo · Chaos Rising 019/086
+  { id: "swsh9-76", qty: 1, note: "" },  // Flygon · Brilliant Stars 076/172
+  { id: "me3-69", qty: 1, note: "" },  // Antique Sail Fossil · Perfect Order 069/088
+  { id: "me3-20", qty: 1, finish: "Normal", note: "" },  // Staryu · Perfect Order 020/088
+  { id: "me4-68", qty: 1, finish: "Holofoil", note: "" },  // Goodra · Chaos Rising 068/086
+  { id: "sv5-43", qty: 1, note: "" },  // Sharpedo · Temporal Forces 043/162
+  { id: "me3-44", qty: 1, note: "" },  // Tyrunt · Perfect Order 044/088
+  { id: "me1-12", qty: 1, note: "" },  // Celebi · Mega Evolution 012/132
+  { id: "sv4-158", qty: 1, finish: "Holofoil", note: "" },  // Iron Jugulis · Paradox Rift 158/182
+  { id: "me3-40", qty: 1, finish: "Reverse Holofoil", note: "" },  // Hippowdon · Perfect Order 040/088
+  { id: "me4-8", qty: 1, finish: "Reverse Holofoil", note: "" },  // Vulpix · Chaos Rising 008/086
+  { id: "swsh6-64", qty: 1, finish: "Normal", note: "" },  // Cresselia · Chilling Reign 064/198 (deck-exclusive non-holo)
+  { id: "swsh6-140", qty: 4, note: "" },  // Fog Crystal · Chilling Reign 140/198
+  { id: "me4-77", qty: 1, note: "" },  // Emma · Chaos Rising 077/086
+  { id: "sv10-167", qty: 2, note: "" },  // Judge · Destined Rivals 167/182
+  { id: "me3-24", qty: 1, finish: "Holofoil", note: "" },  // Aurorus · Perfect Order 024/088
+  { id: "swsh12pt5-9", qty: 2, note: "" },  // Yanmega · Crown Zenith 009/159
+  { id: "me4-29", qty: 2, finish: "Holofoil", note: "" },  // Ampharos · Chaos Rising 029/086
+  { id: "me4-90", qty: 1, finish: "Holofoil", est: 19.11, name: "Ampharos", setLabel: "Chaos Rising · 090/086", note: "Illustration Rare" },  // Ampharos · Chaos Rising 090/086
+  { id: "sv3pt5-165", qty: 1, note: "" },  // Rigid Band · SV: 151 165/165
+  { id: "me1-124", qty: 1, note: "" },  // Premium Power Pro · Mega Evolution 124/132
+  { id: "me4-51", qty: 1, finish: "Reverse Holofoil", note: "" },  // Crobat · Chaos Rising 051/086
+  { id: "me3-33", qty: 1, finish: "Reverse Holofoil", note: "" },  // Espurr · Perfect Order 033/088
+  { id: "me3-84", qty: 1, finish: "Reverse Holofoil", note: "" },  // Rosa's Encouragement · Perfect Order 084/088
+  { id: "me4-33", qty: 1, finish: "Reverse Holofoil", note: "" },  // Deoxys · Chaos Rising 033/086
+  { id: "xy7-66", qty: 1, note: "" },  // Porygon-Z · Ancient Origins 66
+  { id: "sv8pt5-22", qty: 1, finish: "Holofoil", note: "" },  // Vaporeon · Prismatic Evolutions 022/131
+  { id: "sv10-174", qty: 1, note: "" },  // Team Rocket's Giovanni · Destined Rivals 174/182
+  { id: "me1-1", qty: 1, note: "" },  // Bulbasaur · Mega Evolution 001/132
+  { id: "me3-86", qty: 2, finish: "Holofoil", note: "" },  // Growing Grass Energy · Perfect Order 086/088
+  { id: "me3-48", qty: 1, finish: "Reverse Holofoil", note: "" },  // Gastly · Perfect Order 048/088
+  { id: "swsh1-163", qty: 4, finish: "Normal", note: "" },  // Evolution Incense · Sword & Shield Base Set 163/202
+  { id: "me1-117", qty: 1, note: "" },  // Forest of Vitality · Mega Evolution 117/132
+  { id: "swsh1-169", qty: 1, note: "" },  // Marnie · Sword & Shield 169/202
+  { id: "sv5-32", qty: 1, finish: "Reverse Holofoil", note: "" },  // Litten · Temporal Forces 032/162
+  { id: "sm7-39", qty: 1, note: "" },  // Wailmer · Celestial Storm 39
+  { id: "sv3pt5-45", qty: 1, finish: "Holofoil", note: "" },  // Vileplume · SV: 151 045/165
+  { id: "me4-30", qty: 1, finish: "Reverse Holofoil", note: "" },  // Emolga · Chaos Rising 030/086
+  { id: "me3-45", qty: 1, finish: "Reverse Holofoil", note: "" },  // Tyrantrum · Perfect Order 045/088
+  { id: "me4-54", qty: 1, finish: "Reverse Holofoil", note: "" },  // Skuntank · Chaos Rising 054/086
+  { id: "me4-6", qty: 1, finish: "Reverse Holofoil", note: "" },  // Quilladin · Chaos Rising 006/086
+  { id: "me4-61", qty: 1, finish: "Reverse Holofoil", note: "" },  // Metagross · Chaos Rising 061/086
+  { id: "sv3pt5-122", qty: 1, finish: "Holofoil", note: "" },  // Mr. Mime · SV: 151 122/165
+  { id: "swsh12pt5-141", qty: 1, note: "" },  // Rare Candy · Crown Zenith 141/159
+  { id: "sv3pt5-113", qty: 1, finish: "Holofoil", note: "" },  // Chansey · SV: 151 113/165
+  { id: "me3-11", qty: 1, finish: "Reverse Holofoil", note: "" },  // Dartrix · Perfect Order 011/088
+  { id: "sv1-187", qty: 1, finish: "Reverse Holofoil", note: "" },  // Pokémon Catcher · Scarlet & Violet Base Set 187/198
+  { id: "sv4pt5-57", qty: 1, note: "" },  // Gengar · Paldean Fates 057/091
+  { id: "me1-119", qty: 1, note: "" },  // Lillie's Determination · Mega Evolution 119/132
+  { id: "sv6-166", qty: 1, finish: "Reverse Holofoil", note: "" },  // Boomerang Energy · Twilight Masquerade 166/167
+  { id: "swsh45-58", qty: 3, note: "" },  // Boss's Orders · Shining Fates 058/072
+  { id: "sv1-172", qty: 1, finish: "Reverse Holofoil", note: "" },  // Energy Search · Scarlet & Violet Base Set 172/198
+  { id: "me3-20", qty: 1, finish: "Reverse Holofoil", note: "" },  // Staryu · Perfect Order 020/088
+  { id: "swsh9-56", qty: 2, note: "" },  // Mewtwo · Brilliant Stars 056/172
+  { id: "me3-12", qty: 1, finish: "Holofoil", note: "" },  // Decidueye ex · Perfect Order 012/088
+  { id: "swsh7-63", qty: 1, finish: "Normal", note: "" },  // Galarian Articuno · Evolving Skies 063/203 (non-holo)
+  { id: "sv9-128", qty: 1, finish: "Reverse Holofoil", note: "" },  // Noivern · Journey Together 128/159
+  { id: "me4-35", qty: 1, finish: "Holofoil", note: "" },  // Mega Floette ex · Chaos Rising 035/086
+  { id: "base2-52", qty: 1, finish: "Unlimited", note: "" },  // Exeggcute · Jungle 52
+  { id: "sv6-15", qty: 1, note: "" },  // Thwackey · Twilight Masquerade 015/167
+  { id: "mep-72", qty: 1, finish: "Holofoil", est: 3.00, name: "Mega Clefable ex", setLabel: "Mega Evolution Promos · 072", note: "" },  // Mega Clefable ex · MEP Black Star Promos 072 — est CA$ if API lacks it
+  { id: "swsh12pt5-37", qty: 1, finish: "Holofoil", note: "" },  // Kyogre V · Crown Zenith 037/159
+  { id: "swsh6-74", qty: 3, finish: "Holofoil", note: "" },  // Shadow Rider Calyrex V · Chilling Reign 074/198
+  { id: "sv6-64", qty: 1, finish: "Holofoil", note: "" },  // Wellspring Mask Ogerpon ex · Twilight Masquerade 064/167
+  { id: "base1-63", qty: 1, note: "" },  // Squirtle · Base Set (Unlimited) 63
+  { id: "sm7-44", qty: 1, finish: "Normal", note: "" },  // Luvdisc · Celestial Storm 44
+  { id: "base2-50", qty: 1, finish: "Unlimited", note: "" },  // Cubone · Jungle 50
+  { id: "swsh6-75", qty: 3, finish: "Holofoil", note: "" },  // Shadow Rider Calyrex VMAX · Chilling Reign 075/198
+];
+
+/* ============================ ENGINE ============================ */
+
+const API = "https://api.pokemontcg.io/v2/cards";
+const FX_URL = "https://api.frankfurter.app/latest?from=USD&to=CAD,EUR";
+const FX_FALLBACK = { CAD: 1.37, EUR: 0.92 }; // USD-> rates if live lookup fails
+
+const headers = API_KEY ? { "X-Api-Key": API_KEY } : {};
+const $ = (id) => document.getElementById(id);
+
+let fx = null; // { usdToCad, eurToCad, live }
+
+const cad = (n) => n.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// Maps a human finish label to the TCGPlayer price key.
+const FINISH_KEY = {
+  "normal": "normal",
+  "holofoil": "holofoil",
+  "holo": "holofoil",
+  "reverse holofoil": "reverseHolofoil",
+  "reverse holo": "reverseHolofoil",
+  "reverseholofoil": "reverseHolofoil",
+  "unlimited": "unlimited",
+  "1st edition": "1stEdition",
+};
+
+// Pick the most relevant market price from a card's TCGPlayer variants (USD).
+// If we know the exact finish owned, prefer that price key.
+function usdMarket(card, finish) {
+  const p = card.tcgplayer && card.tcgplayer.prices;
+  if (p) {
+    if (finish) {
+      const fk = FINISH_KEY[String(finish).trim().toLowerCase()];
+      if (fk && p[fk] && p[fk].market != null) return { usd: p[fk].market, variant: finish, cur: "USD" };
+    }
+    const order = ["holofoil","1stEditionHolofoil","1stEdition","unlimitedHolofoil",
+                   "normal","unlimited","reverseHolofoil"];
+    for (const k of order) if (p[k] && p[k].market != null) return { usd: p[k].market, variant: k, cur: "USD" };
+    for (const k in p) if (p[k] && p[k].market != null) return { usd: p[k].market, variant: k, cur: "USD" };
+    for (const k in p) if (p[k] && p[k].mid != null)    return { usd: p[k].mid,    variant: k + " (mid)", cur: "USD" };
+  }
+  // Fallback to Cardmarket (EUR) if no TCGPlayer price
+  const cm = card.cardmarket && card.cardmarket.prices;
+  if (cm) {
+    const eur = cm.averageSellPrice ?? cm.trendPrice ?? cm.avg30 ?? null;
+    if (eur != null) return { eur, variant: "Cardmarket avg", cur: "EUR" };
+  }
+  return null;
+}
+
+function toCad(price) {
+  if (!price) return null;
+  if (price.cur === "USD") return price.usd * fx.usdToCad;
+  if (price.cur === "EUR") return price.eur * fx.eurToCad;
+  return null;
+}
+
+async function getFx() {
+  try {
+    const r = await fetch(FX_URL);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    const usdToCad = d.rates.CAD;
+    const usdToEur = d.rates.EUR;
+    fx = { usdToCad, eurToCad: usdToCad / usdToEur, live: true };
+    console.log("[FX] live USD→CAD =", usdToCad.toFixed(4));
+  } catch (e) {
+    fx = { usdToCad: FX_FALLBACK.CAD, eurToCad: FX_FALLBACK.CAD / FX_FALLBACK.EUR, live: false };
+    console.warn("[FX] live rate failed, using fallback:", e.message);
+    addNote("warn", "Live exchange rate unavailable — showing values at an approximate USD→CAD rate of " + FX_FALLBACK.CAD + ".");
+  }
+}
+
+function addNote(kind, msg) {
+  const n = document.createElement("div");
+  n.className = "note" + (kind === "warn" ? " warn" : "");
+  n.textContent = msg;
+  $("notes").appendChild(n);
+}
+
+async function fetchCard(id) {
+  const r = await fetch(API + "/" + encodeURIComponent(id), { headers });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const d = await r.json();
+  return d.data;
+}
+
+function cardTile(card, qty, note, finish, est) {
+  const price = usdMarket(card, finish);
+  const unitCad = toCad(price);
+  let totalCad = unitCad != null ? unitCad * qty : null;
+  let isEst = false;
+  if (totalCad == null && est != null) { totalCad = est * qty; isEst = true; }
+  const num = card.number ? card.number + (card.set?.printedTotal ? "/" + card.set.printedTotal : "") : "";
+  const tile = document.createElement("div");
+  tile.className = "tile";
+  tile.innerHTML = `
+    <a class="img" href="${card.tcgplayer?.url || '#'}" target="_blank" rel="noopener">
+      <img loading="lazy" src="${card.images?.small || ''}" alt="${card.name}">
+    </a>
+    <div class="name">${card.name}</div>
+    <div class="meta">${card.set?.name || ''} ${num ? '· ' + num : ''}</div>
+    ${qty > 1 ? `<div class="qty">×${qty}${note ? ' · ' + note : ''}</div>` : (note ? `<div class="qty">${note}</div>` : '')}
+    <div class="value">
+      ${totalCad != null
+        ? `<span class="cad">CA$${cad(totalCad)}</span>
+           <span class="variant">${isEst ? 'est.' : price.variant + (price.cur === 'EUR' ? ' · €→CA$' : '')}</span>`
+        : `<span class="variant">No market price listed</span>`}
+    </div>`;
+  return { el: tile, value: totalCad || 0 };
+}
+
+// A tile for a known card we couldn't price live (no live id, or the API
+// didn't have it). Uses the entry's own est value (in CA$) plus optional
+// name/setLabel so it still shows cleanly instead of an error tile.
+function estTile(entry) {
+  const qty = entry.qty || 1;
+  const note = entry.note || "";
+  const totalCad = (entry.est != null ? entry.est : 0) * qty;
+  const name = entry.name || entry.id || "Card";
+  const tile = document.createElement("div");
+  tile.className = "tile";
+  tile.innerHTML = `
+    <div class="name">${name}</div>
+    ${entry.setLabel ? `<div class="meta">${entry.setLabel}</div>` : ``}
+    ${qty > 1 ? `<div class="qty">×${qty}${note ? ' · ' + note : ''}</div>` : (note ? `<div class="qty">${note}</div>` : '')}
+    <div class="value">
+      <span class="cad">CA$${cad(totalCad)}</span>
+      <span class="variant">est.</span>
+    </div>`;
+  return { el: tile, value: totalCad };
+}
+
+// Fetch many cards in a few batched requests (id:"a" OR id:"b" …) instead of
+// one request per card — dramatically faster and far easier on the keyless
+// API's rate limit. Returns a map of id -> card for the ones that resolved.
+async function fetchCardsByIds(ids, onProgress) {
+  const map = {};
+  const CHUNK = 50;
+  let done = 0;
+  for (let i = 0; i < ids.length; i += CHUNK) {
+    const slice = ids.slice(i, i + CHUNK);
+    const q = slice.map((id) => `id:"${id}"`).join(" OR ");
+    const url = `${API}?q=${encodeURIComponent(q)}&pageSize=250`;
+    try {
+      const r = await fetch(url, { headers });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const d = await r.json();
+      (d.data || []).forEach((c) => { map[c.id] = c; });
+    } catch (e) {
+      console.error("[BATCH] failed:", e.message);
+    }
+    done += slice.length;
+    if (onProgress) onProgress(done);
+    if (i + CHUNK < ids.length) await sleep(120);
+  }
+  return map;
+}
+
+async function loadPortfolio() {
+  await getFx();
+  const grid = $("grid");
+  let total = 0, loaded = 0;
+  const results = [];
+
+  // Pull every card that has an id in a handful of batched requests, then
+  // build the tiles from the results. (Was one request per card, which got
+  // painfully slow — and rate-limit-prone — as the collection grew.)
+  const ids = MY_CARDS.filter((e) => e.id).map((e) => e.id);
+  const cardMap = await fetchCardsByIds(ids, (n) => {
+    const s = $("subline");
+    if (s) s.textContent = `Loading prices… ${n}/${ids.length}`;
+  });
+
+  for (const entry of MY_CARDS) {
+    // Est-only entry (no id): show the known value without a live lookup.
+    if (!entry.id) {
+      if (entry.est != null) {
+        const t = estTile(entry);
+        results.push(t); total += t.value; loaded++;
+      }
+      continue;
+    }
+    const card = cardMap[entry.id];
+    if (card) {
+      const t = cardTile(card, entry.qty || 1, entry.note || "", entry.finish || "", entry.est);
+      results.push(t);
+      total += t.value;
+      loaded++;
+    } else if (entry.est != null) {
+      // Card didn't come back from the API, but we know roughly what it's worth.
+      const t = estTile(entry);
+      results.push(t); total += t.value; loaded++;
+    } else {
+      console.error("[CARD] not found:", entry.id);
+      const tile = document.createElement("div");
+      tile.className = "tile err";
+      tile.innerHTML = `<div class="name">${entry.id}</div>
+        <div class="errmsg">Couldn't load this card. Check the id — find the right one with the search box above.</div>`;
+      results.push({ el: tile, value: 0 });
+    }
+  }
+
+  // sort loaded cards high→low value, keep errors at the end
+  results.sort((a, b) => b.value - a.value);
+  $("status").remove();
+  if (!results.length) {
+    grid.innerHTML = `<div class="empty">No cards yet. Search above to add your first one, then drop its id into MY_CARDS.</div>`;
+  } else {
+    results.forEach((r, i) => { r.el.style.animationDelay = (i * 40) + "ms"; grid.appendChild(r.el); });
+  }
+
+  // hero
+  $("total").innerHTML = `<span class="cur">CA$</span>${cad(total)}`;
+  const count = MY_CARDS.reduce((s, c) => s + (c.qty || 1), 0);
+  $("subline").innerHTML =
+    `${count} card${count !== 1 ? 's' : ''} <span class="dot">•</span> ` +
+    `${loaded}/${MY_CARDS.length} loaded <span class="dot">•</span> ` +
+    `${fx.live ? 'live' : 'approx.'} rate, updated ${new Date().toLocaleDateString("en-CA")}`;
+  console.log(`[DONE] ${loaded}/${MY_CARDS.length} cards · total CA$${cad(total)}`);
+}
+
+/* ---------- Search ---------- */
+async function doSearch() {
+  const term = $("q").value.trim();
+  if (!term) return;
+  const sec = $("searchSection");
+  const sg = $("searchGrid");
+  sec.hidden = false;
+  sg.innerHTML = `<div class="spinner"></div>`;
+  try {
+    const url = `${API}?q=name:"${encodeURIComponent(term)}*"&pageSize=12&orderBy=-set.releaseDate`;
+    const r = await fetch(url, { headers });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    sg.innerHTML = "";
+    if (!d.data || !d.data.length) {
+      sg.innerHTML = `<div class="empty">No matches for “${term}”. Try a different spelling.</div>`;
+      return;
+    }
+    d.data.forEach((card) => {
+      if (!fx) return;
+      const t = cardTile(card, 1, "");
+      const btn = document.createElement("button");
+      btn.className = "add";
+      btn.textContent = "Add to my view";
+      btn.onclick = () => addToPortfolio(card, t.el, btn);
+      const idline = document.createElement("div");
+      idline.className = "idline";
+      idline.textContent = `id: ${card.id}`;
+      const copy = document.createElement("button");
+      copy.className = "copybtn";
+      copy.textContent = "Copy MY_CARDS line";
+      copy.onclick = () => copyText(`  { id: "${card.id}", qty: 1, note: "" },`, copy);
+      t.el.appendChild(btn);
+      t.el.appendChild(idline);
+      t.el.appendChild(copy);
+      sg.appendChild(t.el);
+    });
+  } catch (e) {
+    console.error("[SEARCH] failed:", e.message);
+    sg.innerHTML = `<div class="empty">Search failed. Please try again in a moment.</div>`;
+  }
+}
+
+// Session-only add: shows the card in the portfolio + reminds you to make it permanent.
+function addToPortfolio(card, srcTile, btn) {
+  const t = cardTile(card, 1, "");
+  t.el.classList.add("added");
+  $("grid").prepend(t.el);
+  btn.textContent = "Added ✓ — paste id into MY_CARDS to keep";
+  btn.disabled = true;
+  // bump the hero total
+  const cur = parseFloat($("total").textContent.replace(/[^0-9.]/g, "")) || 0;
+  $("total").innerHTML = `<span class="cur">CA$</span>${cad(cur + t.value)}`;
+  console.log(`[ADD] ${card.name} (${card.id}) — add this to MY_CARDS:  { id: "${card.id}", qty: 1, note: "" },`);
+}
+
+/* ---------- Clipboard helper ---------- */
+function copyText(text, btn) {
+  const done = () => {
+    if (!btn) return;
+    const orig = btn.textContent;
+    btn.textContent = "Copied ✓"; btn.classList.add("done");
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove("done"); }, 1400);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => { if (btn) btn.textContent = "Copy failed — select & copy manually"; });
+  } else if (btn) {
+    btn.textContent = "Copy not supported — select the text manually";
+  }
+}
+
+/* ---------- Bulk import / add tool (owner) ---------- */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// COLLECTR labels that pokemontcg.io spells differently.
+const SET_ALIAS = {
+  "sv: 151": "151",
+  "151": "151",
+  "sword & shield base set": "Sword & Shield",
+  "scarlet & violet base set": "Scarlet & Violet",
+  "base set (unlimited)": "Base",
+  "base set": "Base",
+  "pokemon go": "Pokémon GO",
+  "pokémon go": "Pokémon GO",
+};
+
+function parseNum(raw) {
+  let n = String(raw || "").split("/")[0].trim();
+  if (/^\d+$/.test(n)) n = String(parseInt(n, 10));
+  return n.toLowerCase();
+}
+function setQueryFor(label) {
+  const key = String(label || "").trim().toLowerCase();
+  return SET_ALIAS[key] || String(label || "").trim();
+}
+
+const _setCache = {}; // query -> array of cards
+async function getSetCards(label) {
+  const q = setQueryFor(label);
+  if (q in _setCache) return _setCache[q];
+  let cards = await fetchSetByName(q);
+  if (!cards.length) cards = await fetchSetByName("*" + q + "*"); // looser fallback
+  _setCache[q] = cards;
+  return cards;
+}
+async function fetchSetByName(name) {
+  let page = 1, all = [], more = true;
+  while (more && page <= 4) {
+    const url = `${API}?q=set.name:"${encodeURIComponent(name)}"&pageSize=250&page=${page}`;
+    let r;
+    try { r = await fetch(url, { headers }); } catch (e) { break; }
+    if (!r.ok) break;
+    const d = await r.json();
+    all = all.concat(d.data || []);
+    more = (d.data || []).length === 250;
+    page++;
+  }
+  return all;
+}
+
+function parseImportLine(line) {
+  const parts = line.split("|").map((s) => s.trim());
+  if (parts.length < 3) return null;
+  const name = parts[0], set = parts[1], number = parts[2];
+  const qty = parts[3] ? (parseInt(parts[3], 10) || 1) : 1;
+  let finish = parts[4] || "";
+  finish = finish.replace(/\(.*?\)/g, "").trim(); // drop "(Illustration Rare)" etc.
+  if (!set || !number) return null;
+  return { name, set, number, qty, finish };
+}
+
+async function runImport() {
+  const lines = $("impIn").value.split("\n")
+    .map((s) => s.trim())
+    .filter((s) => s && s.includes("|") && !s.startsWith("#") && !s.startsWith("//"))
+    .map(parseImportLine).filter(Boolean);
+
+  const list = $("impList"), prog = $("impProg");
+  list.innerHTML = ""; $("impOutWrap").hidden = true;
+  if (!lines.length) { prog.textContent = "Nothing to resolve — paste lines as  Name | Set | Number | Qty | Finish"; return; }
+  if (!fx) await getFx();
+
+  const out = [];
+  let done = 0, ok = 0;
+  for (const ln of lines) {
+    prog.textContent = `Resolving ${done + 1} of ${lines.length}…`;
+    let card = null;
+    try {
+      const cards = await getSetCards(ln.set);
+      const want = parseNum(ln.number);
+      card = cards.find((c) => parseNum(c.number) === want) || null;
+    } catch (e) { card = null; }
+
+    const row = document.createElement("div");
+    row.className = "resrow" + (card ? "" : " bad");
+    if (card) {
+      ok++;
+      const price = usdMarket(card, ln.finish);
+      const cadv = toCad(price);
+      const finStr = ln.finish ? `, finish: "${ln.finish}"` : "";
+      out.push(`  { id: "${card.id}", qty: ${ln.qty}${finStr}, note: "" },  // ${card.name} · ${ln.set} ${ln.number}`);
+      row.innerHTML =
+        `<img src="${card.images && card.images.small ? card.images.small : ''}" alt="">` +
+        `<div><div class="rn">${card.name} <span class="badge ok">match</span></div>` +
+        `<div class="rs">${ln.set} · ${ln.number}${ln.finish ? ' · ' + ln.finish : ''} · <code>${card.id}</code></div></div>` +
+        `<div class="rprice">${cadv != null ? 'CA$' + cad(cadv * ln.qty) : '—'}</div>`;
+    } else {
+      out.push(`  // UNMATCHED — ${ln.name} | ${ln.set} | ${ln.number}  (set or number not found — check spelling)`);
+      row.innerHTML =
+        `<div><div class="rn">${ln.name} <span class="badge no">no match</span></div>` +
+        `<div class="rs">${ln.set} · ${ln.number} — not found in the database</div></div>`;
+    }
+    list.appendChild(row);
+    done++;
+    await sleep(90); // be gentle on the keyless API
+  }
+
+  prog.textContent = `Done — ${ok} matched, ${lines.length - ok} unmatched.`;
+  const append = $("impAppend") && $("impAppend").checked;
+  if (append) {
+    $("impOutTitle").innerHTML = 'New lines — paste just above the closing <code>];</code>';
+    $("impOutHint").innerHTML = 'These are ready-to-add <code>MY_CARDS</code> entries. Paste them on their own lines just before the <code>];</code> that closes the list — your existing cards stay exactly as they are. Lines marked <code>// UNMATCHED</code> couldn\'t be found — fix the set name or number and re-resolve.';
+    $("impOut").value = out.join("\n");
+  } else {
+    $("impOutTitle").innerHTML = 'MY_CARDS block — replaces the whole list';
+    $("impOutHint").innerHTML = 'Replace the existing <code>const MY_CARDS = [ … ];</code> with this entire block. Lines marked <code>// UNMATCHED</code> couldn\'t be found — fix the set name or number and re-resolve.';
+    $("impOut").value = "const MY_CARDS = [\n" + out.join("\n") + "\n];";
+  }
+  lastResolved = out.join("\n");
+  $("impOutWrap").hidden = false;
+}
+
+// Splice the just-resolved lines into a fresh copy of this page's own source
+// (read from disk, not the live DOM) and download a ready-to-commit index.html.
+async function downloadUpdatedPage() {
+  if (!lastResolved.trim()) {
+    $("impProg").textContent = "Resolve some cards first, then download.";
+    return;
+  }
+  let html;
+  try {
+    const res = await fetch(location.href, { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    html = await res.text();
+  } catch (e) {
+    $("impProg").textContent = "Couldn't read the page source — open this on the served/live site, not a file:// path.";
+    return;
+  }
+  const start = html.indexOf("const MY_CARDS = [");
+  const close = start === -1 ? -1 : html.indexOf("\n];", start);
+  if (close === -1) {
+    $("impProg").textContent = "Couldn't find the MY_CARDS list in the page source.";
+    return;
+  }
+  const updated = html.slice(0, close) + "\n" + lastResolved + html.slice(close);
+  const blob = new Blob([updated], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "index.html";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  $("impProg").textContent = "Downloaded index.html — drop it in static/pokemon/, then commit & push.";
+}
+
+/* ---------- boot ---------- */
+let lastResolved = "";
+$("searchBtn").addEventListener("click", doSearch);
+$("q").addEventListener("keydown", (e) => { if (e.key === "Enter") doSearch(); });
+$("backToCollection").addEventListener("click", () => {
+  $("searchSection").hidden = true;
+  $("searchGrid").innerHTML = "";
+  $("q").value = "";
+  const c = $("myCollection");
+  if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+$("jumpAdd").addEventListener("click", () => {
+  const o = $("ownerTools");
+  if (!o) return;
+  o.open = true;
+  // let the panel finish expanding before scrolling, or it lands short
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    o.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+});
+$("impRun").addEventListener("click", runImport);
+$("impCopy").addEventListener("click", () => copyText($("impOut").value, $("impCopy")));
+$("impDownload").addEventListener("click", downloadUpdatedPage);
+$("impClear").addEventListener("click", () => {
+  $("impIn").value = ""; $("impList").innerHTML = "";
+  $("impOutWrap").hidden = true; $("impProg").textContent = ""; lastResolved = "";
+});
+
+const toTop = $("toTop");
+if (toTop) {
+  toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  const onScroll = () => toTop.classList.toggle("show", window.scrollY > 500);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+
+loadPortfolio();
+</script>

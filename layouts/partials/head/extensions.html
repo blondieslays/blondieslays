@@ -1,1 +1,48 @@
 <link rel="stylesheet" href="/css/custom.css">
+<style>
+  #dl-nav-btn, #dl-nav-btn:link, #dl-nav-btn:visited { color: #FF1493 !important; }
+  #dl-nav-btn:hover, #dl-nav-btn:active { color: #ffffff !important; }
+</style>
+<script>
+  var btnStyle = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:none;line-height:1;";
+  var btnHover = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#FF1493;color:#ffffff;box-shadow:none;line-height:1;";
+
+  function styleBtn(el, extraStyle) {
+    var s = btnStyle + (extraStyle || "");
+    el.setAttribute("style", s);
+    el.addEventListener("mouseenter", function() { el.setAttribute("style", btnHover + (extraStyle || "")); });
+    el.addEventListener("mouseleave", function() { el.setAttribute("style", s); });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Digital Downloads nav button
+    var nav = document.querySelector("ul.navbar-nav.ms-auto, nav .navbar-nav, nav ul.navbar-nav");
+    if (!nav) nav = document.querySelector("nav");
+    if (nav) {
+      var btn = document.createElement("a");
+      btn.id = "dl-nav-btn";
+      btn.href = "/downloads/";
+      btn.textContent = "Digital Downloads";
+      styleBtn(btn, "margin-left:0.75rem;");
+      nav.appendChild(btn);
+
+      // Pokémon collection button — pokeball.png
+      var poke = document.createElement("a");
+      poke.id = "poke-nav-btn";
+      poke.href = "/pokemon/";
+      poke.setAttribute("aria-label", "My Pokémon card collection");
+      poke.setAttribute("title", "Pokémon collection");
+      poke.innerHTML = '<img src="/images/pokeball.png" alt="Pokémon collection" style="display:block;height:30px;width:auto;"/>';
+      poke.setAttribute("style", "display:inline-flex;align-items:center;justify-content:center;align-self:center;margin-left:0.75rem;padding:0;line-height:0;text-decoration:none;transition:transform .15s ease, filter .15s ease;");
+      poke.addEventListener("mouseenter", function(){ poke.style.transform = "scale(1.12)"; poke.style.filter = "drop-shadow(0 2px 5px rgba(255,20,147,.5))"; });
+      poke.addEventListener("mouseleave", function(){ poke.style.transform = "scale(1)"; poke.style.filter = "none"; });
+      nav.appendChild(poke);
+    }
+
+    // Hero builder button — same style
+    var heroBtn = document.querySelector('.hero-builder-btn');
+    if (heroBtn) {
+      styleBtn(heroBtn, "");
+    }
+  });
+</script>
