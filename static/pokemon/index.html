@@ -342,14 +342,32 @@
     .tile, .spinner { animation: none; }
   }
 
-  /* ---------- Copy button (search results) ---------- */
-  .copybtn {
-    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
-    border-radius: 999px; padding: .3rem .7rem; cursor: pointer;
-    font: 700 .68rem 'Montserrat', sans-serif; letter-spacing: .03em; margin-top: .4rem;
+  /* ---------- Copy Poké Ball (search results) ---------- */
+  .copyball {
+    display: inline-flex; align-items: center; gap: .4rem;
+    margin-top: .5rem;
+    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .28rem .75rem .28rem .32rem; cursor: pointer;
+    font: 700 .7rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
   }
-  .copybtn:hover { background: var(--pink); color: #fff; }
-  .copybtn.done { background: var(--aqua); color: var(--ink); border-color: var(--aqua); }
+  .copyball:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+  .copyball:hover .cb-ball { transform: rotate(20deg) scale(1.08); }
+  .copyball:active { transform: translateY(1px); }
+  .copyball:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+  .copyball.done { background: var(--aqua); color: var(--ink); border-color: var(--aqua); }
+  .cb-ball {
+    position: relative; width: 20px; height: 20px; border-radius: 50%; flex: none;
+    background: linear-gradient(var(--pink) 0 calc(50% - 1.2px), var(--ink) calc(50% - 1.2px) calc(50% + 1.2px), #fff calc(50% + 1.2px) 100%);
+    border: 1.6px solid var(--ink); transition: transform .2s ease;
+  }
+  .cb-ball::after {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 5px; height: 5px; transform: translate(-50%, -50%);
+    background: #fff; border: 1.6px solid var(--ink); border-radius: 50%;
+  }
+  .copyball.done .cb-ball { background: #fff; }
 
   /* ---------- Owner tools (collapsible) ---------- */
   .owner { margin-top: 2.6rem; border-top: 2px dashed var(--pink-chip); padding-top: 1.1rem; }
@@ -401,48 +419,6 @@
   .badge { font-size: .58rem; font-weight: 800; letter-spacing: .04em; padding: .12em .5em; border-radius: 999px; text-transform: uppercase; }
   .badge.ok { background: #d8f5e3; color: #1c7a48; }
   .badge.no { background: #ffe0e0; color: #b53a3a; }
-
-  /* ---------- Add-a-card passcode gate ---------- */
-  .addgate { text-align: center; margin: .6rem auto 1.6rem; max-width: 560px; }
-  .addbtn {
-    display: inline-flex; align-items: center; gap: .5rem;
-    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
-    border-radius: 999px; padding: .6rem 1.3rem; cursor: pointer;
-    font: 700 .82rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: var(--shadow-sm);
-    transition: background .15s ease, color .15s ease, transform .1s ease;
-  }
-  .addbtn:hover { background: var(--pink); color: #fff; }
-  .addbtn:hover .ab-ball { transform: rotate(20deg) scale(1.08); }
-  .addbtn:active { transform: translateY(1px); }
-  .addbtn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
-  .ab-ball {
-    position: relative; width: 16px; height: 16px; border-radius: 50%;
-    background: linear-gradient(var(--pink) 0 calc(50% - 1px), var(--ink) calc(50% - 1px) calc(50% + 1px), #fff calc(50% + 1px) 100%);
-    border: 1.5px solid var(--ink); transition: transform .2s ease;
-  }
-  .ab-ball::after {
-    content: ""; position: absolute; top: 50%; left: 50%;
-    width: 4px; height: 4px; transform: translate(-50%, -50%);
-    background: #fff; border: 1.5px solid var(--ink); border-radius: 50%;
-  }
-  .passrow { display: flex; gap: .5rem; justify-content: center; margin-top: .7rem; }
-  .passrow input {
-    border: 2px solid var(--pink-med); background: #fff; border-radius: 999px;
-    padding: .6rem 1.1rem; font: 600 .9rem 'Montserrat', sans-serif; color: var(--ink);
-    outline: none; box-shadow: var(--shadow-sm); max-width: 220px;
-  }
-  .passrow input:focus { border-color: var(--pink); }
-  .passrow input::placeholder { color: #c98bb0; font-weight: 500; }
-  .passrow.shake { animation: shake .4s ease; }
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20%,60% { transform: translateX(-7px); }
-    40%,80% { transform: translateX(7px); }
-  }
-  .passmsg { margin: .55rem 0 0; font-size: .76rem; font-weight: 700; color: var(--pink-dark); }
-  .passmsg.bad { color: #b53a3a; }
-  @media (prefers-reduced-motion: reduce) { .passrow.shake { animation: none; } }
 </style>
 
 <header class="hero">
@@ -464,16 +440,7 @@
     </a>
   </div>
 
-  <div class="addgate" id="addGate">
-    <button class="addbtn" id="addCardBtn"><span class="ab-ball" aria-hidden="true"></span> Add a card</button>
-    <div class="passrow" id="passRow" hidden>
-      <input id="passInput" type="password" placeholder="Trainer passcode…" autocomplete="off" aria-label="Trainer passcode">
-      <button class="btn" id="passGo">Enter</button>
-    </div>
-    <p class="passmsg" id="passMsg" hidden></p>
-  </div>
-
-  <div class="searchbar" id="searchBar" hidden>
+  <div class="searchbar">
     <input id="q" type="search" placeholder="Search a card by name… e.g. Charizard" autocomplete="off">
     <button class="btn" id="searchBtn">Search</button>
   </div>
@@ -1007,8 +974,10 @@ async function doSearch() {
       idline.className = "idline";
       idline.textContent = `id: ${card.id}`;
       const copy = document.createElement("button");
-      copy.className = "copybtn";
-      copy.textContent = "Copy line to send";
+      copy.className = "copyball";
+      copy.title = "Copy this card's line to send to Elise";
+      copy.setAttribute("aria-label", "Copy card line");
+      copy.innerHTML = `<span class="cb-ball" aria-hidden="true"></span><span class="cb-label">Copy</span>`;
       copy.onclick = () => copyText(`  { id: "${card.id}", qty: 1, note: "" },`, copy);
       t.el.appendChild(idline);
       t.el.appendChild(copy);
@@ -1022,16 +991,19 @@ async function doSearch() {
 
 /* ---------- Clipboard helper ---------- */
 function copyText(text, btn) {
+  const labelEl = btn ? btn.querySelector(".cb-label") : null;
+  const setMsg = (m) => { if (!btn) return; if (labelEl) labelEl.textContent = m; else btn.textContent = m; };
+  const orig = labelEl ? labelEl.textContent : (btn ? btn.textContent : "");
   const done = () => {
     if (!btn) return;
-    const orig = btn.textContent;
-    btn.textContent = "Copied ✓"; btn.classList.add("done");
-    setTimeout(() => { btn.textContent = orig; btn.classList.remove("done"); }, 1400);
+    btn.classList.add("done");
+    setMsg("Copied!");
+    setTimeout(() => { setMsg(orig); btn.classList.remove("done"); }, 1400);
   };
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(done).catch(() => { if (btn) btn.textContent = "Copy failed — select & copy manually"; });
-  } else if (btn) {
-    btn.textContent = "Copy not supported — select the text manually";
+    navigator.clipboard.writeText(text).then(done).catch(() => setMsg("Copy failed"));
+  } else {
+    setMsg("Copy not supported");
   }
 }
 
@@ -1039,37 +1011,6 @@ function copyText(text, btn) {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ---------- boot ---------- */
-// Cute owner gate for the add-a-card search. NOTE: a static page can't keep a
-// real secret — this passcode is visible in the page source, so it's a friendly
-// gate, not true security. Change the word below to whatever you like.
-const ADD_PASSCODE = "slay";
-function unlockAdd() {
-  $("addGate").hidden = true;
-  $("searchBar").hidden = false;
-  $("q").focus();
-}
-function tryPass() {
-  const val = ($("passInput").value || "").trim().toLowerCase();
-  const msg = $("passMsg");
-  if (val === ADD_PASSCODE.toLowerCase()) {
-    msg.hidden = true;
-    unlockAdd();
-  } else {
-    const row = $("passRow");
-    row.classList.remove("shake"); void row.offsetWidth; row.classList.add("shake");
-    msg.textContent = "Nope — try again, trainer!";
-    msg.classList.add("bad");
-    msg.hidden = false;
-    $("passInput").select();
-  }
-}
-$("addCardBtn").addEventListener("click", () => {
-  $("passRow").hidden = false;
-  $("passInput").focus();
-});
-$("passGo").addEventListener("click", tryPass);
-$("passInput").addEventListener("keydown", (e) => { if (e.key === "Enter") tryPass(); });
-
 $("searchBtn").addEventListener("click", doSearch);
 $("q").addEventListener("keydown", (e) => { if (e.key === "Enter") doSearch(); });
 $("backToCollection").addEventListener("click", () => {
