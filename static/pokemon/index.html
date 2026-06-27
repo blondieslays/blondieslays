@@ -369,6 +369,31 @@
   }
   .copyball.done .cb-ball { background: #fff; }
 
+  /* ---------- Collection set filters ---------- */
+  .collnav { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 .8rem; }
+  .cnav-btn {
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .42rem .95rem; cursor: pointer;
+    font: 700 .74rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease;
+  }
+  .cnav-btn:hover { background: var(--pink); color: #fff; }
+  .cnav-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+  .setchips { display: flex; gap: .45rem; flex-wrap: wrap; margin: 0 0 1.3rem; }
+  .setchip {
+    --chip: var(--pink-chip);
+    border: 2px solid transparent; cursor: pointer;
+    background: var(--chip); color: var(--ink);
+    border-radius: 999px; padding: .34rem .8rem;
+    font: 700 .7rem 'Montserrat', sans-serif; letter-spacing: .02em;
+    box-shadow: var(--shadow-sm);
+    transition: transform .1s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .setchip:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(190,24,93,.16); }
+  .setchip.active { border-color: var(--pink-dark); box-shadow: 0 0 0 2px var(--pink-dark); }
+  .setchip:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
   /* ---------- Owner tools (collapsible) ---------- */
   .owner { margin-top: 2.6rem; border-top: 2px dashed var(--pink-chip); padding-top: 1.1rem; }
   .owner > summary {
@@ -454,6 +479,11 @@
   </section>
 
   <h2 class="label" id="myCollection">Portfolio</h2>
+  <div class="collnav" id="collNav" hidden>
+    <button class="cnav-btn" id="toSearchBtn">Back to search</button>
+    <button class="cnav-btn" id="clearFilterBtn" hidden>Back to collection</button>
+  </div>
+  <div class="setchips" id="setChips"></div>
   <div id="status"><div class="spinner"></div></div>
   <div class="grid" id="grid"></div>
 
@@ -824,6 +854,7 @@ function cardTile(card, qty, note, finish, est) {
   const num = card.number ? card.number + (card.set?.printedTotal ? "/" + card.set.printedTotal : "") : "";
   const tile = document.createElement("div");
   tile.className = "tile";
+  tile.dataset.set = card.set?.name || "Other";
   tile.innerHTML = `
     <a class="img" href="${card.tcgplayer?.url || '#'}" target="_blank" rel="noopener">
       <img loading="lazy" src="${card.images?.small || ''}" alt="${card.name}">
@@ -850,6 +881,7 @@ function estTile(entry) {
   const name = entry.name || entry.id || "Card";
   const tile = document.createElement("div");
   tile.className = "tile";
+  tile.dataset.set = entry.setLabel ? entry.setLabel.split("·")[0].trim() : "Other";
   tile.innerHTML = `
     <div class="name">${name}</div>
     ${entry.setLabel ? `<div class="meta">${entry.setLabel}</div>` : ``}
@@ -925,6 +957,7 @@ async function loadPortfolio() {
       console.error("[CARD] not found:", entry.id);
       const tile = document.createElement("div");
       tile.className = "tile err";
+      tile.dataset.set = "Other";
       tile.innerHTML = `<div class="name">${entry.id}</div>
         <div class="errmsg">Couldn't load this card. Check the id — find the right one with the search box above.</div>`;
       results.push({ el: tile, value: 0 });
@@ -938,6 +971,7 @@ async function loadPortfolio() {
     grid.innerHTML = `<div class="empty">No cards yet. Search above to add your first one, then drop its id into MY_CARDS.</div>`;
   } else {
     results.forEach((r, i) => { r.el.style.animationDelay = (i * 40) + "ms"; grid.appendChild(r.el); });
+    buildSetFilters();
   }
 
   // hero
@@ -948,6 +982,47 @@ async function loadPortfolio() {
     `${loaded}/${MY_CARDS.length} loaded <span class="dot">•</span> ` +
     `${fx.live ? 'live' : 'approx.'} rate, updated ${new Date().toLocaleDateString("en-CA")}`;
   console.log(`[DONE] ${loaded}/${MY_CARDS.length} cards · total CA$${cad(total)}`);
+}
+
+/* ---------- Collection set filters ---------- */
+const SET_COLORS = ["#FFD1E8","#c8f0fb","#ffe0b3","#d8f5e3","#e7d6ff","#ffd6d6","#d6ecff","#fce7b0","#d9f0e6","#f7d6ec","#dfe7ff","#ffe9cf","#e0f5d6","#f0d6ff"];
+let activeFilter = null;
+
+function buildSetFilters() {
+  const grid = $("grid"), chipsWrap = $("setChips");
+  if (!chipsWrap) return;
+  const seen = [];
+  grid.querySelectorAll(".tile").forEach((t) => {
+    const s = t.dataset.set || "Other";
+    if (!seen.includes(s)) seen.push(s);
+  });
+  seen.sort((a, b) => a.localeCompare(b));
+  chipsWrap.innerHTML = "";
+  seen.forEach((s, i) => {
+    const chip = document.createElement("button");
+    chip.className = "setchip";
+    chip.textContent = s;
+    chip.style.setProperty("--chip", SET_COLORS[i % SET_COLORS.length]);
+    chip.onclick = () => applyFilter(s, chip);
+    chipsWrap.appendChild(chip);
+  });
+  $("collNav").hidden = false;
+}
+
+function applyFilter(setName, chipEl) {
+  activeFilter = setName;
+  $("grid").querySelectorAll(".tile").forEach((t) => {
+    t.style.display = (t.dataset.set === setName) ? "" : "none";
+  });
+  document.querySelectorAll(".setchip").forEach((c) => c.classList.toggle("active", c === chipEl));
+  $("clearFilterBtn").hidden = false;
+}
+
+function clearCollectionFilter() {
+  activeFilter = null;
+  $("grid").querySelectorAll(".tile").forEach((t) => { t.style.display = ""; });
+  document.querySelectorAll(".setchip").forEach((c) => c.classList.remove("active"));
+  $("clearFilterBtn").hidden = true;
 }
 
 /* ---------- Search ---------- */
@@ -1020,6 +1095,11 @@ $("backToCollection").addEventListener("click", () => {
   $("q").value = "";
   const c = $("myCollection");
   if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+$("clearFilterBtn").addEventListener("click", clearCollectionFilter);
+$("toSearchBtn").addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  setTimeout(() => { const q = $("q"); if (q) q.focus(); }, 450);
 });
 
 const toTop = $("toTop");
