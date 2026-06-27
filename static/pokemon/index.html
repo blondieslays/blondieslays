@@ -295,6 +295,7 @@
   .tile .qty { font-size: .66rem; color: var(--pink-dark); font-weight: 700; margin-top: .15rem; }
   .value {
     margin-top: auto; padding-top: .6rem;
+    display: flex; flex-direction: column; align-items: center; gap: .28rem;
   }
   .value .cad {
     display: inline-block;
@@ -302,6 +303,14 @@
     font-size: 1.5rem; line-height: 1;
     color: #fff; background: var(--pink);
     border-radius: 8px; padding: .18em .5em;
+    letter-spacing: .02em;
+  }
+  .value .unit {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem; line-height: 1;
+    color: #2c6a86; background: var(--aqua);
+    border-radius: 7px; padding: .16em .55em;
     letter-spacing: .02em;
   }
   .value .variant { display: block; font-size: .6rem; color: #c98bb0; margin-top: .3rem; font-weight: 600; }
@@ -325,6 +334,7 @@
     width: 24%; aspect-ratio: 1; transform: translate(-50%, -50%);
     background: #fff; border: 2.5px solid var(--ink); border-radius: 50%;
   }
+  .tile .estimg { display: block; border-radius: 10px; overflow: hidden; line-height: 0; }
 
   /* search results add-button */
   .tile .add {
@@ -387,30 +397,66 @@
   }
   .copyball.done .cb-ball { background: #fff; }
 
-  /* ---------- Collection set filters ---------- */
-  .collnav { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 .8rem; }
+  /* ---------- Collection: card grid + set sidebar ---------- */
+  .portfolio-layout {
+    display: grid;
+    grid-template-columns: minmax(150px, 188px) 1fr;
+    gap: 1.3rem;
+    align-items: start;
+  }
+  .sidebar {
+    position: sticky; top: .8rem; align-self: start;
+    max-height: calc(100vh - 1.4rem);
+    overflow-y: auto;
+    padding: 0 .35rem .4rem 0;
+  }
+  .sidebar-title {
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: .12em;
+    color: var(--pink-dark); text-transform: uppercase;
+    font-size: .92rem; margin: 1rem 0 .55rem;
+  }
+  .collnav { display: flex; flex-direction: column; gap: .5rem; margin: 0; }
   .cnav-btn {
     border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
-    border-radius: 999px; padding: .42rem .95rem; cursor: pointer;
-    font: 700 .74rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    border-radius: 999px; padding: .45rem .8rem; cursor: pointer;
+    font: 700 .72rem 'Montserrat', sans-serif; letter-spacing: .03em;
     box-shadow: var(--shadow-sm);
     transition: background .15s ease, color .15s ease;
   }
   .cnav-btn:hover { background: var(--pink); color: #fff; }
   .cnav-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
-  .setchips { display: flex; gap: .45rem; flex-wrap: wrap; margin: 0 0 1.3rem; }
+  .setchips { display: flex; flex-direction: column; gap: .4rem; margin: 0; }
   .setchip {
     --chip: var(--pink-chip);
     border: 2px solid transparent; cursor: pointer;
     background: var(--chip); color: var(--ink);
-    border-radius: 999px; padding: .34rem .8rem;
-    font: 700 .7rem 'Montserrat', sans-serif; letter-spacing: .02em;
+    border-radius: 999px; padding: .4rem .85rem; text-align: left;
+    font: 700 .72rem 'Montserrat', sans-serif; letter-spacing: .02em;
     box-shadow: var(--shadow-sm);
     transition: transform .1s ease, box-shadow .15s ease, border-color .15s ease;
   }
-  .setchip:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(190,24,93,.16); }
+  .setchip:hover { transform: translateX(2px); box-shadow: 0 5px 14px rgba(190,24,93,.16); }
   .setchip.active { border-color: var(--pink-dark); box-shadow: 0 0 0 2px var(--pink-dark); }
   .setchip:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  /* per-card set chip (tap to filter to that set) */
+  .tile .cardset {
+    align-self: center; margin-top: .5rem;
+    border: 1.5px solid var(--pink-chip); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .24rem .65rem; cursor: pointer;
+    font: 700 .58rem 'Montserrat', sans-serif; letter-spacing: .02em;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .tile .cardset:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+  .tile .cardset:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  @media (max-width: 680px) {
+    .portfolio-layout { grid-template-columns: 1fr; gap: .6rem; }
+    .sidebar { position: static; max-height: none; overflow: visible; padding: 0; }
+    .collnav { flex-direction: row; flex-wrap: wrap; }
+    .setchips { flex-direction: row; flex-wrap: wrap; }
+    .setchip { text-align: center; }
+  }
 
   /* ---------- Owner tools (collapsible) ---------- */
   .owner { margin-top: 2.6rem; border-top: 2px dashed var(--pink-chip); padding-top: 1.1rem; }
@@ -497,13 +543,18 @@
   </section>
 
   <h2 class="label" id="myCollection">Portfolio</h2>
-  <div class="collnav" id="collNav" hidden>
-    <button class="cnav-btn" id="toSearchBtn">Back to search</button>
-    <button class="cnav-btn" id="clearFilterBtn" hidden>Back to collection</button>
-  </div>
-  <div class="setchips" id="setChips"></div>
   <div id="status"><div class="spinner"></div></div>
-  <div class="grid" id="grid"></div>
+  <div class="portfolio-layout">
+    <aside class="sidebar" id="collSidebar" hidden>
+      <div class="collnav" id="collNav">
+        <button class="cnav-btn" id="toSearchBtn">↑ Back to search</button>
+        <button class="cnav-btn" id="clearFilterBtn" hidden>↩ Back to collection</button>
+      </div>
+      <p class="sidebar-title">Filter by set</p>
+      <div class="setchips" id="setChips"></div>
+    </aside>
+    <div class="grid" id="grid"></div>
+  </div>
 
   <p class="footnote">
     Prices are TCGPlayer market values via
@@ -665,8 +716,9 @@ const MY_CARDS = [
   { id: "me4-51", qty: 1, finish: "Holofoil", note: "" },  // Crobat · Chaos Rising 051/086
   { id: "me4-31", qty: 2, note: "" },  // Deoxys · Chaos Rising 031/086
   { id: "me4-2", qty: 1, note: "" },  // Kakuna · Chaos Rising 002/086
-  { id: "me4-47", qty: 1, note: "" },  // Claydol · Chaos Rising 047/086
+  { id: "me4-47", qty: 2, note: "" },  // Claydol · Chaos Rising 047/086
   { id: "me4-40", qty: 1, note: "" },  // Pumpkaboo · Chaos Rising 040/086
+  { id: "me4-45", qty: 1, finish: "Reverse Holofoil", note: "" },  // Chaos Rising 045/086
   { id: "me3-54", qty: 1, finish: "Holofoil", note: "" },  // Chien-Pao · Perfect Order 054/088
   { id: "sv8-177", qty: 1, note: "" },  // Gravity Mountain · Surging Sparks 177/191
   { id: "me4-32", qty: 1, note: "" },  // Deoxys · Chaos Rising 032/086
@@ -789,6 +841,7 @@ const $ = (id) => document.getElementById(id);
 let fx = null; // { usdToCad, eurToCad, live }
 
 const cad = (n) => n.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const money = (n) => "CA$" + cad(n);
 
 // Maps a human finish label to the TCGPlayer price key.
 const FINISH_KEY = {
@@ -870,6 +923,7 @@ function cardTile(card, qty, note, finish, est) {
   let isEst = false;
   if (totalCad == null && est != null) { totalCad = est * qty; isEst = true; }
   const num = card.number ? card.number + (card.set?.printedTotal ? "/" + card.set.printedTotal : "") : "";
+  const unitPill = (totalCad != null && qty > 1) ? ('<span class="unit">each ' + money(totalCad / qty) + '</span>') : '';
   const tile = document.createElement("div");
   tile.className = "tile";
   tile.dataset.set = card.set?.name || "Other";
@@ -882,11 +936,21 @@ function cardTile(card, qty, note, finish, est) {
     ${qty > 1 ? `<div class="qty">×${qty}${note ? ' · ' + note : ''}</div>` : (note ? `<div class="qty">${note}</div>` : '')}
     <div class="value">
       ${totalCad != null
-        ? `<span class="cad">CA$${cad(totalCad)}</span>
-           <span class="variant">${isEst ? 'est.' : price.variant + (price.cur === 'EUR' ? ' · €→CA$' : '')}</span>`
+        ? `<span class="cad">${money(totalCad)}</span>
+           ${unitPill}
+           <span class="variant">${isEst ? 'est.' : price.variant + (price.cur === 'EUR' ? ' · €→CAD' : '')}</span>`
         : `<span class="variant">No market price listed</span>`}
-    </div>`;
+    </div>
+    <button class="cardset" type="button">${card.set?.name || 'Other'}</button>`;
   return { el: tile, value: totalCad || 0 };
+}
+
+// If a derived card image fails to load (404), swap it for the Poké Ball placeholder.
+function estImgFail(img) {
+  const w = img.parentElement;
+  if (!w) return;
+  w.className = "noimg";
+  w.innerHTML = '<span class="ni-ball"></span>';
 }
 
 // A tile for a known card we couldn't price live (no live id, or the API
@@ -897,18 +961,29 @@ function estTile(entry) {
   const note = entry.note || "";
   const totalCad = (entry.est != null ? entry.est : 0) * qty;
   const name = entry.name || entry.id || "Card";
+  let imgUrl = entry.img || "";
+  if (!imgUrl && entry.id && entry.id.includes("-")) {
+    const dash = entry.id.lastIndexOf("-");
+    imgUrl = "https://images.pokemontcg.io/" + entry.id.slice(0, dash) + "/" + entry.id.slice(dash + 1) + ".png";
+  }
+  const imgBlock = imgUrl
+    ? ('<div class="estimg"><img loading="lazy" src="' + imgUrl + '" alt="' + name + '" onerror="estImgFail(this)"></div>')
+    : '<div class="noimg" aria-hidden="true"><span class="ni-ball"></span></div>';
+  const unitPill = qty > 1 ? ('<span class="unit">each ' + money(totalCad / qty) + '</span>') : '';
   const tile = document.createElement("div");
   tile.className = "tile";
   tile.dataset.set = entry.setLabel ? entry.setLabel.split("·")[0].trim() : "Other";
   tile.innerHTML = `
-    <div class="noimg" aria-hidden="true"><span class="ni-ball"></span></div>
+    ${imgBlock}
     <div class="name">${name}</div>
     ${entry.setLabel ? `<div class="meta">${entry.setLabel}</div>` : ``}
     ${qty > 1 ? `<div class="qty">×${qty}${note ? ' · ' + note : ''}</div>` : (note ? `<div class="qty">${note}</div>` : '')}
     <div class="value">
-      <span class="cad">CA$${cad(totalCad)}</span>
+      <span class="cad">${money(totalCad)}</span>
+      ${unitPill}
       <span class="variant">est.</span>
-    </div>`;
+    </div>
+    <button class="cardset" type="button">${entry.setLabel ? entry.setLabel.split("·")[0].trim() : 'Other'}</button>`;
   return { el: tile, value: totalCad };
 }
 
@@ -1008,10 +1083,10 @@ const SET_COLORS = ["#FFD1E8","#c8f0fb","#ffe0b3","#d8f5e3","#e7d6ff","#ffd6d6",
 let activeFilter = null;
 
 function buildSetFilters() {
-  const grid = $("grid"), chipsWrap = $("setChips");
+  const chipsWrap = $("setChips");
   if (!chipsWrap) return;
   const seen = [];
-  grid.querySelectorAll(".tile").forEach((t) => {
+  $("grid").querySelectorAll(".tile").forEach((t) => {
     const s = t.dataset.set || "Other";
     if (!seen.includes(s)) seen.push(s);
   });
@@ -1021,20 +1096,24 @@ function buildSetFilters() {
     const chip = document.createElement("button");
     chip.className = "setchip";
     chip.textContent = s;
+    chip.dataset.set = s;
     chip.style.setProperty("--chip", SET_COLORS[i % SET_COLORS.length]);
-    chip.onclick = () => applyFilter(s, chip);
+    chip.onclick = () => applyFilter(s);
     chipsWrap.appendChild(chip);
   });
-  $("collNav").hidden = false;
+  const sb = $("collSidebar");
+  if (sb) sb.hidden = false;
 }
 
-function applyFilter(setName, chipEl) {
+function applyFilter(setName) {
   activeFilter = setName;
   $("grid").querySelectorAll(".tile").forEach((t) => {
     t.style.display = (t.dataset.set === setName) ? "" : "none";
   });
-  document.querySelectorAll(".setchip").forEach((c) => c.classList.toggle("active", c === chipEl));
+  document.querySelectorAll(".setchip").forEach((c) => c.classList.toggle("active", c.dataset.set === setName));
   $("clearFilterBtn").hidden = false;
+  const c = $("myCollection");
+  if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function clearCollectionFilter() {
@@ -1119,6 +1198,12 @@ $("clearFilterBtn").addEventListener("click", clearCollectionFilter);
 $("toSearchBtn").addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
   setTimeout(() => { const q = $("q"); if (q) q.focus(); }, 450);
+});
+$("grid").addEventListener("click", (e) => {
+  const b = e.target.closest(".cardset");
+  if (!b) return;
+  const t = b.closest(".tile");
+  if (t && t.dataset.set) applyFilter(t.dataset.set);
 });
 
 const toTop = $("toTop");
