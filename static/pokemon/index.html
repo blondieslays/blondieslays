@@ -309,6 +309,23 @@
   .tile.err .errmsg { font-size: .72rem; color: #b06a92; padding: 1.2rem .4rem; }
   .tile.added { box-shadow: 0 0 0 2px var(--aqua), var(--shadow); }
 
+  /* placeholder art for estimate tiles with no live card image */
+  .tile .noimg {
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 5 / 7; border-radius: 10px;
+    background: linear-gradient(160deg, var(--pink-bg), #ffe6f2);
+  }
+  .ni-ball {
+    position: relative; width: 44%; aspect-ratio: 1; border-radius: 50%;
+    background: linear-gradient(var(--pink-med) 0 calc(50% - 2px), var(--ink) calc(50% - 2px) calc(50% + 2px), #fff calc(50% + 2px) 100%);
+    border: 2.5px solid var(--ink); opacity: .6;
+  }
+  .ni-ball::after {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 24%; aspect-ratio: 1; transform: translate(-50%, -50%);
+    background: #fff; border: 2.5px solid var(--ink); border-radius: 50%;
+  }
+
   /* search results add-button */
   .tile .add {
     margin-top: .55rem;
@@ -344,7 +361,8 @@
 
   /* ---------- Copy Poké Ball (search results) ---------- */
   .copyball {
-    display: inline-flex; align-items: center; gap: .4rem;
+    display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+    align-self: center;
     margin-top: .5rem;
     border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
     border-radius: 999px; padding: .28rem .75rem .28rem .32rem; cursor: pointer;
@@ -883,6 +901,7 @@ function estTile(entry) {
   tile.className = "tile";
   tile.dataset.set = entry.setLabel ? entry.setLabel.split("·")[0].trim() : "Other";
   tile.innerHTML = `
+    <div class="noimg" aria-hidden="true"><span class="ni-ball"></span></div>
     <div class="name">${name}</div>
     ${entry.setLabel ? `<div class="meta">${entry.setLabel}</div>` : ``}
     ${qty > 1 ? `<div class="qty">×${qty}${note ? ' · ' + note : ''}</div>` : (note ? `<div class="qty">${note}</div>` : '')}
