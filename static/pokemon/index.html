@@ -401,6 +401,48 @@
   .badge { font-size: .58rem; font-weight: 800; letter-spacing: .04em; padding: .12em .5em; border-radius: 999px; text-transform: uppercase; }
   .badge.ok { background: #d8f5e3; color: #1c7a48; }
   .badge.no { background: #ffe0e0; color: #b53a3a; }
+
+  /* ---------- Add-a-card passcode gate ---------- */
+  .addgate { text-align: center; margin: .6rem auto 1.6rem; max-width: 560px; }
+  .addbtn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .6rem 1.3rem; cursor: pointer;
+    font: 700 .82rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .addbtn:hover { background: var(--pink); color: #fff; }
+  .addbtn:hover .ab-ball { transform: rotate(20deg) scale(1.08); }
+  .addbtn:active { transform: translateY(1px); }
+  .addbtn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+  .ab-ball {
+    position: relative; width: 16px; height: 16px; border-radius: 50%;
+    background: linear-gradient(var(--pink) 0 calc(50% - 1px), var(--ink) calc(50% - 1px) calc(50% + 1px), #fff calc(50% + 1px) 100%);
+    border: 1.5px solid var(--ink); transition: transform .2s ease;
+  }
+  .ab-ball::after {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 4px; height: 4px; transform: translate(-50%, -50%);
+    background: #fff; border: 1.5px solid var(--ink); border-radius: 50%;
+  }
+  .passrow { display: flex; gap: .5rem; justify-content: center; margin-top: .7rem; }
+  .passrow input {
+    border: 2px solid var(--pink-med); background: #fff; border-radius: 999px;
+    padding: .6rem 1.1rem; font: 600 .9rem 'Montserrat', sans-serif; color: var(--ink);
+    outline: none; box-shadow: var(--shadow-sm); max-width: 220px;
+  }
+  .passrow input:focus { border-color: var(--pink); }
+  .passrow input::placeholder { color: #c98bb0; font-weight: 500; }
+  .passrow.shake { animation: shake .4s ease; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60% { transform: translateX(-7px); }
+    40%,80% { transform: translateX(7px); }
+  }
+  .passmsg { margin: .55rem 0 0; font-size: .76rem; font-weight: 700; color: var(--pink-dark); }
+  .passmsg.bad { color: #b53a3a; }
+  @media (prefers-reduced-motion: reduce) { .passrow.shake { animation: none; } }
 </style>
 
 <header class="hero">
@@ -422,7 +464,16 @@
     </a>
   </div>
 
-  <div class="searchbar">
+  <div class="addgate" id="addGate">
+    <button class="addbtn" id="addCardBtn"><span class="ab-ball" aria-hidden="true"></span> Add a card</button>
+    <div class="passrow" id="passRow" hidden>
+      <input id="passInput" type="password" placeholder="Trainer passcode…" autocomplete="off" aria-label="Trainer passcode">
+      <button class="btn" id="passGo">Enter</button>
+    </div>
+    <p class="passmsg" id="passMsg" hidden></p>
+  </div>
+
+  <div class="searchbar" id="searchBar" hidden>
     <input id="q" type="search" placeholder="Search a card by name… e.g. Charizard" autocomplete="off">
     <button class="btn" id="searchBtn">Search</button>
   </div>
@@ -988,6 +1039,37 @@ function copyText(text, btn) {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ---------- boot ---------- */
+// Cute owner gate for the add-a-card search. NOTE: a static page can't keep a
+// real secret — this passcode is visible in the page source, so it's a friendly
+// gate, not true security. Change the word below to whatever you like.
+const ADD_PASSCODE = "slay";
+function unlockAdd() {
+  $("addGate").hidden = true;
+  $("searchBar").hidden = false;
+  $("q").focus();
+}
+function tryPass() {
+  const val = ($("passInput").value || "").trim().toLowerCase();
+  const msg = $("passMsg");
+  if (val === ADD_PASSCODE.toLowerCase()) {
+    msg.hidden = true;
+    unlockAdd();
+  } else {
+    const row = $("passRow");
+    row.classList.remove("shake"); void row.offsetWidth; row.classList.add("shake");
+    msg.textContent = "Nope — try again, trainer!";
+    msg.classList.add("bad");
+    msg.hidden = false;
+    $("passInput").select();
+  }
+}
+$("addCardBtn").addEventListener("click", () => {
+  $("passRow").hidden = false;
+  $("passInput").focus();
+});
+$("passGo").addEventListener("click", tryPass);
+$("passInput").addEventListener("keydown", (e) => { if (e.key === "Enter") tryPass(); });
+
 $("searchBtn").addEventListener("click", doSearch);
 $("q").addEventListener("keydown", (e) => { if (e.key === "Enter") doSearch(); });
 $("backToCollection").addEventListener("click", () => {
