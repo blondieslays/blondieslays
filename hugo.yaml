@@ -60,6 +60,9 @@ params:
     brandName: "Blondie Slays Apparel"
     disableSearch: true
     customLinks:
+      - name: "About Elise"
+        url: /about/
+        style: "btn"
       - name: "Let's Build Something"
         url: /lets-build-something/
         style: "btn"
