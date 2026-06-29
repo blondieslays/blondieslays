@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Elise · Blondie Slays</title>
+<meta name="description" content="Meet Elise Marion — founder of Blondie Slays Apparel and a digital strategist helping small brands grow with custom apparel, web design, digital design, and AI coaching.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF1493;
+    --pink-bg: #FFF0F6;
+    --pink-med: #f9a8d4;
+    --pink-dark: #be185d;
+    --pink-chip: #FFD1E8;
+    --aqua: #c8f0fb;
+    --aqua-deep: #2c6a86;
+    --ink: #3a1028;
+    --shadow: 0 14px 36px rgba(190, 24, 93, .14);
+    --shadow-sm: 0 4px 14px rgba(190, 24, 93, .10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--pink-bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 1.2rem; }
+
+  h1, h2, h3, .display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: .02em;
+    line-height: 1.02;
+  }
+
+  a { color: inherit; }
+
+  /* ---------- top bar ---------- */
+  .topbar { padding: 1.1rem 0 .2rem; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: .5rem;
+    text-decoration: none;
+    border: 2px solid var(--pink); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .45rem 1.05rem;
+    font-weight: 700; font-size: .78rem; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .home-pill:hover { background: var(--pink); color: #fff; transform: translateY(-1px); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    margin: 1.2rem 0 2.4rem;
+    background: linear-gradient(150deg, #fff 0%, var(--pink-bg) 55%, #fde3f0 100%);
+    border: 2px solid var(--pink-chip);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    padding: 2.2rem;
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .hero-photo {
+    width: 168px; height: 168px; border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 0 0 4px var(--pink), var(--shadow);
+    background: var(--aqua);
+  }
+  .hero-photo.fallback {
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 4.2rem; color: #fff;
+    background: linear-gradient(150deg, var(--pink), var(--pink-med));
+  }
+  .eyebrow {
+    display: inline-block;
+    background: var(--aqua); color: var(--aqua-deep);
+    font-weight: 800; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase;
+    padding: .3rem .7rem; border-radius: 999px; margin-bottom: .7rem;
+  }
+  .hero h1 { font-size: clamp(2.8rem, 7vw, 4.4rem); color: var(--ink); margin-bottom: .5rem; }
+  .hero .tagline { font-size: 1.05rem; font-weight: 600; color: var(--pink-dark); max-width: 46ch; }
+  .hero-links { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .55rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    text-decoration: none; cursor: pointer;
+    border-radius: 999px; padding: .55rem 1.1rem;
+    font-weight: 700; font-size: .78rem; letter-spacing: .02em;
+    border: 2px solid var(--pink);
+    transition: transform .1s ease, background .15s ease, color .15s ease, box-shadow .15s ease;
+  }
+  .btn.primary { background: var(--pink); color: #fff; box-shadow: var(--shadow-sm); }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 20, 147, .32); }
+  .btn.ghost { background: #fff; color: var(--pink-dark); }
+  .btn.ghost:hover { background: var(--pink-chip); transform: translateY(-2px); }
+
+  /* ---------- sections ---------- */
+  section { margin: 3rem 0; }
+  .sec-head { display: flex; align-items: baseline; gap: .8rem; margin-bottom: 1.4rem; }
+  .sec-head h2 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); color: var(--pink-dark); }
+  .sec-head .line { flex: 1; height: 3px; background: linear-gradient(90deg, var(--pink-chip), transparent); border-radius: 3px; }
+
+  .lead { font-size: 1.12rem; color: var(--ink); max-width: 65ch; }
+  .lead strong { color: var(--pink-dark); }
+
+  /* ---------- ventures ---------- */
+  .ventures { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.1rem; }
+  .venture {
+    background: #fff; border: 2px solid var(--pink-chip); border-radius: 20px;
+    padding: 1.4rem; box-shadow: var(--shadow-sm);
+    transition: transform .12s ease, box-shadow .15s ease, border-color .15s ease;
+    display: flex; flex-direction: column;
+  }
+  .venture:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--pink-med); }
+  .venture .v-tag {
+    align-self: flex-start;
+    font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    background: var(--aqua); color: var(--aqua-deep);
+    padding: .25rem .6rem; border-radius: 999px; margin-bottom: .8rem;
+  }
+  .venture h3 { font-size: 1.5rem; color: var(--ink); margin-bottom: .45rem; }
+  .venture p { font-size: .9rem; color: #6b4357; flex: 1; }
+  .venture .v-link {
+    margin-top: 1rem; align-self: flex-start;
+    text-decoration: none; font-weight: 700; font-size: .76rem; color: var(--pink-dark);
+    border-bottom: 2px solid var(--pink-chip); padding-bottom: 2px;
+    transition: border-color .15s ease;
+  }
+  .venture .v-link:hover { border-color: var(--pink); }
+
+  /* ---------- skills ---------- */
+  .skillgroups { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.4rem; }
+  .skillgroup h3 { font-size: 1.25rem; color: var(--pink-dark); margin-bottom: .7rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .chip {
+    background: var(--pink-chip); color: var(--ink);
+    font-size: .72rem; font-weight: 700; letter-spacing: .01em;
+    padding: .34rem .72rem; border-radius: 999px;
+  }
+  .chip.aq { background: var(--aqua); color: var(--aqua-deep); }
+
+  /* ---------- timeline ---------- */
+  .timeline { border-left: 3px solid var(--pink-chip); margin-left: .5rem; padding-left: 1.6rem; }
+  .job { position: relative; padding-bottom: 1.7rem; }
+  .job::before {
+    content: ""; position: absolute; left: -1.95rem; top: .35rem;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--pink); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--pink-chip);
+  }
+  .job:last-child { padding-bottom: 0; }
+  .job h3 { font-size: 1.35rem; color: var(--ink); line-height: 1.1; }
+  .job .role { font-weight: 700; color: var(--pink-dark); font-size: .92rem; }
+  .job .when { font-size: .76rem; color: #9a6b82; font-weight: 600; margin: .15rem 0 .4rem; }
+  .job p { font-size: .9rem; color: #6b4357; max-width: 62ch; }
+
+  /* ---------- education ---------- */
+  .edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .edu-item { background: #fff; border: 2px solid var(--pink-chip); border-radius: 16px; padding: 1.1rem 1.2rem; box-shadow: var(--shadow-sm); }
+  .edu-item h3 { font-size: 1.25rem; color: var(--ink); }
+  .edu-item .deg { font-weight: 700; color: var(--pink-dark); font-size: .85rem; }
+  .edu-item .yr { font-size: .74rem; color: #9a6b82; font-weight: 600; margin-top: .2rem; }
+
+  /* ---------- contact ---------- */
+  .contact {
+    background: linear-gradient(150deg, var(--pink), var(--pink-dark));
+    border-radius: 28px; padding: 2.6rem 2rem; text-align: center; color: #fff;
+    box-shadow: var(--shadow);
+  }
+  .contact h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: .5rem; }
+  .contact p { max-width: 48ch; margin: 0 auto 1.4rem; font-weight: 500; opacity: .95; }
+  .contact .btn { border-color: #fff; }
+  .contact .btn.primary { background: #fff; color: var(--pink-dark); }
+  .contact .btn.primary:hover { background: var(--aqua); }
+  .contact .btn.ghost { background: transparent; color: #fff; }
+  .contact .btn.ghost:hover { background: rgba(255,255,255,.16); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+
+  footer { text-align: center; padding: 2.4rem 0 2.8rem; color: #b07a93; font-size: .76rem; font-weight: 600; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 680px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding: 1.8rem 1.3rem; gap: 1.2rem; }
+    .hero-photo { margin: 0 auto; }
+    .hero-links { justify-content: center; }
+    .hero .tagline { margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="topbar">
+      <a class="home-pill" href="/">&larr; Back to Blondie Slays</a>
+    </div>
+
+    <!-- HERO -->
+    <header class="hero">
+      <img class="hero-photo" src="https://www.elisedaniellemarion.ca/images/elise-photo.png" alt="Elise Marion"
+           onerror="this.outerHTML='&lt;div class=&quot;hero-photo fallback&quot;&gt;EM&lt;/div&gt;'">
+      <div>
+        <span class="eyebrow">Founder &middot; Designer &middot; Strategist</span>
+        <h1>Elise Marion</h1>
+        <p class="tagline">I help small brands look big &mdash; from custom apparel and websites to design and practical AI. Maker behind Blondie Slays Apparel, based in Sarnia, Ontario.</p>
+        <div class="hero-links">
+          <a class="btn primary" href="/">Shop Blondie Slays</a>
+          <a class="btn ghost" href="mailto:blondieslaysapparel@gmail.com">Work with me</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- INTRO -->
+    <section>
+      <div class="sec-head"><h2>Hi, I'm Elise</h2><span class="line"></span></div>
+      <p class="lead">
+        I'm a digital strategist with a decade in content, marketing, and the web &mdash; and an entrepreneur at heart.
+        After years helping companies grow their audiences, I now pour that know-how into my own studio and into helping
+        other small businesses build something of their own. <strong>Blondie Slays</strong> is where my creative and technical
+        sides meet: custom apparel, thoughtful web design, digital design, and down-to-earth AI coaching. I work from
+        Sarnia, Ontario, with clients across Canada and beyond.
+      </p>
+    </section>
+
+    <!-- VENTURES -->
+    <section>
+      <div class="sec-head"><h2>What I Do</h2><span class="line"></span></div>
+      <div class="ventures">
+
+        <div class="venture">
+          <span class="v-tag">The Flagship</span>
+          <h3>Blondie Slays Apparel</h3>
+          <p>Custom heat-transfer vinyl apparel, made to order. Design-your-own tees, small-batch runs, and one-of-a-kind pieces with a bold, playful finish.</p>
+          <a class="v-link" href="/">Design your tee &rarr;</a>
+        </div>
+
+        <div class="venture">
+          <span class="v-tag">Studio</span>
+          <h3>Website Design</h3>
+          <p>Clean, fast, on-brand websites for small businesses &mdash; built to convert, easy to maintain, and genuinely yours.</p>
+          <a class="v-link" href="mailto:blondieslaysapparel@gmail.com">Start a project &rarr;</a>
+        </div>
+
+        <div class="venture">
+          <span class="v-tag">Studio</span>
+          <h3>Digital Design Studio</h3>
+          <p>Logos, brand kits, social templates, and print-ready digital downloads that make your brand feel polished from day one.</p>
+          <a class="v-link" href="mailto:blondieslaysapparel@gmail.com">See what's possible &rarr;</a>
+        </div>
+
+        <div class="venture">
+          <span class="v-tag">Coaching</span>
+          <h3>AI for Your Business</h3>
+          <p>Practical, jargon-free coaching to help you use AI tools to save time, create content, and work smarter &mdash; without the overwhelm.</p>
+          <a class="v-link" href="mailto:blondieslaysapparel@gmail.com">Book a session &rarr;</a>
+        </div>
+
+        <div class="venture">
+          <span class="v-tag">Consulting</span>
+          <h3>Editorial &amp; Content</h3>
+          <p>Editorial strategy, SEO, and copywriting for Canadian and international clients &mdash; content that ranks and reads beautifully.</p>
+          <a class="v-link" href="mailto:blondieslaysapparel@gmail.com">Let's talk content &rarr;</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section>
+      <div class="sec-head"><h2>The Toolkit</h2><span class="line"></span></div>
+      <div class="skillgroups">
+        <div class="skillgroup">
+          <h3>Brand &amp; Marketing</h3>
+          <div class="chips">
+            <span class="chip">Brand Strategy</span>
+            <span class="chip">Multichannel Marketing</span>
+            <span class="chip">Google Ads</span>
+            <span class="chip">SEO &middot; SEMrush</span>
+            <span class="chip">Ahrefs</span>
+            <span class="chip">Conversion Optimization</span>
+            <span class="chip">A/B Testing</span>
+          </div>
+        </div>
+        <div class="skillgroup">
+          <h3>Web &amp; Tech</h3>
+          <div class="chips">
+            <span class="chip aq">HTML &amp; CSS</span>
+            <span class="chip aq">Hugo</span>
+            <span class="chip aq">WordPress</span>
+            <span class="chip aq">GitHub</span>
+            <span class="chip aq">Google Analytics</span>
+            <span class="chip aq">Automation</span>
+          </div>
+        </div>
+        <div class="skillgroup">
+          <h3>Design &amp; Content</h3>
+          <div class="chips">
+            <span class="chip">Apparel &amp; HTV Design</span>
+            <span class="chip">Digital Design</span>
+            <span class="chip">Copywriting</span>
+            <span class="chip">Content Strategy</span>
+            <span class="chip">Competitive Analysis</span>
+          </div>
+        </div>
+        <div class="skillgroup">
+          <h3>AI &amp; Workflow</h3>
+          <div class="chips">
+            <span class="chip aq">AI Workflows</span>
+            <span class="chip aq">Prompt Design</span>
+            <span class="chip aq">Content Automation</span>
+            <span class="chip aq">Data &amp; Reporting</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section>
+      <div class="sec-head"><h2>The Foundation</h2><span class="line"></span></div>
+      <p class="lead" style="margin-bottom:1.6rem;">A decade growing brands and audiences &mdash; the experience that powers everything I build today.</p>
+      <div class="timeline">
+
+        <div class="job">
+          <h3>Accel Media</h3>
+          <div class="role">Editorial Coordinator</div>
+          <div class="when">Dec 2024 &ndash; Present &middot; Remote</div>
+          <p>Coordinating data-driven content, blending creativity with audience insights and analytics to drive measurable engagement across platforms.</p>
+        </div>
+
+        <div class="job">
+          <h3>System1</h3>
+          <div class="role">Content Strategist</div>
+          <div class="when">Mar 2022 &ndash; May 2023 &middot; Remote</div>
+          <p>Built data-driven content strategies aligned with audience interests and market trends, partnering with cross-functional teams on calendars and multichannel campaigns.</p>
+        </div>
+
+        <div class="job">
+          <h3>Schema App</h3>
+          <div class="role">Digital Marketing Manager</div>
+          <div class="when">Jan 2021 &ndash; Mar 2022 &middot; Remote</div>
+          <p>Translated technical topics like schema markup into clear content, and used Analytics &amp; SEMrush to track traffic and sharpen strategy.</p>
+        </div>
+
+        <div class="job">
+          <h3>System1</h3>
+          <div class="role">Head of Audience Development</div>
+          <div class="when">Feb 2018 &ndash; Jan 2021</div>
+          <p>Led and mentored a team of content marketers and built automated reporting systems that gave leadership actionable insight.</p>
+        </div>
+
+        <div class="job">
+          <h3>System1</h3>
+          <div class="role">Search &amp; Content Marketing</div>
+          <div class="when">May 2016 &ndash; Feb 2018</div>
+          <p>Ran search and social campaigns across healthcare, finance, entertainment, and travel &mdash; including a 20% lift in click-through rate through smart audience targeting.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section>
+      <div class="sec-head"><h2>Education</h2><span class="line"></span></div>
+      <div class="edu">
+        <div class="edu-item">
+          <h3>Conestoga College</h3>
+          <div class="deg">Integrated Marketing Communications</div>
+          <div class="yr">2015 &ndash; 2016</div>
+        </div>
+        <div class="edu-item">
+          <h3>Dublin City University</h3>
+          <div class="deg">M.A. Comparative Literature</div>
+          <div class="yr">2013 &ndash; 2014</div>
+        </div>
+        <div class="edu-item">
+          <h3>McMaster University</h3>
+          <div class="deg">B.A. Honours, English &amp; Classics</div>
+          <div class="yr">2009 &ndash; 2012</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section>
+      <div class="contact">
+        <h2>Let's build something</h2>
+        <p>Need custom apparel, a website, a brand refresh, or a hand with AI? I'd love to hear what you're working on.</p>
+        <div class="contact-links">
+          <a class="btn primary" href="mailto:blondieslaysapparel@gmail.com">Email me</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/elisemarion/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/blondieslays" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>&copy; 2026 Elise Marion &middot; Blondie Slays Apparel &middot; Sarnia, Ontario</footer>
+
+</body>
+</html>
