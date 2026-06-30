@@ -56,3 +56,34 @@
     }
   });
 </script>
+
+<!-- Site-wide structured data: Organization + WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://blondieslays.ca/#org",
+      "name": "Blondie Slays Apparel",
+      "url": "https://blondieslays.ca",
+      "logo": "https://blondieslays.ca/images/logo.png",
+      "description": "Independent custom apparel studio and digital consultancy in Sarnia, Ontario.",
+      "founder": { "@type": "Person", "@id": "https://blondieslays.ca/#elise", "name": "Elise Marion", "url": "https://blondieslays.ca/about/" },
+      "areaServed": "CA",
+      "sameAs": [
+        "https://www.linkedin.com/in/elisemarion/",
+        "https://github.com/blondieslays",
+        "https://www.elisedaniellemarion.ca"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://blondieslays.ca/#website",
+      "url": "https://blondieslays.ca",
+      "name": "Blondie Slays Apparel",
+      "publisher": { "@id": "https://blondieslays.ca/#org" }
+    }
+  ]
+}
+</script>
