@@ -232,7 +232,7 @@ a[href="/lets-build-something/"]:hover { background: #000 !important; color: #ff
 nav, .navbar, #profileHeader nav { background-color: #FFF8F5 !important; }
 body.page-downloads nav, body.page-downloads .navbar { background-color: #ffffff !important; }
 a.nav-link[href="#contact"] { color: #FF1493 !important; font-weight: 600 !important; }
-#dl-nav-btn { font-size: 0.75rem !important; padding: 0.4rem 1rem !important; box-shadow: none !important; color: #FF1493 !important; }
+#dl-nav-btn { font-size: 0.75rem !important; padding: 0.4rem 1rem !important; box-shadow: none !important; color: #ffffff !important; }
 
 /* Hero builder button — hover only (sizing via inline style) */
 a#hero-builder-btn:hover {
@@ -244,7 +244,8 @@ a#hero-builder-btn:hover {
 .slide-wrap { position: relative; border: 4px solid #FF1493; border-radius: 16px; background: #fff; aspect-ratio: 8/9; width: 100%; height: auto; }
 .slide-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-/* ── Match Design Your Tee + Digital Downloads exactly ── */
+/* ── Nav + hero buttons: shared geometry ─────────────── */
+#about-nav-btn,
 #dl-nav-btn,
 a#hero-builder-btn {
   display: inline-flex !important;
@@ -263,15 +264,42 @@ a#hero-builder-btn {
   padding: 0.45rem 1.1rem !important;
   border: 2px solid #FF1493 !important;
   border-radius: 4px !important;
-  background: #ffffff !important;
-  color: #FF1493 !important;
   box-shadow: none !important;
   text-decoration: none !important;
 }
-#dl-nav-btn:hover,
+/* Secondary (outline): About + Design Your Tee */
+#about-nav-btn,
+a#hero-builder-btn {
+  background: #ffffff !important;
+  color: #FF1493 !important;
+}
+#about-nav-btn:hover,
 a#hero-builder-btn:hover {
   background: #FF1493 !important;
   color: #ffffff !important;
+}
+/* Primary (filled): Digital Downloads */
+#dl-nav-btn {
+  background: #FF1493 !important;
+  color: #ffffff !important;
+}
+#dl-nav-btn:hover {
+  background: #d1147d !important;
+  border-color: #d1147d !important;
+  color: #ffffff !important;
+}
+
+/* ── Mobile nav: stack the injected buttons neatly in the menu ── */
+@media (max-width: 991px) {
+  #navbarContent .navbar-nav { align-items: center !important; padding-bottom: .6rem; }
+  #about-nav-btn,
+  #dl-nav-btn {
+    margin: .35rem 0 !important;
+    width: 220px !important;
+    max-width: 80vw !important;
+    padding: .6rem 1.1rem !important;
+  }
+  #poke-nav-btn { margin: .55rem 0 !important; }
 }
 
 /* ── Builder mockup frame — the REAL image container ── */
@@ -295,3 +323,18 @@ a#hero-builder-btn:hover {
 /* ── Text placement pills: 2×2 grid ── */
 .bplace-col #bplacements { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .bplace-col #bplacements .bpl { text-align: center; }
+
+/* ── About nav button → complementary blue (filled, matches Digital Downloads) ── */
+#about-nav-btn,
+#about-nav-btn:link,
+#about-nav-btn:visited {
+  background: #2c6a86 !important;
+  border-color: #2c6a86 !important;
+  color: #ffffff !important;
+}
+#about-nav-btn:hover,
+#about-nav-btn:active {
+  background: #22546b !important;
+  border-color: #22546b !important;
+  color: #ffffff !important;
+}

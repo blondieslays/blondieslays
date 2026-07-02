@@ -137,16 +137,38 @@
   }
   .venture .v-link:hover { border-color: var(--pink); }
 
-  /* ---------- skills ---------- */
-  .skillgroups { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.4rem; }
-  .skillgroup h3 { font-size: 1.25rem; color: var(--pink-dark); margin-bottom: .7rem; }
-  .chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+  /* ---------- skills (left-rail toolkit) ---------- */
+  .skillrail { display: grid; }
+  .skillrow {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .skillrow h3 {
+    font-size: 1.18rem; color: var(--pink-dark);
+    letter-spacing: .02em; padding: .15rem 0 1.5rem;
+  }
+  .chips {
+    display: flex; flex-wrap: wrap; gap: .45rem; align-content: flex-start;
+    border-left: 2px solid var(--pink-chip);
+    padding: .15rem 0 1.5rem 1.5rem;
+  }
+  .skillrow:last-child h3,
+  .skillrow:last-child .chips { padding-bottom: .15rem; }
   .chip {
     background: var(--pink-chip); color: var(--ink);
     font-size: .72rem; font-weight: 700; letter-spacing: .01em;
     padding: .34rem .72rem; border-radius: 999px;
   }
   .chip.aq { background: var(--aqua); color: var(--aqua-deep); }
+
+  @media (max-width: 600px) {
+    .skillrow { grid-template-columns: 1fr; gap: .5rem; }
+    .skillrow h3 { padding-bottom: .3rem; }
+    .chips { border-left: none; padding: 0 0 1.4rem; }
+    .skillrow:last-child .chips { padding-bottom: 0; }
+  }
 
   /* ---------- timeline ---------- */
   .timeline { border-left: 3px solid var(--pink-chip); margin-left: .5rem; padding-left: 1.6rem; }
@@ -240,7 +262,6 @@
       ],
       "sameAs": [
         "https://www.linkedin.com/in/elisemarion/",
-        "https://github.com/blondieslays",
         "https://www.elisedaniellemarion.ca"
       ]
     },
@@ -252,7 +273,13 @@
       "logo": "https://blondieslays.ca/images/logo.png",
       "description": "Independent custom apparel studio and digital consultancy in Sarnia, Ontario.",
       "founder": { "@id": "https://blondieslays.ca/#elise" },
-      "areaServed": "CA"
+      "areaServed": "CA",
+      "sameAs": [
+        "https://www.instagram.com/blondieslays/",
+        "https://www.etsy.com/shop/BlondieSlaysApparel",
+        "https://www.facebook.com/blondieslays/",
+        "https://github.com/blondieslays"
+      ]
     },
     {
       "@type": "ProfilePage",
@@ -353,8 +380,8 @@
     <!-- SKILLS -->
     <section>
       <div class="sec-head"><h2>The Toolkit</h2><span class="line"></span></div>
-      <div class="skillgroups">
-        <div class="skillgroup">
+      <div class="skillrail">
+        <div class="skillrow">
           <h3>Brand &amp; Marketing</h3>
           <div class="chips">
             <span class="chip">Brand Strategy</span>
@@ -366,7 +393,7 @@
             <span class="chip">A/B Testing</span>
           </div>
         </div>
-        <div class="skillgroup">
+        <div class="skillrow">
           <h3>Web &amp; Tech</h3>
           <div class="chips">
             <span class="chip aq">HTML &amp; CSS</span>
@@ -377,7 +404,7 @@
             <span class="chip aq">Automation</span>
           </div>
         </div>
-        <div class="skillgroup">
+        <div class="skillrow">
           <h3>Design &amp; Content</h3>
           <div class="chips">
             <span class="chip">Apparel &amp; HTV Design</span>
@@ -387,7 +414,7 @@
             <span class="chip">Competitive Analysis</span>
           </div>
         </div>
-        <div class="skillgroup">
+        <div class="skillrow">
           <h3>AI &amp; Workflow</h3>
           <div class="chips">
             <span class="chip aq">AI Workflows</span>

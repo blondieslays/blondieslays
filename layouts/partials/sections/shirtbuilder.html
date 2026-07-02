@@ -1,4 +1,5 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime&family=Kiwi+Maru&family=Teko:wght@400;600&family=DM+Serif+Display&family=Inter&family=Montserrat:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
   .bsa-details { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem 1rem; margin: 1rem 0 .75rem; }
@@ -7,6 +8,10 @@
   #bsa-order-form .btxt-in { font-size: 13px; }
   #bsa-order-form select.btxt-in { background: #fff; }
   #bo-success a { text-decoration: underline; }
+  .bprice { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem .6rem; background: #eef7fc; border: 1px solid #89c4e1; border-radius: 10px; padding: .6rem .85rem; margin: 0 0 .85rem; }
+  .bprice-label { font-family: 'Bebas Neue', sans-serif; letter-spacing: .04em; color: #3a7fa3; text-transform: uppercase; font-size: .95rem; }
+  #bprice-val { font-size: 1.15rem; color: #be185d; }
+  .bprice-note { flex-basis: 100%; font-size: 11px; color: #3a7fa3; line-height: 1.4; }
   @media (max-width: 768px) { .bsa-details { grid-template-columns: 1fr; } }
 </style>
 
@@ -54,13 +59,13 @@
           <div class="bcolor-list" id="swatches">
             <div class="bcolor-btn on" data-b="#f5ede0" data-n="Natural"><span class="bcolor-dot" style="background:#f5ede0;border:1px solid #ddd"></span>Natural</div>
             <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
-            <div class="bcolor-btn" data-b="#2b3a5c" data-n="Navy"><span class="bcolor-dot" style="background:#2b3a5c"></span>Navy</div>
             <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
-            <div class="bcolor-btn" data-b="#f4634a" data-n="Coral"><span class="bcolor-dot" style="background:#f4634a"></span>Coral</div>
-            <div class="bcolor-btn" data-b="#7c1e3a" data-n="Maroon"><span class="bcolor-dot" style="background:#7c1e3a"></span>Maroon</div>
-            <div class="bcolor-btn" data-b="#f5e88a" data-n="Cornsilk"><span class="bcolor-dot" style="background:#f5e88a;border:1px solid #ddd"></span>Cornsilk</div>
+            <div class="bcolor-btn" data-b="#e0559d" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
+            <div class="bcolor-btn" data-b="#33a8c2" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
+            <div class="bcolor-btn" data-b="#f2d2e0" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
+            <div class="bcolor-btn" data-b="tiedye" data-n="Tie-Dye"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye +$5</div>
           </div>
-          <div id="tdnote" class="btd-note" style="display:none">Each tie-dye is hand-made and unique — +$15 upcharge applies.</div>
+          <div id="tdnote" class="btd-note" style="display:none">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
         </div>
 
         <div>
@@ -117,6 +122,12 @@
           Placement: <strong id="bs-place">Centre chest</strong>
         </div>
 
+        <div class="bprice" id="bprice">
+          <span class="bprice-label">Estimated total</span>
+          <strong id="bprice-val">$20.00</strong>
+          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl or tie-dye upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
+        </div>
+
         <form id="bsa-order-form" action="https://formspree.io/f/xwvzyblg" method="POST" novalidate>
           <div class="bsa-details">
             <div class="bsa-field">
@@ -126,6 +137,10 @@
             <div class="bsa-field">
               <span class="bcl">Email *</span>
               <input class="btxt-in" type="email" name="email" id="bo-email" placeholder="you@email.com" required/>
+            </div>
+            <div class="bsa-field bsa-field-full">
+              <span class="bcl">Confirm email *</span>
+              <input class="btxt-in" type="email" id="bo-email2" placeholder="Re-enter your email" required autocomplete="off"/>
             </div>
             <div class="bsa-field">
               <span class="bcl">Size *</span>
@@ -159,6 +174,8 @@
           <input type="hidden" name="Vinyl" id="hf-vinyl"/>
           <input type="hidden" name="Font" id="hf-font"/>
           <input type="hidden" name="Placement" id="hf-place"/>
+          <input type="hidden" name="Estimated total" id="hf-total"/>
+          <input type="hidden" name="Invoice summary" id="hf-invoice"/>
           <input type="hidden" name="_subject" id="hf-subject" value="New tee order request"/>
           <!-- Spam honeypot: real users never fill this -->
           <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;"/>
@@ -170,8 +187,8 @@
 
         <div id="bo-success" style="display:none;text-align:center;background:#FFF0F6;border:1px solid #f9a8d4;border-radius:12px;padding:1.25rem;color:#be185d;line-height:1.6;">
           <strong style="display:block;font-size:1rem;margin-bottom:.4rem;">Order request sent! 🎉</strong>
-          Thanks — Elise will be in touch at the email you gave within 48 hours with your total and a PayPal link
-          (<a href="https://paypal.me/blondieslaysapparel" target="_blank" rel="noopener" style="color:#FF1493;font-weight:700;">paypal.me/blondieslaysapparel</a>).
+          Thanks — Elise will review your design and email you within 48 hours to confirm the details and send a
+          secure <strong>PayPal invoice</strong> for the total (including any tax). Nothing to pay until that invoice lands in your inbox.
         </div>
       </div>
     </div>
@@ -187,6 +204,56 @@
   ];
   var mcur = 0;
   var S = {colour:'Natural', text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest'};
+
+  // ── Pricing ────────────────────────────────────────────
+  var BASE = 20;            // per shirt, CAD
+  var SPECIAL_VINYL = 2;    // glitter / holographic finishes
+  var TIEDYE = 5;           // tie-dye shirt
+  var SPECIAL_VINYLS = ['Glitter Gold','Glitter Silver','Holographic'];
+  var CUR = String.fromCharCode(36); // "$" — built this way to stay safe through file tooling
+
+  function money(n){ return CUR + n.toFixed(2); }
+  function qtyVal(){ var el=document.getElementById('bo-qty'); var q=parseInt(el?el.value:'1',10); return (q && q>0) ? q : 1; }
+  function perShirt(){
+    return BASE
+      + (SPECIAL_VINYLS.indexOf(S.vinyl) > -1 ? SPECIAL_VINYL : 0)
+      + (S.colour === 'Tie-Dye' ? TIEDYE : 0);
+  }
+  function priceBreakdown(){
+    var parts = ['base ' + money(BASE)];
+    if(SPECIAL_VINYLS.indexOf(S.vinyl) > -1) parts.push(S.vinyl + ' vinyl +' + money(SPECIAL_VINYL));
+    if(S.colour === 'Tie-Dye') parts.push('tie-dye +' + money(TIEDYE));
+    return parts.join(', ');
+  }
+  var HST_RATE = 0.13;     // Ontario HST — added on the invoice
+  function lineItemDesc(){
+    var bits = ['Custom HTV tee — ' + S.colour];
+    if(S.text) bits.push('text: "' + S.text + '"');
+    bits.push(S.vinyl + ' vinyl');
+    bits.push(S.font + ' font');
+    bits.push(S.placement);
+    var sizeEl = document.getElementById('bo-size');
+    if(sizeEl && sizeEl.value) bits.push('size ' + sizeEl.value);
+    return bits.join(', ');
+  }
+  function invoiceSummary(){
+    var q   = qtyVal();
+    var sub = perShirt()*q;
+    var hst = sub*HST_RATE;
+    var tot = sub + hst;
+    return [
+      'LINE ITEM: ' + q + ' \u00d7 ' + lineItemDesc() + ' @ ' + money(perShirt()) + ' ea',
+      '  (' + priceBreakdown() + ')',
+      'Subtotal: ' + money(sub) + ' CAD',
+      'HST (13%): ' + money(hst),
+      'TOTAL TO INVOICE: ' + money(tot) + ' CAD'
+    ].join('\n');
+  }
+  function updatePrice(){
+    var q = qtyVal();
+    var el = document.getElementById('bprice-val');
+    if(el) el.textContent = money(perShirt()*q) + (q > 1 ? '  (' + q + ' \u00d7 ' + money(perShirt()) + ')' : '');
+  }
 
   function buildMDots(){
     var d=document.getElementById('mdots');
@@ -222,6 +289,7 @@
     S.colour=sw.dataset.n;
     document.getElementById('bs-colour').textContent=S.colour;
     document.getElementById('tdnote').style.display=sw.dataset.b==='tiedye'?'block':'none';
+    updatePrice();
   });
 
   document.getElementById('btxtin').addEventListener('input',function(){
@@ -234,6 +302,7 @@
     document.querySelectorAll('.bvc').forEach(function(x){x.classList.remove('on');});
     v.classList.add('on');S.vinyl=v.dataset.v;
     document.getElementById('bs-vinyl').textContent=S.vinyl;
+    updatePrice();
   });
 
   document.getElementById('bfonts').addEventListener('click',function(e){
@@ -250,6 +319,24 @@
     S.placement=p.dataset.p;
     document.getElementById('bs-place').textContent=S.placement;
   });
+
+  var qtyInput = document.getElementById('bo-qty');
+  if(qtyInput) qtyInput.addEventListener('input', updatePrice);
+
+  // ── Customer confirmation email (EmailJS) ──────────────────
+  // Paste your three EmailJS IDs below. Until they're filled in, the
+  // confirmation email is skipped safely and the order still sends to Elise.
+  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+  var emailjsReady = false;
+  if (window.emailjs && EMAILJS_PUBLIC_KEY.indexOf('YOUR_') !== 0) {
+    try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); emailjsReady = true; } catch(e) {}
+  }
+  function sendConfirmation(params){
+    if(!emailjsReady) return;
+    try { emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params); } catch(e){}
+  }
 
   // ── Order submission via Formspree (AJAX) ──────────────
   var form        = document.getElementById('bsa-order-form');
@@ -279,12 +366,20 @@
       return;
     }
 
+    var email2 = document.getElementById('bo-email2') ? document.getElementById('bo-email2').value.trim() : '';
+    if(email.toLowerCase() !== email2.toLowerCase()){
+      showErr('Your two email addresses don\u2019t match \u2014 please re-enter the address you can receive mail at. Your confirmation and PayPal invoice are sent there.');
+      return;
+    }
+
     // Copy the live design selections into the hidden fields
     document.getElementById('hf-colour').value  = S.colour;
     document.getElementById('hf-text').value    = S.text || '(none)';
     document.getElementById('hf-vinyl').value   = S.vinyl;
     document.getElementById('hf-font').value    = S.font;
     document.getElementById('hf-place').value   = S.placement;
+    document.getElementById('hf-total').value   = money(perShirt()*qtyVal()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')';
+    document.getElementById('hf-invoice').value  = invoiceSummary();
     document.getElementById('hf-subject').value = 'New tee order request \u2014 ' + name;
 
     submitBtn.disabled = true;
@@ -300,6 +395,18 @@
         summaryBox.style.display = 'none';
         successBox.style.display = 'block';
         successBox.scrollIntoView({behavior:'smooth', block:'center'});
+        sendConfirmation({
+          email:        email,
+          to_name:      name,
+          shirt_colour: S.colour,
+          shirt_text:   S.text || '(none)',
+          vinyl:        S.vinyl,
+          font:         S.font,
+          placement:    S.placement,
+          size:         size,
+          quantity:     String(qtyVal()),
+          estimate:     money(perShirt()*qtyVal()) + ' CAD (' + priceBreakdown() + ')'
+        });
       } else {
         return res.json().then(function(data){
           var msg = (data && data.errors && data.errors.length)
@@ -320,5 +427,6 @@
 
   buildMDots();
   goMockup(0);
+  updatePrice();
 })();
 </script>

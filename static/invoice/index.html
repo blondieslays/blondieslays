@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Invoice Builder · Blondie Slays</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FF1493; --pink-dark:#be185d; --pink-soft:#f9a8d4; --pink-bg:#FFF0F6;
+    --blue-bg:#eef7fc; --blue-bd:#89c4e1; --blue-tx:#3a7fa3;
+    --ink:#2b2b2b; --line:#f0d4e2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--pink-bg);color:var(--ink);font-family:'Montserrat',system-ui,sans-serif;line-height:1.5;padding:1.5rem 1rem 4rem}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-family:'Bebas Neue',sans-serif;color:var(--pink);letter-spacing:.03em;font-size:2.6rem;margin:.2rem 0 .1rem}
+  .sub{color:var(--pink-dark);font-size:.85rem;margin:0 0 1.4rem}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.15rem;margin-bottom:1.1rem;box-shadow:0 4px 18px rgba(255,20,147,.06)}
+  .eyebrow{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);font-size:1rem;margin:0 0 .7rem}
+  label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.02em;color:var(--pink-dark);margin:0 0 3px;text-transform:uppercase}
+  input,select,textarea{width:100%;font-family:inherit;font-size:.9rem;padding:.5rem .6rem;border:1.5px solid #ebd3df;border-radius:9px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
+  .grid{display:grid;gap:.7rem}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr 1fr}
+  .g-shirt{grid-template-columns:70px 1fr 1fr}
+  .field{min-width:0}
+  .btn{font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;font-size:1rem;border:none;border-radius:999px;padding:.5rem 1.15rem;cursor:pointer;background:var(--pink);color:#fff;transition:background .15s}
+  .btn:hover{background:var(--pink-dark)}
+  .btn-ghost{background:#fff;color:var(--pink);border:1.5px solid var(--pink)}
+  .btn-ghost:hover{background:var(--pink);color:#fff}
+  .btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.85rem;align-items:center}
+  .unit-hint{font-size:.8rem;color:var(--blue-tx);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.2rem}
+  th{text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.03em;color:var(--pink-dark);border-bottom:1.5px solid var(--line);padding:.35rem .3rem}
+  td{padding:.5rem .3rem;border-bottom:1px solid #f6e6ee;vertical-align:top}
+  td.num,th.num{text-align:right;white-space:nowrap}
+  .rm{background:none;border:none;color:var(--pink);font-size:1.1rem;cursor:pointer;line-height:1;padding:0 .2rem}
+  .rm:hover{color:var(--pink-dark)}
+  .empty{color:#b78ca2;font-size:.85rem;padding:.8rem .3rem}
+  .totals{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:12px;padding:.85rem 1rem;margin-top:1rem}
+  .trow{display:flex;justify-content:space-between;font-size:.9rem;color:var(--blue-tx);padding:.15rem 0}
+  .trow.grand{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--pink-dark);letter-spacing:.02em;border-top:1.5px solid var(--blue-bd);margin-top:.35rem;padding-top:.45rem}
+  .hst-ctl{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--blue-tx);margin-bottom:.4rem}
+  .hst-ctl input[type=checkbox]{width:auto}
+  .hst-ctl input[type=number]{width:64px;padding:.25rem .4rem}
+  textarea#out{min-height:170px;font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:.82rem;line-height:1.5;background:#fffafd}
+  .copied{color:var(--pink);font-weight:600;font-size:.82rem;opacity:0;transition:opacity .2s}
+  .copied.show{opacity:1}
+  .foot{font-size:.72rem;color:#b78ca2;text-align:center;margin-top:1.4rem}
+  @media(max-width:560px){.g2,.g3,.g-shirt{grid-template-columns:1fr}h1{font-size:2.1rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Invoice Builder</h1>
+  <p class="sub">Internal tool &mdash; build a line-item total with HST, then paste into PayPal. Nothing is saved or sent.</p>
+
+  <!-- Customer -->
+  <div class="card">
+    <p class="eyebrow">Bill to</p>
+    <div class="grid g2">
+      <div class="field"><label>Customer name</label><input id="c-name" placeholder="First &amp; last"></div>
+      <div class="field"><label>Customer email</label><input id="c-email" type="email" placeholder="them@email.com"></div>
+    </div>
+  </div>
+
+  <!-- Quick shirt line -->
+  <div class="card">
+    <p class="eyebrow">Add a shirt</p>
+    <div class="grid g-shirt">
+      <div class="field"><label>Qty</label><input id="s-qty" type="number" min="1" value="1"></div>
+      <div class="field"><label>Shirt colour</label>
+        <select id="s-colour">
+          <option>Natural</option><option>White</option><option>Navy</option><option>Black</option>
+          <option>Coral</option><option>Maroon</option><option>Cornsilk</option>
+          <option value="Tie-Dye">Tie-Dye (+$5)</option>
+        </select>
+      </div>
+      <div class="field"><label>Vinyl</label>
+        <select id="s-vinyl">
+          <option>Navy</option><option>White</option><option>Black</option><option>Blue</option>
+          <option>Gold</option><option>Pink</option><option>Yellow</option><option>Green</option>
+          <option>Silver</option><option>Red</option>
+          <option value="Glitter Gold">Glitter Gold (+$2)</option>
+          <option value="Glitter Silver">Glitter Silver (+$2)</option>
+          <option value="Holographic">Holographic (+$2)</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:.7rem">
+      <div class="field"><label>Text (optional)</label><input id="s-text" placeholder="e.g. Best Oma Ever"></div>
+      <div class="field"><label>Font (optional)</label>
+        <select id="s-font">
+          <option value="">&mdash;</option><option>Dragonlord</option><option>High Tide</option>
+          <option>Typewriter</option><option>Kiwi Maru</option><option>Cricut Sans</option><option>Barn Acre</option>
+        </select>
+      </div>
+      <div class="field"><label>Placement (optional)</label>
+        <select id="s-place">
+          <option value="">&mdash;</option><option>Centre chest</option><option>Centre back</option>
+          <option>Right sleeve</option><option>Left sleeve</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="add-shirt">Add shirt &rarr;</button>
+      <span class="unit-hint" id="s-unit"></span>
+    </div>
+  </div>
+
+  <!-- Custom line -->
+  <div class="card">
+    <p class="eyebrow">Add a custom line</p>
+    <div class="grid g-shirt">
+      <div class="field"><label>Qty</label><input id="x-qty" type="number" min="1" value="1"></div>
+      <div class="field"><label>Description</label><input id="x-desc" placeholder="e.g. Rush fee, tote bag, sticker pack"></div>
+      <div class="field"><label>Unit price (CAD)</label><input id="x-unit" type="number" min="0" step="0.01" placeholder="0.00"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="add-custom">Add line &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Line items -->
+  <div class="card">
+    <p class="eyebrow">Invoice lines</p>
+    <table>
+      <thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th></th></tr></thead>
+      <tbody id="lines"><tr><td colspan="5" class="empty">No lines yet &mdash; add a shirt or a custom line above.</td></tr></tbody>
+    </table>
+
+    <div class="totals">
+      <div class="hst-ctl">
+        <label style="margin:0;display:flex;align-items:center;gap:.4rem;text-transform:none;color:var(--blue-tx);font-weight:600">
+          <input type="checkbox" id="hst-on" checked> Add HST
+        </label>
+        <input type="number" id="hst-rate" value="13" min="0" step="0.5"> <span>%</span>
+      </div>
+      <div class="trow"><span>Subtotal</span><span id="t-sub">$0.00</span></div>
+      <div class="trow" id="t-hst-row"><span id="t-hst-lbl">HST (13%)</span><span id="t-hst">$0.00</span></div>
+      <div class="trow grand"><span>Total</span><span id="t-total">$0.00</span></div>
+    </div>
+  </div>
+
+  <!-- Output -->
+  <div class="card">
+    <p class="eyebrow">Copy into PayPal</p>
+    <textarea id="out" readonly></textarea>
+    <div class="btn-row">
+      <button class="btn" id="copy">Copy invoice block</button>
+      <a class="btn btn-ghost" href="https://www.paypal.com/invoice/create" target="_blank" rel="noopener">Open PayPal invoicing &rarr;</a>
+      <span class="copied" id="copied">Copied!</span>
+    </div>
+  </div>
+
+  <p class="foot">Blondie Slays Apparel &middot; figures in CAD &middot; this page runs entirely in your browser</p>
+</div>
+
+<script>
+(function(){
+  var CUR = String.fromCharCode(36); // "$", tooling-safe
+  var BASE = 20, SPECIAL_VINYL = 2, TIEDYE = 5;
+  var SPECIAL_VINYLS = ['Glitter Gold','Glitter Silver','Holographic'];
+  var items = [];
+
+  function money(n){ return CUR + (Math.round(n*100)/100).toFixed(2); }
+  function el(id){ return document.getElementById(id); }
+  function num(v,d){ var n = parseFloat(v); return isFinite(n) ? n : (d||0); }
+  function intv(v,d){ var n = parseInt(v,10); return (n && n>0) ? n : (d||1); }
+
+  function shirtUnit(colour, vinyl){
+    return BASE
+      + (SPECIAL_VINYLS.indexOf(vinyl) > -1 ? SPECIAL_VINYL : 0)
+      + (colour === 'Tie-Dye' ? TIEDYE : 0);
+  }
+  function shirtDesc(colour, vinyl, text, font, place){
+    var b = ['Custom HTV tee \u2014 ' + colour];
+    if(text) b.push('"' + text + '"');
+    b.push(vinyl + ' vinyl');
+    if(font)  b.push(font + ' font');
+    if(place) b.push(place);
+    return b.join(', ');
+  }
+
+  function liveShirtUnit(){
+    el('s-unit').textContent = money(shirtUnit(el('s-colour').value, el('s-vinyl').value)) + ' / shirt';
+  }
+  ['s-colour','s-vinyl'].forEach(function(id){ el(id).addEventListener('change', liveShirtUnit); });
+
+  el('add-shirt').addEventListener('click', function(){
+    var colour = el('s-colour').value, vinyl = el('s-vinyl').value;
+    items.push({
+      desc: shirtDesc(colour, vinyl, el('s-text').value.trim(), el('s-font').value, el('s-place').value),
+      qty:  intv(el('s-qty').value, 1),
+      unit: shirtUnit(colour, vinyl)
+    });
+    el('s-text').value = '';
+    render();
+  });
+
+  el('add-custom').addEventListener('click', function(){
+    var desc = el('x-desc').value.trim();
+    if(!desc){ el('x-desc').focus(); return; }
+    items.push({ desc: desc, qty: intv(el('x-qty').value,1), unit: num(el('x-unit').value,0) });
+    el('x-desc').value = ''; el('x-unit').value = ''; el('x-qty').value = '1';
+    render();
+  });
+
+  el('lines').addEventListener('click', function(e){
+    var b = e.target.closest('.rm'); if(!b) return;
+    items.splice(parseInt(b.dataset.i,10), 1);
+    render();
+  });
+
+  ['hst-on','hst-rate'].forEach(function(id){ el(id).addEventListener('input', render); });
+
+  function render(){
+    var body = el('lines');
+    if(!items.length){
+      body.innerHTML = '<tr><td colspan="5" class="empty">No lines yet \u2014 add a shirt or a custom line above.</td></tr>';
+    } else {
+      body.innerHTML = items.map(function(it, i){
+        return '<tr><td>' + escapeHtml(it.desc) + '</td>'
+          + '<td class="num">' + it.qty + '</td>'
+          + '<td class="num">' + money(it.unit) + '</td>'
+          + '<td class="num">' + money(it.unit*it.qty) + '</td>'
+          + '<td class="num"><button class="rm" data-i="' + i + '" title="Remove">\u00d7</button></td></tr>';
+      }).join('');
+    }
+
+    var sub = items.reduce(function(s,it){ return s + it.unit*it.qty; }, 0);
+    var rate = num(el('hst-rate').value, 0);
+    var hstOn = el('hst-on').checked;
+    var hst = hstOn ? sub * rate/100 : 0;
+    var total = sub + hst;
+
+    el('t-sub').textContent = money(sub);
+    el('t-hst-lbl').textContent = 'HST (' + rate + '%)';
+    el('t-hst').textContent = money(hst);
+    el('t-hst-row').style.display = hstOn ? 'flex' : 'none';
+    el('t-total').textContent = money(total);
+
+    buildOutput(sub, hst, total, hstOn, rate);
+  }
+
+  function buildOutput(sub, hst, total, hstOn, rate){
+    var L = [];
+    L.push('BLONDIE SLAYS APPAREL');
+    var name = el('c-name').value.trim(), email = el('c-email').value.trim();
+    if(name || email) L.push('Bill to: ' + [name, email].filter(Boolean).join('  '));
+    L.push('');
+    items.forEach(function(it){
+      L.push(it.qty + ' \u00d7 ' + it.desc + '  @ ' + money(it.unit) + ' ea  = ' + money(it.unit*it.qty));
+    });
+    if(!items.length) L.push('(no lines yet)');
+    L.push('');
+    L.push('Subtotal: ' + money(sub) + ' CAD');
+    if(hstOn) L.push('HST (' + rate + '%): ' + money(hst));
+    L.push('TOTAL: ' + money(total) + ' CAD');
+    el('out').value = L.join('\n');
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  el('copy').addEventListener('click', function(){
+    var ta = el('out');
+    ta.select();
+    var done = function(){ var c = el('copied'); c.classList.add('show'); setTimeout(function(){ c.classList.remove('show'); }, 1600); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(done, function(){ document.execCommand('copy'); done(); });
+    } else { document.execCommand('copy'); done(); }
+  });
+
+  liveShirtUnit();
+  render();
+})();
+</script>
+</body>
+</html>

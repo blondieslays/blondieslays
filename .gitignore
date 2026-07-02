@@ -9,3 +9,4 @@
 # editor / script backups
 *.bak
 *.bak[0-9]
+_notes/
