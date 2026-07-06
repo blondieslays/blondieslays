@@ -25,14 +25,8 @@
 
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 d-flex align-items-center">
-                <div class="hero-carousel-wrap">
-                    <div class="swiper hero-swiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="/images/htv/custom-pieces.png" alt="Custom pieces" class="hero-carousel-img"></div>
-                            <div class="swiper-slide"><img src="/images/htv/team-apparel.png" alt="Team apparel" class="hero-carousel-img"></div>
-                        </div>
-                        <div class="swiper-pagination hero-swiper-dots"></div>
-                    </div>
+                <div class="hero-video-wrap">
+                    <video class="hero-video" src="/video/promo.mp4" autoplay loop muted playsinline preload="auto" poster="/images/htv/custom-pieces.png"></video>
                 </div>
             </div>
         </div>
@@ -301,16 +295,5 @@
         </svg>
     </div>
     {{ end }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  new Swiper(".hero-swiper", {
-    loop: true,
-    autoplay: { delay: 3500, disableOnInteraction: false },
-    pagination: { el: ".hero-swiper-dots", clickable: true }
-  });
-});
-</script>
 </section>
 {{ end }}

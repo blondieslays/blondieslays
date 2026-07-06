@@ -338,3 +338,7 @@ a#hero-builder-btn:hover {
   border-color: #0B7A8A !important;
   color: #ffffff !important;
 }
+
+/* ── Hero promo video ── */
+.hero-video-wrap { width: 100%; }
+.hero-video { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 36px rgba(190,24,93,.15), 0 4px 12px rgba(0,0,0,.05); display: block; background: #FFF0F6; }
