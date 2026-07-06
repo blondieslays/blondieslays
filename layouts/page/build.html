@@ -5,27 +5,47 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<section class="build-showcase">
+<section class="build-hero">
   <style>
-    .build-showcase { max-width: 640px; margin: 1rem auto 0; padding: 1.5rem 1.5rem 0; text-align: center; }
-    .build-showcase .bs-title { font-family:'Bebas Neue',sans-serif; letter-spacing:.03em; font-size:2.9rem; color:#FF1493; margin:0 0 .2rem; line-height:1; }
-    .build-showcase .bs-sub { font-family:Montserrat,sans-serif; font-size:.95rem; color:#8a8a8a; margin:0 0 1.4rem; }
-    .bs-slider { border-radius:16px; overflow:hidden; box-shadow:0 16px 36px rgba(190,24,93,.15), 0 4px 12px rgba(0,0,0,.05); }
-    .bs-slider img { width:100%; height:auto; display:block; }
+    .build-hero { background: linear-gradient(180deg,#FFF3F9 0%,#ffffff 100%); padding: 2.25rem 1.5rem 2.75rem; margin: .5rem 0 1rem; }
+    .bh-wrap { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
+    .bh-eyebrow { font-family:'Bebas Neue',sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#0E93A6; font-size:1rem; }
+    .bh-title { font-family:'Bebas Neue',sans-serif; letter-spacing:.03em; font-size:3.6rem; color:#FF1493; margin:.15rem 0 .6rem; line-height:.92; }
+    .bh-sub { font-family:Montserrat,sans-serif; font-size:.98rem; line-height:1.65; color:#5a5a5a; margin:0 0 1.5rem; max-width:34ch; }
+    .bh-scroll { font-family:Montserrat,sans-serif; font-weight:700; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:#FF1493; padding:.6rem 1.5rem; border-radius:999px; text-decoration:none; box-shadow:0 10px 24px rgba(255,20,147,.28); transition:all .15s ease; display:inline-block; }
+    .bh-scroll:hover { background:#d1147d; transform:translateY(-2px); }
+    .bh-media { display:flex; justify-content:center; }
+    .bs-slider { width:100%; max-width:400px; aspect-ratio:4/5; max-height:470px; border-radius:18px; overflow:hidden; box-shadow:0 18px 40px rgba(190,24,93,.16),0 4px 12px rgba(0,0,0,.05); }
+    .bs-slider .swiper-slide img { width:100%; height:100%; object-fit:cover; display:block; }
     .bs-slider .swiper-pagination-bullet-active { background:#FF1493; }
+    @media (max-width:800px){
+      .bh-wrap { grid-template-columns:1fr; gap:1.5rem; text-align:center; }
+      .bh-sub { margin-left:auto; margin-right:auto; }
+      .bh-title { font-size:3rem; }
+    }
   </style>
-  <h1 class="bs-title">Design Your Tee</h1>
-  <p class="bs-sub">Real pieces, made in Sarnia &mdash; then build your own below.</p>
-  <div class="bs-slider swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="/images/htv/custom-pieces.png" alt="Custom pieces"></div>
-      <div class="swiper-slide"><img src="/images/htv/team-apparel.png" alt="Team apparel"></div>
+  <div class="bh-wrap">
+    <div class="bh-text">
+      <span class="bh-eyebrow">Custom HTV Apparel</span>
+      <h1 class="bh-title">Design Your Tee</h1>
+      <p class="bh-sub">Real pieces, pressed and shipped from Sarnia. Pick your colours, font, and text below &mdash; Elise takes it from there.</p>
+      <a class="bh-scroll" href="#builder">Start building &darr;</a>
     </div>
-    <div class="swiper-pagination bs-dots"></div>
+    <div class="bh-media">
+      <div class="bs-slider swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="/images/htv/custom-pieces.png" alt="Custom pieces"></div>
+          <div class="swiper-slide"><img src="/images/htv/team-apparel.png" alt="Team apparel"></div>
+        </div>
+        <div class="swiper-pagination bs-dots"></div>
+      </div>
+    </div>
   </div>
 </section>
 
+<div id="builder">
 {{- partial "sections/shirtbuilder.html" . -}}
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
