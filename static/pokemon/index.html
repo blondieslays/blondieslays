@@ -572,7 +572,7 @@
 // Optional: a free pokemontcg.io key raises your rate limits.
 // Leave "" to run keyless (fine for a small collection). Get one at
 // https://dev.pokemontcg.io — note it IS visible in page source.
-const API_KEY = "";
+const API_KEY = "7fc672cb-31e7-4e6b-a443-138ff3d17ead";
 
 // YOUR CARDS — replace these examples with your own (use search to find ids).
 // id     = pokemontcg.io card id (e.g. "base1-4")
@@ -635,14 +635,14 @@ const MY_CARDS = [
   { id: "sv5-2", qty: 1, note: "" },  // Pineco · Temporal Forces 002/162
   { id: "swsh4-108", qty: 1, note: "" },  // Krokorok · Vivid Voltage 108/185
   { id: "sv3pt5-69", qty: 1, note: "" },  // Bellsprout · SV: 151 069/165
-  { id: "me4-63", qty: 1, note: "" },  // Ferrothorn · Chaos Rising 063/086
+  { id: "me4-63", qty: 2, note: "" },  // Ferrothorn · Chaos Rising 063/086
   { id: "swsh1-183", qty: 2, note: "" },  // Switch · Sword & Shield Base Set 183/202
   { id: "me1-101", qty: 1, note: "" },  // Latios · Mega Evolution 101/132
   { id: "zsv10pt5-11", qty: 1, note: "" },  // Amoonguss · Black Bolt 011/086
   { id: "me3-18", qty: 1, note: "" },  // Seel · Perfect Order 018/088
   { id: "sv6pt5-35", qty: 1, note: "" },  // Yveltal · Shrouded Fable 035/064
   { id: "me4-14", qty: 1, note: "" },  // Litleo · Chaos Rising 014/086
-  { id: "me4-15", qty: 1, note: "" },  // Chaos Rising 015/086
+  { id: "me4-15", qty: 2, note: "" },  // Chaos Rising 015/086
   { id: "me4-13", qty: 1, finish: "Holofoil", note: "" },  // Delphox · Chaos Rising 013/086
   { id: "me4-69", qty: 1, note: "" },  // Tauros · Chaos Rising 069/086
   { id: "sv6pt5-43", qty: 1, note: "" },  // Varoom · Shrouded Fable 043/064
@@ -653,7 +653,7 @@ const MY_CARDS = [
   { id: "me2-15", qty: 1, note: "" },  // Darumaka · Phantasmal Flames 015/094
   { id: "swsh6-26", qty: 1, note: "" },  // Scorbunny · Chilling Reign 026/198
   { id: "swsh12-168", qty: 1, note: "" },  // Regenerative Energy · Silver Tempest 168/195
-  { id: "me4-76", qty: 2, note: "" },  // AZ's Tranquility · Chaos Rising 076/086
+  { id: "me4-76", qty: 4, note: "" },  // AZ's Tranquility · Chaos Rising 076/086
   { id: "sv3pt5-126", qty: 1, note: "" },  // Magmar · SV: 151 126/165
   { id: "sv4-104", qty: 1, finish: "Holofoil", note: "" },  // Garganacl · Paradox Rift 104/182
   { id: "swsh4-158", qty: 1, note: "" },  // Opal · Vivid Voltage 158/185
@@ -678,11 +678,11 @@ const MY_CARDS = [
   { id: "me4-20", qty: 1, note: "" },  // Froakie · Chaos Rising 020/086
   { id: "me4-88", qty: 2, finish: "Holofoil", est: 19.54, name: "Froakie", setLabel: "Chaos Rising · 088/086", note: "Illustration Rare" },  // Froakie · Chaos Rising 088/086
   { id: "me4-87", qty: 1, note: "" },  // Chaos Rising 087/086
-  { id: "me4-86", qty: 1, note: "" },  // Chaos Rising 086/086 — basic energy? verify
+  { id: "me4-86", qty: 2, note: "" },  // Chaos Rising 086/086 — basic energy? verify
   { id: "me4-71", qty: 1, note: "" },  // Watchog · Chaos Rising 071/086
   { id: "me4-72", qty: 1, note: "" },  // Chaos Rising 072/086
   { id: "sv4-151", qty: 1, note: "" },  // Spinda · Paradox Rift 151/182
-  { id: "sv8pt5-114", qty: 1, note: "" },  // Lacey · Prismatic Evolutions 114/131
+  { id: "sv8pt5-114", qty: 2, note: "" },  // Lacey · Prismatic Evolutions 114/131
   { id: "swsh9-49", qty: 1, note: "" },  // Shinx · Brilliant Stars 049/172
   { id: "sv10-94", qty: 1, note: "" },  // Team Rocket's Larvitar · Destined Rivals 094/182
   { id: "sv8pt5-123", qty: 1, note: "" },  // Professor's Research · Prismatic Evolutions 123/131
@@ -694,7 +694,7 @@ const MY_CARDS = [
   { id: "sv4-36", qty: 1, finish: "Holofoil", note: "" },  // Milotic · Paradox Rift 036/182
   { id: "me1-118", qty: 1, note: "" },  // Iron Defender · Mega Evolution 118/132
   { id: "me3-29", qty: 1, note: "" },  // Dedenne · Perfect Order 029/088
-  { id: "me4-75", qty: 1, note: "" },  // Ange Floette · Chaos Rising 075/086
+  { id: "me4-75", qty: 2, note: "" },  // Ange Floette · Chaos Rising 075/086
   { id: "sv5-112", qty: 1, note: "" },  // Mawile · Temporal Forces 112/162
   { id: "sv5-79", qty: 1, note: "" },  // Iron Valiant · Temporal Forces 079/162
   { id: "sv5-127", qty: 1, note: "" },  // Noctowl · Temporal Forces 127/162
@@ -709,9 +709,9 @@ const MY_CARDS = [
   { id: "swsh7-113", qty: 1, note: "" },  // Deino · Evolving Skies 113/203
   { id: "sv6-103", qty: 1, finish: "Reverse Holofoil", note: "" },  // Timburr · Twilight Masquerade 103/167
   { id: "sv5-138", qty: 1, finish: "Holofoil", note: "" },  // Drampa · Temporal Forces 138/162
-  { id: "me4-8", qty: 1, note: "" },  // Vulpix · Chaos Rising 008/086
-  { id: "me4-59", qty: 1, note: "" },  // Beldum · Chaos Rising 059/086
-  { id: "me4-60", qty: 1, note: "" },  // Chaos Rising 060/086
+  { id: "me4-8", qty: 2, note: "" },  // Vulpix · Chaos Rising 008/086
+  { id: "me4-59", qty: 2, note: "" },  // Beldum · Chaos Rising 059/086
+  { id: "me4-60", qty: 2, note: "" },  // Chaos Rising 060/086
   { id: "swsh1-164", qty: 2, note: "" },  // Great Ball · Sword & Shield Base Set 164/202
   { id: "me3-52", qty: 1, note: "" },  // Drapion · Perfect Order 052/088
   { id: "me4-11", qty: 1, note: "" },  // Fennekin · Chaos Rising 011/086
@@ -719,16 +719,16 @@ const MY_CARDS = [
   { id: "me3-85", qty: 1, note: "" },  // Tarragon · Perfect Order 085/088
   { id: "sv6-17", qty: 1, note: "" },  // Applin · Twilight Masquerade 017/167
   { id: "me4-7", qty: 1, finish: "Holofoil", note: "" },  // Chesnaught · Chaos Rising 007/086
-  { id: "me4-5", qty: 1, note: "" },  // Chespin · Chaos Rising 005/086
+  { id: "me4-5", qty: 2, note: "" },  // Chespin · Chaos Rising 005/086
   { id: "me4-51", qty: 1, finish: "Holofoil", note: "" },  // Crobat · Chaos Rising 051/086
   { id: "me4-31", qty: 2, note: "" },  // Deoxys · Chaos Rising 031/086
   { id: "me4-2", qty: 1, note: "" },  // Kakuna · Chaos Rising 002/086
   { id: "me4-47", qty: 2, note: "" },  // Claydol · Chaos Rising 047/086
-  { id: "me4-40", qty: 1, note: "" },  // Pumpkaboo · Chaos Rising 040/086
+  { id: "me4-40", qty: 2, note: "" },  // Pumpkaboo · Chaos Rising 040/086
   { id: "me4-45", qty: 1, finish: "Reverse Holofoil", note: "" },  // Chaos Rising 045/086
   { id: "me3-54", qty: 1, finish: "Holofoil", note: "" },  // Chien-Pao · Perfect Order 054/088
   { id: "sv8-177", qty: 1, note: "" },  // Gravity Mountain · Surging Sparks 177/191
-  { id: "me4-32", qty: 1, note: "" },  // Deoxys · Chaos Rising 032/086
+  { id: "me4-32", qty: 2, note: "" },  // Deoxys · Chaos Rising 032/086
   { id: "swsh9-108", qty: 1, note: "" },  // Gabite · Brilliant Stars 108/172
   { qty: 1, est: 0.25, name: "Psychic Energy", setLabel: "Sword & Shield Base Set · basic", note: "Basic Energy" },  // Psychic Energy · SWSH Base · unnumbered basic — no live id, est CA$
   { id: "swsh2-169", qty: 3, note: "" },  // Training Court · Rebel Clash 169/192
@@ -749,12 +749,12 @@ const MY_CARDS = [
   { id: "me3-49", qty: 1, note: "" },  // Haunter · Perfect Order 049/088
   { id: "swsh12-50", qty: 1, note: "" },  // Raichu · Silver Tempest 050/195
   { id: "me4-25", qty: 1, finish: "Reverse Holofoil", note: "" },  // Wimpod · Chaos Rising 025/086
-  { id: "me4-26", qty: 1, note: "" },  // Chaos Rising 026/086
+  { id: "me4-26", qty: 2, note: "" },  // Chaos Rising 026/086
   { id: "sv8pt5-111", qty: 1, finish: "Reverse Holofoil", note: "" },  // Haban Berry · Prismatic Evolutions 111/131
   { id: "rsv10pt5-6", qty: 1, note: "" },  // Deerling · White Flare 006/086
   { id: "swsh12pt5-47", qty: 1, note: "" },  // Emolga · Crown Zenith 047/159
   { id: "sv6-117", qty: 1, note: "" },  // Scolipede · Twilight Masquerade 117/167
-  { id: "me4-34", qty: 2, note: "" },  // Deoxys · Chaos Rising 034/086
+  { id: "me4-34", qty: 3, note: "" },  // Deoxys · Chaos Rising 034/086
   { id: "me3-23", qty: 1, note: "" },  // Amaura · Perfect Order 023/088
   { id: "sv8-175", qty: 1, note: "" },  // Dusk Ball · Surging Sparks 175/191
   { id: "sv8-100", qty: 1, note: "" },  // Annihilape · Surging Sparks 100/191
@@ -767,7 +767,7 @@ const MY_CARDS = [
   { id: "pgo-20", qty: 1, note: "" },  // Slowbro · Pokemon Go 020/078
   { id: "sv6-51", qty: 1, note: "" },  // Snorunt · Twilight Masquerade 051/167
   { id: "me4-19", qty: 1, finish: "Holofoil", note: "" },  // Keldeo · Chaos Rising 019/086
-  { id: "me4-18", qty: 1, note: "" },  // Chaos Rising 018/086
+  { id: "me4-18", qty: 2, note: "" },  // Chaos Rising 018/086
   { id: "swsh9-76", qty: 1, note: "" },  // Flygon · Brilliant Stars 076/172
   { id: "me3-69", qty: 1, note: "" },  // Antique Sail Fossil · Perfect Order 069/088
   { id: "me3-20", qty: 1, finish: "Normal", note: "" },  // Staryu · Perfect Order 020/088
@@ -781,8 +781,8 @@ const MY_CARDS = [
   { id: "swsh6-64", qty: 1, finish: "Normal", note: "" },  // Cresselia · Chilling Reign 064/198 (deck-exclusive non-holo)
   { id: "swsh6-140", qty: 4, note: "" },  // Fog Crystal · Chilling Reign 140/198
   { id: "me4-77", qty: 1, note: "" },  // Emma · Chaos Rising 077/086
-  { id: "me4-84", qty: 1, note: "" },  // Chaos Rising 084/086
-  { id: "me4-81", qty: 1, finish: "Reverse Holofoil", note: "" },  // Chaos Rising 081/086
+  { id: "me4-84", qty: 2, note: "" },  // Chaos Rising 084/086
+  { id: "me4-81", qty: 2, finish: "Reverse Holofoil", note: "" },  // Chaos Rising 081/086
   { id: "sv10-167", qty: 2, note: "" },  // Judge · Destined Rivals 167/182
   { id: "me3-24", qty: 1, finish: "Holofoil", note: "" },  // Aurorus · Perfect Order 024/088
   { id: "swsh12pt5-9", qty: 2, note: "" },  // Yanmega · Crown Zenith 009/159
@@ -837,7 +837,35 @@ const MY_CARDS = [
   { id: "base1-63", qty: 1, note: "" },  // Squirtle · Base Set (Unlimited) 63
   { id: "sm7-44", qty: 1, finish: "Normal", note: "" },  // Luvdisc · Celestial Storm 44
   { id: "base2-50", qty: 1, finish: "Unlimited", note: "" },  // Cubone · Jungle 50
-  { id: "swsh6-75", qty: 3, finish: "Holofoil", note: "" },  // Shadow Rider Calyrex VMAX · Chilling Reign 075/198
+  { id: "swsh6-75", qty: 1, finish: "Holofoil", note: "" },  // Shadow Rider Calyrex VMAX · Chilling Reign 075/198
+  { id: "zsv10pt5-55", qty: 1, note: "" },  // Black Bolt 055/086
+  { id: "me1-74", qty: 1, note: "" },  // Mega Evolution 074/132
+  { id: "sv8-83", qty: 1, note: "" },  // Surging Sparks 083/191
+  { id: "sv1-74", qty: 1, note: "" },  // Scarlet & Violet Base Set 074/198
+  { id: "me1-92", qty: 1, note: "" },  // Mega Evolution 092/132
+  { id: "me3-22", qty: 1, note: "" },  // Perfect Order 022/088
+  { id: "me3-88", qty: 1, note: "" },  // Perfect Order 088/088
+  { id: "me4-50", qty: 1, note: "" },  // Chaos Rising 050/086
+  { id: "me4-79", qty: 1, note: "" },  // Chaos Rising 079/086
+  { id: "me4-73", qty: 1, note: "" },  // Chaos Rising 073/086
+  { id: "me4-16", qty: 1, note: "" },  // Chaos Rising 016/086
+  { id: "me4-70", qty: 3, note: "" },  // Chaos Rising 070/086
+  { id: "me4-83", qty: 1, note: "" },  // Chaos Rising 083/086
+  { id: "me4-39", qty: 1, note: "" },  // Chaos Rising 039/086
+  { id: "me4-56", qty: 1, note: "" },  // Chaos Rising 056/086
+  { id: "me4-51", qty: 1, note: "" },  // Crobat · Chaos Rising 051/086
+  { id: "me4-78", qty: 1, note: "" },  // Chaos Rising 078/086
+  { id: "me4-37", qty: 1, note: "" },  // Chaos Rising 037/086
+  { id: "me4-80", qty: 1, note: "" },  // Chaos Rising 080/086
+  { id: "sv4pt5-42", qty: 1, note: "" },  // Paldean Fates 042/091
+  { id: "sv4-78", qty: 1, note: "" },  // Paradox Rift 078/182
+  { id: "me3-43", qty: 1, note: "" },  // Perfect Order 043/088
+  { id: "me4-81", qty: 1, note: "" },  // Chaos Rising 081/086
+  { id: "base2-45", qty: 1, note: "" },  // Rhydon · Jungle 045/064
+  { id: "neo1-28", qty: 1, note: "" },  // Bayleef · Neo Genesis 028/111
+  { id: "mee-6", qty: 1, note: "" },  // Basic Fighting Energy · Mega Evolution Energy 006
+  { id: "mee-8", qty: 1, note: "" },  // Basic Metal Energy · Mega Evolution Energy 008
+  { id: "mee-5", qty: 1, note: "" },  // Basic Psychic Energy · Mega Evolution Energy 005
 ];
 
 /* ============================ ENGINE ============================ */
@@ -1001,12 +1029,23 @@ function estTile(entry) {
 // Fetch many cards in a few batched requests (id:"a" OR id:"b" …) instead of
 // one request per card — dramatically faster and far easier on the keyless
 // API's rate limit. Returns a map of id -> card for the ones that resolved.
+//
+// Reliability notes: the keyless pokemontcg.io tier has a fairly low rate
+// limit, so with 300+ cards a batch can occasionally get rate-limited and
+// silently drop an entire chunk of cards. To avoid that:
+//   1. Each batch retries up to 3x with exponential backoff on failure.
+//   2. After the first full pass, any ids that are STILL missing get a
+//      second sweep in smaller batches (rate limits are usually transient).
+// Getting a free API key (https://dev.pokemontcg.io) and pasting it into
+// API_KEY above raises the rate limit substantially and makes this a
+// non-issue — worth doing once the collection gets this large.
 async function fetchCardsByIds(ids, onProgress) {
   const map = {};
-  const CHUNK = 50;
+  const CHUNK = 40;
+  const MAX_RETRIES = 4;
   let done = 0;
-  for (let i = 0; i < ids.length; i += CHUNK) {
-    const slice = ids.slice(i, i + CHUNK);
+
+  async function fetchBatch(slice, attempt = 1) {
     const q = slice.map((id) => `id:"${id}"`).join(" OR ");
     const url = `${API}?q=${encodeURIComponent(q)}&pageSize=250`;
     try {
@@ -1015,12 +1054,39 @@ async function fetchCardsByIds(ids, onProgress) {
       const d = await r.json();
       (d.data || []).forEach((c) => { map[c.id] = c; });
     } catch (e) {
-      console.error("[BATCH] failed:", e.message);
+      if (attempt < MAX_RETRIES) {
+        const backoff = 500 * attempt * attempt; // 500, 2000, 4500ms
+        console.warn(`[BATCH] attempt ${attempt} failed (${e.message}), retrying in ${backoff}ms…`);
+        await sleep(backoff);
+        return fetchBatch(slice, attempt + 1);
+      }
+      console.error(`[BATCH] gave up after ${MAX_RETRIES} attempts:`, e.message, slice);
     }
-    done += slice.length;
-    if (onProgress) onProgress(done);
-    if (i + CHUNK < ids.length) await sleep(120);
   }
+
+  for (let i = 0; i < ids.length; i += CHUNK) {
+    const slice = ids.slice(i, i + CHUNK);
+    await fetchBatch(slice);
+    done += slice.length;
+    if (onProgress) onProgress(Math.min(done, ids.length));
+    if (i + CHUNK < ids.length) await sleep(200);
+  }
+
+  // Second pass: anything still missing gets retried in small batches. This
+  // recovers cards from batches that got rate-limited or timed out earlier,
+  // without needing to redo the whole fetch.
+  const missing = [...new Set(ids)].filter((id) => !map[id]);
+  if (missing.length) {
+    console.warn(`[BATCH] ${missing.length} card(s) still missing after pass 1, sweeping again…`);
+    const SMALL = 10;
+    for (let i = 0; i < missing.length; i += SMALL) {
+      const slice = missing.slice(i, i + SMALL);
+      await fetchBatch(slice);
+      if (onProgress) onProgress(ids.length);
+      if (i + SMALL < missing.length) await sleep(300);
+    }
+  }
+
   return map;
 }
 
