@@ -40,6 +40,15 @@
   .dl-already a { font-family: Montserrat, sans-serif; font-size: 0.88rem; font-weight: 600; color: #FF1493; text-decoration: none; }
   .dl-already a:hover { text-decoration: underline; }
 
+  /* Order-number unlock gate */
+  .dl-unlock-row { display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .dl-unlock-row input { flex: 1; min-width: 220px; border: 1.5px solid #f0d4e2; border-radius: 8px; padding: 0.65rem 0.9rem; font: 500 0.88rem Montserrat, sans-serif; outline: none; color: #333; }
+  .dl-unlock-row input:focus { border-color: #FF1493; }
+  .dl-unlock-btn { background: #FF1493; color: #fff; border: none; border-radius: 8px; padding: 0.65rem 1.4rem; font: 700 0.78rem Montserrat, sans-serif; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: background 0.15s ease; white-space: nowrap; }
+  .dl-unlock-btn:hover { background: #d1147d; }
+  .dl-unlock-error { display: none; background: #fff0f0; border: 1px solid #f5b5b5; color: #b91c1c; border-radius: 8px; padding: 0.55rem 0.8rem; font: 500 0.8rem Montserrat, sans-serif; margin-bottom: 1rem; }
+  .dl-links-hidden { display: none; }
+
   /* Lightbox */
   .lb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; }
   .lb-overlay.active { display: flex; }
@@ -79,8 +88,8 @@
           <span class="dl-price">$5.65 CAD</span>
           <a class="dl-btn" href="https://www.paypal.com/paypalme/blondieslaysapparel/5.65CAD?note=recipes-pdf" target="_blank">Buy Now &rarr;</a>
         </div>
-        <p class="dl-note">After payment, return to this page and use the download link below.</p>
-      </div>
+        <p class="dl-note">After payment, enter your PayPal order number below to unlock your download.</p>
+        </div>
       <div class="dl-preview portrait" onclick="openLB('recipes',0)">
         <img src="/images/downloads/recipes-1.png" alt="Recipe cookbook preview">
         <span class="dl-preview-hint">1 of 3 &mdash; click to browse</span>
@@ -96,7 +105,7 @@
           <span class="dl-price">$5.65 CAD</span>
           <a class="dl-btn" href="https://www.paypal.com/paypalme/blondieslaysapparel/5.65CAD?note=cheese-2026-pdf" target="_blank">Buy Now &rarr;</a>
         </div>
-        <p class="dl-note">After payment, return to this page and use the download link below.</p>
+        <p class="dl-note">After payment, enter your PayPal order number below to unlock your download.</p>
       </div>
       <div class="dl-preview landscape" onclick="openLB('cheese',0)">
         <img src="/images/downloads/January.png" alt="Cheese of the month preview">
@@ -106,8 +115,13 @@
 
     <div class="dl-already">
       <h3>Already purchased?</h3>
-      <p>Your download links are permanent &mdash; bookmark this page for easy access.</p>
-      <ul>
+      <p>Enter the order number from your PayPal payment confirmation email to unlock your downloads.</p>
+      <div class="dl-unlock-row">
+        <input type="text" id="dl-code" placeholder="e.g. 3RA123456B789012C" autocomplete="off">
+        <button class="dl-unlock-btn" id="dl-unlock-btn" type="button">Unlock Downloads</button>
+      </div>
+      <div class="dl-unlock-error" id="dl-unlock-error"></div>
+      <ul class="dl-links-hidden" id="dl-links">
         <li><a href="/downloads/xk7q2/recipes.pdf">&darr; Family Recipe Cookbook PDF</a></li>
         <li><a href="/downloads/xk7q2/cheese-2026.pdf">&darr; Cheese of the Month Club 2026 PDF</a></li>
       </ul>
@@ -134,5 +148,39 @@
     document.getElementById('lb-img').src = imgs[currentIndex];
   }
   document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLB(); });
+
+  // ── Order-number unlock gate ──────────────────────────────
+  (function(){
+    var STORAGE_KEY = 'bsa_dl_unlocked';
+    var input = document.getElementById('dl-code');
+    var btn   = document.getElementById('dl-unlock-btn');
+    var err   = document.getElementById('dl-unlock-error');
+    var links = document.getElementById('dl-links');
+    if (!input || !btn || !links) return;
+
+    function unlock() {
+      links.classList.remove('dl-links-hidden');
+      input.closest('.dl-unlock-row').style.display = 'none';
+      err.style.display = 'none';
+    }
+
+    function tryUnlock() {
+      var code = input.value.trim();
+      if (code.length < 8) {
+        err.textContent = "That doesn\u2019t look like a full PayPal order number \u2014 check your payment confirmation email and try again.";
+        err.style.display = 'block';
+        return;
+      }
+      try { localStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
+      unlock();
+    }
+
+    btn.addEventListener('click', tryUnlock);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryUnlock(); });
+
+    try {
+      if (localStorage.getItem(STORAGE_KEY) === '1') { unlock(); }
+    } catch(e) {}
+  })();
 </script>
 {{ end }}
