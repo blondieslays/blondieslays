@@ -27,13 +27,21 @@
   .to-proof-text { font-family:Montserrat,sans-serif; font-size:.95rem; color:#5a5a5a; text-align:center; max-width:60ch; margin:0 auto; line-height:1.7; }
   .to-proof-text strong { color:#be185d; }
 
-  /* Offer cards */
-  .to-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-  .to-card { background:#fff; border:1px solid #f5e4ec; border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(255,20,147,.06); }
-  .to-card img { width:100%; aspect-ratio: 3 / 4; height:auto; object-fit:cover; display:block; }
-  .to-card-body { padding:1.1rem 1.2rem 1.4rem; }
-  .to-card h3 { font-family:Montserrat,sans-serif; font-size:1.05rem; font-weight:700; color:#FF1493; margin:0 0 .5rem; }
-  .to-card p { font-family:Montserrat,sans-serif; font-size:.85rem; color:#777; line-height:1.6; margin:0; }
+  /* What We Make — alternating rows, deliberately different rhythm from the proof grid above */
+  .wm-list { display:flex; flex-direction:column; gap:2.75rem; }
+  .wm-row { display:flex; align-items:center; gap:2.25rem; }
+  .wm-row.reverse { flex-direction:row-reverse; }
+  .wm-img-wrap { flex:none; width:230px; }
+  .wm-img-wrap img { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:18px; box-shadow:0 12px 26px rgba(190,24,93,.16); display:block; }
+  .wm-text { flex:1; }
+  .wm-text h3 { font-family:Montserrat,sans-serif; font-weight:700; font-size:1.35rem; color:#FF1493; margin:0 0 .55rem; }
+  .wm-text p { font-family:Montserrat,sans-serif; font-size:.94rem; color:#666; line-height:1.75; margin:0; max-width:44ch; }
+
+  @media (max-width:680px) {
+    .wm-row, .wm-row.reverse { flex-direction:column; text-align:center; }
+    .wm-img-wrap { width:200px; }
+    .wm-text p { max-width:none; }
+  }
 
   /* Why us bullets */
   .to-why { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem 2rem; max-width: 760px; margin: 0 auto; }
@@ -49,7 +57,7 @@
   .to-price-band p { font-family:Montserrat,sans-serif; font-size:.88rem; opacity:.92; margin:.4rem 0 0; }
 
   @media (max-width: 780px) {
-    .to-proof-grid, .to-cards { grid-template-columns: 1fr; }
+    .to-proof-grid { grid-template-columns: 1fr; }
     .to-why { grid-template-columns: 1fr; }
     .to-title { font-size: 2.5rem; }
   }
@@ -75,24 +83,24 @@
 <section class="to-section">
   <h2 class="to-section-title">What We Make</h2>
   <p class="to-section-sub">One-off pieces, team sets, or standing orders &mdash; all produced in-house.</p>
-  <div class="to-cards">
-    <div class="to-card">
-      <img src="/images/htv/team-apparel.png" alt="Bridal and bachelorette party shirts">
-      <div class="to-card-body">
+  <div class="wm-list">
+    <div class="wm-row">
+      <div class="wm-img-wrap"><img src="/images/htv/team-apparel.png" alt="Bridal and bachelorette party shirts"></div>
+      <div class="wm-text">
         <h3>Bridal &amp; Bachelorette Party Shirts</h3>
         <p>Matching sets for the whole crew &mdash; bride-to-be designs, personalized names, and coordinated colours. Perfect for the big weekend.</p>
       </div>
     </div>
-    <div class="to-card">
-      <img src="/images/htv/branded-merch.png" alt="Branded merchandise">
-      <div class="to-card-body">
+    <div class="wm-row reverse">
+      <div class="wm-img-wrap"><img src="/images/htv/branded-merch.png" alt="Branded merchandise"></div>
+      <div class="wm-text">
         <h3>Branded Merchandise</h3>
         <p>Logo tees, staff uniforms, and branded giveaways for small businesses. Canadian sourcing, fast turnaround.</p>
       </div>
     </div>
-    <div class="to-card">
-      <img src="/images/htv/custom-pieces.png" alt="Custom gifts">
-      <div class="to-card-body">
+    <div class="wm-row">
+      <div class="wm-img-wrap"><img src="/images/products/custom-name.png" alt="Custom gifts"></div>
+      <div class="wm-text">
         <h3>Custom Gifts</h3>
         <p>One-of-a-kind gifts for birthdays, holidays, and anyone hard to shop for. Bring your idea and Elise will bring it to life.</p>
       </div>
