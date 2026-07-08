@@ -121,10 +121,7 @@
         <button class="dl-unlock-btn" id="dl-unlock-btn" type="button">Unlock Downloads</button>
       </div>
       <div class="dl-unlock-error" id="dl-unlock-error"></div>
-      <ul class="dl-links-hidden" id="dl-links">
-        <li><a href="/downloads/xk7q2/recipes.pdf">&darr; Family Recipe Cookbook PDF</a></li>
-        <li><a href="/downloads/xk7q2/cheese-2026.pdf">&darr; Cheese of the Month Club 2026 PDF</a></li>
-      </ul>
+      <ul class="dl-links-hidden" id="dl-links"></ul>
     </div>
 
   </div>
@@ -158,7 +155,22 @@
     var links = document.getElementById('dl-links');
     if (!input || !btn || !links) return;
 
+    var FILES = [
+      { href: '/downloads/xk7q2/recipes.pdf', label: '\u2193 Family Recipe Cookbook PDF' },
+      { href: '/downloads/xk7q2/cheese-2026.pdf', label: '\u2193 Cheese of the Month Club 2026 PDF' }
+    ];
+
     function unlock() {
+      if (!links.children.length) {
+        FILES.forEach(function(f){
+          var li = document.createElement('li');
+          var a = document.createElement('a');
+          a.href = f.href;
+          a.textContent = f.label;
+          li.appendChild(a);
+          links.appendChild(li);
+        });
+      }
       links.classList.remove('dl-links-hidden');
       input.closest('.dl-unlock-row').style.display = 'none';
       err.style.display = 'none';
