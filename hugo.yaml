@@ -28,7 +28,7 @@ markup:
 params:
   title: "Blondie Slays Apparel"
   description: "Independent content consultancy and custom apparel. Sarnia, Ontario."
-  favicon: "/images/logo.png"
+  favicon: "/images/logo-reversed.png"
 
   useBootstrapCDN: false
   mathjax: false
