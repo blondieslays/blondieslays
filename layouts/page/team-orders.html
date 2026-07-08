@@ -35,7 +35,8 @@
   /* Why us bullets */
   .to-why { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem 2rem; max-width: 760px; margin: 0 auto; }
   .to-why-item { display:flex; gap:.75rem; align-items:flex-start; font-family:Montserrat,sans-serif; }
-  .to-why-icon { flex:none; width:28px; height:28px; border-radius:50%; background:#c8f0fb; color:#0E6A85; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; }
+  .to-why-icon { flex:none; width:28px; height:28px; border-radius:50%; background:#c8f0fb; color:#0E6A85; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; overflow:hidden; }
+  .to-why-icon img { width:60%; height:60%; object-fit:contain; display:block; }
   .to-why-text strong { display:block; font-size:.92rem; color:#1a1a1a; margin-bottom:.15rem; }
   .to-why-text span { font-size:.83rem; color:#888; line-height:1.5; }
 
@@ -100,19 +101,19 @@
   <h2 class="to-section-title">Why Teams Work With Blondie Slays</h2>
   <div class="to-why">
     <div class="to-why-item">
-      <span class="to-why-icon">&#9201;</span>
+      <span class="to-why-icon"><img src="/images/icons/turnaround-icon.png" alt=""></span>
       <div class="to-why-text"><strong>48-Hour Turnaround</strong><span>Most orders pressed and ready within two days &mdash; no waiting weeks on a big-box printer.</span></div>
     </div>
     <div class="to-why-item">
-      <span class="to-why-icon">&#128204;</span>
+      <span class="to-why-icon"><img src="/images/icons/no-order-icon.png" alt=""></span>
       <div class="to-why-text"><strong>No Order Too Small</strong><span>One jersey or one hundred &mdash; every order gets the same attention to detail.</span></div>
     </div>
     <div class="to-why-item">
-      <span class="to-why-icon">&#127465;&#65039;</span>
+      <span class="to-why-icon"><img src="/images/icons/sarnia-icon.png" alt=""></span>
       <div class="to-why-text"><strong>Made in Sarnia</strong><span>Every piece is designed and pressed locally &mdash; no overseas shipping delays.</span></div>
     </div>
     <div class="to-why-item">
-      <span class="to-why-icon">&#127912;</span>
+      <span class="to-why-icon"><img src="/images/icons/design-icon.png" alt=""></span>
       <div class="to-why-text"><strong>Design Help Included</strong><span>Not sure what you want yet? Elise will help turn your idea into a finished design.</span></div>
     </div>
   </div>
