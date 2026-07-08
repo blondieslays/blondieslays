@@ -55,7 +55,7 @@ params:
 
   navbar:
     align: ms-auto
-    brandLogo: "/images/logo.png"
+    brandLogo: "/images/logo-reversed.png"
     showBrandLogo: true
     brandName: "Blondie Slays Apparel"
     disableSearch: true
