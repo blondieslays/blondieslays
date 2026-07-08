@@ -1,0 +1,130 @@
+{{ define "main" }}
+<div style="max-width:1100px;margin:0 auto;padding:1.5rem 1rem 0;">
+  <a href="/" style="font-family:Montserrat,sans-serif;font-size:.8rem;font-weight:600;color:#0E93A6;text-decoration:none;">&larr; Back to home</a>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  .to-hero { background: linear-gradient(180deg,#FFF3F9 0%,#ffffff 100%); padding: 2.25rem 1.5rem 2.5rem; margin: .5rem 0 0; text-align: center; }
+  .to-eyebrow { font-family:'Bebas Neue',sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#0E93A6; font-size:1rem; }
+  .to-title { font-family:'Bebas Neue',sans-serif; letter-spacing:.03em; font-size:3.2rem; color:#FF1493; margin:.15rem 0 .7rem; line-height:.95; }
+  .to-sub { font-family:Montserrat,sans-serif; font-size:1rem; line-height:1.65; color:#5a5a5a; margin:0 auto 1.6rem; max-width:52ch; }
+  .to-cta { font-family:Montserrat,sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:#FF1493; padding:.75rem 1.9rem; border-radius:999px; text-decoration:none; box-shadow:0 10px 24px rgba(255,20,147,.28); transition:all .15s ease; display:inline-block; }
+  .to-cta:hover { background:#d1147d; transform:translateY(-2px); color: #fff; }
+
+  .to-section { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem; }
+  .to-section-title { font-family:'Bebas Neue',sans-serif; letter-spacing:.1em; text-transform:uppercase; font-size: 1.6rem; color:#1a1a1a; text-align:center; margin: 0 0 .5rem; }
+  .to-section-sub { font-family:Montserrat,sans-serif; font-size:.9rem; color:#888; text-align:center; margin: 0 0 2rem; }
+
+  /* Proof strip */
+  .to-proof { background:#FFF0F6; }
+  .to-proof-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:1.25rem; margin-bottom: 1.75rem; }
+  .to-proof-grid img { width:100%; height:220px; object-fit:cover; border-radius:12px; box-shadow:0 8px 20px rgba(190,24,93,.14); }
+  .to-proof-text { font-family:Montserrat,sans-serif; font-size:.95rem; color:#5a5a5a; text-align:center; max-width:60ch; margin:0 auto; line-height:1.7; }
+  .to-proof-text strong { color:#be185d; }
+
+  /* Offer cards */
+  .to-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .to-card { background:#fff; border:1px solid #f5e4ec; border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(255,20,147,.06); }
+  .to-card img { width:100%; height:150px; object-fit:cover; display:block; }
+  .to-card-body { padding:1.1rem 1.2rem 1.4rem; }
+  .to-card h3 { font-family:Montserrat,sans-serif; font-size:1.05rem; font-weight:700; color:#1a1a1a; margin:0 0 .5rem; }
+  .to-card p { font-family:Montserrat,sans-serif; font-size:.85rem; color:#777; line-height:1.6; margin:0; }
+
+  /* Why us bullets */
+  .to-why { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem 2rem; max-width: 760px; margin: 0 auto; }
+  .to-why-item { display:flex; gap:.75rem; align-items:flex-start; font-family:Montserrat,sans-serif; }
+  .to-why-icon { flex:none; width:28px; height:28px; border-radius:50%; background:#c8f0fb; color:#0E6A85; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; }
+  .to-why-text strong { display:block; font-size:.92rem; color:#1a1a1a; margin-bottom:.15rem; }
+  .to-why-text span { font-size:.83rem; color:#888; line-height:1.5; }
+
+  /* Pricing anchor */
+  .to-price-band { text-align:center; background:#0E93A6; color:#fff; padding: 2rem 1.5rem; border-radius: 16px; margin: 0 auto; max-width: 1040px; }
+  .to-price-band .amt { font-family:'Bebas Neue',sans-serif; font-size:2.6rem; letter-spacing:.02em; }
+  .to-price-band p { font-family:Montserrat,sans-serif; font-size:.88rem; opacity:.92; margin:.4rem 0 0; }
+
+  @media (max-width: 780px) {
+    .to-proof-grid, .to-cards { grid-template-columns: 1fr; }
+    .to-why { grid-template-columns: 1fr; }
+    .to-title { font-size: 2.5rem; }
+  }
+</style>
+
+<section class="to-hero">
+  <span class="to-eyebrow">For Teams, Leagues &amp; Businesses</span>
+  <h1 class="to-title">Bulk &amp; Team Apparel</h1>
+  <p class="to-sub">Custom tees, spirit wear, and branded merch &mdash; designed and pressed in Sarnia, Ontario. Fast turnaround, and no order too small to matter.</p>
+  <a class="to-cta" href="#team-order">Get a Quote &darr;</a>
+</section>
+
+<section class="to-section to-proof">
+  <h2 class="to-section-title">Proven With Real Teams</h2>
+  <div class="to-proof-grid">
+    <img src="/images/projects/cnpl-apparel/01.png" alt="Canadian National Pickleball League custom apparel">
+    <img src="/images/projects/cnpl-apparel/02.png" alt="Canadian National Pickleball League custom apparel">
+    <img src="/images/projects/cnpl-apparel/03.png" alt="Canadian National Pickleball League custom apparel">
+  </div>
+  <p class="to-proof-text">Blondie Slays produced the branded merchandise for the <strong>Canadian National Pickleball League</strong> &mdash; custom tees, towels, and event apparel designed and pressed in-studio using Cricut and heat press techniques. If your team, league, or business needs the same, you're in the right place.</p>
+</section>
+
+<section class="to-section">
+  <h2 class="to-section-title">What We Make</h2>
+  <p class="to-section-sub">One-off pieces, team sets, or standing orders &mdash; all produced in-house.</p>
+  <div class="to-cards">
+    <div class="to-card">
+      <img src="/images/htv/team-apparel.png" alt="Team & event apparel">
+      <div class="to-card-body">
+        <h3>Team &amp; Event Apparel</h3>
+        <p>Custom tees, hoodies, and hats for sports teams, corporate events, and brand activations. Designed to order, produced in-studio.</p>
+      </div>
+    </div>
+    <div class="to-card">
+      <img src="/images/htv/branded-merch.png" alt="Branded merchandise">
+      <div class="to-card-body">
+        <h3>Branded Merchandise</h3>
+        <p>Logo tees, staff uniforms, and branded giveaways for small businesses. Canadian sourcing, fast turnaround.</p>
+      </div>
+    </div>
+    <div class="to-card">
+      <img src="/images/htv/custom-pieces.png" alt="One-off custom pieces">
+      <div class="to-card-body">
+        <h3>One-Off Custom Pieces</h3>
+        <p>Got a vision? Bring it. One-of-a-kind designs for fundraisers, tournaments, and anything in between.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="to-section" style="padding-top:0;">
+  <h2 class="to-section-title">Why Teams Work With Blondie Slays</h2>
+  <div class="to-why">
+    <div class="to-why-item">
+      <span class="to-why-icon">&#9201;</span>
+      <div class="to-why-text"><strong>48-Hour Turnaround</strong><span>Most orders pressed and ready within two days &mdash; no waiting weeks on a big-box printer.</span></div>
+    </div>
+    <div class="to-why-item">
+      <span class="to-why-icon">&#128204;</span>
+      <div class="to-why-text"><strong>No Order Too Small</strong><span>One jersey or one hundred &mdash; every order gets the same attention to detail.</span></div>
+    </div>
+    <div class="to-why-item">
+      <span class="to-why-icon">&#127465;&#65039;</span>
+      <div class="to-why-text"><strong>Made in Sarnia</strong><span>Every piece is designed and pressed locally &mdash; no overseas shipping delays.</span></div>
+    </div>
+    <div class="to-why-item">
+      <span class="to-why-icon">&#127912;</span>
+      <div class="to-why-text"><strong>Design Help Included</strong><span>Not sure what you want yet? Elise will help turn your idea into a finished design.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="to-price-band">
+  <span class="amt">Starting at $20/shirt</span>
+  <p>Bulk pricing gets better the more you order &mdash; get a free, no-obligation quote below.</p>
+</div>
+
+<div style="height:1rem;"></div>
+
+{{ partial "sections/teamorder.html" . }}
+
+{{ end }}
