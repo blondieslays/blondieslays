@@ -104,14 +104,17 @@
     }
 </style>
 
+<meta name="google-site-verification" content="2ljr4hFN4_4XXyG0Zkp-piJuqxMfvNR7EIF67yc2ej4" />
 <link rel="stylesheet" href="/css/custom.css">
 <style>
-  #dl-nav-btn, #dl-nav-btn:link, #dl-nav-btn:visited { color: #FF1493 !important; }
+  #dl-nav-btn, #dl-nav-btn:link, #dl-nav-btn:visited { color: #ffffff !important; }
   #dl-nav-btn:hover, #dl-nav-btn:active { color: #ffffff !important; }
+  #about-nav-btn, #about-nav-btn:link, #about-nav-btn:visited { color: #ffffff !important; }
+  #about-nav-btn:hover, #about-nav-btn:active { color: #ffffff !important; }
 </style>
 <script>
-  var btnStyle = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:none;line-height:1;";
-  var btnHover = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:4px;border:2px solid #FF1493;text-decoration:none;background:#FF1493;color:#ffffff;box-shadow:none;line-height:1;";
+  var btnStyle = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.5rem 1.25rem;border-radius:999px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:0 2px 8px rgba(255,20,147,0.12);line-height:1;transition:all .15s ease;";
+  var btnHover = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.5rem 1.25rem;border-radius:999px;border:2px solid #FF1493;text-decoration:none;background:#FF1493;color:#ffffff;box-shadow:0 6px 16px rgba(255,20,147,0.32);line-height:1;transition:all .15s ease;transform:translateY(-1px);";
 
   function styleBtn(el, extraStyle) {
     var s = btnStyle + (extraStyle || "");
@@ -125,6 +128,14 @@
     var nav = document.querySelector("ul.navbar-nav.ms-auto, nav .navbar-nav, nav ul.navbar-nav");
     if (!nav) nav = document.querySelector("nav");
     if (nav) {
+      
+      var about = document.createElement("a");
+      about.id = "about-nav-btn";
+      about.href = "/about/";
+      about.textContent = "About";
+      styleBtn(about, "margin-left:0.75rem;");
+      nav.appendChild(about);
+
       var btn = document.createElement("a");
       btn.id = "dl-nav-btn";
       btn.href = "/downloads/";
@@ -151,6 +162,38 @@
       styleBtn(heroBtn, "");
     }
   });
+</script>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://blondieslays.ca/#org",
+      "name": "Blondie Slays Apparel",
+      "url": "https://blondieslays.ca",
+      "logo": "https://blondieslays.ca/images/logo.png",
+      "description": "Independent custom apparel studio and digital consultancy in Sarnia, Ontario.",
+      "founder": { "@type": "Person", "@id": "https://blondieslays.ca/#elise", "name": "Elise Marion", "url": "https://blondieslays.ca/about/" },
+      "areaServed": "CA",
+      "sameAs": [
+        "https://www.instagram.com/blondieslays/",
+        "https://www.etsy.com/shop/BlondieSlaysApparel",
+        "https://www.facebook.com/blondieslays/",
+        "https://github.com/blondieslays"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://blondieslays.ca/#website",
+      "url": "https://blondieslays.ca",
+      "name": "Blondie Slays Apparel",
+      "publisher": { "@id": "https://blondieslays.ca/#org" }
+    }
+  ]
+}
 </script>
 
 
@@ -256,13 +299,6 @@ Page not found | Blondie Slays Apparel
 
                     
 
-                    
-                    <li class="nav-item navbar-text">
-                        <a class="nav-link" href="/#contact"
-                            aria-label="contact">
-                            Get in touch
-                        </a>
-                    </li>
                     
 
                     
