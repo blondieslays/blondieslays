@@ -262,9 +262,9 @@ params:
       - title: CNPL Custom Apparel
         content: Branded merchandise production for the Canadian National Pickleball League. Custom tees, towels, and event apparel designed and produced in-studio using Cricut and heat press techniques.
         images:
+          - /images/projects/cnpl-apparel/03.png
           - /images/projects/cnpl-apparel/01.png
           - /images/projects/cnpl-apparel/02.png
-          - /images/projects/cnpl-apparel/03.png
         link: /team-orders/
         linkText: "Get a quote for your team →"
         skills:
