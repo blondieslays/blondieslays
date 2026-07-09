@@ -234,9 +234,7 @@ params:
       - title: Canadian National Pickleball League
         content: End-to-end content production for league events, social media campaigns, and sponsorship activations. Blog posts, matchday graphics, promotional materials, and full brand assets across the 2026 season.
         images:
-          - /images/projects/cnpl-content/01.png
-          - /images/projects/cnpl-content/02.png
-          - /images/projects/cnpl-content/03.png
+          - /images/projects/cnpl-content/cnpl-socials.png
         skills:
           - name: Content Strategy
             color: pink
