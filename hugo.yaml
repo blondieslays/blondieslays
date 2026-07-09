@@ -67,7 +67,7 @@ params:
       disableAbout: true
       disableExperience: false
       disableEducation: true
-      disableProjects: false
+      disableProjects: true
       disableAchievements: true
       disableContact: true
 
