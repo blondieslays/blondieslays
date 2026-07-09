@@ -37,8 +37,14 @@
 }
 
 /* ── Hero ─────────────────────────────────────── */
-#hero h2 { font-size: 1.4rem !important; font-weight: 500 !important; letter-spacing: 0 !important; }
+#hero h1 { font-family: 'Caveat', cursive !important; font-weight: 700 !important; letter-spacing: 0 !important; color: #be185d !important; font-size: 4rem !important; line-height: 1.05 !important; }
+#hero h2 { font-size: 1.4rem !important; font-weight: 500 !important; letter-spacing: 0 !important; color: #5a5a5a !important; }
+#hero p.hero-content { color: #5a5a5a !important; }
 #hero { overflow: hidden !important; padding-bottom: 5rem !important; margin-bottom: 0 !important; }
+
+@media (max-width: 768px) {
+  #hero h1 { font-size: 3rem !important; }
+}
 #hero .row { align-items: flex-start !important; }
 #hero .col-sm-12.col-md-9.pt-5 { padding-top: 0 !important; }
 
