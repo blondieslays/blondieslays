@@ -23,13 +23,21 @@
     var nav = document.querySelector("ul.navbar-nav.ms-auto, nav .navbar-nav, nav ul.navbar-nav");
     if (!nav) nav = document.querySelector("nav");
     if (nav) {
-      // About nav button
-      var about = document.createElement("a");
-      about.id = "about-nav-btn";
-      about.href = "/about/";
-      about.textContent = "About";
-      styleBtn(about, "margin-left:0.75rem;");
-      nav.appendChild(about);
+      // Bulk Orders nav button
+      var bulk = document.createElement("a");
+      bulk.id = "bulk-nav-btn";
+      bulk.href = "/team-orders/";
+      bulk.textContent = "Bulk Orders";
+      styleBtn(bulk, "margin-left:0.75rem;");
+      nav.appendChild(bulk);
+
+      // Shirt Designer nav button
+      var designer = document.createElement("a");
+      designer.id = "designer-nav-btn";
+      designer.href = "/build/";
+      designer.textContent = "Shirt Designer";
+      styleBtn(designer, "margin-left:0.75rem;");
+      nav.appendChild(designer);
 
       var btn = document.createElement("a");
       btn.id = "dl-nav-btn";
@@ -37,6 +45,14 @@
       btn.textContent = "Digital Downloads";
       styleBtn(btn, "margin-left:0.75rem;");
       nav.appendChild(btn);
+
+      // "Meet Elise" nav button (was About)
+      var about = document.createElement("a");
+      about.id = "about-nav-btn";
+      about.href = "/about/";
+      about.textContent = "Meet Elise";
+      styleBtn(about, "margin-left:0.75rem;");
+      nav.appendChild(about);
     }
 
     // Hero builder button — same style

@@ -253,6 +253,8 @@ a#hero-builder-btn:hover {
 /* ── Nav + hero buttons: shared geometry ─────────────── */
 #about-nav-btn,
 #dl-nav-btn,
+#bulk-nav-btn,
+#designer-nav-btn,
 a#hero-builder-btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -284,12 +286,14 @@ a#hero-builder-btn:hover {
   background: #FF1493 !important;
   color: #ffffff !important;
 }
-/* Primary (filled): Digital Downloads */
-#dl-nav-btn {
+/* Primary (filled): Digital Downloads + Bulk Orders */
+#dl-nav-btn,
+#bulk-nav-btn {
   background: #FF1493 !important;
   color: #ffffff !important;
 }
-#dl-nav-btn:hover {
+#dl-nav-btn:hover,
+#bulk-nav-btn:hover {
   background: #d1147d !important;
   border-color: #d1147d !important;
   color: #ffffff !important;
@@ -299,7 +303,9 @@ a#hero-builder-btn:hover {
 @media (max-width: 991px) {
   #navbarContent .navbar-nav { align-items: center !important; padding-bottom: .6rem; }
   #about-nav-btn,
-  #dl-nav-btn {
+  #dl-nav-btn,
+  #bulk-nav-btn,
+  #designer-nav-btn {
     margin: .35rem 0 !important;
     width: 220px !important;
     max-width: 80vw !important;
@@ -330,16 +336,21 @@ a#hero-builder-btn:hover {
 .bplace-col #bplacements { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .bplace-col #bplacements .bpl { text-align: center; }
 
-/* ── About nav button → complementary blue (filled, matches Digital Downloads) ── */
+/* ── About nav button ("Meet Elise") + Shirt Designer → complementary blue (filled) ── */
 #about-nav-btn,
 #about-nav-btn:link,
-#about-nav-btn:visited {
+#about-nav-btn:visited,
+#designer-nav-btn,
+#designer-nav-btn:link,
+#designer-nav-btn:visited {
   background: #0E93A6 !important;
   border-color: #0E93A6 !important;
   color: #ffffff !important;
 }
 #about-nav-btn:hover,
-#about-nav-btn:active {
+#about-nav-btn:active,
+#designer-nav-btn:hover,
+#designer-nav-btn:active {
   background: #0B7A8A !important;
   border-color: #0B7A8A !important;
   color: #ffffff !important;
