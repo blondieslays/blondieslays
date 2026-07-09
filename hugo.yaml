@@ -248,8 +248,7 @@ params:
       - title: InMobi Audience Growth
         content: Increased daily pageviews by 400% and unique users by 133% through data-driven content strategy, GenAI workflows, and editorial team management across a 170-site portfolio.
         images:
-          - /images/projects/inmobi-growth/01.png
-          - /images/projects/inmobi-growth/02.png
+          - /images/projects/inmobi-growth/03.png
         skills:
           - name: Content Strategy
             color: pink
