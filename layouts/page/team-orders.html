@@ -35,8 +35,21 @@
   .to-card h3 { font-family:Montserrat,sans-serif; font-size:1.05rem; font-weight:700; color:#FF1493; margin:0 0 .5rem; }
   .to-card p { font-family:Montserrat,sans-serif; font-size:.85rem; color:#777; line-height:1.6; margin:0; }
 
-  /* CNPL section */
+  /* CNPL testimonial */
   .to-cnpl { background:#FFF0F6; }
+  .to-testimonial { display:flex; align-items:center; gap:2.5rem; max-width:900px; margin:0 auto; }
+  .to-testimonial-photo { flex:none; width:260px; }
+  .to-testimonial-photo img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:16px; box-shadow:0 12px 26px rgba(190,24,93,.16); display:block; }
+  .to-testimonial-body { flex:1; }
+  .to-quote-mark { font-family:'Caveat',cursive; font-size:4.5rem; color:#f9a8d4; line-height:.6; display:block; margin-bottom:.25rem; }
+  .to-quote-text { font-family:Montserrat,sans-serif; font-size:1.2rem; font-style:italic; color:#3a1028; line-height:1.6; margin:0 0 1.1rem; }
+  .to-quote-attr { font-family:Montserrat,sans-serif; font-size:.85rem; font-weight:700; color:#be185d; margin:0; }
+  .to-quote-attr span { display:block; font-weight:500; color:#888; font-size:.8rem; margin-top:.15rem; }
+
+  @media (max-width:680px) {
+    .to-testimonial { flex-direction:column; text-align:center; }
+    .to-testimonial-photo { width:200px; }
+  }
 
   /* Why us bullets */
   .to-why { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem 2rem; max-width: 760px; margin: 0 auto; }
@@ -75,6 +88,20 @@
   <p class="to-proof-text">From custom names to your favourite saying, every piece is designed and pressed in-studio using Cricut and heat press techniques &mdash; the same process trusted by teams like the <strong>Canadian National Pickleball League</strong>. Whatever you're picturing, we'll help you bring it to life.</p>
 </section>
 
+<section class="to-section to-cnpl">
+  <h2 class="to-section-title">Working With The CNPL</h2>
+  <div class="to-testimonial">
+    <div class="to-testimonial-photo">
+      <img src="/images/htv/branded-merch.png" alt="Canadian National Pickleball League custom apparel">
+    </div>
+    <div class="to-testimonial-body">
+      <span class="to-quote-mark">&#8220;</span>
+      <p class="to-quote-text">[Drop your CNPL quote in here — replace this placeholder line once you have it.]</p>
+      <p class="to-quote-attr">[Name]<span>Canadian National Pickleball League</span></p>
+    </div>
+  </div>
+</section>
+
 <section class="to-section">
   <h2 class="to-section-title">What We Make</h2>
   <p class="to-section-sub">One-off pieces, team sets, or standing orders &mdash; all produced in-house.</p>
@@ -101,16 +128,6 @@
       </div>
     </div>
   </div>
-</section>
-
-<section class="to-section to-cnpl">
-  <h2 class="to-section-title">Trusted By Real Teams</h2>
-  <div class="to-proof-grid">
-    <img src="/images/htv/branded-merch.png" alt="Canadian National Pickleball League custom apparel">
-    <img src="/images/projects/cnpl-apparel/02.png" alt="Canadian National Pickleball League custom apparel">
-    <img src="/images/projects/cnpl-apparel/03.png" alt="Canadian National Pickleball League custom apparel">
-  </div>
-  <p class="to-proof-text">Blondie Slays produced the branded merchandise for the <strong>Canadian National Pickleball League</strong> &mdash; custom tees, towels, and event apparel designed and pressed in-studio using Cricut and heat press techniques. If your team, league, or business needs the same, you're in the right place.</p>
 </section>
 
 <section class="to-section" style="padding-top:0;">
