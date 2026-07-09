@@ -27,7 +27,7 @@ markup:
 
 params:
   title: "Blondie Slays Apparel"
-  description: "Independent content consultancy and custom apparel. Sarnia, Ontario."
+  description: "Custom heat-transfer vinyl apparel and bulk team merch, hand-pressed in Sarnia, Ontario. Design your own tee, order in bulk, or go one-of-a-kind."
   favicon: "/images/logo-reversed.png"
 
   useBootstrapCDN: false
@@ -59,13 +59,6 @@ params:
     showBrandLogo: true
     brandName: "Blondie Slays Apparel"
     disableSearch: true
-    customLinks:
-      - name: "Let's Build Something"
-        url: /lets-build-something/
-        style: "btn"
-      - name: "Shop Etsy"
-        url: /downloads/
-        style: "btn"
     stickyNavBar:
       enable: true
       showOnScrollUp: true

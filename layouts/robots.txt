@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /downloads/xk7q2/
+Sitemap: https://blondieslays.ca/sitemap.xml
