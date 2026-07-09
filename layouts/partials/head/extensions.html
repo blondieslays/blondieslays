@@ -37,18 +37,6 @@
       btn.textContent = "Digital Downloads";
       styleBtn(btn, "margin-left:0.75rem;");
       nav.appendChild(btn);
-
-      // Pokémon collection button — pokeball.png
-      var poke = document.createElement("a");
-      poke.id = "poke-nav-btn";
-      poke.href = "/pokemon/";
-      poke.setAttribute("aria-label", "My Pokémon card collection");
-      poke.setAttribute("title", "Pokémon collection");
-      poke.innerHTML = '<img src="/images/pokeball.png" alt="Pokémon collection" style="display:block;height:30px;width:auto;"/>';
-      poke.setAttribute("style", "display:inline-flex;align-items:center;justify-content:center;align-self:center;margin-left:0.75rem;padding:0;line-height:0;text-decoration:none;transition:transform .15s ease, filter .15s ease;");
-      poke.addEventListener("mouseenter", function(){ poke.style.transform = "scale(1.12)"; poke.style.filter = "drop-shadow(0 2px 5px rgba(255,20,147,.5))"; });
-      poke.addEventListener("mouseleave", function(){ poke.style.transform = "scale(1)"; poke.style.filter = "none"; });
-      nav.appendChild(poke);
     }
 
     // Hero builder button — same style
