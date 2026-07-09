@@ -127,9 +127,9 @@
           <span class="bcl">Delivery</span>
           <div class="bcolor-list" id="bdelivery">
             <div class="bcolor-btn on" data-d="pickup" data-n="Local Pickup (Sarnia)">Local Pickup (Sarnia) &mdash; Free</div>
-            <div class="bcolor-btn" data-d="ship" data-n="Shipped">Shipped &mdash; +$15</div>
+            <div class="bcolor-btn" data-d="ship" data-n="Shipped">Shipped</div>
           </div>
-          <div id="shipnote" class="btd-note" style="display:none">Shipping is a flat estimate — Elise will confirm the exact rate for your address on your invoice.</div>
+          <div id="shipnote" class="btd-note" style="display:none">Shipping is a data-based estimate ($18–$22 depending on quantity) — Elise will confirm the exact rate for your address on your invoice.</div>
         </div>
 
         <div class="bprice" id="bprice">
@@ -220,11 +220,16 @@
   var BASE = 20;            // per shirt, CAD
   var SPECIAL_VINYL = 2;    // glitter / holographic finishes
   var TIEDYE = 5;           // tie-dye shirt
-  // TODO Elise: this is a flat placeholder, not a real Canada Post rate.
-  // Weigh one packaged shirt (shirt + poly mailer/box + label) and check
-  // canadapost-postescanada.ca/cpc/en/tools/find-a-rate.page for your postal
-  // code, then update this number to match.
-  var SHIP_FLAT = 15;       // flat shipping add-on, once per order, CAD
+  // TODO Elise: these are data-based estimates from your Canada Post lookup
+  // (based on the "Close/regional" column, with a small buffer). Re-check
+  // periodically at canadapost-postescanada.ca/cpc/en/tools/find-a-rate.page
+  // — far/international orders undershoot this and get trued up on the
+  // invoice, where the exact rate is entered.
+  function shippingRate(qty){
+    if(qty >= 9) return 22;
+    if(qty >= 5) return 21;
+    return 18; // 1–4 shirts
+  }
   var SPECIAL_VINYLS = ['Glitter Gold','Glitter Silver','Holographic'];
   var CUR = String.fromCharCode(36); // "$" — built this way to stay safe through file tooling
 
@@ -241,7 +246,7 @@
     if(S.tiedye) parts.push('tie-dye +' + money(TIEDYE));
     return parts.join(', ');
   }
-  function shippingCost(){ return S.delivery === 'ship' ? SHIP_FLAT : 0; }
+  function shippingCost(){ return S.delivery === 'ship' ? shippingRate(qtyVal()) : 0; }
   var HST_RATE = 0.13;     // Ontario HST — added on the invoice
   function lineItemDesc(){
     var bits = ['Custom HTV tee — ' + S.colour];
@@ -261,7 +266,7 @@
     return [
       'LINE ITEM: ' + q + ' \u00d7 ' + lineItemDesc() + ' @ ' + money(perShirt()) + ' ea',
       '  (' + priceBreakdown() + ')',
-      'Delivery: ' + S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(SHIP_FLAT) + ' estimated, confirm exact rate before invoicing)' : ' (free)'),
+      'Delivery: ' + S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(shippingCost()) + ' estimated, confirm exact rate before invoicing)' : ' (free)'),
       'Subtotal: ' + money(sub) + ' CAD',
       'HST (13%): ' + money(hst),
       'TOTAL TO INVOICE: ' + money(tot) + ' CAD'
@@ -271,7 +276,7 @@
     var q = qtyVal();
     var el = document.getElementById('bprice-val');
     var total = perShirt()*q + shippingCost();
-    var extra = S.delivery === 'ship' ? ' (incl. ' + money(SHIP_FLAT) + ' shipping)' : '';
+    var extra = S.delivery === 'ship' ? ' (incl. ' + money(shippingCost()) + ' shipping)' : '';
     if(el) el.textContent = money(total) + (q > 1 ? '  (' + q + ' \u00d7 ' + money(perShirt()) + ')' : '') + extra;
   }
 
@@ -410,8 +415,8 @@
     document.getElementById('hf-vinyl').value   = S.vinyl;
     document.getElementById('hf-font').value    = S.font;
     document.getElementById('hf-place').value   = S.placement;
-    document.getElementById('hf-delivery').value = S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(SHIP_FLAT) + ' est. shipping)' : ' (free)');
-    document.getElementById('hf-total').value   = money(perShirt()*qtyVal() + shippingCost()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')' + (S.delivery==='ship' ? ' + ' + money(SHIP_FLAT) + ' shipping' : '');
+    document.getElementById('hf-delivery').value = S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(shippingCost()) + ' est. shipping)' : ' (free)');
+    document.getElementById('hf-total').value   = money(perShirt()*qtyVal() + shippingCost()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')' + (S.delivery==='ship' ? ' + ' + money(shippingCost()) + ' shipping' : '');
     document.getElementById('hf-invoice').value  = invoiceSummary();
     document.getElementById('hf-subject').value = 'New tee order request \u2014 ' + name;
 
@@ -439,7 +444,7 @@
           size:         size,
           quantity:     String(qtyVal()),
           delivery:     S.delivery_label,
-          estimate:     money(perShirt()*qtyVal() + shippingCost()) + ' CAD (' + priceBreakdown() + (S.delivery==='ship' ? ', +' + money(SHIP_FLAT) + ' shipping' : '') + ')'
+          estimate:     money(perShirt()*qtyVal() + shippingCost()) + ' CAD (' + priceBreakdown() + (S.delivery==='ship' ? ', +' + money(shippingCost()) + ' shipping' : '') + ')'
         });
       } else {
         return res.json().then(function(data){
