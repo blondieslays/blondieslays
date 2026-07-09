@@ -137,6 +137,22 @@
   }
   .venture .v-link:hover { border-color: var(--pink); }
 
+  /* ---------- featured work ---------- */
+  .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.3rem; }
+  .work-card {
+    background: #fff; border: 2px solid var(--pink-chip); border-radius: 20px;
+    overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: transform .12s ease, box-shadow .15s ease, border-color .15s ease;
+    display: flex; flex-direction: column;
+  }
+  .work-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--pink-med); }
+  .work-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  .work-card-body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
+  .work-card h3 { font-size: 1.35rem; color: var(--ink); margin-bottom: .45rem; }
+  .work-card p { font-size: .87rem; color: #6b4357; flex: 1; }
+  .work-card .v-link { margin-top: 1rem; align-self: flex-start; text-decoration: none; font-weight: 700; font-size: .76rem; color: var(--pink-dark); border-bottom: 2px solid var(--pink-chip); padding-bottom: 2px; transition: border-color .15s ease; }
+  .work-card .v-link:hover { border-color: var(--pink); }
+
   /* ---------- skills (left-rail toolkit) ---------- */
   .skillrail { display: grid; }
   .skillrow {
@@ -157,7 +173,7 @@
   .skillrow:last-child h3,
   .skillrow:last-child .chips { padding-bottom: .15rem; }
   .chip {
-    background: var(--pink-chip); color: var(--ink);
+    background: var(--pink-chip); color: var(--pink-dark);
     font-size: .72rem; font-weight: 700; letter-spacing: .01em;
     padding: .34rem .72rem; border-radius: 999px;
   }
@@ -214,6 +230,8 @@
     .hero-photo { margin: 0 auto; }
     .hero-links { justify-content: center; }
     .hero .tagline { margin: 0 auto; }
+    /* Toolkit stays in the HTML for search engines — just hidden visually on small screens where it feels cluttered */
+    .toolkit-section { display: none; }
   }
 </style>
 
@@ -377,8 +395,41 @@
       </div>
     </section>
 
+    <!-- FEATURED WORK -->
+    <section id="featured-work">
+      <div class="sec-head"><h2>Featured Work</h2><span class="line"></span></div>
+      <div class="work-grid">
+
+        <div class="work-card">
+          <img src="/images/projects/cnpl-apparel/03.png" alt="Canadian National Pickleball League custom apparel">
+          <div class="work-card-body">
+            <h3>CNPL Custom Apparel</h3>
+            <p>Branded merchandise production for the Canadian National Pickleball League. Custom tees, towels, and event apparel designed and produced in-studio using Cricut and heat press techniques.</p>
+            <a class="v-link" href="/team-orders/">Get a quote for your team &rarr;</a>
+          </div>
+        </div>
+
+        <div class="work-card">
+          <img src="/images/projects/cnpl-content/cnpl-socials.png" alt="Canadian National Pickleball League content and social media">
+          <div class="work-card-body">
+            <h3>Canadian National Pickleball League</h3>
+            <p>End-to-end content production for league events, social media campaigns, and sponsorship activations. Blog posts, matchday graphics, promotional materials, and full brand assets across the 2026 season.</p>
+          </div>
+        </div>
+
+        <div class="work-card">
+          <img src="/images/projects/inmobi-growth/03.png" alt="InMobi audience growth chart">
+          <div class="work-card-body">
+            <h3>InMobi Audience Growth</h3>
+            <p>Increased daily pageviews by 400% and unique users by 133% through data-driven content strategy, GenAI workflows, and editorial team management across a 170-site portfolio.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- SKILLS -->
-    <section>
+    <section class="toolkit-section">
       <div class="sec-head"><h2>The Toolkit</h2><span class="line"></span></div>
       <div class="skillrail">
         <div class="skillrow">

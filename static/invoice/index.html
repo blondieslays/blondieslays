@@ -124,6 +124,25 @@
     </div>
   </div>
 
+  <!-- Delivery -->
+  <div class="card">
+    <p class="eyebrow">Delivery</p>
+    <div class="grid g2">
+      <div class="field">
+        <label>Method</label>
+        <select id="ship-method">
+          <option value="pickup">Local Pickup (Sarnia) &mdash; Free</option>
+          <option value="ship">Shipped</option>
+        </select>
+      </div>
+      <div class="field" id="ship-amt-wrap" style="display:none">
+        <label>Shipping cost (CAD)</label>
+        <input id="ship-amt" type="number" min="0" step="0.01" placeholder="0.00">
+      </div>
+    </div>
+    <p class="unit-hint" id="ship-hint" style="display:none;margin-top:.5rem">Look up the exact rate for this order's weight &amp; destination at <a href="https://www.canadapost-postescanada.ca/cpc/en/tools/find-a-rate.page" target="_blank" rel="noopener" style="color:var(--pink)">Canada Post's rate finder &rarr;</a></p>
+  </div>
+
   <!-- Line items -->
   <div class="card">
     <p class="eyebrow">Invoice lines</p>
@@ -140,6 +159,7 @@
         <input type="number" id="hst-rate" value="13" min="0" step="0.5"> <span>%</span>
       </div>
       <div class="trow"><span>Subtotal</span><span id="t-sub">$0.00</span></div>
+      <div class="trow" id="t-ship-row" style="display:none"><span>Shipping</span><span id="t-ship">$0.00</span></div>
       <div class="trow" id="t-hst-row"><span id="t-hst-lbl">HST (13%)</span><span id="t-hst">$0.00</span></div>
       <div class="trow grand"><span>Total</span><span id="t-total">$0.00</span></div>
     </div>
@@ -217,6 +237,14 @@
 
   ['hst-on','hst-rate'].forEach(function(id){ el(id).addEventListener('input', render); });
 
+  el('ship-method').addEventListener('change', function(){
+    var shipped = this.value === 'ship';
+    el('ship-amt-wrap').style.display = shipped ? '' : 'none';
+    el('ship-hint').style.display = shipped ? '' : 'none';
+    render();
+  });
+  el('ship-amt').addEventListener('input', render);
+
   function render(){
     var body = el('lines');
     if(!items.length){
@@ -232,21 +260,26 @@
     }
 
     var sub = items.reduce(function(s,it){ return s + it.unit*it.qty; }, 0);
+    var shipped = el('ship-method').value === 'ship';
+    var shipAmt = shipped ? num(el('ship-amt').value, 0) : 0;
     var rate = num(el('hst-rate').value, 0);
     var hstOn = el('hst-on').checked;
-    var hst = hstOn ? sub * rate/100 : 0;
-    var total = sub + hst;
+    var taxBase = sub + shipAmt;
+    var hst = hstOn ? taxBase * rate/100 : 0;
+    var total = taxBase + hst;
 
     el('t-sub').textContent = money(sub);
+    el('t-ship-row').style.display = shipped ? 'flex' : 'none';
+    el('t-ship').textContent = money(shipAmt);
     el('t-hst-lbl').textContent = 'HST (' + rate + '%)';
     el('t-hst').textContent = money(hst);
     el('t-hst-row').style.display = hstOn ? 'flex' : 'none';
     el('t-total').textContent = money(total);
 
-    buildOutput(sub, hst, total, hstOn, rate);
+    buildOutput(sub, shipped, shipAmt, hst, total, hstOn, rate);
   }
 
-  function buildOutput(sub, hst, total, hstOn, rate){
+  function buildOutput(sub, shipped, shipAmt, hst, total, hstOn, rate){
     var L = [];
     L.push('BLONDIE SLAYS APPAREL');
     var name = el('c-name').value.trim(), email = el('c-email').value.trim();
@@ -258,6 +291,7 @@
     if(!items.length) L.push('(no lines yet)');
     L.push('');
     L.push('Subtotal: ' + money(sub) + ' CAD');
+    L.push('Delivery: ' + (shipped ? 'Shipped — ' + money(shipAmt) : 'Local Pickup (Sarnia) — Free'));
     if(hstOn) L.push('HST (' + rate + '%): ' + money(hst));
     L.push('TOTAL: ' + money(total) + ' CAD');
     el('out').value = L.join('\n');

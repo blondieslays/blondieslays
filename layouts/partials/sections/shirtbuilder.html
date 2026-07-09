@@ -184,6 +184,7 @@
           <input type="hidden" name="Vinyl" id="hf-vinyl"/>
           <input type="hidden" name="Font" id="hf-font"/>
           <input type="hidden" name="Placement" id="hf-place"/>
+          <input type="hidden" name="Delivery" id="hf-delivery"/>
           <input type="hidden" name="Estimated total" id="hf-total"/>
           <input type="hidden" name="Invoice summary" id="hf-invoice"/>
           <input type="hidden" name="_subject" id="hf-subject" value="New tee order request"/>
@@ -340,6 +341,17 @@
     document.getElementById('bs-place').textContent=S.placement;
   });
 
+  document.getElementById('bdelivery').addEventListener('click',function(e){
+    var d=e.target.closest('.bcolor-btn');if(!d||!d.dataset.d)return;
+    document.querySelectorAll('#bdelivery .bcolor-btn').forEach(function(x){x.classList.remove('on');});
+    d.classList.add('on');
+    S.delivery = d.dataset.d;
+    S.delivery_label = d.dataset.n;
+    document.getElementById('bs-delivery').textContent = S.delivery_label;
+    document.getElementById('shipnote').style.display = S.delivery === 'ship' ? 'block' : 'none';
+    updatePrice();
+  });
+
   var qtyInput = document.getElementById('bo-qty');
   if(qtyInput) qtyInput.addEventListener('input', updatePrice);
 
@@ -398,7 +410,8 @@
     document.getElementById('hf-vinyl').value   = S.vinyl;
     document.getElementById('hf-font').value    = S.font;
     document.getElementById('hf-place').value   = S.placement;
-    document.getElementById('hf-total').value   = money(perShirt()*qtyVal()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')';
+    document.getElementById('hf-delivery').value = S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(SHIP_FLAT) + ' est. shipping)' : ' (free)');
+    document.getElementById('hf-total').value   = money(perShirt()*qtyVal() + shippingCost()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')' + (S.delivery==='ship' ? ' + ' + money(SHIP_FLAT) + ' shipping' : '');
     document.getElementById('hf-invoice').value  = invoiceSummary();
     document.getElementById('hf-subject').value = 'New tee order request \u2014 ' + name;
 
@@ -425,7 +438,8 @@
           placement:    S.placement,
           size:         size,
           quantity:     String(qtyVal()),
-          estimate:     money(perShirt()*qtyVal()) + ' CAD (' + priceBreakdown() + ')'
+          delivery:     S.delivery_label,
+          estimate:     money(perShirt()*qtyVal() + shippingCost()) + ' CAD (' + priceBreakdown() + (S.delivery==='ship' ? ', +' + money(SHIP_FLAT) + ' shipping' : '') + ')'
         });
       } else {
         return res.json().then(function(data){
