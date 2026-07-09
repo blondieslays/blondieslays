@@ -50,18 +50,19 @@
 
   /* CNPL testimonial */
   .to-cnpl { background:#FFF0F6; }
-  .to-testimonial { display:flex; align-items:center; gap:2.5rem; max-width:900px; margin:0 auto; }
-  .to-testimonial-photo { flex:none; width:260px; }
-  .to-testimonial-photo img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:16px; box-shadow:0 12px 26px rgba(190,24,93,.16); display:block; }
-  .to-testimonial-body { flex:1; }
-  .to-quote-mark { font-family:'Caveat',cursive; font-size:4.5rem; color:#f9a8d4; line-height:.6; display:block; margin-bottom:.25rem; }
-  .to-quote-text { font-family:Montserrat,sans-serif; font-size:1.2rem; font-style:italic; color:#3a1028; line-height:1.6; margin:0 0 1.1rem; }
-  .to-quote-attr { font-family:Montserrat,sans-serif; font-size:.85rem; font-weight:700; color:#be185d; margin:0; }
-  .to-quote-attr span { display:block; font-weight:500; color:#888; font-size:.8rem; margin-top:.15rem; }
+  .to-quote-block { max-width:720px; margin:0 auto; text-align:center; }
+  .to-quote-mark { font-family:'Caveat',cursive; font-size:5rem; color:#f9a8d4; line-height:.5; display:block; margin-bottom:.5rem; }
+  .to-quote-text { font-family:Montserrat,sans-serif; font-size:1.3rem; font-style:italic; color:#3a1028; line-height:1.6; margin:0 0 1.75rem; }
+  .to-quote-person { display:flex; align-items:center; justify-content:center; gap:.9rem; }
+  .to-quote-person img { width:64px; height:64px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 3px #fff, 0 0 0 5px #FF1493; display:block; }
+  .to-quote-person .who { text-align:left; }
+  .to-quote-person strong { display:block; font-family:Montserrat,sans-serif; font-size:.95rem; color:#be185d; }
+  .to-quote-person span { display:block; font-family:Montserrat,sans-serif; font-size:.8rem; color:#888; }
+  .to-cnpl-proof { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; max-width:1040px; margin:2.75rem auto 0; }
+  .to-cnpl-proof img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:14px; box-shadow:0 10px 24px rgba(190,24,93,.14); display:block; }
 
   @media (max-width:680px) {
-    .to-testimonial { flex-direction:column; text-align:center; }
-    .to-testimonial-photo { width:200px; }
+    .to-cnpl-proof { grid-template-columns:1fr; }
   }
 
   /* Pricing anchor */
@@ -112,15 +113,21 @@
 
 <section class="to-section to-cnpl">
   <h2 class="to-section-title">Working With The CNPL</h2>
-  <div class="to-testimonial">
-    <div class="to-testimonial-photo">
-      <img src="/images/htv/branded-merch.png" alt="Canadian National Pickleball League custom apparel">
+  <div class="to-quote-block">
+    <span class="to-quote-mark">&#8220;</span>
+    <p class="to-quote-text">We have a lot of tight deadlines at the CNPL for event gear and fan swag and Blondie Slays always comes through for us on time and on spec.</p>
+    <div class="to-quote-person">
+      <img src="/images/testimonials/mike-mcaninch.png" alt="Mike McAninch">
+      <div class="who">
+        <strong>Mike McAninch</strong>
+        <span>Co-Founder &amp; Commissioner, CNPL</span>
+      </div>
     </div>
-    <div class="to-testimonial-body">
-      <span class="to-quote-mark">&#8220;</span>
-      <p class="to-quote-text">[Drop your CNPL quote in here — replace this placeholder line once you have it.]</p>
-      <p class="to-quote-attr">[Name]<span>Canadian National Pickleball League</span></p>
-    </div>
+  </div>
+  <div class="to-cnpl-proof">
+    <img src="/images/projects/cnpl-apparel/01.png" alt="Canadian National Pickleball League custom apparel">
+    <img src="/images/projects/cnpl-apparel/02.png" alt="Canadian National Pickleball League custom apparel">
+    <img src="/images/projects/cnpl-apparel/03.png" alt="Canadian National Pickleball League custom apparel">
   </div>
 </section>
 

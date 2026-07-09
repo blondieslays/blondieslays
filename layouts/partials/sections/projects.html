@@ -30,6 +30,9 @@
                                     {{ end }}
                                 </div>
                                 {{ end }}
+                                {{ if $project.link }}
+                                <a href="{{ $project.link | relURL }}" class="feature-card-link">{{ $project.linkText | default "Learn more →" }}</a>
+                                {{ end }}
                             </div>
                         </div>
                     </div>

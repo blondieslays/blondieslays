@@ -332,7 +332,21 @@ a#hero-builder-btn:hover {
 .bplace-col #bplacements { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .bplace-col #bplacements .bpl { text-align: center; }
 
-/* ── Shirt Designer → complementary blue (filled) ── */
+/* ── Featured Work: optional CTA link per project card ── */
+.feature-card-link {
+  display: inline-block;
+  margin-top: .8rem;
+  font-family: Montserrat, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: .78rem !important;
+  color: #FF1493 !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid #FFD1E8;
+  padding-bottom: 2px;
+  transition: border-color .15s ease;
+}
+.feature-card-link:hover { border-color: #FF1493; }
+
 #designer-nav-btn,
 #designer-nav-btn:link,
 #designer-nav-btn:visited {

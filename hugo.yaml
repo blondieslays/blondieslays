@@ -228,7 +228,7 @@ params:
             color: pink
 
   projects:
-    enable: false
+    enable: true
     title: "Featured Work"
     items:
       - title: Canadian National Pickleball League
@@ -268,6 +268,8 @@ params:
           - /images/projects/cnpl-apparel/01.png
           - /images/projects/cnpl-apparel/02.png
           - /images/projects/cnpl-apparel/03.png
+        link: /team-orders/
+        linkText: "Get a quote for your team →"
         skills:
           - name: Custom Apparel
             color: pink
@@ -281,9 +283,9 @@ params:
   contact:
     enable: true
     title: "Get in touch"
-    content: "Inbox is open for new projects, custom apparel orders, and collaborations. Based in Sarnia, Ontario, working with clients across Canada and beyond."
+    content: "Inbox is open for new projects, custom apparel orders, and collaborations. Based in Sarnia, Ontario, working with clients across Canada and beyond. Ordering for a team, league, or business? [Get a bulk quote here](/team-orders/) instead."
     btnName: "Email Elise"
-    btnLink: "mailto:elisedaniellemarion@gmail.com"
+    btnLink: "mailto:blondieslaysapparel@gmail.com"
 
   footer:
     socialNetworks:
