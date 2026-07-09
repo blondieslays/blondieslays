@@ -4,8 +4,6 @@
 <style>
   #dl-nav-btn, #dl-nav-btn:link, #dl-nav-btn:visited { color: #ffffff !important; }
   #dl-nav-btn:hover, #dl-nav-btn:active { color: #ffffff !important; }
-  #about-nav-btn, #about-nav-btn:link, #about-nav-btn:visited { color: #ffffff !important; }
-  #about-nav-btn:hover, #about-nav-btn:active { color: #ffffff !important; }
 </style>
 <script>
   var btnStyle = "display:inline-flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.5rem 1.25rem;border-radius:999px;border:2px solid #FF1493;text-decoration:none;background:#ffffff;color:#FF1493;box-shadow:0 2px 8px rgba(255,20,147,0.12);line-height:1;transition:all .15s ease;";
@@ -39,19 +37,12 @@
       styleBtn(designer, "margin-left:0.75rem;");
       nav.appendChild(designer);
 
-      var btn = document.createElement("a");
-      btn.id = "dl-nav-btn";
-      btn.href = "/downloads/";
-      btn.textContent = "Digital Downloads";
-      styleBtn(btn, "margin-left:0.75rem;");
-      nav.appendChild(btn);
-
-      // "Meet Elise" nav button (was About)
+      // "Meet Elise" profile chip — circular photo + name, not a filled button
       var about = document.createElement("a");
       about.id = "about-nav-btn";
       about.href = "/about/";
-      about.textContent = "Meet Elise";
-      styleBtn(about, "margin-left:0.75rem;");
+      about.innerHTML = '<img src="/images/me.png" alt="" />' + '<span>Meet Elise</span>';
+      about.setAttribute("style", "margin-left:0.75rem;");
       nav.appendChild(about);
     }
 

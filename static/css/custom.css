@@ -251,7 +251,6 @@ a#hero-builder-btn:hover {
 .slide-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 /* ── Nav + hero buttons: shared geometry ─────────────── */
-#about-nav-btn,
 #dl-nav-btn,
 #bulk-nav-btn,
 #designer-nav-btn,
@@ -275,13 +274,11 @@ a#hero-builder-btn {
   box-shadow: none !important;
   text-decoration: none !important;
 }
-/* Secondary (outline): About + Design Your Tee */
-#about-nav-btn,
+/* Secondary (outline): Design Your Tee */
 a#hero-builder-btn {
   background: #ffffff !important;
   color: #FF1493 !important;
 }
-#about-nav-btn:hover,
 a#hero-builder-btn:hover {
   background: #FF1493 !important;
   color: #ffffff !important;
@@ -302,7 +299,6 @@ a#hero-builder-btn:hover {
 /* ── Mobile nav: stack the injected buttons neatly in the menu ── */
 @media (max-width: 991px) {
   #navbarContent .navbar-nav { align-items: center !important; padding-bottom: .6rem; }
-  #about-nav-btn,
   #dl-nav-btn,
   #bulk-nav-btn,
   #designer-nav-btn {
@@ -311,6 +307,7 @@ a#hero-builder-btn:hover {
     max-width: 80vw !important;
     padding: .6rem 1.1rem !important;
   }
+  #about-nav-btn { margin: .5rem 0 !important; }
   #poke-nav-btn { margin: .55rem 0 !important; }
 }
 
@@ -336,10 +333,7 @@ a#hero-builder-btn:hover {
 .bplace-col #bplacements { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
 .bplace-col #bplacements .bpl { text-align: center; }
 
-/* ── About nav button ("Meet Elise") + Shirt Designer → complementary blue (filled) ── */
-#about-nav-btn,
-#about-nav-btn:link,
-#about-nav-btn:visited,
+/* ── Shirt Designer → complementary blue (filled) ── */
 #designer-nav-btn,
 #designer-nav-btn:link,
 #designer-nav-btn:visited {
@@ -347,13 +341,45 @@ a#hero-builder-btn:hover {
   border-color: #0E93A6 !important;
   color: #ffffff !important;
 }
-#about-nav-btn:hover,
-#about-nav-btn:active,
 #designer-nav-btn:hover,
 #designer-nav-btn:active {
   background: #0B7A8A !important;
   border-color: #0B7A8A !important;
   color: #ffffff !important;
+}
+
+/* ── "Meet Elise" profile chip: circular photo + name, not a filled button ── */
+#about-nav-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: center !important;
+  gap: 9px !important;
+  text-decoration: none !important;
+  padding: 3px 16px 3px 3px !important;
+  border-radius: 999px !important;
+  border: 2px solid #FFD1E8 !important;
+  background: #ffffff !important;
+  transition: all .15s ease !important;
+}
+#about-nav-btn img {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  display: block !important;
+  box-shadow: 0 0 0 2px #FF1493 !important;
+}
+#about-nav-btn span {
+  font-family: Montserrat, sans-serif !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  color: #be185d !important;
+  white-space: nowrap !important;
+}
+#about-nav-btn:hover {
+  border-color: #FF1493 !important;
+  background: #FFF0F6 !important;
 }
 
 /* ── Hero promo video ── */
