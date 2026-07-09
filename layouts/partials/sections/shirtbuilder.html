@@ -57,15 +57,15 @@
         <div>
           <span class="bcl">Shirt colour</span>
           <div class="bcolor-list" id="swatches">
-            <div class="bcolor-btn on" data-b="#f5ede0" data-n="Natural"><span class="bcolor-dot" style="background:#f5ede0;border:1px solid #ddd"></span>Natural</div>
+            <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:radial-gradient(circle at 30% 28%, #FF1493 18%, transparent 19%), radial-gradient(circle at 68% 55%, #FF1493 22%, transparent 23%), radial-gradient(circle at 42% 78%, #FF1493 14%, transparent 15%), #f5ede0;border:1px solid #ddd"></span>Natural Tie-Dye Pink +$5</div>
             <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
             <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
             <div class="bcolor-btn" data-b="#e0559d" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
             <div class="bcolor-btn" data-b="#33a8c2" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
             <div class="bcolor-btn" data-b="#f2d2e0" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
-            <div class="bcolor-btn" data-b="tiedye" data-n="Tie-Dye"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye +$5</div>
+            <div class="bcolor-btn" data-b="tiedye" data-n="Tie-Dye" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye +$5</div>
           </div>
-          <div id="tdnote" class="btd-note" style="display:none">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
+          <div id="tdnote" class="btd-note" style="display:block">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
         </div>
 
         <div>
@@ -115,7 +115,7 @@
         </div>
 
         <div class="bsummary" id="bsummary">
-          Shirt: <strong id="bs-colour">Natural</strong> &nbsp;|&nbsp;
+          Shirt: <strong id="bs-colour">Natural Tie-Dye Pink</strong> &nbsp;|&nbsp;
           Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
           Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
           Font: <strong id="bs-font">High Tide</strong> &nbsp;|&nbsp;
@@ -203,7 +203,7 @@
     {label:'Font Styles',     img:'/images/builder/fonts.png'},
   ];
   var mcur = 0;
-  var S = {colour:'Natural', text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest'};
+  var S = {colour:'Natural Tie-Dye Pink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest'};
 
   // ── Pricing ────────────────────────────────────────────
   var BASE = 20;            // per shirt, CAD
@@ -217,12 +217,12 @@
   function perShirt(){
     return BASE
       + (SPECIAL_VINYLS.indexOf(S.vinyl) > -1 ? SPECIAL_VINYL : 0)
-      + (S.colour === 'Tie-Dye' ? TIEDYE : 0);
+      + (S.tiedye ? TIEDYE : 0);
   }
   function priceBreakdown(){
     var parts = ['base ' + money(BASE)];
     if(SPECIAL_VINYLS.indexOf(S.vinyl) > -1) parts.push(S.vinyl + ' vinyl +' + money(SPECIAL_VINYL));
-    if(S.colour === 'Tie-Dye') parts.push('tie-dye +' + money(TIEDYE));
+    if(S.tiedye) parts.push('tie-dye +' + money(TIEDYE));
     return parts.join(', ');
   }
   var HST_RATE = 0.13;     // Ontario HST — added on the invoice
@@ -288,7 +288,8 @@
     sw.classList.add('on');
     S.colour=sw.dataset.n;
     document.getElementById('bs-colour').textContent=S.colour;
-    document.getElementById('tdnote').style.display=sw.dataset.b==='tiedye'?'block':'none';
+    S.tiedye = sw.dataset.tiedye === '1';
+    document.getElementById('tdnote').style.display = S.tiedye ? 'block' : 'none';
     updatePrice();
   });
 
