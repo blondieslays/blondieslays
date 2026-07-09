@@ -1,0 +1,19 @@
+{{ if .Site.Params.contact.enable }}
+<section id="contact" class="ct-section">
+  <style>
+    .ct-section { background:#FFF0F6; padding: 3.5rem 1.5rem; text-align:center; }
+    .ct-inner { max-width: 640px; margin: 0 auto; }
+    .ct-title { font-family:'Caveat',cursive; font-weight:700; letter-spacing:0; font-size: 2.8rem; color:#be185d; margin: 0 0 1rem; }
+    .ct-content { font-family:Montserrat,sans-serif; font-size:.98rem; line-height:1.7; color:#5a5a5a; margin: 0 0 1.75rem; }
+    .ct-content p { margin: 0 0 .6rem; }
+    .ct-content a { color:#FF1493; font-weight:700; text-decoration:underline; }
+    .ct-btn { display:inline-block; font-family:Montserrat,sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:#FF1493; padding:.85rem 2.2rem; border-radius:999px; text-decoration:none; box-shadow:0 10px 24px rgba(255,20,147,.28); transition:all .15s ease; }
+    .ct-btn:hover { background:#d1147d; transform:translateY(-2px); color:#fff; }
+  </style>
+  <div class="ct-inner">
+    <h2 class="ct-title">{{ .Site.Params.contact.title | default "Get in touch" }}</h2>
+    <div class="ct-content">{{ .Site.Params.contact.content | markdownify }}</div>
+    <a class="ct-btn" href="{{ .Site.Params.contact.btnLink }}">{{ .Site.Params.contact.btnName | default "Email Elise" }}</a>
+  </div>
+</section>
+{{ end }}

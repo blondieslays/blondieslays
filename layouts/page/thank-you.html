@@ -1,0 +1,32 @@
+{{ define "main" }}
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  .ty-wrap { min-height: 60vh; display:flex; align-items:center; justify-content:center; padding: 3rem 1.5rem; background: linear-gradient(180deg,#FFF3F9 0%,#ffffff 100%); }
+  .ty-card { max-width: 560px; text-align:center; }
+  .ty-eyebrow { font-family:'Bebas Neue',sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#0E93A6; font-size:1rem; }
+  .ty-title { font-family:'Caveat',cursive; font-weight:700; font-size:4rem; color:#FF1493; margin:.2rem 0 1rem; line-height:1; }
+  .ty-body { font-family:Montserrat,sans-serif; font-size:1.05rem; line-height:1.7; color:#5a5a5a; margin:0 0 2rem; }
+  .ty-body strong { color:#be185d; }
+  .ty-actions { display:flex; gap:.85rem; justify-content:center; flex-wrap:wrap; }
+  .ty-btn { font-family:Montserrat,sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; padding:.75rem 1.7rem; border-radius:999px; text-decoration:none; transition:all .15s ease; display:inline-block; }
+  .ty-btn.primary { color:#fff; background:#FF1493; box-shadow:0 10px 24px rgba(255,20,147,.28); }
+  .ty-btn.primary:hover { background:#d1147d; transform:translateY(-2px); color:#fff; }
+  .ty-btn.ghost { color:#FF1493; background:#fff; border:2px solid #FF1493; }
+  .ty-btn.ghost:hover { background:#FF1493; color:#fff; }
+</style>
+
+<div class="ty-wrap">
+  <div class="ty-card">
+    <span class="ty-eyebrow">Request Received</span>
+    <h1 class="ty-title">Thank You!</h1>
+    <p class="ty-body">Your request has been sent &mdash; <strong>Elise will reply within 48 hours</strong> with a quote and next steps. Keep an eye on your inbox (and check spam, just in case).</p>
+    <div class="ty-actions">
+      <a class="ty-btn primary" href="/">Back to Home</a>
+      <a class="ty-btn ghost" href="/build/">Design Another Tee</a>
+    </div>
+  </div>
+</div>
+
+{{ end }}

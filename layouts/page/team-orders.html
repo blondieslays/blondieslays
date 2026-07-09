@@ -58,11 +58,15 @@
   .to-quote-person .who { text-align:left; }
   .to-quote-person strong { display:block; font-family:Montserrat,sans-serif; font-size:.95rem; color:#be185d; }
   .to-quote-person span { display:block; font-family:Montserrat,sans-serif; font-size:.8rem; color:#888; }
-  .to-cnpl-proof { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; max-width:1040px; margin:2.75rem auto 0; }
-  .to-cnpl-proof img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:14px; box-shadow:0 10px 24px rgba(190,24,93,.14); display:block; }
+  .to-cnpl-proof { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; max-width:1040px; margin:2.75rem auto 0; padding:0 1rem; }
+  .to-cnpl-proof img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:10px; border:7px solid #fff; box-shadow:0 14px 28px rgba(190,24,93,.18); display:block; }
+  .to-cnpl-proof img:nth-child(1) { transform:rotate(-2.5deg); }
+  .to-cnpl-proof img:nth-child(2) { transform:rotate(1.75deg); }
+  .to-cnpl-proof img:nth-child(3) { transform:rotate(-1.25deg); }
 
   @media (max-width:680px) {
-    .to-cnpl-proof { grid-template-columns:1fr; }
+    .to-cnpl-proof { grid-template-columns:1fr; max-width:280px; }
+    .to-cnpl-proof img { transform:none !important; }
   }
 
   /* Pricing anchor */
@@ -117,7 +121,7 @@
     <span class="to-quote-mark">&#8220;</span>
     <p class="to-quote-text">We have a lot of tight deadlines at the CNPL for event gear and fan swag and Blondie Slays always comes through for us on time and on spec.</p>
     <div class="to-quote-person">
-      <img src="/images/testimonials/mike-mcaninch.png" alt="Mike McAninch">
+      <img src="/images/team/mike-mcaninch.png" alt="Mike McAninch">
       <div class="who">
         <strong>Mike McAninch</strong>
         <span>Co-Founder &amp; Commissioner, CNPL</span>
