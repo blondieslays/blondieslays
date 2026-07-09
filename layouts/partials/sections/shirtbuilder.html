@@ -119,7 +119,17 @@
           Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
           Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
           Font: <strong id="bs-font">High Tide</strong> &nbsp;|&nbsp;
-          Placement: <strong id="bs-place">Centre chest</strong>
+          Placement: <strong id="bs-place">Centre chest</strong> &nbsp;|&nbsp;
+          Delivery: <strong id="bs-delivery">Local Pickup (Sarnia)</strong>
+        </div>
+
+        <div>
+          <span class="bcl">Delivery</span>
+          <div class="bcolor-list" id="bdelivery">
+            <div class="bcolor-btn on" data-d="pickup" data-n="Local Pickup (Sarnia)">Local Pickup (Sarnia) &mdash; Free</div>
+            <div class="bcolor-btn" data-d="ship" data-n="Shipped">Shipped &mdash; +$15</div>
+          </div>
+          <div id="shipnote" class="btd-note" style="display:none">Shipping is a flat estimate — Elise will confirm the exact rate for your address on your invoice.</div>
         </div>
 
         <div class="bprice" id="bprice">
@@ -203,12 +213,17 @@
     {label:'Font Styles',     img:'/images/builder/fonts.png'},
   ];
   var mcur = 0;
-  var S = {colour:'Natural Tie-Dye Pink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest'};
+  var S = {colour:'Natural Tie-Dye Pink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
 
   // ── Pricing ────────────────────────────────────────────
   var BASE = 20;            // per shirt, CAD
   var SPECIAL_VINYL = 2;    // glitter / holographic finishes
   var TIEDYE = 5;           // tie-dye shirt
+  // TODO Elise: this is a flat placeholder, not a real Canada Post rate.
+  // Weigh one packaged shirt (shirt + poly mailer/box + label) and check
+  // canadapost-postescanada.ca/cpc/en/tools/find-a-rate.page for your postal
+  // code, then update this number to match.
+  var SHIP_FLAT = 15;       // flat shipping add-on, once per order, CAD
   var SPECIAL_VINYLS = ['Glitter Gold','Glitter Silver','Holographic'];
   var CUR = String.fromCharCode(36); // "$" — built this way to stay safe through file tooling
 
@@ -225,6 +240,7 @@
     if(S.tiedye) parts.push('tie-dye +' + money(TIEDYE));
     return parts.join(', ');
   }
+  function shippingCost(){ return S.delivery === 'ship' ? SHIP_FLAT : 0; }
   var HST_RATE = 0.13;     // Ontario HST — added on the invoice
   function lineItemDesc(){
     var bits = ['Custom HTV tee — ' + S.colour];
@@ -238,12 +254,13 @@
   }
   function invoiceSummary(){
     var q   = qtyVal();
-    var sub = perShirt()*q;
+    var sub = perShirt()*q + shippingCost();
     var hst = sub*HST_RATE;
     var tot = sub + hst;
     return [
       'LINE ITEM: ' + q + ' \u00d7 ' + lineItemDesc() + ' @ ' + money(perShirt()) + ' ea',
       '  (' + priceBreakdown() + ')',
+      'Delivery: ' + S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(SHIP_FLAT) + ' estimated, confirm exact rate before invoicing)' : ' (free)'),
       'Subtotal: ' + money(sub) + ' CAD',
       'HST (13%): ' + money(hst),
       'TOTAL TO INVOICE: ' + money(tot) + ' CAD'
@@ -252,7 +269,9 @@
   function updatePrice(){
     var q = qtyVal();
     var el = document.getElementById('bprice-val');
-    if(el) el.textContent = money(perShirt()*q) + (q > 1 ? '  (' + q + ' \u00d7 ' + money(perShirt()) + ')' : '');
+    var total = perShirt()*q + shippingCost();
+    var extra = S.delivery === 'ship' ? ' (incl. ' + money(SHIP_FLAT) + ' shipping)' : '';
+    if(el) el.textContent = money(total) + (q > 1 ? '  (' + q + ' \u00d7 ' + money(perShirt()) + ')' : '') + extra;
   }
 
   function buildMDots(){
