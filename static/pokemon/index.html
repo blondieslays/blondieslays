@@ -400,10 +400,7 @@
 
   /* ---------- Collection: card grid + set sidebar ---------- */
   .portfolio-layout {
-    display: grid;
-    grid-template-columns: minmax(150px, 188px) 1fr;
-    gap: 1.3rem;
-    align-items: start;
+    display: block;
   }
   .sidebar {
     position: sticky; top: .8rem; align-self: start;
@@ -452,11 +449,6 @@
   .tile .cardset:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   @media (max-width: 680px) {
-    .portfolio-layout { grid-template-columns: 1fr; gap: .6rem; }
-    .sidebar { position: static; max-height: none; overflow: visible; padding: 0; }
-    .collnav { flex-direction: row; flex-wrap: wrap; }
-    .setchips { flex-direction: row; flex-wrap: wrap; }
-    .setchip { text-align: center; }
   }
 
   /* ---------- Owner tools (collapsible) ---------- */
@@ -546,14 +538,6 @@
   <h2 class="label" id="myCollection">Portfolio</h2>
   <div id="status"><div class="spinner"></div></div>
   <div class="portfolio-layout">
-    <aside class="sidebar" id="collSidebar" hidden>
-      <div class="collnav" id="collNav">
-        <button class="cnav-btn" id="toSearchBtn">↑ Back to search</button>
-        <button class="cnav-btn" id="clearFilterBtn" hidden>↩ Back to collection</button>
-      </div>
-      <p class="sidebar-title">Filter by set</p>
-      <div class="setchips" id="setChips"></div>
-    </aside>
     <div class="grid" id="grid"></div>
   </div>
 
@@ -833,7 +817,7 @@ const MY_CARDS = [
   { id: "sv6-15", qty: 1, note: "" },  // Thwackey · Twilight Masquerade 015/167
   { id: "mep-72", qty: 1, finish: "Holofoil", est: 3.00, name: "Mega Clefable ex", setLabel: "Mega Evolution Promos · 072", note: "" },  // Mega Clefable ex · MEP Black Star Promos 072 — est CA$ if API lacks it
   { id: "swsh12pt5-37", qty: 1, finish: "Holofoil", note: "" },  // Kyogre V · Crown Zenith 037/159
-  { id: "swsh6-74", qty: 3, finish: "Holofoil", note: "" },  // Shadow Rider Calyrex V · Chilling Reign 074/198
+  { id: "swsh6-74", qty: 1, finish: "Holofoil", note: "" },  // Shadow Rider Calyrex V · Chilling Reign 074/198
   { id: "sv6-64", qty: 1, finish: "Holofoil", note: "" },  // Wellspring Mask Ogerpon ex · Twilight Masquerade 064/167
   { id: "base1-63", qty: 1, note: "" },  // Squirtle · Base Set (Unlimited) 63
   { id: "sm7-44", qty: 1, finish: "Normal", note: "" },  // Luvdisc · Celestial Storm 44
@@ -1143,7 +1127,6 @@ async function loadPortfolio() {
     grid.innerHTML = `<div class="empty">No cards yet. Search above to add your first one, then drop its id into MY_CARDS.</div>`;
   } else {
     results.forEach((r, i) => { r.el.style.animationDelay = (i * 40) + "ms"; grid.appendChild(r.el); });
-    buildSetFilters();
   }
 
   // hero
@@ -1156,31 +1139,28 @@ async function loadPortfolio() {
   console.log(`[DONE] ${loaded}/${MY_CARDS.length} cards · total CA$${cad(total)}`);
 }
 
-/* ---------- Collection set filters ---------- */
-const SET_COLORS = ["#FFD1E8","#c8f0fb","#ffe0b3","#d8f5e3","#e7d6ff","#ffd6d6","#d6ecff","#fce7b0","#d9f0e6","#f7d6ec","#dfe7ff","#ffe9cf","#e0f5d6","#f0d6ff"];
+/* ---------- Collection set filter (click a card's set button to filter; click Clear to reset) ---------- */
 let activeFilter = null;
 
-function buildSetFilters() {
-  const chipsWrap = $("setChips");
-  if (!chipsWrap) return;
-  const seen = [];
-  $("grid").querySelectorAll(".tile").forEach((t) => {
-    const s = t.dataset.set || "Other";
-    if (!seen.includes(s)) seen.push(s);
-  });
-  seen.sort((a, b) => a.localeCompare(b));
-  chipsWrap.innerHTML = "";
-  seen.forEach((s, i) => {
-    const chip = document.createElement("button");
-    chip.className = "setchip";
-    chip.textContent = s;
-    chip.dataset.set = s;
-    chip.style.setProperty("--chip", SET_COLORS[i % SET_COLORS.length]);
-    chip.onclick = () => applyFilter(s);
-    chipsWrap.appendChild(chip);
-  });
-  const sb = $("collSidebar");
-  if (sb) sb.hidden = false;
+function ensureFilterBar() {
+  let bar = $("filterBar");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "filterBar";
+    bar.style.cssText = "display:none;align-items:center;gap:.7rem;margin:0 0 1.1rem;";
+    const label = document.createElement("span");
+    label.id = "filterLabel";
+    label.style.cssText = "font:700 .82rem 'Montserrat',sans-serif;color:var(--pink-dark);";
+    const clearBtn = document.createElement("button");
+    clearBtn.className = "cnav-btn";
+    clearBtn.textContent = "↩ Clear filter";
+    clearBtn.onclick = clearCollectionFilter;
+    bar.appendChild(label);
+    bar.appendChild(clearBtn);
+    const grid = $("grid");
+    grid.parentElement.insertBefore(bar, grid);
+  }
+  return bar;
 }
 
 function applyFilter(setName) {
@@ -1188,8 +1168,9 @@ function applyFilter(setName) {
   $("grid").querySelectorAll(".tile").forEach((t) => {
     t.style.display = (t.dataset.set === setName) ? "" : "none";
   });
-  document.querySelectorAll(".setchip").forEach((c) => c.classList.toggle("active", c.dataset.set === setName));
-  $("clearFilterBtn").hidden = false;
+  const bar = ensureFilterBar();
+  bar.style.display = "flex";
+  $("filterLabel").textContent = "Showing: " + setName;
   const c = $("myCollection");
   if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -1197,8 +1178,8 @@ function applyFilter(setName) {
 function clearCollectionFilter() {
   activeFilter = null;
   $("grid").querySelectorAll(".tile").forEach((t) => { t.style.display = ""; });
-  document.querySelectorAll(".setchip").forEach((c) => c.classList.remove("active"));
-  $("clearFilterBtn").hidden = true;
+  const bar = $("filterBar");
+  if (bar) bar.style.display = "none";
 }
 
 /* ---------- Search ---------- */
@@ -1271,11 +1252,6 @@ $("backToCollection").addEventListener("click", () => {
   $("q").value = "";
   const c = $("myCollection");
   if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
-});
-$("clearFilterBtn").addEventListener("click", clearCollectionFilter);
-$("toSearchBtn").addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  setTimeout(() => { const q = $("q"); if (q) q.focus(); }, 450);
 });
 $("grid").addEventListener("click", (e) => {
   const b = e.target.closest(".cardset");
