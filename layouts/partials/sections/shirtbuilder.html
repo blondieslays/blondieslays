@@ -129,7 +129,12 @@
             <div class="bcolor-btn on" data-d="pickup" data-n="Local Pickup (Sarnia)">Local Pickup (Sarnia) &mdash; Free</div>
             <div class="bcolor-btn" data-d="ship" data-n="Shipped">Shipped</div>
           </div>
-          <div id="shipnote" class="btd-note" style="display:none">Shipping is a data-based estimate ($18–$22 depending on quantity) — Elise will confirm the exact rate for your address on your invoice.</div>
+          <div id="shipfields" style="display:none;margin-top:.6rem">
+            <span class="bcl">Postal code</span>
+            <input class="btxt-in" id="bo-postal" maxlength="7" placeholder="e.g. N7T 1A1" style="max-width:160px"/>
+            <div id="localnote" class="btd-note" style="display:none;background:#eafff2;border-color:#8fdca8;color:#0a7a3d;margin-top:.5rem">🎉 Free shipping — you're in our local delivery area!</div>
+          </div>
+          <div id="shipnote" class="btd-note" style="display:none">Shipping is a data-based estimate ($18–$22 depending on quantity) — free for local Sarnia, London &amp; Waterloo-area orders. Elise will confirm the exact rate for your address on your invoice.</div>
         </div>
 
         <div class="bprice" id="bprice">
@@ -185,6 +190,7 @@
           <input type="hidden" name="Font" id="hf-font"/>
           <input type="hidden" name="Placement" id="hf-place"/>
           <input type="hidden" name="Delivery" id="hf-delivery"/>
+          <input type="hidden" name="Postal code" id="hf-postal"/>
           <input type="hidden" name="Estimated total" id="hf-total"/>
           <input type="hidden" name="Invoice summary" id="hf-invoice"/>
           <input type="hidden" name="_subject" id="hf-subject" value="New tee order request"/>
@@ -230,6 +236,18 @@
     if(qty >= 5) return 21;
     return 18; // 1–4 shirts
   }
+  // Local-delivery FSAs (first 3 chars of postal code) — free shipping applies
+  var LOCAL_FSAS = [
+    'N7S','N7T','N7V','N7W','N7X','N0N',                                   // Sarnia + Lambton
+    'N5V','N5W','N5X','N5Y','N5Z','N6A','N6B','N6C','N6E','N6G','N6H','N6J','N6K','N6L','N6M','N6N','N6P', // London
+    'N2J','N2K','N2L','N2T','N2V'                                          // Waterloo
+  ];
+  function isLocalPostal(){
+    var el = document.getElementById('bo-postal');
+    if(!el) return false;
+    var fsa = el.value.trim().toUpperCase().replace(/\s+/g,'').slice(0,3);
+    return LOCAL_FSAS.indexOf(fsa) > -1;
+  }
   var SPECIAL_VINYLS = ['Glitter Gold','Glitter Silver','Holographic'];
   var CUR = String.fromCharCode(36); // "$" — built this way to stay safe through file tooling
 
@@ -246,7 +264,10 @@
     if(S.tiedye) parts.push('tie-dye +' + money(TIEDYE));
     return parts.join(', ');
   }
-  function shippingCost(){ return S.delivery === 'ship' ? shippingRate(qtyVal()) : 0; }
+  function shippingCost(){
+    if(S.delivery !== 'ship') return 0;
+    return isLocalPostal() ? 0 : shippingRate(qtyVal());
+  }
   var HST_RATE = 0.13;     // Ontario HST — added on the invoice
   function lineItemDesc(){
     var bits = ['Custom HTV tee — ' + S.colour];
@@ -266,7 +287,7 @@
     return [
       'LINE ITEM: ' + q + ' \u00d7 ' + lineItemDesc() + ' @ ' + money(perShirt()) + ' ea',
       '  (' + priceBreakdown() + ')',
-      'Delivery: ' + S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(shippingCost()) + ' estimated, confirm exact rate before invoicing)' : ' (free)'),
+      'Delivery: ' + S.delivery_label + (S.delivery === 'ship' ? (isLocalPostal() ? ' (FREE — local delivery discount)' : ' (+' + money(shippingCost()) + ' estimated, confirm exact rate before invoicing)') : ' (free)'),
       'Subtotal: ' + money(sub) + ' CAD',
       'HST (13%): ' + money(hst),
       'TOTAL TO INVOICE: ' + money(tot) + ' CAD'
@@ -353,7 +374,16 @@
     S.delivery = d.dataset.d;
     S.delivery_label = d.dataset.n;
     document.getElementById('bs-delivery').textContent = S.delivery_label;
-    document.getElementById('shipnote').style.display = S.delivery === 'ship' ? 'block' : 'none';
+    var shipping = S.delivery === 'ship';
+    document.getElementById('shipfields').style.display = shipping ? 'block' : 'none';
+    document.getElementById('shipnote').style.display = shipping ? 'block' : 'none';
+    document.getElementById('localnote').style.display = (shipping && isLocalPostal()) ? 'block' : 'none';
+    updatePrice();
+  });
+
+  var postalInput = document.getElementById('bo-postal');
+  if(postalInput) postalInput.addEventListener('input', function(){
+    document.getElementById('localnote').style.display = (S.delivery === 'ship' && isLocalPostal()) ? 'block' : 'none';
     updatePrice();
   });
 
@@ -415,7 +445,8 @@
     document.getElementById('hf-vinyl').value   = S.vinyl;
     document.getElementById('hf-font').value    = S.font;
     document.getElementById('hf-place').value   = S.placement;
-    document.getElementById('hf-delivery').value = S.delivery_label + (S.delivery === 'ship' ? ' (+' + money(shippingCost()) + ' est. shipping)' : ' (free)');
+    document.getElementById('hf-delivery').value = S.delivery_label + (S.delivery === 'ship' ? (isLocalPostal() ? ' (FREE — local delivery discount)' : ' (+' + money(shippingCost()) + ' est. shipping)') : ' (free)');
+    document.getElementById('hf-postal').value = document.getElementById('bo-postal') ? document.getElementById('bo-postal').value.trim() : '';
     document.getElementById('hf-total').value   = money(perShirt()*qtyVal() + shippingCost()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')' + (S.delivery==='ship' ? ' + ' + money(shippingCost()) + ' shipping' : '');
     document.getElementById('hf-invoice').value  = invoiceSummary();
     document.getElementById('hf-subject').value = 'New tee order request \u2014 ' + name;
