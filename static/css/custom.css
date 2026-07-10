@@ -395,6 +395,17 @@ a#hero-builder-btn:hover {
   background: #FFF0F6 !important;
 }
 
+/* ── Nav brand logo: white circle to balance the Meet Elise chip ── */
+.navbar-brand img {
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(190,24,93,.18);
+  width: 34px !important;
+  height: 34px !important;
+  object-fit: contain;
+}
+
 /* ── Hero promo video ── */
 .hero-video-wrap { width: 100%; }
 .hero-video { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 36px rgba(190,24,93,.15), 0 4px 12px rgba(0,0,0,.05); display: block; background: #FFF0F6; }
