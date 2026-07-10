@@ -35,6 +35,22 @@
         </svg>
       </a>
       {{ end }}
+      {{ if .Site.Params.footer.socialNetworks.etsy }}
+      <a href="{{ .Site.Params.footer.socialNetworks.etsy }}" target="_blank" aria-label="etsy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.8rem" height="1.8rem" viewBox="0 0 512 512">
+          <rect width="512" height="512" rx="15%" fill="#f16521"/>
+          <path fill="#fff" d="M199 143c-4 0-7 2-7 8v25c0 5 2 8 7 8h58v34h-58c-4 0-7 3-7 8v67c0 15 6 22 20 22h50l7 36h-93c-30 0-46-17-46-46V184c0-30 16-47 46-47h93l-7 36h-63zm150 0h30v161c0 12 4 16 14 16h6l-3 32h-16c-25 0-31-15-31-38V143z"/>
+        </svg>
+      </a>
+      {{ end }}
+      {{ if .Site.Params.footer.socialNetworks.facebook }}
+      <a href="{{ .Site.Params.footer.socialNetworks.facebook }}" target="_blank" aria-label="facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.8rem" height="1.8rem" viewBox="0 0 512 512">
+          <rect width="512" height="512" rx="15%" fill="#1877f2"/>
+          <path fill="#fff" d="M355 240l-10 68h-56v182h-84V308h-46v-68h46v-48c0-52 28-84 88-84h50v68h-32c-16 0-22 10-22 26v38h56z"/>
+        </svg>
+      </a>
+      {{ end }}
       <a href="/pokemon/" aria-label="My Pokémon card collection" title="Pokémon collection" style="display:inline-flex;align-items:center;justify-content:center;">
         <img src="/images/pokeball.png" alt="Pokémon collection" style="display:block; width:1.8rem; height:1.8rem; object-fit:contain;">
       </a>
