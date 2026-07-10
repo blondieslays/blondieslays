@@ -58,13 +58,28 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>Colour Preference</label>
-            <input type="text" name="colour" id="to-colour" placeholder="e.g. team colours, black, white">
-          </div>
-          <div class="form-group">
             <label>Timeline</label>
             <input type="text" name="timeline" id="to-timeline" placeholder="When do you need it by?">
           </div>
+          <div class="form-group">
+            <label>Special colour request (optional)</label>
+            <input type="text" id="to-colour-special" placeholder="Custom colour not shown below?">
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Preferred Colour(s) — select any that apply</label>
+          <div class="bcolor-list" id="to-swatches">
+            <div class="bcolor-btn" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
+            <div class="bcolor-btn" data-n="Natural Tie-Dye Pink"><span class="bcolor-dot" style="background:radial-gradient(circle at 30% 28%, #FF1493 18%, transparent 19%), radial-gradient(circle at 68% 55%, #FF1493 22%, transparent 23%), radial-gradient(circle at 42% 78%, #FF1493 14%, transparent 15%), #f5ede0;border:1px solid #ddd"></span>Natural Tie-Dye Pink</div>
+            <div class="bcolor-btn" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
+            <div class="bcolor-btn" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
+            <div class="bcolor-btn" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
+            <div class="bcolor-btn" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
+            <div class="bcolor-btn" data-n="Tie-Dye"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye</div>
+          </div>
+          <div class="btd-note">These are our standard shirt colours — pick as many as you'd like. Need something custom (team colours we don't stock, a specific Pantone match, etc.)? Note it above and Elise will confirm if it's possible.</div>
+          <input type="hidden" name="colour" id="to-colour">
         </div>
 
         <div class="form-group full-width">
@@ -123,6 +138,25 @@
 
   function val(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
   function showErr(msg){ errBox.textContent = msg; errBox.style.display = 'block'; errBox.scrollIntoView({behavior:'smooth', block:'center'}); }
+
+  // ── Colour swatches (multi-select) ──────────────────────
+  var swatchWrap = document.getElementById('to-swatches');
+  function updateColourField(){
+    var picked = [];
+    swatchWrap.querySelectorAll('.bcolor-btn.on').forEach(function(b){ picked.push(b.dataset.n); });
+    var special = val('to-colour-special');
+    if(special) picked.push('custom: ' + special);
+    document.getElementById('to-colour').value = picked.join(', ');
+  }
+  if(swatchWrap){
+    swatchWrap.addEventListener('click', function(e){
+      var b = e.target.closest('.bcolor-btn'); if(!b) return;
+      b.classList.toggle('on');
+      updateColourField();
+    });
+  }
+  var colourSpecialInput = document.getElementById('to-colour-special');
+  if(colourSpecialInput) colourSpecialInput.addEventListener('input', updateColourField);
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
