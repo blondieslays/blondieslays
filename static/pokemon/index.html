@@ -911,6 +911,12 @@ const MY_CARDS = [
   { id: "me5-26", qty: 1, note: "" },
   { id: "me5-61", qty: 1, note: "" },
   { id: "me5-31", qty: 1, note: "" },
+  { id: "me5-23", qty: 1, note: "reverse-holofoil" },
+  { id: "me5-81", qty: 1, note: "" },
+  { id: "me5-73", qty: 1, note: "" },
+  { id: "me5-20", qty: 1, note: "holofoil" },
+  { id: "me5-25", qty: 1, note: "reverse-holofoil" },
+  { id: "me5-77", qty: 1, note: "reverse-holofoil" },
 ];
 
 /* ============================ ENGINE ============================ */
@@ -1274,7 +1280,7 @@ async function doSearch() {
   sec.hidden = false;
   sg.innerHTML = `<div class="spinner"></div>`;
   try {
-    const url = `${API}?q=name:"${encodeURIComponent(term)}*"&pageSize=12&orderBy=-set.releaseDate`;
+    const url = `${API}?q=name:"*${encodeURIComponent(term)}*"&pageSize=12&orderBy=-set.releaseDate`;
     const r = await fetch(url, { headers });
     if (!r.ok) throw new Error("HTTP " + r.status);
     const d = await r.json();
