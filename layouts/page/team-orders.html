@@ -35,6 +35,9 @@
 
   .to-section { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem; }
   .to-section-title { font-family:'Caveat',cursive; font-weight:700; letter-spacing:0; text-transform:none; font-size: 2.8rem; color:#be185d; text-align:center; margin: 0 0 .5rem; }
+  /* Script font reserved for the CNPL testimonial (the one marquee moment on this page);
+     structural section headers use the bold display face instead */
+  .to-section-title.classic { font-family:'Bebas Neue',sans-serif; font-weight:400; letter-spacing:.03em; text-transform:uppercase; font-size:2.2rem; }
 
   /* Get a Bulk Quote heading — reverted to the original bold sans style on request */
   .classic-title.custom-order-title { font-family: 'Bebas Neue', sans-serif !important; font-weight: 400 !important; text-transform: uppercase !important; letter-spacing: 2px !important; color: #be185d !important; font-size: 2.6rem !important; }
@@ -44,6 +47,8 @@
   .to-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
   .to-card { background:#fff; border:1px solid #f5e4ec; border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(255,20,147,.06); }
   .to-card img { width:100%; aspect-ratio: 3 / 4; height:auto; object-fit:cover; display:block; }
+  .to-card-placeholder { width:100%; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; text-align:center; background:#FFF0F6; border-bottom:2px dashed #f9a8d4; }
+  .to-card-placeholder span { font-family:Montserrat,sans-serif; font-size:.78rem; font-weight:700; color:#be185d; text-transform:uppercase; letter-spacing:.05em; padding:0 1rem; }
   .to-card-body { padding:1.1rem 1.2rem 1.4rem; }
   .to-card h3 { font-family:Montserrat,sans-serif; font-size:1.05rem; font-weight:700; color:#FF1493; margin:0 0 .5rem; }
   .to-card p { font-family:Montserrat,sans-serif; font-size:.85rem; color:#777; line-height:1.6; margin:0; }
@@ -58,15 +63,13 @@
   .to-quote-person .who { text-align:left; }
   .to-quote-person strong { display:block; font-family:Montserrat,sans-serif; font-size:.95rem; color:#be185d; }
   .to-quote-person span { display:block; font-family:Montserrat,sans-serif; font-size:.8rem; color:#888; }
-  .to-cnpl-proof { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; max-width:1040px; margin:2.75rem auto 0; padding:0 1rem; }
-  .to-cnpl-proof img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:10px; border:7px solid #fff; box-shadow:0 14px 28px rgba(190,24,93,.18); display:block; }
-  .to-cnpl-proof img:nth-child(1) { transform:rotate(-2.5deg); }
-  .to-cnpl-proof img:nth-child(2) { transform:rotate(1.75deg); }
-  .to-cnpl-proof img:nth-child(3) { transform:rotate(-1.25deg); }
+  .to-cnpl-proof { max-width:300px; margin:2.75rem auto 0; padding:0 1rem; }
+  .to-cnpl-proof img { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:10px; border:7px solid #fff; box-shadow:0 14px 28px rgba(190,24,93,.18); display:block; transform:rotate(-1.5deg); }
+  .to-photo-placeholder { width:100%; aspect-ratio:3/4; border-radius:10px; border:2px dashed #f9a8d4; background:#fff; box-shadow:0 14px 28px rgba(190,24,93,.12); display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem; transform:rotate(-1.5deg); }
+  .to-photo-placeholder span { font-family:Montserrat,sans-serif; font-size:.78rem; font-weight:700; color:#be185d; text-transform:uppercase; letter-spacing:.05em; }
 
   @media (max-width:680px) {
-    .to-cnpl-proof { grid-template-columns:1fr; max-width:280px; }
-    .to-cnpl-proof img { transform:none !important; }
+    .to-cnpl-proof { max-width:260px; }
   }
 
   /* Pricing anchor */
@@ -88,7 +91,7 @@
 </section>
 
 <section class="to-section">
-  <h2 class="to-section-title">What We Make</h2>
+  <h2 class="to-section-title classic">What We Make</h2>
   <p class="to-section-sub">One-off pieces, team sets, or standing orders &mdash; all produced in-house.</p>
   <div class="to-cards">
     <div class="to-card">
@@ -99,7 +102,7 @@
       </div>
     </div>
     <div class="to-card">
-      <img loading="lazy" src="/images/htv/branded-merch.png" alt="Branded merchandise">
+      <div class="to-card-placeholder"><span>Photo coming soon</span></div>
       <div class="to-card-body">
         <h3>Branded Merchandise</h3>
         <p>Logo tees, staff uniforms, and branded giveaways for small businesses. Canadian sourcing, fast turnaround.</p>
@@ -129,9 +132,7 @@
     </div>
   </div>
   <div class="to-cnpl-proof">
-    <img loading="lazy" src="/images/projects/cnpl-apparel/01.png" alt="Canadian National Pickleball League custom apparel">
-    <img loading="lazy" src="/images/projects/cnpl-apparel/02.png" alt="Canadian National Pickleball League custom apparel">
-    <img loading="lazy" src="/images/projects/cnpl-apparel/03.png" alt="Canadian National Pickleball League custom apparel">
+    <div class="to-photo-placeholder"><span>Photo coming soon</span></div>
   </div>
   <p style="text-align:center; margin-top:2rem;"><a href="/about/#featured-work" style="font-family:Montserrat,sans-serif; font-weight:700; font-size:.85rem; color:#FF1493; text-decoration:underline;">See more of our work &rarr;</a></p>
 </section>
