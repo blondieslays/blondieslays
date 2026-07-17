@@ -13,6 +13,18 @@
   #bprice-val { font-size: 1.15rem; color: #be185d; }
   .bprice-note { flex-basis: 100%; font-size: 11px; color: #3a7fa3; line-height: 1.4; }
   @media (max-width: 768px) { .bsa-details { grid-template-columns: 1fr; } }
+
+  /* ── Step-by-step builder flow ── */
+  .bldr-progress { margin-bottom: 1rem; }
+  .bldr-progress-bar { height: 6px; background: #f5e4ec; border-radius: 999px; overflow: hidden; }
+  .bldr-progress-fill { height: 100%; width: 20%; background: #FF1493; border-radius: 999px; transition: width .25s ease; }
+  .bldr-progress-label { display: block; margin-top: .5rem; font-family: Montserrat, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #be185d; }
+  .bldr-step { display: flex; flex-direction: column; gap: 1.1rem; }
+  .bldr-nav { display: flex; gap: .75rem; margin-top: 1.35rem; }
+  .bldr-back-btn { flex: 0 0 auto; padding: 11px 18px; background: transparent; color: #888; border: 2px solid #ddd; border-radius: 8px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
+  .bldr-back-btn:hover { border-color: #FF1493; color: #FF1493; }
+  .bldr-next-btn { flex: 1; padding: 11px; background: #FF1493; color: #fff; border: 2px solid #FF1493; border-radius: 8px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
+  .bldr-next-btn:hover { background: #d1147d; border-color: #d1147d; }
 </style>
 
 <section id="shirt-builder" class="shirt-builder-section">
@@ -30,15 +42,10 @@
             </div>
             <img id="mockup-img" src="" alt="shirt mockup" style="display:none"/>
           </div>
-          <div class="mockup-nav">
-            <button class="snav-btn" id="mprev" aria-label="Previous">&#8592;</button>
-            <div class="mockup-dots" id="mdots"></div>
-            <button class="snav-btn" id="mnext" aria-label="Next">&#8594;</button>
-          </div>
           <p class="slide-label" id="mockup-label">Browse examples</p>
 
         </div>
-          <div class="builder-aside">
+          <div class="builder-aside" id="builder-aside">
             <div class="builder-aside-block">
               <span class="ba-eyebrow">Digital downloads</span>
               <div class="ba-title">Printables, ready now</div>
@@ -54,27 +61,65 @@
       </div>
 
       <div class="ctrl-side">
-        <div>
-          <span class="bcl">Shirt colour</span>
-          <div class="bcolor-list" id="swatches">
-            <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:radial-gradient(circle at 30% 28%, #FF1493 18%, transparent 19%), radial-gradient(circle at 68% 55%, #FF1493 22%, transparent 23%), radial-gradient(circle at 42% 78%, #FF1493 14%, transparent 15%), #f5ede0;border:1px solid #ddd"></span>Natural Tie-Dye Pink +$5</div>
-            <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
-            <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
-            <div class="bcolor-btn" data-b="#e0559d" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
-            <div class="bcolor-btn" data-b="#33a8c2" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
-            <div class="bcolor-btn" data-b="#f2d2e0" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
-            <div class="bcolor-btn" data-b="tiedye" data-n="Tie-Dye" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye +$5</div>
+        <div class="bldr-progress">
+          <div class="bldr-progress-bar"><div class="bldr-progress-fill" id="bldr-progress-fill"></div></div>
+          <span class="bldr-progress-label" id="bldr-progress-label">Step 1 of 5 &mdash; Shirt Colour</span>
+        </div>
+
+        <div class="bsummary" id="bsummary">
+          Shirt: <strong id="bs-colour">Natural Tie-Dye Pink</strong> &nbsp;|&nbsp;
+          Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
+          Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
+          Font: <strong id="bs-font">High Tide</strong> &nbsp;|&nbsp;
+          Placement: <strong id="bs-place">Centre chest</strong> &nbsp;|&nbsp;
+          Delivery: <strong id="bs-delivery">Local Pickup (Sarnia)</strong>
+        </div>
+
+        <div class="bprice" id="bprice">
+          <span class="bprice-label">Estimated total</span>
+          <strong id="bprice-val">$20.00</strong>
+          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl or tie-dye upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
+        </div>
+
+        <!-- Step 1: Shirt colour -->
+        <div class="bldr-step" id="step-1">
+          <div>
+            <span class="bcl">Shirt colour</span>
+            <div class="bcolor-list" id="swatches">
+              <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:radial-gradient(circle at 30% 28%, #FF1493 18%, transparent 19%), radial-gradient(circle at 68% 55%, #FF1493 22%, transparent 23%), radial-gradient(circle at 42% 78%, #FF1493 14%, transparent 15%), #f5ede0;border:1px solid #ddd"></span>Natural Tie-Dye Pink +$5</div>
+              <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
+              <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
+              <div class="bcolor-btn" data-b="#e0559d" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
+              <div class="bcolor-btn" data-b="#33a8c2" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
+              <div class="bcolor-btn" data-b="#f2d2e0" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
+              <div class="bcolor-btn" data-b="tiedye" data-n="Tie-Dye" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye +$5</div>
+            </div>
+            <div id="tdnote" class="btd-note" style="display:block">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
           </div>
-          <div id="tdnote" class="btd-note" style="display:block">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
         </div>
 
-        <div>
-          <span class="bcl">Your text</span>
-          <input class="btxt-in" id="btxtin" maxlength="28" placeholder="e.g. Sam &amp; Mark 2025"/>
+        <!-- Step 2: Text + font -->
+        <div class="bldr-step" id="step-2" hidden>
+          <div>
+            <span class="bcl">Your text</span>
+            <input class="btxt-in" id="btxtin" maxlength="28" placeholder="e.g. Sam &amp; Mark 2025"/>
+          </div>
+          <div>
+            <span class="bcl">Font style</span>
+            <div class="bfont-row" id="bfonts">
+                <div class="bfo on" data-f="Dragonlord">Dragonlord</div>
+                <div class="bfo" data-f="High Tide">High Tide</div>
+                <div class="bfo" data-f="Typewriter">Typewriter</div>
+                <div class="bfo" data-f="Kiwi Maru">Kiwi Maru</div>
+                <div class="bfo" data-f="Cricut Sans">Cricut Sans</div>
+                <div class="bfo" data-f="Barn Acre">Barn Acre</div>
+            </div>
+          </div>
         </div>
 
-        <div class="bvinyl-font-row">
-          <div class="bvinyl-col">
+        <!-- Step 3: Vinyl colour + placement -->
+        <div class="bldr-step" id="step-3" hidden>
+          <div>
             <span class="bcl">Vinyl colour</span>
             <div class="bcolor-list" id="bvcs">
               <div class="bvc bcolor-btn" data-v="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
@@ -92,120 +137,105 @@
               <div class="bvc bcolor-btn bvc-holo" data-v="Holographic"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)"></span>Holographic +$2</div>
             </div>
           </div>
-          <div class="bfont-col">
-            <span class="bcl">Font style</span>
-            <div class="bfont-row" id="bfonts">
-                <div class="bfo on" data-f="Dragonlord">Dragonlord</div>
-                <div class="bfo" data-f="High Tide">High Tide</div>
-                <div class="bfo" data-f="Typewriter">Typewriter</div>
-                <div class="bfo" data-f="Kiwi Maru">Kiwi Maru</div>
-                <div class="bfo" data-f="Cricut Sans">Cricut Sans</div>
-                <div class="bfo" data-f="Barn Acre">Barn Acre</div>
+          <div>
+            <span class="bcl">Text placement</span>
+            <div class="bplacement-row" id="bplacements">
+              <div class="bpl on" data-p="Centre chest">Centre chest</div>
+              <div class="bpl" data-p="Centre back">Centre back</div>
+              <div class="bpl" data-p="Right sleeve">Right sleeve</div>
+              <div class="bpl" data-p="Left sleeve">Left sleeve</div>
             </div>
-            <div class="bplace-col">
-              <span class="bcl">Text placement</span>
-              <div class="bplacement-row" id="bplacements">
-                <div class="bpl on" data-p="Centre chest">Centre chest</div>
-                <div class="bpl" data-p="Centre back">Centre back</div>
-                <div class="bpl" data-p="Right sleeve">Right sleeve</div>
-                <div class="bpl" data-p="Left sleeve">Left sleeve</div>
+          </div>
+        </div>
+
+        <!-- Step 4: Delivery -->
+        <div class="bldr-step" id="step-4" hidden>
+          <div>
+            <span class="bcl">Delivery</span>
+            <div class="bcolor-list" id="bdelivery">
+              <div class="bcolor-btn on" data-d="pickup" data-n="Local Pickup (Sarnia)">Local Pickup (Sarnia) &mdash; Free</div>
+              <div class="bcolor-btn" data-d="ship" data-n="Shipped">Shipped</div>
+            </div>
+            <div id="shipfields" style="display:none;margin-top:.6rem">
+              <span class="bcl">Postal code</span>
+              <input class="btxt-in" id="bo-postal" maxlength="7" placeholder="e.g. N7T 1A1" style="max-width:160px"/>
+              <div id="localnote" class="btd-note" style="display:none;background:#eafff2;border-color:#8fdca8;color:#0a7a3d;margin-top:.5rem">🎉 Free shipping — you're in our local delivery area!</div>
+            </div>
+            <div id="shipnote" class="btd-note" style="display:none">Shipping is a data-based estimate ($18–$22 depending on quantity) — free for local Sarnia, London &amp; Waterloo-area orders. Elise will confirm the exact rate for your address on your invoice.</div>
+          </div>
+        </div>
+
+        <!-- Step 5: Review + order details -->
+        <div class="bldr-step" id="step-5" hidden>
+          <form id="bsa-order-form" action="https://formspree.io/f/xwvzyblg" method="POST" novalidate>
+            <div class="bsa-details">
+              <div class="bsa-field">
+                <span class="bcl">Your name *</span>
+                <input class="btxt-in" type="text" name="name" id="bo-name" placeholder="First &amp; last" required/>
+              </div>
+              <div class="bsa-field">
+                <span class="bcl">Email *</span>
+                <input class="btxt-in" type="email" name="email" id="bo-email" placeholder="you@email.com" required/>
+              </div>
+              <div class="bsa-field bsa-field-full">
+                <span class="bcl">Confirm email *</span>
+                <input class="btxt-in" type="email" id="bo-email2" placeholder="Re-enter your email" required autocomplete="off"/>
+              </div>
+              <div class="bsa-field">
+                <span class="bcl">Size *</span>
+                <select class="btxt-in" name="size" id="bo-size" required>
+                  <option value="" disabled selected>Choose…</option>
+                  <option>XS</option>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                  <option>XL</option>
+                  <option>2XL</option>
+                  <option>3XL</option>
+                  <option>Youth S</option>
+                  <option>Youth M</option>
+                  <option>Youth L</option>
+                </select>
+              </div>
+              <div class="bsa-field">
+                <span class="bcl">Quantity *</span>
+                <input class="btxt-in" type="number" name="quantity" id="bo-qty" min="1" value="1" required/>
+              </div>
+              <div class="bsa-field bsa-field-full">
+                <span class="bcl">Notes (optional)</span>
+                <textarea class="btxt-in" name="notes" id="bo-notes" rows="2" placeholder="Anything else Elise should know"></textarea>
               </div>
             </div>
+
+            <!-- Design selections, filled from the builder state on submit -->
+            <input type="hidden" name="Shirt colour" id="hf-colour"/>
+            <input type="hidden" name="Text" id="hf-text"/>
+            <input type="hidden" name="Vinyl" id="hf-vinyl"/>
+            <input type="hidden" name="Font" id="hf-font"/>
+            <input type="hidden" name="Placement" id="hf-place"/>
+            <input type="hidden" name="Delivery" id="hf-delivery"/>
+            <input type="hidden" name="Postal code" id="hf-postal"/>
+            <input type="hidden" name="Estimated total" id="hf-total"/>
+            <input type="hidden" name="Invoice summary" id="hf-invoice"/>
+            <input type="hidden" name="_subject" id="hf-subject" value="New tee order request"/>
+            <!-- Spam honeypot: real users never fill this -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;"/>
+
+            <div class="btd-note" id="bo-error" style="display:none;background:#fff0f0;border-color:#f5b5b5;color:#b91c1c;margin-bottom:.6rem;"></div>
+
+            <button class="bobtn" id="bsubmit" type="submit">Send my order request &rarr;</button>
+          </form>
+
+          <div id="bo-success" style="display:none;text-align:center;background:#FFF0F6;border:1px solid #f9a8d4;border-radius:12px;padding:1.25rem;color:#be185d;line-height:1.6;">
+            <strong style="display:block;font-size:1rem;margin-bottom:.4rem;">Order request sent! 🎉</strong>
+            Thanks — Elise will review your design and email you within 48 hours to confirm the details and send a
+            secure <strong>PayPal invoice</strong> for the total (including any tax). Nothing to pay until that invoice lands in your inbox.
           </div>
         </div>
 
-        <div class="bsummary" id="bsummary">
-          Shirt: <strong id="bs-colour">Natural Tie-Dye Pink</strong> &nbsp;|&nbsp;
-          Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
-          Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
-          Font: <strong id="bs-font">High Tide</strong> &nbsp;|&nbsp;
-          Placement: <strong id="bs-place">Centre chest</strong> &nbsp;|&nbsp;
-          Delivery: <strong id="bs-delivery">Local Pickup (Sarnia)</strong>
-        </div>
-
-        <div>
-          <span class="bcl">Delivery</span>
-          <div class="bcolor-list" id="bdelivery">
-            <div class="bcolor-btn on" data-d="pickup" data-n="Local Pickup (Sarnia)">Local Pickup (Sarnia) &mdash; Free</div>
-            <div class="bcolor-btn" data-d="ship" data-n="Shipped">Shipped</div>
-          </div>
-          <div id="shipfields" style="display:none;margin-top:.6rem">
-            <span class="bcl">Postal code</span>
-            <input class="btxt-in" id="bo-postal" maxlength="7" placeholder="e.g. N7T 1A1" style="max-width:160px"/>
-            <div id="localnote" class="btd-note" style="display:none;background:#eafff2;border-color:#8fdca8;color:#0a7a3d;margin-top:.5rem">🎉 Free shipping — you're in our local delivery area!</div>
-          </div>
-          <div id="shipnote" class="btd-note" style="display:none">Shipping is a data-based estimate ($18–$22 depending on quantity) — free for local Sarnia, London &amp; Waterloo-area orders. Elise will confirm the exact rate for your address on your invoice.</div>
-        </div>
-
-        <div class="bprice" id="bprice">
-          <span class="bprice-label">Estimated total</span>
-          <strong id="bprice-val">$20.00</strong>
-          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl or tie-dye upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
-        </div>
-
-        <form id="bsa-order-form" action="https://formspree.io/f/xwvzyblg" method="POST" novalidate>
-          <div class="bsa-details">
-            <div class="bsa-field">
-              <span class="bcl">Your name *</span>
-              <input class="btxt-in" type="text" name="name" id="bo-name" placeholder="First &amp; last" required/>
-            </div>
-            <div class="bsa-field">
-              <span class="bcl">Email *</span>
-              <input class="btxt-in" type="email" name="email" id="bo-email" placeholder="you@email.com" required/>
-            </div>
-            <div class="bsa-field bsa-field-full">
-              <span class="bcl">Confirm email *</span>
-              <input class="btxt-in" type="email" id="bo-email2" placeholder="Re-enter your email" required autocomplete="off"/>
-            </div>
-            <div class="bsa-field">
-              <span class="bcl">Size *</span>
-              <select class="btxt-in" name="size" id="bo-size" required>
-                <option value="" disabled selected>Choose…</option>
-                <option>XS</option>
-                <option>S</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
-                <option>2XL</option>
-                <option>3XL</option>
-                <option>Youth S</option>
-                <option>Youth M</option>
-                <option>Youth L</option>
-              </select>
-            </div>
-            <div class="bsa-field">
-              <span class="bcl">Quantity *</span>
-              <input class="btxt-in" type="number" name="quantity" id="bo-qty" min="1" value="1" required/>
-            </div>
-            <div class="bsa-field bsa-field-full">
-              <span class="bcl">Notes (optional)</span>
-              <textarea class="btxt-in" name="notes" id="bo-notes" rows="2" placeholder="Anything else Elise should know"></textarea>
-            </div>
-          </div>
-
-          <!-- Design selections, filled from the builder state on submit -->
-          <input type="hidden" name="Shirt colour" id="hf-colour"/>
-          <input type="hidden" name="Text" id="hf-text"/>
-          <input type="hidden" name="Vinyl" id="hf-vinyl"/>
-          <input type="hidden" name="Font" id="hf-font"/>
-          <input type="hidden" name="Placement" id="hf-place"/>
-          <input type="hidden" name="Delivery" id="hf-delivery"/>
-          <input type="hidden" name="Postal code" id="hf-postal"/>
-          <input type="hidden" name="Estimated total" id="hf-total"/>
-          <input type="hidden" name="Invoice summary" id="hf-invoice"/>
-          <input type="hidden" name="_subject" id="hf-subject" value="New tee order request"/>
-          <!-- Spam honeypot: real users never fill this -->
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;"/>
-
-          <div class="btd-note" id="bo-error" style="display:none;background:#fff0f0;border-color:#f5b5b5;color:#b91c1c;margin-bottom:.6rem;"></div>
-
-          <button class="bobtn" id="bsubmit" type="submit">Send my order request &rarr;</button>
-        </form>
-
-        <div id="bo-success" style="display:none;text-align:center;background:#FFF0F6;border:1px solid #f9a8d4;border-radius:12px;padding:1.25rem;color:#be185d;line-height:1.6;">
-          <strong style="display:block;font-size:1rem;margin-bottom:.4rem;">Order request sent! 🎉</strong>
-          Thanks — Elise will review your design and email you within 48 hours to confirm the details and send a
-          secure <strong>PayPal invoice</strong> for the total (including any tax). Nothing to pay until that invoice lands in your inbox.
+        <div class="bldr-nav">
+          <button type="button" class="bldr-back-btn" id="bldr-back">&larr; Back</button>
+          <button type="button" class="bldr-next-btn" id="bldr-next">Next &rarr;</button>
         </div>
       </div>
     </div>
@@ -219,8 +249,61 @@
     {label:'Vinyl Colours',   img:'/images/builder/vinyl.png'},
     {label:'Font Styles',     img:'/images/builder/fonts.png'},
   ];
-  var mcur = 0;
   var S = {colour:'Natural Tie-Dye Pink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
+
+  // ── Step-by-step flow ───────────────────────────────────
+  var TOTAL_STEPS = 5;
+  var curStep = 1;
+  var STEP_TITLES = ['Shirt Colour', 'Text & Font', 'Vinyl & Placement', 'Delivery', 'Review & Order'];
+  var STEP_MOCKUP = [0, 2, 1, 1, 1]; // index into mockups[] shown for each step
+  var stepRendered = false; // guards the auto-scroll so it doesn't fire on first load
+
+  function showMockup(i){
+    var m = mockups[i];
+    var img = document.getElementById('mockup-img');
+    var ph = document.getElementById('mockup-placeholder');
+    img.src = m.img;
+    img.style.display = 'block';
+    ph.style.display = 'none';
+    img.onerror = function(){ img.style.display='none'; ph.style.display='flex'; };
+    document.getElementById('mockup-label').textContent = m.label;
+  }
+
+  function renderStep(){
+    for(var s = 1; s <= TOTAL_STEPS; s++){
+      var el = document.getElementById('step-' + s);
+      if(el) el.hidden = (s !== curStep);
+    }
+    document.getElementById('bldr-progress-fill').style.width = ((curStep / TOTAL_STEPS) * 100) + '%';
+    document.getElementById('bldr-progress-label').textContent = 'Step ' + curStep + ' of ' + TOTAL_STEPS + ' — ' + STEP_TITLES[curStep - 1];
+    showMockup(STEP_MOCKUP[curStep - 1]);
+
+    var aside = document.getElementById('builder-aside');
+    if(aside) aside.style.display = (curStep === 1) ? 'flex' : 'none';
+
+    var backBtn = document.getElementById('bldr-back');
+    var nextBtn = document.getElementById('bldr-next');
+    backBtn.style.visibility = (curStep === 1) ? 'hidden' : 'visible';
+    if(curStep === TOTAL_STEPS){
+      nextBtn.style.display = 'none';
+    } else {
+      nextBtn.style.display = 'inline-flex';
+      nextBtn.textContent = (curStep === TOTAL_STEPS - 1) ? 'Review my order →' : 'Next →';
+    }
+
+    if(stepRendered){
+      var ctrl = document.querySelector('.ctrl-side');
+      if(ctrl) ctrl.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    stepRendered = true;
+  }
+
+  document.getElementById('bldr-next').addEventListener('click', function(){
+    if(curStep < TOTAL_STEPS){ curStep++; renderStep(); }
+  });
+  document.getElementById('bldr-back').addEventListener('click', function(){
+    if(curStep > 1){ curStep--; renderStep(); }
+  });
 
   // ── Pricing ────────────────────────────────────────────
   var BASE = 20;            // per shirt, CAD
@@ -300,33 +383,6 @@
     var extra = S.delivery === 'ship' ? ' (incl. ' + money(shippingCost()) + ' shipping)' : '';
     if(el) el.textContent = money(total) + (q > 1 ? '  (' + q + ' \u00d7 ' + money(perShirt()) + ')' : '') + extra;
   }
-
-  function buildMDots(){
-    var d=document.getElementById('mdots');
-    d.innerHTML='';
-    mockups.forEach(function(_,i){
-      var dot=document.createElement('div');
-      dot.className='bsdot'+(i===mcur?' on':'');
-      dot.addEventListener('click',function(){goMockup(i);});
-      d.appendChild(dot);
-    });
-  }
-
-  function goMockup(i){
-    mcur=i;
-    var m=mockups[i];
-    var img=document.getElementById('mockup-img');
-    var ph=document.getElementById('mockup-placeholder');
-    img.src=m.img;
-    img.style.display='block';
-    ph.style.display='none';
-    img.onerror=function(){img.style.display='none';ph.style.display='flex';};
-    document.getElementById('mockup-label').textContent=m.label;
-    buildMDots();
-  }
-
-  document.getElementById('mprev').addEventListener('click',function(){goMockup((mcur-1+mockups.length)%mockups.length);});
-  document.getElementById('mnext').addEventListener('click',function(){goMockup((mcur+1)%mockups.length);});
 
   document.getElementById('swatches').addEventListener('click',function(e){
     var sw=e.target.closest('.bcolor-btn');if(!sw||!sw.dataset.b)return;
@@ -495,8 +551,7 @@
     });
   });
 
-  buildMDots();
-  goMockup(0);
+  renderStep();
   updatePrice();
 })();
 </script>
