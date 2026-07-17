@@ -15,16 +15,26 @@
   @media (max-width: 768px) { .bsa-details { grid-template-columns: 1fr; } }
 
   /* ── Step-by-step builder flow ── */
+  /* Frame the whole builder as one unified card instead of two loose columns */
+  .bldr { background: #fff; border: 1px solid #f5e4ec; border-radius: 22px; box-shadow: 0 18px 44px rgba(190,24,93,.10), 0 4px 12px rgba(0,0,0,.04); padding: 2rem; }
+  /* Pin the preview so it doesn't leave a dead gap when the control column runs longer */
+  .slide-side { position: sticky; top: 1.25rem; align-self: start; }
+  @media (max-width: 768px) { .bldr { padding: 1.25rem; } .slide-side { position: static; } }
+
   .bldr-progress { margin-bottom: 1rem; }
   .bldr-progress-bar { height: 6px; background: #f5e4ec; border-radius: 999px; overflow: hidden; }
   .bldr-progress-fill { height: 100%; width: 20%; background: #FF1493; border-radius: 999px; transition: width .25s ease; }
   .bldr-progress-label { display: block; margin-top: .5rem; font-family: Montserrat, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #be185d; }
   .bldr-step { display: flex; flex-direction: column; gap: 1.1rem; }
   .bldr-nav { display: flex; gap: .75rem; margin-top: 1.35rem; }
-  .bldr-back-btn { flex: 0 0 auto; padding: 11px 18px; background: transparent; color: #888; border: 2px solid #ddd; border-radius: 8px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
-  .bldr-back-btn:hover { border-color: #FF1493; color: #FF1493; }
-  .bldr-next-btn { flex: 1; padding: 11px; background: #FF1493; color: #fff; border: 2px solid #FF1493; border-radius: 8px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
-  .bldr-next-btn:hover { background: #d1147d; border-color: #d1147d; }
+  .bldr-back-btn { flex: 0 0 auto; padding: 12px 22px; background: #fff; color: #888; border: 2px solid #e5d3db; border-radius: 999px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
+  .bldr-back-btn:hover { border-color: #FF1493; color: #FF1493; transform: translateY(-1px); }
+  .bldr-next-btn { flex: 1; padding: 12px; background: #FF1493; color: #fff; border: 2px solid #FF1493; border-radius: 999px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; box-shadow: 0 10px 24px rgba(255,20,147,.28); transition: all .2s; }
+  .bldr-next-btn:hover { background: #d1147d; border-color: #d1147d; transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,20,147,.35); }
+
+  /* Inspiration strip in the aside */
+  .ba-idea-strip { display: flex; gap: .5rem; margin-top: .7rem; }
+  .ba-idea-strip img { width: calc(33.333% - .34rem); aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(190,24,93,.16); }
 </style>
 
 <section id="shirt-builder" class="shirt-builder-section">
@@ -46,6 +56,15 @@
 
         </div>
           <div class="builder-aside" id="builder-aside">
+            <div class="builder-aside-block">
+              <span class="ba-eyebrow">Need inspiration?</span>
+              <div class="ba-title">A few ideas to get you started</div>
+              <div class="ba-idea-strip">
+                <img loading="lazy" src="/images/products/custom-saying-3.png" alt="Example custom tee — Probably late">
+                <img loading="lazy" src="/images/products/custom-saying-1.png" alt="Example custom tee — Summer Should Be Fun">
+                <img loading="lazy" src="/images/products/custom-saying-2.png" alt="Example custom tee — Actually,">
+              </div>
+            </div>
             <div class="builder-aside-block">
               <span class="ba-eyebrow">Digital downloads</span>
               <div class="ba-title">Printables, ready now</div>
@@ -101,8 +120,9 @@
         <!-- Step 2: Text + font -->
         <div class="bldr-step" id="step-2" hidden>
           <div>
-            <span class="bcl">Your text</span>
-            <input class="btxt-in" id="btxtin" maxlength="28" placeholder="e.g. Sam &amp; Mark 2025"/>
+            <span class="bcl">Your text *</span>
+            <input class="btxt-in" id="btxtin" maxlength="28" placeholder="e.g. Sam &amp; Mark 2025" required/>
+            <div id="text-required-note" class="btd-note" style="display:none;background:#fff0f0;border-color:#f5b5b5;color:#b91c1c;margin-top:.5rem">Please add your text so Elise knows what to press — even just a name works!</div>
           </div>
           <div>
             <span class="bcl">Font style</span>
@@ -299,6 +319,11 @@
   }
 
   document.getElementById('bldr-next').addEventListener('click', function(){
+    if(curStep === 2 && !S.text.trim()){
+      document.getElementById('text-required-note').style.display = 'block';
+      document.getElementById('btxtin').focus();
+      return;
+    }
     if(curStep < TOTAL_STEPS){ curStep++; renderStep(); }
   });
   document.getElementById('bldr-back').addEventListener('click', function(){
@@ -398,6 +423,7 @@
   document.getElementById('btxtin').addEventListener('input',function(){
     S.text=this.value;
     document.getElementById('bs-text').textContent=S.text||'—';
+    if(this.value.trim()) document.getElementById('text-required-note').style.display = 'none';
   });
 
   document.getElementById('bvcs').addEventListener('click',function(e){
