@@ -166,6 +166,14 @@
   .btn:hover { background: var(--pink-dark); }
   .btn:active { transform: translateY(1px); }
   .btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+  .btn.ghost {
+    background: #fff; color: var(--pink-dark);
+    border: 2px solid var(--pink-med);
+    padding: 0 1.2rem;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  .btn.ghost:hover { background: var(--pink-med); color: #fff; }
 
   /* jump-to-add-cards pill (top shortcut) */
   .jumpwrap { text-align: center; margin: -0.4rem 0 1.3rem; }
@@ -525,6 +533,7 @@
   <div class="searchbar">
     <input id="q" type="search" placeholder="Search a card by name… e.g. Charizard" autocomplete="off">
     <button class="btn" id="searchBtn">Search</button>
+    <button class="btn ghost" id="pauseBtn" type="button" hidden>Pause loading</button>
   </div>
 
   <div id="notes"></div>
@@ -879,6 +888,18 @@ const MY_CARDS = [
   { id: "me2pt5-36", qty: 1, note: "" },
   { id: "swsh7-27", qty: 1, note: "" },
   { id: "me3-38", qty: 1, note: "" },
+  { id: "me5-74", qty: 1, note: "reverse-holofoil" },
+  { id: "me5-1", qty: 1, note: "reverse-holofoil" },
+  { id: "me5-60", qty: 1, note: "" },
+  { id: "me5-17", qty: 1, note: "" },
+  { id: "me5-80", qty: 1, note: "" },
+  { id: "me5-82", qty: 1, note: "" },
+  { id: "me5-84", qty: 1, note: "reverse-holofoil" },
+  { id: "me5-61", qty: 1, note: "reverse-holofoil" },
+  { id: "me5-62", qty: 1, note: "holofoil" },
+  { id: "me5-10", qty: 1, note: "" },
+  { id: "me5-56", qty: 1, note: "holofoil-eb-games-promo" },
+  { id: "me5-2", qty: 1, note: "" },
 ];
 
 /* ============================ ENGINE ============================ */
@@ -1052,6 +1073,25 @@ function estTile(entry) {
 // Getting a free API key (https://dev.pokemontcg.io) and pasting it into
 // API_KEY above raises the rate limit substantially and makes this a
 // non-issue — worth doing once the collection gets this large.
+
+// Lets the "Pause loading" button hold off on firing more batch requests,
+// so the search box (hitting the same rate-limited API) gets the room it
+// needs to come back quickly. Resuming wakes up any paused loop.
+let loadingPaused = false;
+let resumeWaiters = [];
+function waitIfPaused() {
+  if (!loadingPaused) return Promise.resolve();
+  return new Promise((resolve) => resumeWaiters.push(resolve));
+}
+function setPauseButton(mode) {
+  // mode: "hidden" | "loading" | "paused"
+  const btn = $("pauseBtn");
+  if (!btn) return;
+  if (mode === "hidden") { btn.hidden = true; return; }
+  btn.hidden = false;
+  btn.textContent = mode === "paused" ? "Resume loading" : "Pause loading";
+}
+
 async function fetchCardsByIds(ids, onProgress) {
   const map = {};
   const CHUNK = 40;
@@ -1078,6 +1118,7 @@ async function fetchCardsByIds(ids, onProgress) {
   }
 
   for (let i = 0; i < ids.length; i += CHUNK) {
+    await waitIfPaused();
     const slice = ids.slice(i, i + CHUNK);
     await fetchBatch(slice);
     done += slice.length;
@@ -1093,6 +1134,7 @@ async function fetchCardsByIds(ids, onProgress) {
     console.warn(`[BATCH] ${missing.length} card(s) still missing after pass 1, sweeping again…`);
     const SMALL = 10;
     for (let i = 0; i < missing.length; i += SMALL) {
+      await waitIfPaused();
       const slice = missing.slice(i, i + SMALL);
       await fetchBatch(slice);
       if (onProgress) onProgress(ids.length);
@@ -1113,10 +1155,12 @@ async function loadPortfolio() {
   // build the tiles from the results. (Was one request per card, which got
   // painfully slow — and rate-limit-prone — as the collection grew.)
   const ids = MY_CARDS.filter((e) => e.id).map((e) => e.id);
+  setPauseButton("loading");
   const cardMap = await fetchCardsByIds(ids, (n) => {
     const s = $("subline");
-    if (s) s.textContent = `Loading prices… ${n}/${ids.length}`;
+    if (s && !loadingPaused) s.textContent = `Loading prices… ${n}/${ids.length}`;
   });
+  setPauseButton("hidden");
 
   for (const entry of MY_CARDS) {
     // Est-only entry (no id): show the known value without a live lookup.
@@ -1274,6 +1318,19 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 /* ---------- boot ---------- */
 $("searchBtn").addEventListener("click", doSearch);
 $("q").addEventListener("keydown", (e) => { if (e.key === "Enter") doSearch(); });
+$("pauseBtn").addEventListener("click", () => {
+  loadingPaused = !loadingPaused;
+  const s = $("subline");
+  if (loadingPaused) {
+    setPauseButton("paused");
+    if (s) s.textContent = "Loading paused — search away, then hit Resume.";
+  } else {
+    setPauseButton("loading");
+    if (s) s.textContent = "Resuming…";
+    resumeWaiters.forEach((r) => r());
+    resumeWaiters = [];
+  }
+});
 $("backToCollection").addEventListener("click", () => {
   $("searchSection").hidden = true;
   $("searchGrid").innerHTML = "";
