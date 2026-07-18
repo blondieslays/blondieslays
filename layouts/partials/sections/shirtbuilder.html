@@ -19,6 +19,9 @@
   .bldr { background: #fff; border: 1px solid #f5e4ec; border-radius: 22px; box-shadow: 0 18px 44px rgba(190,24,93,.10), 0 4px 12px rgba(0,0,0,.04); padding: 2rem; }
   /* Pin the preview so it doesn't leave a dead gap when the control column runs longer */
   .slide-side { position: sticky; top: 1.25rem; align-self: start; }
+  /* Step 1 has no preview image — collapse to one column */
+  .bldr.bldr-solo { grid-template-columns: 1fr; }
+  .bldr.bldr-solo .slide-side { display: none; }
   @media (max-width: 768px) { .bldr { padding: 1.25rem; } .slide-side { position: static; } }
 
   .bldr-progress { margin-bottom: 1rem; }
@@ -32,9 +35,9 @@
   .bldr-next-btn { flex: 1; padding: 12px; background: #FF1493; color: #fff; border: 2px solid #FF1493; border-radius: 999px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; box-shadow: 0 10px 24px rgba(255,20,147,.28); transition: all .2s; }
   .bldr-next-btn:hover { background: #d1147d; border-color: #d1147d; transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,20,147,.35); }
 
-  /* Inspiration strip in the aside */
-  .ba-idea-strip { display: flex; gap: .5rem; margin-top: .7rem; }
-  .ba-idea-strip img { width: calc(33.333% - .34rem); aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(190,24,93,.16); }
+  /* Downloads + coming-soon, side by side under the builder */
+  .bldr-promos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 860px; margin: 1.5rem auto 0; }
+  @media (max-width: 768px) { .bldr-promos { grid-template-columns: 1fr; } }
 </style>
 
 <section id="shirt-builder" class="shirt-builder-section">
@@ -55,28 +58,6 @@
           <p class="slide-label" id="mockup-label">Browse examples</p>
 
         </div>
-          <div class="builder-aside" id="builder-aside">
-            <div class="builder-aside-block">
-              <span class="ba-eyebrow">Need inspiration?</span>
-              <div class="ba-title">A few ideas to get you started</div>
-              <div class="ba-idea-strip">
-                <img loading="lazy" src="/images/products/custom-saying-3.png" alt="Example custom tee — Probably late">
-                <img loading="lazy" src="/images/products/custom-saying-1.png" alt="Example custom tee — Summer Should Be Fun">
-                <img loading="lazy" src="/images/products/custom-saying-2.png" alt="Example custom tee — Actually,">
-              </div>
-            </div>
-            <div class="builder-aside-block">
-              <span class="ba-eyebrow">Digital downloads</span>
-              <div class="ba-title">Printables, ready now</div>
-              <p class="ba-text">Fillable recipe cards and the 2026 Cheese of the Month Club — instant download, nothing to ship.</p>
-              <a class="ba-btn" href="/downloads/">Browse downloads &rarr;</a>
-            </div>
-            <div class="builder-aside-block ba-soon">
-              <span class="ba-eyebrow">Coming soon</span>
-              <div class="ba-title">Grad &amp; wedding towel builder <span class="ba-pill">Soon</span></div>
-              <p class="ba-text">Personalised grad and wedding towels — design yours right here, launching soon.</p>
-            </div>
-          </div>
       </div>
 
       <div class="ctrl-side">
@@ -105,15 +86,15 @@
           <div>
             <span class="bcl">Shirt colour</span>
             <div class="bcolor-list" id="swatches">
-              <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:radial-gradient(circle at 30% 28%, #FF1493 18%, transparent 19%), radial-gradient(circle at 68% 55%, #FF1493 22%, transparent 23%), radial-gradient(circle at 42% 78%, #FF1493 14%, transparent 15%), #f5ede0;border:1px solid #ddd"></span>Natural Tie-Dye Pink +$5</div>
+              <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)"></span>Tie-Dye Pink +$5</div>
               <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
               <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
               <div class="bcolor-btn" data-b="#e0559d" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
               <div class="bcolor-btn" data-b="#33a8c2" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
               <div class="bcolor-btn" data-b="#f2d2e0" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
-              <div class="bcolor-btn" data-b="tiedye" data-n="Tie-Dye" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#f9a8d4,#a5f3fc,#fde68a,#c4b5fd,#f9a8d4)"></span>Tie-Dye +$5</div>
             </div>
             <div id="tdnote" class="btd-note" style="display:block">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
+            <div class="btd-note" style="margin-top:.5rem">Want a different colour or a custom tie-dye blend? Special requests welcome — just mention it in your notes.</div>
           </div>
         </div>
 
@@ -259,15 +240,28 @@
         </div>
       </div>
     </div>
+
+    <div class="bldr-promos">
+      <div class="builder-aside-block">
+        <span class="ba-eyebrow">Digital downloads</span>
+        <div class="ba-title">Printables, ready now</div>
+        <p class="ba-text">Fillable recipe cards and the 2026 Cheese of the Month Club — instant download, nothing to ship.</p>
+        <a class="ba-btn" href="/downloads/">Browse downloads &rarr;</a>
+      </div>
+      <div class="builder-aside-block ba-soon">
+        <span class="ba-eyebrow">Coming soon</span>
+        <div class="ba-title">Grad &amp; wedding towel builder <span class="ba-pill">Soon</span></div>
+        <p class="ba-text">Personalised grad and wedding towels — design yours right here, launching soon.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <script>
 (function(){
   var mockups = [
-    {label:'Shirt Colours',  img:'/images/builder/shirts.png'},
-    {label:'Vinyl Colours',   img:'/images/builder/vinyl.png'},
     {label:'Font Styles',     img:'/images/builder/fonts.png'},
+    {label:'Vinyl Colours',   img:'/images/builder/vinyl.png'},
   ];
   var S = {colour:'Natural Tie-Dye Pink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
 
@@ -275,7 +269,7 @@
   var TOTAL_STEPS = 5;
   var curStep = 1;
   var STEP_TITLES = ['Shirt Colour', 'Text & Font', 'Vinyl & Placement', 'Delivery', 'Review & Order'];
-  var STEP_MOCKUP = [0, 2, 1, 1, 1]; // index into mockups[] shown for each step
+  var STEP_MOCKUP = [null, 0, 1, 1, 1]; // index into mockups[] shown for each step — step 1 has no preview
   var stepRendered = false; // guards the auto-scroll so it doesn't fire on first load
 
   function showMockup(i){
@@ -296,10 +290,10 @@
     }
     document.getElementById('bldr-progress-fill').style.width = ((curStep / TOTAL_STEPS) * 100) + '%';
     document.getElementById('bldr-progress-label').textContent = 'Step ' + curStep + ' of ' + TOTAL_STEPS + ' — ' + STEP_TITLES[curStep - 1];
-    showMockup(STEP_MOCKUP[curStep - 1]);
 
-    var aside = document.getElementById('builder-aside');
-    if(aside) aside.style.display = (curStep === 1) ? 'flex' : 'none';
+    var mockIdx = STEP_MOCKUP[curStep - 1];
+    if(mockIdx !== null) showMockup(mockIdx);
+    document.querySelector('.bldr').classList.toggle('bldr-solo', curStep === 1);
 
     var backBtn = document.getElementById('bldr-back');
     var nextBtn = document.getElementById('bldr-next');

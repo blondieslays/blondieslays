@@ -147,6 +147,8 @@
   }
   .work-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--pink-med); }
   .work-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: #FFF0F6; display: block; }
+  .work-card-placeholder { width: 100%; aspect-ratio: 3 / 4; display: flex; align-items: center; justify-content: center; text-align: center; background: #FFF0F6; border-bottom: 2px dashed var(--pink-med); }
+  .work-card-placeholder span { font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .05em; padding: 0 1rem; }
   .work-card-body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
   .work-card h3 { font-size: 1.35rem; color: var(--ink); margin-bottom: .45rem; }
   .work-card p { font-size: .87rem; color: #6b4357; flex: 1; }
@@ -199,6 +201,8 @@
   .job .role { font-weight: 700; color: var(--pink-dark); font-size: .92rem; }
   .job .when { font-size: .76rem; color: #9a6b82; font-weight: 600; margin: .15rem 0 .4rem; }
   .job p { font-size: .9rem; color: #6b4357; max-width: 62ch; }
+  .timeline-aside { margin-top: 1.1rem; font-size: .82rem; color: #9a6b82; max-width: 62ch; }
+  .timeline-aside strong { color: var(--pink-dark); }
 
   /* ---------- education ---------- */
   .edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
@@ -383,10 +387,20 @@
         </div>
 
         <div class="work-card">
-          <img loading="lazy" src="/images/projects/inmobi-growth/03.png" alt="InMobi audience growth chart">
+          <img loading="lazy" src="/images/htv/team-apparel.png" alt="Bachelorette party shirts">
           <div class="work-card-body">
-            <h3>InMobi Audience Growth</h3>
-            <p>Increased daily pageviews by 400% and unique users by 133% through data-driven content strategy, GenAI workflows, and editorial team management across a 170-site portfolio.</p>
+            <h3>Bachelorette Party Shirts</h3>
+            <p>Matching tie-dye sets for the whole crew &mdash; bride-to-be designs, personalized names, and coordinated colours, pressed in-studio for the big weekend.</p>
+            <a class="v-link" href="/team-orders/">Get a quote for your group &rarr;</a>
+          </div>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-placeholder"><span>Photo coming soon</span></div>
+          <div class="work-card-body">
+            <h3>Wedding Mirror &amp; Window Decals</h3>
+            <p>Custom vinyl decals for mirrors, windows, and welcome signage &mdash; names, dates, and seating charts cut and applied to order.</p>
+            <a class="v-link" href="/team-orders/">Get a quote &rarr;</a>
           </div>
         </div>
 
@@ -452,45 +466,32 @@
           <h3>Blondie Slays Apparel</h3>
           <div class="role">Founder &amp; Maker &middot; Self-employed</div>
           <div class="when">May 2023 &ndash; Present &middot; Sarnia, ON</div>
-          <p>Founded and run Blondie Slays Apparel, a custom heat-transfer vinyl studio producing team, bulk, and one-of-a-kind apparel from a Cricut and heat press studio in Sarnia. Alongside the studio, delivered content and brand production for the Canadian National Pickleball League, and drove a 400% increase in daily pageviews and 133% growth in unique users for InMobi through data-driven content strategy and GenAI workflows.</p>
-        </div>
-
-        <div class="job">
-          <h3>Mind Model AI</h3>
-          <div class="role">Guest Speaker</div>
-          <div class="when">Apr 2025 &middot; Kitchener, ON</div>
-          <p>Spoke on using generative AI as a tool to enhance and explore your skills &mdash; sharing practical ways to personalize and accelerate creative work with AI.</p>
+          <p>After nearly a decade in content strategy and digital marketing, pivoted to build something of her own: a custom heat-transfer vinyl studio producing team, bulk, and one-of-a-kind apparel from a Cricut and heat press studio in Sarnia. Alongside the studio, delivers content and brand production for the Canadian National Pickleball League, and drove a 400% increase in daily pageviews and 133% growth in unique users for InMobi through data-driven content strategy and GenAI workflows.</p>
         </div>
 
         <div class="job">
           <h3>System1</h3>
           <div class="role">Content Strategist</div>
           <div class="when">Mar 2022 &ndash; May 2023 &middot; Remote</div>
-          <p>Built data-driven content strategies aligned with audience interests and market trends, partnering with cross-functional teams on calendars and multichannel campaigns.</p>
+          <p>Returned to System1 to build data-driven content strategies aligned with audience interests and market trends, partnering with cross-functional teams on calendars and multichannel campaigns. When the role was eliminated in a 2023 restructuring, took it as the push to build something entirely her own &mdash; which became Blondie Slays.</p>
         </div>
 
         <div class="job">
           <h3>Schema App</h3>
           <div class="role">Digital Marketing Manager</div>
           <div class="when">Jan 2021 &ndash; Mar 2022 &middot; Remote</div>
-          <p>Translated technical topics like schema markup into clear content, and used Analytics &amp; SEMrush to track traffic and sharpen strategy.</p>
+          <p>Pivoted into technical SEO &mdash; translating concepts like schema markup and structured data into clear content, and using Analytics &amp; SEMrush to track traffic and sharpen strategy.</p>
         </div>
 
         <div class="job">
           <h3>System1</h3>
-          <div class="role">Head of Audience Development</div>
-          <div class="when">Feb 2018 &ndash; Jan 2021</div>
-          <p>Led and mentored a team of content marketers and built automated reporting systems that gave leadership actionable insight.</p>
-        </div>
-
-        <div class="job">
-          <h3>System1</h3>
-          <div class="role">Search &amp; Content Marketing</div>
-          <div class="when">May 2016 &ndash; Feb 2018</div>
-          <p>Ran search and social campaigns across healthcare, finance, entertainment, and travel &mdash; including a 20% lift in click-through rate through smart audience targeting.</p>
+          <div class="role">Search &amp; Content Marketing &rarr; Head of Audience Development</div>
+          <div class="when">May 2016 &ndash; Jan 2021</div>
+          <p>Started running search and social campaigns across healthcare, finance, entertainment, and travel &mdash; including a 20% lift in click-through rate through smart audience targeting. Promoted in 2018 to Head of Audience Development, leading and mentoring a team of content marketers and building automated reporting systems that gave leadership actionable insight.</p>
         </div>
 
       </div>
+      <p class="timeline-aside">Also: guest speaker at <strong>Mind Model AI</strong> (Apr 2025, Kitchener, ON), talking generative AI as a creative and workflow tool.</p>
     </section>
 
     <!-- EDUCATION -->
