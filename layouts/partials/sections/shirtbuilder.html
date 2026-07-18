@@ -21,27 +21,22 @@
   .slide-side { position: sticky; top: 1.25rem; align-self: start; }
   @media (max-width: 768px) { .bldr { padding: 1.25rem; } .slide-side { position: static; } }
 
-  /* Live shirt preview — clean solid-colour silhouette, text clear in the middle */
-  .shirt-shape {
-    position: relative;
-    width: 78%;
-    aspect-ratio: 5/6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .shirt-svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.14)); }
-  .shirt-svg #shirt-fill { transition: fill .25s ease; }
-  .shirt-text {
-    position: absolute;
-    max-width: 62%;
-    text-align: center;
-    line-height: 1.15;
-    overflow-wrap: break-word;
-    transition: top .25s ease, left .25s ease, font-size .25s ease, color .25s ease;
-    pointer-events: none;
-  }
-  .shirt-text.placeholder { opacity: .4; font-style: italic; font-family: Montserrat, sans-serif !important; }
+  /* Step-by-step recap — replaces the mockup image with a live progress
+     breakdown: one coloured bar per step, filled in as you go, showing
+     that step's current selection. */
+  .mockup-frame-recap { aspect-ratio: auto !important; align-items: stretch !important; padding: 1.75rem 1.5rem; }
+  .bldr-recap { width: 100%; display: flex; flex-direction: column; gap: 1.15rem; }
+  .brecap-row { display: flex; flex-direction: column; gap: .4rem; opacity: .4; transition: opacity .25s ease; }
+  .brecap-row.is-done, .brecap-row.is-active { opacity: 1; }
+  .brecap-bar { height: 6px; background: #f5e4ec; border-radius: 999px; overflow: hidden; }
+  .brecap-fill { height: 100%; width: 0%; background: #FF1493; border-radius: 999px; transition: width .3s ease; }
+  .brecap-row.is-done .brecap-fill { width: 100%; }
+  .brecap-row.is-active .brecap-fill { width: 55%; }
+  .brecap-text { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+  .brecap-label { font-family: Montserrat, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #be185d; white-space: nowrap; }
+  .brecap-row.is-active .brecap-label { color: #FF1493; }
+  .brecap-value { font-family: Montserrat, sans-serif; font-size: 12.5px; color: #666; text-align: right; overflow-wrap: anywhere; }
+  .brecap-row.is-active .brecap-value { color: #333; font-weight: 600; }
 
   .bldr-progress { margin-bottom: 1rem; }
   .bldr-progress-bar { height: 6px; background: #f5e4ec; border-radius: 999px; overflow: hidden; }
@@ -66,16 +61,46 @@
     <div class="bldr">
       <div class="slide-side">
         <div class="mockup-carousel">
-          <div class="mockup-frame" id="mockup-frame">
-            <div class="shirt-shape" id="shirt-shape">
-              <svg class="shirt-svg" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                <path id="shirt-fill" d="M 250 78 C 232 78, 218 66, 218 46 L 160 30 C 140 26, 118 30, 100 42 L 40 84 C 22 96, 14 116, 22 138 L 56 208 C 62 222, 74 226, 86 218 L 130 190 C 136 250, 134 300, 133 350 C 132 420, 130 480, 132 540 C 131 556, 140 566, 156 566 L 344 566 C 360 566, 369 556, 368 540 C 370 480, 368 420, 367 350 C 366 300, 364 250, 370 190 L 414 218 C 426 226, 438 222, 444 208 L 478 138 C 486 116, 478 96, 460 84 L 400 42 C 382 30, 360 26, 340 30 L 282 46 C 282 66, 268 78, 250 78 Z" fill="#f2a6c9" stroke="rgba(0,0,0,.16)" stroke-width="3"/>
-                <path d="M 218 46 C 226 58, 238 64, 250 64 C 262 64, 274 58, 282 46" fill="none" stroke="rgba(0,0,0,.2)" stroke-width="3"/>
-              </svg>
-              <div class="shirt-text placeholder" id="shirt-text-preview">Your Text Here</div>
+          <div class="mockup-frame mockup-frame-recap" id="mockup-frame">
+            <div class="bldr-recap" id="bldr-recap">
+              <div class="brecap-row" data-step="1">
+                <div class="brecap-bar"><div class="brecap-fill"></div></div>
+                <div class="brecap-text">
+                  <span class="brecap-label">Shirt Colour</span>
+                  <span class="brecap-value" id="brecap-v1">Natural Tie-Dye Pink</span>
+                </div>
+              </div>
+              <div class="brecap-row" data-step="2">
+                <div class="brecap-bar"><div class="brecap-fill"></div></div>
+                <div class="brecap-text">
+                  <span class="brecap-label">Text &amp; Font</span>
+                  <span class="brecap-value" id="brecap-v2">—</span>
+                </div>
+              </div>
+              <div class="brecap-row" data-step="3">
+                <div class="brecap-bar"><div class="brecap-fill"></div></div>
+                <div class="brecap-text">
+                  <span class="brecap-label">Vinyl &amp; Placement</span>
+                  <span class="brecap-value" id="brecap-v3">—</span>
+                </div>
+              </div>
+              <div class="brecap-row" data-step="4">
+                <div class="brecap-bar"><div class="brecap-fill"></div></div>
+                <div class="brecap-text">
+                  <span class="brecap-label">Delivery</span>
+                  <span class="brecap-value" id="brecap-v4">—</span>
+                </div>
+              </div>
+              <div class="brecap-row" data-step="5">
+                <div class="brecap-bar"><div class="brecap-fill"></div></div>
+                <div class="brecap-text">
+                  <span class="brecap-label">Review &amp; Order</span>
+                  <span class="brecap-value" id="brecap-v5">—</span>
+                </div>
+              </div>
             </div>
           </div>
-          <p class="slide-label">Preview updates as you build</p>
+          <p class="slide-label">Your selections, step by step</p>
 
         </div>
       </div>
@@ -281,84 +306,24 @@
 (function(){
   var S = {colour:'Natural Tie-Dye Pink', colourKey:'naturaltiedyepink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
 
-  // Solid fill colour for the preview silhouette — flat and simple so text
-  // stays readable (tie-dye gets one representative solid pink rather than
-  // trying to render the pattern).
-  var COLOUR_FILL = {
-    'naturaltiedyepink': '#f2a6c9',
-    '#ffffff':           '#ffffff',
-    '#111111':           '#111111',
-    '#e0559d':            '#e0559d',
-    '#33a8c2':            '#33a8c2',
-    '#f2d2e0':            '#f2d2e0'
-  };
-
-  // ── Live shirt preview ──────────────────────────────────
-  var FONT_MAP = {
-    'Dragonlord':   "'UnifrakturMaguntia', cursive",
-    'High Tide':    "'Permanent Marker', cursive",
-    'Typewriter':   "'Courier Prime', monospace",
-    'Kiwi Maru':    "'Kiwi Maru', sans-serif",
-    'Cricut Sans':  "'Montserrat', sans-serif",
-    'Barn Acre':    "'DM Serif Display', serif"
-  };
-  var UPPERCASE_FONTS = ['Barn Acre']; // all-caps-only typefaces
-  var VINYL_COLOR = {
-    'Navy':'#1e3a5f','White':'#ffffff','Black':'#111111','Blue':'#29abe2','Gold':'#c9a96e',
-    'Pink':'#f4a7b9','Yellow':'#f5e642','Green':'#00a651','Silver':'#c0c8c8','Red':'#e8393e'
-  };
-  var VINYL_GRADIENT = {
-    'Glitter Gold':   'linear-gradient(90deg,#fde68a,#d4af37,#fde68a)',
-    'Glitter Silver': 'linear-gradient(90deg,#f1f5f9,#c0c0c0,#f1f5f9)',
-    'Holographic':    'linear-gradient(90deg,#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)'
-  };
-  var PLACEMENTS = {
-    'Centre chest': { top:'44%', left:'50%', rotate:0,   maxWidth:'42%', fontSize:'.92rem' },
-    'Centre back':  { top:'44%', left:'50%', rotate:0,   maxWidth:'42%', fontSize:'.92rem' },
-    'Right sleeve': { top:'20%', left:'83%', rotate:-12, maxWidth:'22%', fontSize:'.58rem' },
-    'Left sleeve':  { top:'20%', left:'17%', rotate:12,  maxWidth:'22%', fontSize:'.58rem' }
-  };
-
-  function updateShirtPreview(){
-    var shape = document.getElementById('shirt-shape');
-    var fillPath = document.getElementById('shirt-fill');
-    var txt = document.getElementById('shirt-text-preview');
-    if(!shape || !txt) return;
-
-    if(fillPath) fillPath.setAttribute('fill', COLOUR_FILL[S.colourKey] || COLOUR_FILL['naturaltiedyepink']);
-
-    var hasText = !!S.text.trim();
-    txt.textContent = hasText ? S.text : 'Your Text Here';
-    txt.classList.toggle('placeholder', !hasText);
-
-    var p = PLACEMENTS[S.placement] || PLACEMENTS['Centre chest'];
-    txt.style.top = p.top;
-    txt.style.left = p.left;
-    txt.style.maxWidth = p.maxWidth;
-    txt.style.fontSize = p.fontSize;
-    txt.style.transform = 'translate(-50%,-50%) rotate(' + p.rotate + 'deg)';
-
-    if(!hasText){
-      txt.style.fontFamily = '';
-      txt.style.backgroundImage = 'none';
-      txt.style.color = '#999';
-      txt.style.webkitTextFillColor = '';
-      txt.style.webkitBackgroundClip = '';
-    } else {
-      txt.style.fontFamily = FONT_MAP[S.font] || 'inherit';
-      txt.style.textTransform = (UPPERCASE_FONTS.indexOf(S.font) > -1) ? 'uppercase' : 'none';
-      if(VINYL_GRADIENT[S.vinyl]){
-        txt.style.backgroundImage = VINYL_GRADIENT[S.vinyl];
-        txt.style.webkitBackgroundClip = 'text';
-        txt.style.backgroundClip = 'text';
-        txt.style.color = 'transparent';
-        txt.style.webkitTextFillColor = 'transparent';
-      } else {
-        txt.style.backgroundImage = 'none';
-        txt.style.webkitBackgroundClip = '';
-        txt.style.color = VINYL_COLOR[S.vinyl] || '#111';
-        txt.style.webkitTextFillColor = '';
-      }
+  // ── Step recap — one coloured bar per step, filled in as you progress,
+  // showing that step's current selection ─────────────────────────────
+  function updateRecap(){
+    var vals = {
+      1: S.colour,
+      2: S.text.trim() ? (S.text + ' · ' + S.font) : '—',
+      3: S.vinyl + ' · ' + S.placement,
+      4: S.delivery_label,
+      5: (curStep === TOTAL_STEPS) ? 'Ready to send!' : '—'
+    };
+    for(var i = 1; i <= TOTAL_STEPS; i++){
+      var row = document.querySelector('.brecap-row[data-step="' + i + '"]');
+      if(!row) continue;
+      var valEl = document.getElementById('brecap-v' + i);
+      if(valEl) valEl.textContent = vals[i];
+      row.classList.remove('is-done', 'is-active');
+      if(i < curStep) row.classList.add('is-done');
+      else if(i === curStep) row.classList.add('is-active');
     }
   }
 
@@ -391,6 +356,7 @@
       if(ctrl) ctrl.scrollIntoView({behavior:'smooth', block:'start'});
     }
     stepRendered = true;
+    updateRecap();
   }
 
   document.getElementById('bldr-next').addEventListener('click', function(){
@@ -494,14 +460,14 @@
     S.tiedye = sw.dataset.tiedye === '1';
     document.getElementById('tdnote').style.display = S.tiedye ? 'block' : 'none';
     updatePrice();
-    updateShirtPreview();
+    updateRecap();
   });
 
   document.getElementById('btxtin').addEventListener('input',function(){
     S.text=this.value;
     document.getElementById('bs-text').textContent=S.text||'—';
     if(this.value.trim()) document.getElementById('text-required-note').style.display = 'none';
-    updateShirtPreview();
+    updateRecap();
   });
 
   document.getElementById('bvcs').addEventListener('click',function(e){
@@ -510,7 +476,7 @@
     v.classList.add('on');S.vinyl=v.dataset.v;
     document.getElementById('bs-vinyl').textContent=S.vinyl;
     updatePrice();
-    updateShirtPreview();
+    updateRecap();
   });
 
   document.getElementById('bfonts').addEventListener('click',function(e){
@@ -518,7 +484,7 @@
     document.querySelectorAll('.bfo').forEach(function(x){x.classList.remove('on');});
     f.classList.add('on');S.font=f.dataset.f;
     document.getElementById('bs-font').textContent=S.font;
-    updateShirtPreview();
+    updateRecap();
   });
 
   document.getElementById('bplacements').addEventListener('click',function(e){
@@ -527,7 +493,7 @@
     p.classList.add('on');
     S.placement=p.dataset.p;
     document.getElementById('bs-place').textContent=S.placement;
-    updateShirtPreview();
+    updateRecap();
   });
 
   document.getElementById('bdelivery').addEventListener('click',function(e){
@@ -541,6 +507,7 @@
     document.getElementById('shipfields').style.display = shipping ? 'block' : 'none';
     document.getElementById('shipnote').style.display = shipping ? 'block' : 'none';
     document.getElementById('localnote').style.display = (shipping && isLocalPostal()) ? 'block' : 'none';
+    updateRecap();
     updatePrice();
   });
 
@@ -660,6 +627,5 @@
 
   renderStep();
   updatePrice();
-  updateShirtPreview();
 })();
 </script>
