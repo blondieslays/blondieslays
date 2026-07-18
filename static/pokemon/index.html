@@ -104,6 +104,15 @@
     opacity: .9;
     font-size: clamp(.6rem, 1.6vw, .74rem);
   }
+  /* Pause-loading button lives inside the circle now, under the loading copy —
+     the overlay itself is pointer-events:none so re-enable clicks just here. */
+  .hero-info .hero-pause-btn {
+    pointer-events: auto;
+    display: inline-block;
+    margin-top: .6rem;
+    padding: .4rem 1rem;
+    font-size: .68rem;
+  }
 
   .eyebrow {
     font-family: 'Bebas Neue', sans-serif;
@@ -518,6 +527,7 @@
       <p class="eyebrow">My Collection · Live Value</p>
       <h1 class="total" id="total"><span class="cur">CA$</span>—</h1>
       <p class="subline" id="subline">Loading the latest market prices…</p>
+      <button class="btn ghost hero-pause-btn" id="pauseBtn" type="button" hidden>Pause loading</button>
     </div>
   </div>
 </header>
@@ -533,7 +543,6 @@
   <div class="searchbar">
     <input id="q" type="search" placeholder="Search a card by name… e.g. Charizard" autocomplete="off">
     <button class="btn" id="searchBtn">Search</button>
-    <button class="btn ghost" id="pauseBtn" type="button" hidden>Pause loading</button>
   </div>
 
   <div id="notes"></div>

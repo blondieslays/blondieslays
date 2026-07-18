@@ -1,4 +1,4 @@
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime&family=Kiwi+Maru&family=Teko:wght@400;600&family=DM+Serif+Display&family=Inter&family=Montserrat:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime&family=Kiwi+Maru&family=Teko:wght@400;600&family=DM+Serif+Display&family=Inter&family=Montserrat:wght@400;700&family=Permanent+Marker&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
@@ -21,18 +21,23 @@
   .slide-side { position: sticky; top: 1.25rem; align-self: start; }
   @media (max-width: 768px) { .bldr { padding: 1.25rem; } .slide-side { position: static; } }
 
-  /* Live shirt preview */
+  /* Live shirt preview — real product photo, colour-swapped, text overlaid */
   .shirt-shape {
     position: relative;
-    width: 78%;
-    aspect-ratio: 5/6;
-    clip-path: polygon(40% 0%, 44% 7%, 56% 7%, 60% 0%, 78% 0%, 100% 22%, 86% 34%, 72% 20%, 72% 100%, 28% 100%, 28% 20%, 14% 34%, 0% 22%, 22% 0%);
-    background: #f5ede0;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
-    transition: background .25s ease;
+    width: 84%;
+    height: 84%;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .shirt-photo {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,.16));
   }
   .shirt-text {
     position: absolute;
@@ -70,6 +75,7 @@
         <div class="mockup-carousel">
           <div class="mockup-frame" id="mockup-frame">
             <div class="shirt-shape" id="shirt-shape">
+              <img class="shirt-photo" id="shirt-photo-img" src="/images/builder/shirt-tiedye.png" alt="Shirt colour preview">
               <div class="shirt-text placeholder" id="shirt-text-preview">Your Text Here</div>
             </div>
           </div>
@@ -277,17 +283,28 @@
 
 <script>
 (function(){
-  var S = {colour:'Natural Tie-Dye Pink', colourBg:'conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
+  var S = {colour:'Natural Tie-Dye Pink', colourKey:'naturaltiedyepink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
+
+  // Real product photos for each shirt colour (cropped from static/images/builder/shirts.png)
+  var COLOUR_IMG = {
+    'naturaltiedyepink': '/images/builder/shirt-tiedye.png',
+    '#ffffff':           '/images/builder/shirt-white.png',
+    '#111111':           '/images/builder/shirt-black.png',
+    '#e0559d':           '/images/builder/shirt-bubblegum.png',
+    '#33a8c2':            '/images/builder/shirt-teal.png',
+    '#f2d2e0':            '/images/builder/shirt-blush.png'
+  };
 
   // ── Live shirt preview ──────────────────────────────────
   var FONT_MAP = {
     'Dragonlord':   "'UnifrakturMaguntia', cursive",
-    'High Tide':    "'DM Serif Display', serif",
+    'High Tide':    "'Permanent Marker', cursive",
     'Typewriter':   "'Courier Prime', monospace",
     'Kiwi Maru':    "'Kiwi Maru', sans-serif",
-    'Cricut Sans':  "'Inter', sans-serif",
-    'Barn Acre':    "'Teko', sans-serif"
+    'Cricut Sans':  "'Montserrat', sans-serif",
+    'Barn Acre':    "'DM Serif Display', serif"
   };
+  var UPPERCASE_FONTS = ['Barn Acre']; // all-caps-only typefaces
   var VINYL_COLOR = {
     'Navy':'#1e3a5f','White':'#ffffff','Black':'#111111','Blue':'#29abe2','Gold':'#c9a96e',
     'Pink':'#f4a7b9','Yellow':'#f5e642','Green':'#00a651','Silver':'#c0c8c8','Red':'#e8393e'
@@ -298,18 +315,22 @@
     'Holographic':    'linear-gradient(90deg,#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)'
   };
   var PLACEMENTS = {
-    'Centre chest': { top:'42%', left:'50%', rotate:0,   maxWidth:'62%', fontSize:'1.05rem' },
-    'Centre back':  { top:'42%', left:'50%', rotate:0,   maxWidth:'62%', fontSize:'1.05rem' },
-    'Right sleeve': { top:'20%', left:'83%', rotate:-12, maxWidth:'24%', fontSize:'.62rem' },
-    'Left sleeve':  { top:'20%', left:'17%', rotate:12,  maxWidth:'24%', fontSize:'.62rem' }
+    'Centre chest': { top:'44%', left:'50%', rotate:0,   maxWidth:'42%', fontSize:'.92rem' },
+    'Centre back':  { top:'44%', left:'50%', rotate:0,   maxWidth:'42%', fontSize:'.92rem' },
+    'Right sleeve': { top:'20%', left:'83%', rotate:-12, maxWidth:'22%', fontSize:'.58rem' },
+    'Left sleeve':  { top:'20%', left:'17%', rotate:12,  maxWidth:'22%', fontSize:'.58rem' }
   };
 
   function updateShirtPreview(){
     var shape = document.getElementById('shirt-shape');
+    var photo = document.getElementById('shirt-photo-img');
     var txt = document.getElementById('shirt-text-preview');
     if(!shape || !txt) return;
 
-    shape.style.background = S.colourBg || '#f5ede0';
+    if(photo){
+      var src = COLOUR_IMG[S.colourKey] || COLOUR_IMG['naturaltiedyepink'];
+      if(photo.getAttribute('src') !== src) photo.setAttribute('src', src);
+    }
 
     var hasText = !!S.text.trim();
     txt.textContent = hasText ? S.text : 'Your Text Here';
@@ -330,6 +351,7 @@
       txt.style.webkitBackgroundClip = '';
     } else {
       txt.style.fontFamily = FONT_MAP[S.font] || 'inherit';
+      txt.style.textTransform = (UPPERCASE_FONTS.indexOf(S.font) > -1) ? 'uppercase' : 'none';
       if(VINYL_GRADIENT[S.vinyl]){
         txt.style.backgroundImage = VINYL_GRADIENT[S.vinyl];
         txt.style.webkitBackgroundClip = 'text';
@@ -472,7 +494,7 @@
     document.querySelectorAll('#swatches .bcolor-btn').forEach(function(x){x.classList.remove('on');});
     sw.classList.add('on');
     S.colour=sw.dataset.n;
-    S.colourBg = (sw.dataset.b === 'naturaltiedyepink') ? 'conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)' : sw.dataset.b;
+    S.colourKey = sw.dataset.b;
     document.getElementById('bs-colour').textContent=S.colour;
     S.tiedye = sw.dataset.tiedye === '1';
     document.getElementById('tdnote').style.display = S.tiedye ? 'block' : 'none';
