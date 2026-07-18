@@ -19,10 +19,31 @@
   .bldr { background: #fff; border: 1px solid #f5e4ec; border-radius: 22px; box-shadow: 0 18px 44px rgba(190,24,93,.10), 0 4px 12px rgba(0,0,0,.04); padding: 2rem; }
   /* Pin the preview so it doesn't leave a dead gap when the control column runs longer */
   .slide-side { position: sticky; top: 1.25rem; align-self: start; }
-  /* Step 1 has no preview image — collapse to one column */
-  .bldr.bldr-solo { grid-template-columns: 1fr; }
-  .bldr.bldr-solo .slide-side { display: none; }
   @media (max-width: 768px) { .bldr { padding: 1.25rem; } .slide-side { position: static; } }
+
+  /* Live shirt preview */
+  .shirt-shape {
+    position: relative;
+    width: 78%;
+    aspect-ratio: 5/6;
+    clip-path: polygon(40% 0%, 44% 7%, 56% 7%, 60% 0%, 78% 0%, 100% 22%, 86% 34%, 72% 20%, 72% 100%, 28% 100%, 28% 20%, 14% 34%, 0% 22%, 22% 0%);
+    background: #f5ede0;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+    transition: background .25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shirt-text {
+    position: absolute;
+    max-width: 62%;
+    text-align: center;
+    line-height: 1.15;
+    overflow-wrap: break-word;
+    transition: top .25s ease, left .25s ease, font-size .25s ease, color .25s ease;
+    pointer-events: none;
+  }
+  .shirt-text.placeholder { opacity: .4; font-style: italic; font-family: Montserrat, sans-serif !important; }
 
   .bldr-progress { margin-bottom: 1rem; }
   .bldr-progress-bar { height: 6px; background: #f5e4ec; border-radius: 999px; overflow: hidden; }
@@ -48,14 +69,11 @@
       <div class="slide-side">
         <div class="mockup-carousel">
           <div class="mockup-frame" id="mockup-frame">
-            <div class="mockup-placeholder" id="mockup-placeholder">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8L6 16V20L12 21V42H36V21L42 20V16L34 8Q31 4 24 4Q17 4 14 8Z" fill="#e5e7eb" stroke="#d1d5db" stroke-width="1.5"/><path d="M18 8Q21 13 24 13Q27 13 30 8" fill="none" stroke="#d1d5db" stroke-width="1.5"/></svg>
-              <span>Add your Canva mockups to</span>
-              <span style="color:#FF1493;font-size:11px">static/images/builder/</span>
+            <div class="shirt-shape" id="shirt-shape">
+              <div class="shirt-text placeholder" id="shirt-text-preview">Your Text Here</div>
             </div>
-            <img id="mockup-img" src="" alt="shirt mockup" style="display:none"/>
           </div>
-          <p class="slide-label" id="mockup-label">Browse examples</p>
+          <p class="slide-label">Preview updates as you build</p>
 
         </div>
       </div>
@@ -259,29 +277,79 @@
 
 <script>
 (function(){
-  var mockups = [
-    {label:'Font Styles',     img:'/images/builder/fonts.png'},
-    {label:'Vinyl Colours',   img:'/images/builder/vinyl.png'},
-  ];
-  var S = {colour:'Natural Tie-Dye Pink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
+  var S = {colour:'Natural Tie-Dye Pink', colourBg:'conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
+
+  // ── Live shirt preview ──────────────────────────────────
+  var FONT_MAP = {
+    'Dragonlord':   "'UnifrakturMaguntia', cursive",
+    'High Tide':    "'DM Serif Display', serif",
+    'Typewriter':   "'Courier Prime', monospace",
+    'Kiwi Maru':    "'Kiwi Maru', sans-serif",
+    'Cricut Sans':  "'Inter', sans-serif",
+    'Barn Acre':    "'Teko', sans-serif"
+  };
+  var VINYL_COLOR = {
+    'Navy':'#1e3a5f','White':'#ffffff','Black':'#111111','Blue':'#29abe2','Gold':'#c9a96e',
+    'Pink':'#f4a7b9','Yellow':'#f5e642','Green':'#00a651','Silver':'#c0c8c8','Red':'#e8393e'
+  };
+  var VINYL_GRADIENT = {
+    'Glitter Gold':   'linear-gradient(90deg,#fde68a,#d4af37,#fde68a)',
+    'Glitter Silver': 'linear-gradient(90deg,#f1f5f9,#c0c0c0,#f1f5f9)',
+    'Holographic':    'linear-gradient(90deg,#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)'
+  };
+  var PLACEMENTS = {
+    'Centre chest': { top:'42%', left:'50%', rotate:0,   maxWidth:'62%', fontSize:'1.05rem' },
+    'Centre back':  { top:'42%', left:'50%', rotate:0,   maxWidth:'62%', fontSize:'1.05rem' },
+    'Right sleeve': { top:'20%', left:'83%', rotate:-12, maxWidth:'24%', fontSize:'.62rem' },
+    'Left sleeve':  { top:'20%', left:'17%', rotate:12,  maxWidth:'24%', fontSize:'.62rem' }
+  };
+
+  function updateShirtPreview(){
+    var shape = document.getElementById('shirt-shape');
+    var txt = document.getElementById('shirt-text-preview');
+    if(!shape || !txt) return;
+
+    shape.style.background = S.colourBg || '#f5ede0';
+
+    var hasText = !!S.text.trim();
+    txt.textContent = hasText ? S.text : 'Your Text Here';
+    txt.classList.toggle('placeholder', !hasText);
+
+    var p = PLACEMENTS[S.placement] || PLACEMENTS['Centre chest'];
+    txt.style.top = p.top;
+    txt.style.left = p.left;
+    txt.style.maxWidth = p.maxWidth;
+    txt.style.fontSize = p.fontSize;
+    txt.style.transform = 'translate(-50%,-50%) rotate(' + p.rotate + 'deg)';
+
+    if(!hasText){
+      txt.style.fontFamily = '';
+      txt.style.backgroundImage = 'none';
+      txt.style.color = '#999';
+      txt.style.webkitTextFillColor = '';
+      txt.style.webkitBackgroundClip = '';
+    } else {
+      txt.style.fontFamily = FONT_MAP[S.font] || 'inherit';
+      if(VINYL_GRADIENT[S.vinyl]){
+        txt.style.backgroundImage = VINYL_GRADIENT[S.vinyl];
+        txt.style.webkitBackgroundClip = 'text';
+        txt.style.backgroundClip = 'text';
+        txt.style.color = 'transparent';
+        txt.style.webkitTextFillColor = 'transparent';
+      } else {
+        txt.style.backgroundImage = 'none';
+        txt.style.webkitBackgroundClip = '';
+        txt.style.color = VINYL_COLOR[S.vinyl] || '#111';
+        txt.style.webkitTextFillColor = '';
+      }
+    }
+  }
 
   // ── Step-by-step flow ───────────────────────────────────
   var TOTAL_STEPS = 5;
   var curStep = 1;
   var STEP_TITLES = ['Shirt Colour', 'Text & Font', 'Vinyl & Placement', 'Delivery', 'Review & Order'];
-  var STEP_MOCKUP = [null, 0, 1, 1, 1]; // index into mockups[] shown for each step — step 1 has no preview
   var stepRendered = false; // guards the auto-scroll so it doesn't fire on first load
-
-  function showMockup(i){
-    var m = mockups[i];
-    var img = document.getElementById('mockup-img');
-    var ph = document.getElementById('mockup-placeholder');
-    img.src = m.img;
-    img.style.display = 'block';
-    ph.style.display = 'none';
-    img.onerror = function(){ img.style.display='none'; ph.style.display='flex'; };
-    document.getElementById('mockup-label').textContent = m.label;
-  }
 
   function renderStep(){
     for(var s = 1; s <= TOTAL_STEPS; s++){
@@ -290,10 +358,6 @@
     }
     document.getElementById('bldr-progress-fill').style.width = ((curStep / TOTAL_STEPS) * 100) + '%';
     document.getElementById('bldr-progress-label').textContent = 'Step ' + curStep + ' of ' + TOTAL_STEPS + ' — ' + STEP_TITLES[curStep - 1];
-
-    var mockIdx = STEP_MOCKUP[curStep - 1];
-    if(mockIdx !== null) showMockup(mockIdx);
-    document.querySelector('.bldr').classList.toggle('bldr-solo', curStep === 1);
 
     var backBtn = document.getElementById('bldr-back');
     var nextBtn = document.getElementById('bldr-next');
@@ -408,16 +472,19 @@
     document.querySelectorAll('#swatches .bcolor-btn').forEach(function(x){x.classList.remove('on');});
     sw.classList.add('on');
     S.colour=sw.dataset.n;
+    S.colourBg = (sw.dataset.b === 'naturaltiedyepink') ? 'conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)' : sw.dataset.b;
     document.getElementById('bs-colour').textContent=S.colour;
     S.tiedye = sw.dataset.tiedye === '1';
     document.getElementById('tdnote').style.display = S.tiedye ? 'block' : 'none';
     updatePrice();
+    updateShirtPreview();
   });
 
   document.getElementById('btxtin').addEventListener('input',function(){
     S.text=this.value;
     document.getElementById('bs-text').textContent=S.text||'—';
     if(this.value.trim()) document.getElementById('text-required-note').style.display = 'none';
+    updateShirtPreview();
   });
 
   document.getElementById('bvcs').addEventListener('click',function(e){
@@ -426,6 +493,7 @@
     v.classList.add('on');S.vinyl=v.dataset.v;
     document.getElementById('bs-vinyl').textContent=S.vinyl;
     updatePrice();
+    updateShirtPreview();
   });
 
   document.getElementById('bfonts').addEventListener('click',function(e){
@@ -433,6 +501,7 @@
     document.querySelectorAll('.bfo').forEach(function(x){x.classList.remove('on');});
     f.classList.add('on');S.font=f.dataset.f;
     document.getElementById('bs-font').textContent=S.font;
+    updateShirtPreview();
   });
 
   document.getElementById('bplacements').addEventListener('click',function(e){
@@ -441,6 +510,7 @@
     p.classList.add('on');
     S.placement=p.dataset.p;
     document.getElementById('bs-place').textContent=S.placement;
+    updateShirtPreview();
   });
 
   document.getElementById('bdelivery').addEventListener('click',function(e){
@@ -573,5 +643,6 @@
 
   renderStep();
   updatePrice();
+  updateShirtPreview();
 })();
 </script>
