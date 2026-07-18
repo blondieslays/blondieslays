@@ -21,24 +21,17 @@
   .slide-side { position: sticky; top: 1.25rem; align-self: start; }
   @media (max-width: 768px) { .bldr { padding: 1.25rem; } .slide-side { position: static; } }
 
-  /* Live shirt preview — real product photo, colour-swapped, text overlaid */
+  /* Live shirt preview — clean solid-colour silhouette, text clear in the middle */
   .shirt-shape {
     position: relative;
-    width: 84%;
-    height: 84%;
+    width: 78%;
+    aspect-ratio: 5/6;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .shirt-photo {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 18px rgba(0,0,0,.16));
-  }
+  .shirt-svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.14)); }
+  .shirt-svg #shirt-fill { transition: fill .25s ease; }
   .shirt-text {
     position: absolute;
     max-width: 62%;
@@ -75,7 +68,10 @@
         <div class="mockup-carousel">
           <div class="mockup-frame" id="mockup-frame">
             <div class="shirt-shape" id="shirt-shape">
-              <img class="shirt-photo" id="shirt-photo-img" src="/images/builder/shirt-tiedye.png" alt="Shirt colour preview">
+              <svg class="shirt-svg" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <path id="shirt-fill" d="M 250 78 C 232 78, 218 66, 218 46 L 160 30 C 140 26, 118 30, 100 42 L 40 84 C 22 96, 14 116, 22 138 L 56 208 C 62 222, 74 226, 86 218 L 130 190 C 136 250, 134 300, 133 350 C 132 420, 130 480, 132 540 C 131 556, 140 566, 156 566 L 344 566 C 360 566, 369 556, 368 540 C 370 480, 368 420, 367 350 C 366 300, 364 250, 370 190 L 414 218 C 426 226, 438 222, 444 208 L 478 138 C 486 116, 478 96, 460 84 L 400 42 C 382 30, 360 26, 340 30 L 282 46 C 282 66, 268 78, 250 78 Z" fill="#f2a6c9" stroke="rgba(0,0,0,.16)" stroke-width="3"/>
+                <path d="M 218 46 C 226 58, 238 64, 250 64 C 262 64, 274 58, 282 46" fill="none" stroke="rgba(0,0,0,.2)" stroke-width="3"/>
+              </svg>
               <div class="shirt-text placeholder" id="shirt-text-preview">Your Text Here</div>
             </div>
           </div>
@@ -285,14 +281,16 @@
 (function(){
   var S = {colour:'Natural Tie-Dye Pink', colourKey:'naturaltiedyepink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
 
-  // Real product photos for each shirt colour (cropped from static/images/builder/shirts.png)
-  var COLOUR_IMG = {
-    'naturaltiedyepink': '/images/builder/shirt-tiedye.png',
-    '#ffffff':           '/images/builder/shirt-white.png',
-    '#111111':           '/images/builder/shirt-black.png',
-    '#e0559d':           '/images/builder/shirt-bubblegum.png',
-    '#33a8c2':            '/images/builder/shirt-teal.png',
-    '#f2d2e0':            '/images/builder/shirt-blush.png'
+  // Solid fill colour for the preview silhouette — flat and simple so text
+  // stays readable (tie-dye gets one representative solid pink rather than
+  // trying to render the pattern).
+  var COLOUR_FILL = {
+    'naturaltiedyepink': '#f2a6c9',
+    '#ffffff':           '#ffffff',
+    '#111111':           '#111111',
+    '#e0559d':            '#e0559d',
+    '#33a8c2':            '#33a8c2',
+    '#f2d2e0':            '#f2d2e0'
   };
 
   // ── Live shirt preview ──────────────────────────────────
@@ -323,14 +321,11 @@
 
   function updateShirtPreview(){
     var shape = document.getElementById('shirt-shape');
-    var photo = document.getElementById('shirt-photo-img');
+    var fillPath = document.getElementById('shirt-fill');
     var txt = document.getElementById('shirt-text-preview');
     if(!shape || !txt) return;
 
-    if(photo){
-      var src = COLOUR_IMG[S.colourKey] || COLOUR_IMG['naturaltiedyepink'];
-      if(photo.getAttribute('src') !== src) photo.setAttribute('src', src);
-    }
+    if(fillPath) fillPath.setAttribute('fill', COLOUR_FILL[S.colourKey] || COLOUR_FILL['naturaltiedyepink']);
 
     var hasText = !!S.text.trim();
     txt.textContent = hasText ? S.text : 'Your Text Here';
