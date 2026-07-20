@@ -18,8 +18,41 @@
     .nyw-text { font-family:Montserrat,sans-serif; font-size:.95rem; color:#5a5a5a; line-height:1.7; margin:0; }
     .nyw-text strong { color:#be185d; }
 
-    /* Who I am — mini bio card, links out to the full About page */
-    .nyw-elise { background:#fff; border-radius:14px; padding:1.1rem 1.25rem; box-shadow:0 10px 24px rgba(190,24,93,.10); }
+    /* Who I am — mini bio card, styled as a puffy 80s cloud sticker, links out to the full About page */
+    .nyw-elise { position:relative; background:transparent; margin-top:2.4rem; }
+    .nyw-cloud-shape {
+      position:absolute; inset:0;
+      background:#fff; border-radius:60px;
+      filter:
+        drop-shadow(3px 0 0 #FF1493) drop-shadow(-3px 0 0 #FF1493)
+        drop-shadow(0 3px 0 #FF1493) drop-shadow(0 -3px 0 #FF1493)
+        drop-shadow(2.1px 2.1px 0 #FF1493) drop-shadow(-2.1px -2.1px 0 #FF1493)
+        drop-shadow(2.1px -2.1px 0 #FF1493) drop-shadow(-2.1px 2.1px 0 #FF1493)
+        drop-shadow(8px 10px 0 #be185d);
+      z-index:0;
+    }
+    .nyw-cloud-bump { position:absolute; background:#fff; border-radius:50%; }
+    .nyw-cloud-bump--top { top:0; }
+    .nyw-cloud-bump--bottom { bottom:0; }
+    .nyw-cloud-bump--1 { left:2%;  width:90px;  height:90px;  margin-top:-60px; }
+    .nyw-cloud-bump--2 { left:20%; width:128px; height:128px; margin-top:-98px; }
+    .nyw-cloud-bump--3 { left:50%; width:120px; height:120px; margin-top:-90px; }
+    .nyw-cloud-bump--4 { left:78%; width:86px;  height:86px;  margin-top:-56px; }
+    .nyw-cloud-bump--5 { left:6%;  width:82px;  height:82px;  margin-bottom:-52px; }
+    .nyw-cloud-bump--6 { left:24%; width:110px; height:110px; margin-bottom:-80px; }
+    .nyw-cloud-bump--7 { left:54%; width:104px; height:104px; margin-bottom:-74px; }
+    .nyw-cloud-bump--8 { left:80%; width:76px;  height:76px;  margin-bottom:-46px; }
+    @media (max-width:768px) {
+      .nyw-cloud-bump--1 { width:64px;  height:64px;  margin-top:-42px; }
+      .nyw-cloud-bump--2 { width:90px;  height:90px;  margin-top:-68px; }
+      .nyw-cloud-bump--3 { width:84px;  height:84px;  margin-top:-62px; }
+      .nyw-cloud-bump--4 { width:60px;  height:60px;  margin-top:-38px; }
+      .nyw-cloud-bump--5 { width:58px;  height:58px;  margin-bottom:-36px; }
+      .nyw-cloud-bump--6 { width:78px;  height:78px;  margin-bottom:-56px; }
+      .nyw-cloud-bump--7 { width:74px;  height:74px;  margin-bottom:-52px; }
+      .nyw-cloud-bump--8 { width:54px;  height:54px;  margin-bottom:-32px; }
+    }
+    .nyw-cloud-content { position:relative; z-index:1; padding:2.6rem 1.5rem 2.1rem; }
     .nyw-elise-row { display:flex; align-items:center; gap:1rem; margin-bottom:.65rem; }
     .nyw-elise-photo { width:60px; height:60px; border-radius:50%; object-fit:cover; flex-shrink:0; box-shadow:0 4px 10px rgba(190,24,93,.18); }
     .nyw-elise-row p { margin:0; font-family:Montserrat,sans-serif; font-size:.85rem; color:#5a5a5a; line-height:1.55; }
@@ -46,12 +79,24 @@
         </div>
 
         <div class="nyw-elise">
-          <span class="nyw-block-eyebrow">Who I Am</span>
-          <div class="nyw-elise-row">
-            <img class="nyw-elise-photo" loading="lazy" src="/images/me.png" alt="Elise Marion, founder of Blondie Slays" onerror="this.style.display='none'">
-            <p>Hi, I'm Elise — I design and press every piece by hand from my Sarnia, Ontario studio. Blondie Slays is where bold branding meets made-to-order apparel.</p>
+          <div class="nyw-cloud-shape" aria-hidden="true">
+            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--1"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--2"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--3"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--4"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--5"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--6"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--7"></span>
+            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--8"></span>
           </div>
-          <a class="nyw-elise-link" href="/about/">Meet Elise &rarr;</a>
+          <div class="nyw-cloud-content">
+            <span class="nyw-block-eyebrow">Who I Am</span>
+            <div class="nyw-elise-row">
+              <img class="nyw-elise-photo" loading="lazy" src="/images/me.png" alt="Elise Marion, founder of Blondie Slays" onerror="this.style.display='none'">
+              <p>Hi, I'm Elise — I design and press every piece by hand from my Sarnia, Ontario studio. Blondie Slays is where bold branding meets made-to-order apparel.</p>
+            </div>
+            <a class="nyw-elise-link" href="/about/">Meet Elise &rarr;</a>
+          </div>
         </div>
 
         <div class="nyw-cta-wrap">
