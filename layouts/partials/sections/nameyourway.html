@@ -18,41 +18,19 @@
     .nyw-text { font-family:Montserrat,sans-serif; font-size:.95rem; color:#5a5a5a; line-height:1.7; margin:0; }
     .nyw-text strong { color:#be185d; }
 
-    /* Who I am — mini bio card, styled as a puffy 80s cloud sticker, links out to the full About page */
-    .nyw-elise { position:relative; background:transparent; margin:2.25rem 0 2rem; }
-    .nyw-cloud-shape {
-      position:absolute; inset:0;
-      background:#fff; border-radius:60px;
-      filter:
-        drop-shadow(3px 0 0 #FF1493) drop-shadow(-3px 0 0 #FF1493)
-        drop-shadow(0 3px 0 #FF1493) drop-shadow(0 -3px 0 #FF1493)
-        drop-shadow(2.1px 2.1px 0 #FF1493) drop-shadow(-2.1px -2.1px 0 #FF1493)
-        drop-shadow(2.1px -2.1px 0 #FF1493) drop-shadow(-2.1px 2.1px 0 #FF1493)
-        drop-shadow(8px 10px 0 #be185d);
-      z-index:0;
+    /* Who I am — mini bio card, soft pink wash that fades out top and bottom, tie-dye-ish blend into the section */
+    .nyw-elise {
+      position:relative; max-width:480px; margin:2.5rem 0 2rem; padding:2.3rem 1.6rem;
+      background: linear-gradient(180deg,
+        rgba(255,178,214,0)    0%,
+        rgba(255,178,214,.75) 22%,
+        rgba(255,178,214,.75) 78%,
+        rgba(255,178,214,0)   100%);
     }
-    .nyw-cloud-bump { position:absolute; background:#fff; border-radius:50%; }
-    .nyw-cloud-bump--top { top:0; }
-    .nyw-cloud-bump--bottom { bottom:0; }
-    .nyw-cloud-bump--1 { left:2%;  width:58px; height:58px; margin-top:-30px; }
-    .nyw-cloud-bump--2 { left:20%; width:72px; height:72px; margin-top:-44px; }
-    .nyw-cloud-bump--3 { left:50%; width:70px; height:70px; margin-top:-42px; }
-    .nyw-cloud-bump--4 { left:78%; width:54px; height:54px; margin-top:-26px; }
-    .nyw-cloud-bump--5 { left:6%;  width:52px; height:52px; margin-bottom:-26px; }
-    .nyw-cloud-bump--6 { left:24%; width:64px; height:64px; margin-bottom:-38px; }
-    .nyw-cloud-bump--7 { left:54%; width:62px; height:62px; margin-bottom:-36px; }
-    .nyw-cloud-bump--8 { left:80%; width:48px; height:48px; margin-bottom:-22px; }
     @media (max-width:768px) {
-      .nyw-cloud-bump--1 { width:42px; height:42px; margin-top:-22px; }
-      .nyw-cloud-bump--2 { width:52px; height:52px; margin-top:-32px; }
-      .nyw-cloud-bump--3 { width:50px; height:50px; margin-top:-30px; }
-      .nyw-cloud-bump--4 { width:38px; height:38px; margin-top:-18px; }
-      .nyw-cloud-bump--5 { width:38px; height:38px; margin-bottom:-18px; }
-      .nyw-cloud-bump--6 { width:46px; height:46px; margin-bottom:-27px; }
-      .nyw-cloud-bump--7 { width:44px; height:44px; margin-bottom:-26px; }
-      .nyw-cloud-bump--8 { width:34px; height:34px; margin-bottom:-15px; }
+      .nyw-elise-row { flex-direction:column; align-items:flex-start; gap:.6rem; }
+      .nyw-elise { padding:2rem 1.4rem; }
     }
-    .nyw-cloud-content { position:relative; z-index:1; padding:2.6rem 1.5rem 2.1rem; }
     .nyw-elise-row { display:flex; align-items:center; gap:1rem; margin-bottom:.65rem; }
     .nyw-elise-photo { width:60px; height:60px; border-radius:50%; object-fit:cover; flex-shrink:0; box-shadow:0 4px 10px rgba(190,24,93,.18); }
     .nyw-elise-row p { margin:0; font-family:Montserrat,sans-serif; font-size:.85rem; color:#5a5a5a; line-height:1.55; }
@@ -79,24 +57,12 @@
         </div>
 
         <div class="nyw-elise">
-          <div class="nyw-cloud-shape" aria-hidden="true">
-            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--1"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--2"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--3"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--top nyw-cloud-bump--4"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--5"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--6"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--7"></span>
-            <span class="nyw-cloud-bump nyw-cloud-bump--bottom nyw-cloud-bump--8"></span>
+          <span class="nyw-block-eyebrow">Who I Am</span>
+          <div class="nyw-elise-row">
+            <img class="nyw-elise-photo" loading="lazy" src="/images/me.png" alt="Elise Marion, founder of Blondie Slays" onerror="this.style.display='none'">
+            <p>Hi, I'm Elise — I design and press every piece by hand from my Sarnia, Ontario studio. Blondie Slays is where bold branding meets made-to-order apparel.</p>
           </div>
-          <div class="nyw-cloud-content">
-            <span class="nyw-block-eyebrow">Who I Am</span>
-            <div class="nyw-elise-row">
-              <img class="nyw-elise-photo" loading="lazy" src="/images/me.png" alt="Elise Marion, founder of Blondie Slays" onerror="this.style.display='none'">
-              <p>Hi, I'm Elise — I design and press every piece by hand from my Sarnia, Ontario studio. Blondie Slays is where bold branding meets made-to-order apparel.</p>
-            </div>
-            <a class="nyw-elise-link" href="/about/">Meet Elise &rarr;</a>
-          </div>
+          <a class="nyw-elise-link" href="/about/">Meet Elise &rarr;</a>
         </div>
 
         <div class="nyw-cta-wrap">
