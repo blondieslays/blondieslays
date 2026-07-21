@@ -117,6 +117,12 @@
           <span class="bldr-progress-label" id="bldr-progress-label">Step 1 of 5 &mdash; Shirt Colour</span>
         </div>
 
+        <div class="bprice" id="bprice">
+          <span class="bprice-label">Estimated total</span>
+          <strong id="bprice-val">$20.00</strong>
+          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl, tie-dye, or back-design upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
+        </div>
+
         <div class="bsummary" id="bsummary">
           Shirt: <strong id="bs-colour">Natural Tie-Dye Pink</strong> &nbsp;|&nbsp;
           Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
@@ -128,25 +134,19 @@
           Delivery: <strong id="bs-delivery">Local Pickup (Sarnia)</strong>
         </div>
 
-        <div class="bprice" id="bprice">
-          <span class="bprice-label">Estimated total</span>
-          <strong id="bprice-val">$20.00</strong>
-          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl, tie-dye, or back-design upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
-        </div>
-
         <!-- Step 1: Shirt colour -->
         <div class="bldr-step" id="step-1">
           <div>
             <span class="bcl">Shirt colour</span>
             <div class="bcolor-list" id="swatches">
-              <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)"></span>Tie-Dye Pink +$5</div>
+              <div class="bcolor-btn on" data-b="naturaltiedyepink" data-n="Natural Tie-Dye Pink" data-tiedye="1"><span class="bcolor-dot" style="background:conic-gradient(from 90deg,#FF1493,#f9a8d4,#fce7f3,#f472b6,#FF1493)"></span>Tie-Dye Pink +$3</div>
               <div class="bcolor-btn" data-b="#ffffff" data-n="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
               <div class="bcolor-btn" data-b="#111111" data-n="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
               <div class="bcolor-btn" data-b="#e0559d" data-n="Bubblegum"><span class="bcolor-dot" style="background:#e0559d"></span>Bubblegum</div>
               <div class="bcolor-btn" data-b="#33a8c2" data-n="Teal"><span class="bcolor-dot" style="background:#33a8c2"></span>Teal</div>
               <div class="bcolor-btn" data-b="#f2d2e0" data-n="Blush"><span class="bcolor-dot" style="background:#f2d2e0;border:1px solid #ddd"></span>Blush</div>
             </div>
-            <div id="tdnote" class="btd-note" style="display:block">Each tie-dye is hand-made and unique — +$5 upcharge applies.</div>
+            <div id="tdnote" class="btd-note" style="display:block">Each tie-dye is hand-made and unique — +$3 upcharge applies.</div>
             <div class="btd-note" style="margin-top:.5rem">Want a different colour or a custom tie-dye blend? Special requests welcome — just mention it in your notes.</div>
           </div>
         </div>
@@ -203,7 +203,7 @@
 
           <label class="bback-toggle">
             <input type="checkbox" id="baddback"/>
-            <span id="baddback-label">Add a design on the back too (+$8)</span>
+            <span id="baddback-label">Add a design on the back too (+$5)</span>
           </label>
 
           <div class="bback-panel" id="backpanel" hidden>
@@ -433,8 +433,8 @@
   // ── Pricing ────────────────────────────────────────────
   var BASE = 20;            // per shirt, CAD
   var SPECIAL_VINYL = 2;    // glitter / holographic finishes
-  var TIEDYE = 5;           // tie-dye shirt
-  var BACK_DESIGN = 8;      // adding a second (back) design location
+  var TIEDYE = 3;           // tie-dye shirt
+  var BACK_DESIGN = 5;      // adding a second (back) design location
   // TODO Elise: these are data-based estimates from your Canada Post lookup
   // (based on the "Close/regional" column, with a small buffer). Re-check
   // periodically at canadapost-postescanada.ca/cpc/en/tools/find-a-rate.page
@@ -566,8 +566,8 @@
     document.getElementById('bs-place').textContent=S.placement;
     var backLabel = document.getElementById('baddback-label');
     if(backLabel) backLabel.textContent = (S.placement === 'Centre back')
-      ? 'Add a design on the front too (+$8)'
-      : 'Add a design on the back too (+$8)';
+      ? 'Add a design on the front too (+$5)'
+      : 'Add a design on the back too (+$5)';
     updateRecap();
   });
 
