@@ -49,6 +49,12 @@
   .bldr-next-btn { flex: 1; padding: 12px; background: #FF1493; color: #fff; border: 2px solid #FF1493; border-radius: 999px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; box-shadow: 0 10px 24px rgba(255,20,147,.28); transition: all .2s; }
   .bldr-next-btn:hover { background: #d1147d; border-color: #d1147d; transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,20,147,.35); }
 
+  /* Optional second (back) design toggle + panel */
+  .bback-toggle { display: flex; align-items: center; gap: .6rem; margin-top: 1rem; padding: .85rem 1rem; background: #FFF7FA; border: 1.5px dashed #f7b8d3; border-radius: 12px; cursor: pointer; }
+  .bback-toggle input { width: 17px; height: 17px; accent-color: #FF1493; cursor: pointer; flex-shrink: 0; }
+  .bback-toggle span { font-family: Montserrat, sans-serif; font-size: .85rem; font-weight: 600; color: #be185d; }
+  .bback-panel { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid #f5e4ec; display: flex; flex-direction: column; gap: 1.1rem; }
+
   /* Downloads + coming-soon, side by side under the builder */
   .bldr-promos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 860px; margin: 1.5rem auto 0; }
   @media (max-width: 768px) { .bldr-promos { grid-template-columns: 1fr; } }
@@ -116,14 +122,16 @@
           Text: <strong id="bs-text">—</strong> &nbsp;|&nbsp;
           Vinyl: <strong id="bs-vinyl">Black</strong> &nbsp;|&nbsp;
           Font: <strong id="bs-font">High Tide</strong> &nbsp;|&nbsp;
-          Placement: <strong id="bs-place">Centre chest</strong> &nbsp;|&nbsp;
+          Placement: <strong id="bs-place">Centre chest</strong>
+          <span id="bs-back-wrap" hidden>&nbsp;|&nbsp; Back: <strong id="bs-back-summary">—</strong></span>
+          &nbsp;|&nbsp;
           Delivery: <strong id="bs-delivery">Local Pickup (Sarnia)</strong>
         </div>
 
         <div class="bprice" id="bprice">
           <span class="bprice-label">Estimated total</span>
           <strong id="bprice-val">$20.00</strong>
-          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl or tie-dye upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
+          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl, tie-dye, or back-design upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
         </div>
 
         <!-- Step 1: Shirt colour -->
@@ -190,6 +198,48 @@
               <div class="bpl" data-p="Centre back">Centre back</div>
               <div class="bpl" data-p="Right sleeve">Right sleeve</div>
               <div class="bpl" data-p="Left sleeve">Left sleeve</div>
+            </div>
+          </div>
+
+          <label class="bback-toggle">
+            <input type="checkbox" id="baddback"/>
+            <span id="baddback-label">Add a design on the back too (+$8)</span>
+          </label>
+
+          <div class="bback-panel" id="backpanel" hidden>
+            <div>
+              <span class="bcl">Back text *</span>
+              <input class="btxt-in" id="btxtin2" maxlength="28" placeholder="e.g. Est. 2020"/>
+              <div id="back-text-required-note" class="btd-note" style="display:none;background:#fff0f0;border-color:#f5b5b5;color:#b91c1c;margin-top:.5rem">Add the text for the back, or uncheck the box above if you've changed your mind.</div>
+            </div>
+            <div>
+              <span class="bcl">Back font style</span>
+              <div class="bfont-row" id="bfonts2">
+                <div class="bfo on" data-f="Dragonlord">Dragonlord</div>
+                <div class="bfo" data-f="High Tide">High Tide</div>
+                <div class="bfo" data-f="Typewriter">Typewriter</div>
+                <div class="bfo" data-f="Kiwi Maru">Kiwi Maru</div>
+                <div class="bfo" data-f="Cricut Sans">Cricut Sans</div>
+                <div class="bfo" data-f="Barn Acre">Barn Acre</div>
+              </div>
+            </div>
+            <div>
+              <span class="bcl">Back vinyl colour</span>
+              <div class="bcolor-list" id="bvcs2">
+                <div class="bvc bcolor-btn on" data-v="Navy"><span class="bcolor-dot" style="background:#1e3a5f"></span>Navy</div>
+                <div class="bvc bcolor-btn" data-v="White"><span class="bcolor-dot" style="background:#ffffff;border:1px solid #ddd"></span>White</div>
+                <div class="bvc bcolor-btn" data-v="Black"><span class="bcolor-dot" style="background:#111111"></span>Black</div>
+                <div class="bvc bcolor-btn" data-v="Blue"><span class="bcolor-dot" style="background:#29abe2"></span>Blue</div>
+                <div class="bvc bcolor-btn" data-v="Gold"><span class="bcolor-dot" style="background:#c9a96e"></span>Gold</div>
+                <div class="bvc bcolor-btn" data-v="Pink"><span class="bcolor-dot" style="background:#f4a7b9"></span>Pink</div>
+                <div class="bvc bcolor-btn" data-v="Yellow"><span class="bcolor-dot" style="background:#f5e642"></span>Yellow</div>
+                <div class="bvc bcolor-btn" data-v="Green"><span class="bcolor-dot" style="background:#00a651"></span>Green</div>
+                <div class="bvc bcolor-btn" data-v="Silver"><span class="bcolor-dot" style="background:#c0c8c8;border:1px solid #ddd"></span>Silver</div>
+                <div class="bvc bcolor-btn" data-v="Red"><span class="bcolor-dot" style="background:#e8393e"></span>Red</div>
+                <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Gold"><span class="bcolor-dot" style="background:linear-gradient(135deg,#fde68a,#d4af37,#fde68a)"></span>Glitter Gold +$2</div>
+                <div class="bvc bcolor-btn bvc-glitter" data-v="Glitter Silver"><span class="bcolor-dot" style="background:linear-gradient(135deg,#f1f5f9,#c0c0c0,#f1f5f9)"></span>Glitter Silver +$2</div>
+                <div class="bvc bcolor-btn bvc-holo" data-v="Holographic"><span class="bcolor-dot" style="background:conic-gradient(#f9a8d4,#a5f3fc,#c4b5fd,#f9a8d4)"></span>Holographic +$2</div>
+              </div>
             </div>
           </div>
         </div>
@@ -259,6 +309,9 @@
             <input type="hidden" name="Vinyl" id="hf-vinyl"/>
             <input type="hidden" name="Font" id="hf-font"/>
             <input type="hidden" name="Placement" id="hf-place"/>
+            <input type="hidden" name="Back text" id="hf-text2"/>
+            <input type="hidden" name="Back vinyl" id="hf-vinyl2"/>
+            <input type="hidden" name="Back font" id="hf-font2"/>
             <input type="hidden" name="Delivery" id="hf-delivery"/>
             <input type="hidden" name="Postal code" id="hf-postal"/>
             <input type="hidden" name="Estimated total" id="hf-total"/>
@@ -304,7 +357,8 @@
 
 <script>
 (function(){
-  var S = {colour:'Natural Tie-Dye Pink', colourKey:'naturaltiedyepink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)'};
+  var S = {colour:'Natural Tie-Dye Pink', colourKey:'naturaltiedyepink', tiedye:true, text:'', vinyl:'Black', font:'High Tide', placement:'Centre chest', delivery:'pickup', delivery_label:'Local Pickup (Sarnia)',
+    hasBack:false, text2:'', font2:'Dragonlord', vinyl2:'Navy'};
 
   // ── Step recap — one coloured bar per step, filled in as you progress,
   // showing that step's current selection ─────────────────────────────
@@ -312,7 +366,7 @@
     var vals = {
       1: S.colour,
       2: S.text.trim() ? (S.text + ' · ' + S.font) : '—',
-      3: S.vinyl + ' · ' + S.placement,
+      3: S.vinyl + ' · ' + S.placement + (S.hasBack ? ' + back design' : ''),
       4: S.delivery_label,
       5: (curStep === TOTAL_STEPS) ? 'Ready to send!' : '—'
     };
@@ -365,6 +419,11 @@
       document.getElementById('btxtin').focus();
       return;
     }
+    if(curStep === 3 && S.hasBack && !S.text2.trim()){
+      document.getElementById('back-text-required-note').style.display = 'block';
+      document.getElementById('btxtin2').focus();
+      return;
+    }
     if(curStep < TOTAL_STEPS){ curStep++; renderStep(); }
   });
   document.getElementById('bldr-back').addEventListener('click', function(){
@@ -375,6 +434,7 @@
   var BASE = 20;            // per shirt, CAD
   var SPECIAL_VINYL = 2;    // glitter / holographic finishes
   var TIEDYE = 5;           // tie-dye shirt
+  var BACK_DESIGN = 8;      // adding a second (back) design location
   // TODO Elise: these are data-based estimates from your Canada Post lookup
   // (based on the "Close/regional" column, with a small buffer). Re-check
   // periodically at canadapost-postescanada.ca/cpc/en/tools/find-a-rate.page
@@ -405,12 +465,18 @@
   function perShirt(){
     return BASE
       + (SPECIAL_VINYLS.indexOf(S.vinyl) > -1 ? SPECIAL_VINYL : 0)
-      + (S.tiedye ? TIEDYE : 0);
+      + (S.tiedye ? TIEDYE : 0)
+      + (S.hasBack ? BACK_DESIGN + (SPECIAL_VINYLS.indexOf(S.vinyl2) > -1 ? SPECIAL_VINYL : 0) : 0);
   }
   function priceBreakdown(){
     var parts = ['base ' + money(BASE)];
     if(SPECIAL_VINYLS.indexOf(S.vinyl) > -1) parts.push(S.vinyl + ' vinyl +' + money(SPECIAL_VINYL));
     if(S.tiedye) parts.push('tie-dye +' + money(TIEDYE));
+    if(S.hasBack){
+      var backParts = 'back design +' + money(BACK_DESIGN);
+      if(SPECIAL_VINYLS.indexOf(S.vinyl2) > -1) backParts += ' (+' + money(SPECIAL_VINYL) + ' ' + S.vinyl2 + ' vinyl)';
+      parts.push(backParts);
+    }
     return parts.join(', ');
   }
   function shippingCost(){
@@ -420,10 +486,15 @@
   var HST_RATE = 0.13;     // Ontario HST — added on the invoice
   function lineItemDesc(){
     var bits = ['Custom HTV tee — ' + S.colour];
-    if(S.text) bits.push('text: "' + S.text + '"');
+    if(S.text) bits.push('front text: "' + S.text + '"');
     bits.push(S.vinyl + ' vinyl');
     bits.push(S.font + ' font');
     bits.push(S.placement);
+    if(S.hasBack){
+      bits.push('BACK — text: "' + (S.text2 || '') + '"');
+      bits.push(S.vinyl2 + ' vinyl');
+      bits.push(S.font2 + ' font');
+    }
     var sizeEl = document.getElementById('bo-size');
     if(sizeEl && sizeEl.value) bits.push('size ' + sizeEl.value);
     return bits.join(', ');
@@ -493,7 +564,59 @@
     p.classList.add('on');
     S.placement=p.dataset.p;
     document.getElementById('bs-place').textContent=S.placement;
+    var backLabel = document.getElementById('baddback-label');
+    if(backLabel) backLabel.textContent = (S.placement === 'Centre back')
+      ? 'Add a design on the front too (+$8)'
+      : 'Add a design on the back too (+$8)';
     updateRecap();
+  });
+
+  // ── Optional second (back) design ───────────────────────
+  function updateBackSummary(){
+    var wrap = document.getElementById('bs-back-wrap');
+    var val  = document.getElementById('bs-back-summary');
+    if(!wrap || !val) return;
+    wrap.hidden = !S.hasBack;
+    if(S.hasBack) val.textContent = (S.text2.trim() || '(no text yet)') + ' · ' + S.vinyl2 + ' · ' + S.font2;
+  }
+
+  var addBackChk = document.getElementById('baddback');
+  if(addBackChk) addBackChk.addEventListener('change', function(){
+    S.hasBack = this.checked;
+    document.getElementById('backpanel').hidden = !S.hasBack;
+    if(!S.hasBack) document.getElementById('back-text-required-note').style.display = 'none';
+    updatePrice();
+    updateRecap();
+    updateBackSummary();
+  });
+
+  var btxtin2 = document.getElementById('btxtin2');
+  if(btxtin2) btxtin2.addEventListener('input', function(){
+    S.text2 = this.value;
+    if(this.value.trim()) document.getElementById('back-text-required-note').style.display = 'none';
+    updateRecap();
+    updateBackSummary();
+  });
+
+  var bfonts2 = document.getElementById('bfonts2');
+  if(bfonts2) bfonts2.addEventListener('click', function(e){
+    var f=e.target.closest('.bfo');if(!f)return;
+    bfonts2.querySelectorAll('.bfo').forEach(function(x){x.classList.remove('on');});
+    f.classList.add('on');
+    S.font2=f.dataset.f;
+    updateRecap();
+    updateBackSummary();
+  });
+
+  var bvcs2 = document.getElementById('bvcs2');
+  if(bvcs2) bvcs2.addEventListener('click', function(e){
+    var v=e.target.closest('.bvc');if(!v)return;
+    bvcs2.querySelectorAll('.bvc').forEach(function(x){x.classList.remove('on');});
+    v.classList.add('on');
+    S.vinyl2=v.dataset.v;
+    updatePrice();
+    updateRecap();
+    updateBackSummary();
   });
 
   document.getElementById('bdelivery').addEventListener('click',function(e){
@@ -575,6 +698,9 @@
     document.getElementById('hf-vinyl').value   = S.vinyl;
     document.getElementById('hf-font').value    = S.font;
     document.getElementById('hf-place').value   = S.placement;
+    document.getElementById('hf-text2').value   = S.hasBack ? (S.text2 || '(none)') : '(no back design)';
+    document.getElementById('hf-vinyl2').value  = S.hasBack ? S.vinyl2 : '';
+    document.getElementById('hf-font2').value   = S.hasBack ? S.font2 : '';
     document.getElementById('hf-delivery').value = S.delivery_label + (S.delivery === 'ship' ? (isLocalPostal() ? ' (FREE — local delivery discount)' : ' (+' + money(shippingCost()) + ' est. shipping)') : ' (free)');
     document.getElementById('hf-postal').value = document.getElementById('bo-postal') ? document.getElementById('bo-postal').value.trim() : '';
     document.getElementById('hf-total').value   = money(perShirt()*qtyVal() + shippingCost()) + ' CAD \u2014 ' + qtyVal() + ' \u00d7 ' + money(perShirt()) + ' (' + priceBreakdown() + ')' + (S.delivery==='ship' ? ' + ' + money(shippingCost()) + ' shipping' : '');
@@ -602,6 +728,7 @@
           vinyl:        S.vinyl,
           font:         S.font,
           placement:    S.placement,
+          back_design:  S.hasBack ? ('Yes — "' + (S.text2 || '') + '", ' + S.vinyl2 + ' vinyl, ' + S.font2 + ' font') : 'No',
           size:         size,
           quantity:     String(qtyVal()),
           delivery:     S.delivery_label,
