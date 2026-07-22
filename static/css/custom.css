@@ -150,8 +150,8 @@
 .bvc-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .bvc { padding: 4px 10px; border: 1.5px solid #ddd; border-radius: 20px; cursor: pointer; font-size: 12px; background: #fff; color: #666; transition: all .12s; }
 .bvc.on { border-color: #FF1493; color: #FF1493; font-weight: 700; }
-.bfont-row { display: flex; flex-direction: column; gap: 5px; }
-.bfo { padding: 7px 11px; border: 1.5px solid #ddd; border-radius: 8px; cursor: pointer; background: #fff; color: #333; transition: border-color .12s; font-size: 14px; }
+.bfont-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
+.bfo { padding: 8px 10px; border: 1.5px solid #ddd; border-radius: 8px; cursor: pointer; background: #fff; color: #333; transition: border-color .12s; font-size: 14px; text-align: center; }
 .bfo.on { border-color: #FF1493; color: #FF1493; }
 .bsummary { background: #fafafa; border-radius: 10px; padding: .75rem 1rem; font-size: 12px; color: #666; line-height: 1.9; border: 1px solid #eee; }
 .bobtn { width: 100%; padding: 11px; background: transparent; color: #FF1493; border: 2px solid #FF1493; border-radius: 8px; font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all .2s; }
