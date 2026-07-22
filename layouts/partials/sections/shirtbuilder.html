@@ -8,7 +8,7 @@
   #bsa-order-form .btxt-in { font-size: 13px; }
   #bsa-order-form select.btxt-in { background: #fff; }
   #bo-success a { text-decoration: underline; }
-  .bprice { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem .6rem; background: #eef7fc; border: 1px solid #89c4e1; border-radius: 10px; padding: .6rem .85rem; margin: 0 0 .85rem; }
+  .bprice { display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem .6rem; background: #eef7fc; border: 1px solid #89c4e1; border-radius: 10px; padding: .6rem .85rem; margin: 0; }
   .bprice-label { font-family: 'Bebas Neue', sans-serif; letter-spacing: .04em; color: #3a7fa3; text-transform: uppercase; font-size: .95rem; }
   #bprice-val { font-size: 1.15rem; color: #be185d; }
   .bprice-note { flex-basis: 100%; font-size: 11px; color: #3a7fa3; line-height: 1.4; }
@@ -108,6 +108,11 @@
           </div>
           <p class="slide-label">Your selections, step by step</p>
 
+          <div class="bprice" id="bprice">
+            <span class="bprice-label">Estimated total</span>
+            <strong id="bprice-val">$20.00</strong>
+            <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl, tie-dye, or back-design upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
+          </div>
         </div>
       </div>
 
@@ -115,12 +120,6 @@
         <div class="bldr-progress">
           <div class="bldr-progress-bar"><div class="bldr-progress-fill" id="bldr-progress-fill"></div></div>
           <span class="bldr-progress-label" id="bldr-progress-label">Step 1 of 5 &mdash; Shirt Colour</span>
-        </div>
-
-        <div class="bprice" id="bprice">
-          <span class="bprice-label">Estimated total</span>
-          <strong id="bprice-val">$20.00</strong>
-          <span class="bprice-note">CAD &middot; $20/shirt plus any special-vinyl, tie-dye, or back-design upcharge. Final price &amp; tax are confirmed by Elise on your invoice.</span>
         </div>
 
         <div class="bsummary" id="bsummary">
