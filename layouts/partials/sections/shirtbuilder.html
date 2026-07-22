@@ -254,6 +254,7 @@
             <div id="shipfields" style="display:none;margin-top:.6rem">
               <span class="bcl">Postal code</span>
               <input class="btxt-in" id="bo-postal" maxlength="7" placeholder="e.g. N7T 1A1" style="max-width:160px"/>
+              <div id="shipcost-line" class="btd-note" style="display:none;background:#eef7fc;border-color:#89c4e1;color:#3a7fa3;margin-top:.5rem;font-weight:700;">Estimated shipping: <span id="shipcost-val">$18.00</span></div>
               <div id="localnote" class="btd-note" style="display:none;background:#eafff2;border-color:#8fdca8;color:#0a7a3d;margin-top:.5rem">🎉 Free shipping — you're in our local delivery area!</div>
             </div>
             <div id="shipnote" class="btd-note" style="display:none">Shipping is a data-based estimate ($18–$22 depending on quantity) — free for local Sarnia, London &amp; Waterloo-area orders. Elise will confirm the exact rate for your address on your invoice.</div>
@@ -456,6 +457,26 @@
     var fsa = el.value.trim().toUpperCase().replace(/\s+/g,'').slice(0,3);
     return LOCAL_FSAS.indexOf(fsa) > -1;
   }
+  // ── Live shipping-cost readout under the postal code field ─────
+  function updateShipCostLine(){
+    var postalEl = document.getElementById('bo-postal');
+    var raw = postalEl ? postalEl.value.trim() : '';
+    var lineEl = document.getElementById('shipcost-line');
+    var valEl = document.getElementById('shipcost-val');
+    var localEl = document.getElementById('localnote');
+    if(S.delivery !== 'ship' || raw.length < 3){
+      if(lineEl) lineEl.style.display = 'none';
+      if(localEl) localEl.style.display = 'none';
+      return;
+    }
+    if(isLocalPostal()){
+      if(lineEl) lineEl.style.display = 'none';
+      if(localEl) localEl.style.display = 'block';
+    } else {
+      if(localEl) localEl.style.display = 'none';
+      if(lineEl){ lineEl.style.display = 'block'; if(valEl) valEl.textContent = money(shippingRate(qtyVal())); }
+    }
+  }
   var SPECIAL_VINYLS = ['Glitter Gold','Glitter Silver','Holographic'];
   var CUR = String.fromCharCode(36); // "$" — built this way to stay safe through file tooling
 
@@ -628,19 +649,19 @@
     var shipping = S.delivery === 'ship';
     document.getElementById('shipfields').style.display = shipping ? 'block' : 'none';
     document.getElementById('shipnote').style.display = shipping ? 'block' : 'none';
-    document.getElementById('localnote').style.display = (shipping && isLocalPostal()) ? 'block' : 'none';
+    updateShipCostLine();
     updateRecap();
     updatePrice();
   });
 
   var postalInput = document.getElementById('bo-postal');
   if(postalInput) postalInput.addEventListener('input', function(){
-    document.getElementById('localnote').style.display = (S.delivery === 'ship' && isLocalPostal()) ? 'block' : 'none';
+    updateShipCostLine();
     updatePrice();
   });
 
   var qtyInput = document.getElementById('bo-qty');
-  if(qtyInput) qtyInput.addEventListener('input', updatePrice);
+  if(qtyInput) qtyInput.addEventListener('input', function(){ updatePrice(); updateShipCostLine(); });
 
   // ── Customer confirmation email (EmailJS) ──────────────────
   // Paste your three EmailJS IDs below. Until they're filled in, the
