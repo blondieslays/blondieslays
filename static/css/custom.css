@@ -328,6 +328,14 @@ a#hero-builder-btn:hover {
 .ba-btn:hover { background: #fff; color: #FF1493 !important; }
 .ba-pill { display: inline-block; background: #FFD1E8; color: #be185d; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 999px; vertical-align: middle; margin-left: 6px; }
 
+/* ── Digital-download preview cards (thumbnail + text, whole card clickable) ── */
+.ba-preview { display: flex; align-items: center; gap: .9rem; text-decoration: none !important; transition: box-shadow .15s ease, transform .15s ease; }
+.ba-preview:hover { box-shadow: 0 10px 24px rgba(255,20,147,.16); transform: translateY(-2px); }
+.ba-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; background: #fff; flex-shrink: 0; box-shadow: 0 4px 10px rgba(190,24,93,.15); }
+.ba-preview-text { flex: 1; min-width: 0; }
+.ba-preview .ba-text { margin-bottom: .45rem; }
+.ba-link-hint { display: inline-block; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; font-size: .68rem; color: #FF1493; }
+
 /* ── Text placement nested under font options ── */
 .bplace-col { margin-top: 1rem; }
 
