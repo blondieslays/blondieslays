@@ -256,6 +256,7 @@ a#hero-builder-btn:hover {
 #dl-nav-btn,
 #bulk-nav-btn,
 #designer-nav-btn,
+#streaming-nav-btn,
 a#hero-builder-btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -298,12 +299,29 @@ a#hero-builder-btn:hover {
   color: #ffffff !important;
 }
 
+/* Tertiary (solid dark pink): What to Watch — distinct from the primary
+   hot-pink CTA and the teal Shirt Designer, still clearly on-brand */
+#streaming-nav-btn,
+#streaming-nav-btn:link,
+#streaming-nav-btn:visited {
+  background: #be185d !important;
+  border-color: #be185d !important;
+  color: #ffffff !important;
+}
+#streaming-nav-btn:hover,
+#streaming-nav-btn:active {
+  background: #93154a !important;
+  border-color: #93154a !important;
+  color: #ffffff !important;
+}
+
 /* ── Mobile nav: stack the injected buttons neatly in the menu ── */
 @media (max-width: 991px) {
   #navbarContent .navbar-nav { align-items: center !important; padding-bottom: .6rem; }
   #dl-nav-btn,
   #bulk-nav-btn,
-  #designer-nav-btn {
+  #designer-nav-btn,
+  #streaming-nav-btn {
     margin: .35rem 0 !important;
     width: 220px !important;
     max-width: 80vw !important;
