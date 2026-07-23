@@ -468,6 +468,7 @@
     <button class="tab-btn active" data-tab="new">New This Month</button>
     <button class="tab-btn" data-tab="popular">What's Popular</button>
     <button class="tab-btn" data-tab="picks">Elise's Picks</button>
+    <button class="tab-btn" data-tab="gems">Hidden Gems</button>
     <button class="tab-btn" data-tab="vibe">Find Your Vibe</button>
   </div>
 
@@ -528,6 +529,27 @@
     <div class="grid" id="grid-picks"></div>
     <p class="footnote">
       A living list, not an algorithm — updated whenever Elise tells us what she's loved lately.
+    </p>
+  </section>
+
+  <!-- ===== HIDDEN GEMS ===== -->
+  <section class="tabpanel" id="panel-gems">
+    <p class="vibe-intro">Not new, not necessarily trending — just genuinely good and easy to miss in the catalogue. Weighted toward Prime Video and Disney+, since those two bury the good stuff deepest.</p>
+    <div class="searchbar">
+      <input id="q-gems" type="search" placeholder="Search a title…" autocomplete="off">
+    </div>
+    <div class="toolbar" id="toolbar-gems">
+      <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
+      <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+      <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+      <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+      <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+    </div>
+    <p class="label" id="resultLabel-gems"></p>
+    <div class="grid" id="grid-gems"></div>
+    <div class="empty" id="empty-gems" hidden>Nothing matches that search — try another title.</div>
+    <p class="footnote">
+      Deep-cut picks pulled from critic and outlet round-ups of catalogue titles worth digging for. Availability shifts as licensing deals change — always confirm in-app.
     </p>
   </section>
 
@@ -683,6 +705,22 @@ const ELISE_PICKS = [
    future picks: she leans toward grounded/real-stakes tension over creature
    horror or camp. */
 
+/* ---------------- Hidden Gems ----------------
+   Deep-cut catalogue titles, not tied to "new" or "trending" — weighted
+   Prime/Disney+ per Elise's request. Add more any time; each entry:
+   { t, p, k, g, note, mood: [...] }                                    */
+const HIDDEN_GEMS = [
+  { t: "Buried", p: "prime", k: "Movie", g: "Survival Thriller", note: "Ryan Reynolds, alone, in a coffin, for the whole runtime. Claustrophobic in the best way — pure Apex-style tension with zero budget for anything but dread.", mood: ["edge"] },
+  { t: "Dark Nature", p: "prime", k: "Movie", g: "Wilderness Horror", note: "A women's wilderness-therapy retreat goes very wrong. Slow-build survival horror that catalogue-browsers walk right past.", mood: ["edge","horror"] },
+  { t: "Coherence", p: "prime", k: "Movie", g: "Sci-Fi Thriller", note: "A dinner party unravels into a mind-bending reality-fracture thriller — shot for almost nothing, tighter than movies ten times its budget.", mood: ["edge","deep"] },
+  { t: "Synchronic", p: "prime", k: "Movie", g: "Sci-Fi Thriller", note: "Anthony Mackie, a strange new drug, and time itself breaking down. Genuinely underseen.", mood: ["edge","deep"] },
+  { t: "The Fly", p: "disney", k: "Movie", g: "Body Horror", note: "Cronenberg's body-horror classic — a teleportation experiment goes catastrophically wrong. Still unsettling decades later.", mood: ["horror","edge"] },
+  { t: "Crimson Tide", p: "disney", k: "Movie", g: "Submarine Thriller", note: "Denzel Washington and Gene Hackman lock horns on a nuclear sub with the fate of the world on the line. Relentless, airtight tension.", mood: ["edge","deep"] },
+  { t: "The Empty Man", p: "disney", k: "Movie", g: "Cult Horror", note: "An ex-cop's missing-persons case unravels into a cult conspiracy. Flopped in theatres, quietly became a horror-community favourite since.", mood: ["horror","edge","deep"] },
+  { t: "What Lies Beneath", p: "disney", k: "Movie", g: "Supernatural Thriller", note: "Harrison Ford and Michelle Pfeiffer in a haunted-marriage thriller that's creepier than it gets credit for.", mood: ["horror","edge"] },
+  { t: "Alien", p: "disney", k: "Movie", g: "Sci-Fi Horror", note: "The original — a crew picked off one by one in deep space. If you've only seen the sequels, this one's colder and slower and worse for it (in the best way).", mood: ["horror","edge","deep"] },
+];
+
 function tileHTML(item, badgeHTML) {
   return `
     <div class="tile" data-p="${item.p}">
@@ -777,6 +815,39 @@ function tileHTML(item, badgeHTML) {
   }).join("");
 })();
 
+/* ---------------- Hidden Gems ---------------- */
+(function initGems() {
+  const grid = document.getElementById("grid-gems");
+  const empty = document.getElementById("empty-gems");
+  const resultLabel = document.getElementById("resultLabel-gems");
+  const toolbar = document.getElementById("toolbar-gems");
+  const searchInput = document.getElementById("q-gems");
+  let activePlatform = "all";
+
+  function render() {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = HIDDEN_GEMS.filter(item => {
+      const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
+      const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
+      return matchesPlatform && matchesQuery;
+    });
+    grid.innerHTML = filtered.map(item => tileHTML({ ...item, _when: "Hidden gem" })).join("");
+    empty.hidden = filtered.length !== 0;
+    resultLabel.textContent = `${filtered.length} deep cuts worth digging for`;
+  }
+
+  toolbar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activePlatform = btn.dataset.p;
+    render();
+  });
+  searchInput.addEventListener("input", render);
+  render();
+})();
+
 /* ---------------- Find Your Vibe ---------------- */
 (function initVibe() {
   const moodGrid = document.getElementById("moodGrid");
@@ -784,7 +855,7 @@ function tileHTML(item, badgeHTML) {
   const empty = document.getElementById("empty-vibe");
   const resultLabel = document.getElementById("resultLabel-vibe");
   const resultsEls = document.querySelectorAll(".vibe-results");
-  const ALL = NEW.concat(POPULAR).concat(ELISE_PICKS);
+  const ALL = NEW.concat(POPULAR).concat(ELISE_PICKS).concat(HIDDEN_GEMS);
 
   moodGrid.addEventListener("click", (e) => {
     const btn = e.target.closest(".mood-btn");
@@ -807,6 +878,7 @@ function tileHTML(item, badgeHTML) {
       let when = "Personal pick";
       if (item.rank) when = "Popular right now";
       else if (item.when) when = `New ${item.when}`;
+      else if (HIDDEN_GEMS.includes(item)) when = "Hidden gem";
       return tileHTML({ ...item, _when: when });
     }).join("");
     empty.hidden = matches.length !== 0;
