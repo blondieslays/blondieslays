@@ -4,20 +4,38 @@
      (static/ files are copied as-is, so this bypasses the theme wrapper,
      same pattern as /pokemon/)
 
+     THREE TABS
+     ----------
+     1. New This Month  — curated new arrivals (NEW array)
+     2. What's Popular   — real Top 10 chart data (POPULAR array)
+     3. Find Your Vibe    — mood-based filter across both catalogs (uses `mood` field)
+
      HOW TO UPDATE (do this monthly)
      --------------------------------
+     NEW ARRIVALS:
      1. Search "new on Netflix Canada <month> <year>", and the same for
         Prime Video Canada, Crave Canada, and Disney+ Canada — iPhoneinCanada,
         MobileSyrup, and whatsondisneyplus.com publish these every month.
-     2. Add/replace entries in the TITLES array below. Each entry:
+     2. Add/replace entries in the NEW array below. Each entry:
         { t: "Title", p: "netflix|prime|crave|disney", k: "Movie|Series|Docuseries|Live",
-          g: "Genre", note: "one-line description", when: "Jul 2026" }
-     3. Update the LAST_UPDATED string near the top of TITLES.
+          g: "Genre", note: "one-line description", when: "Jul 2026",
+          mood: ["cozy","laugh","edge","deep","family","reality"] (pick 1-2) }
+     3. Update NEW_UPDATED near the top of the script.
+
+     WHAT'S POPULAR:
+     1. Visit flixpatrol.com/top10/netflix/canada/, /amazon-prime/canada/,
+        /crave/canada/, /disney/canada/ (or netflix.com/tudum/top10/canada
+        for Netflix's own official numbers).
+     2. Replace entries in the POPULAR array with the current Top ranked
+        titles per platform. Each entry: same shape as NEW, plus
+        { rank: 1, chart: "Movies|TV Shows|Overall" } instead of `when`.
+     3. Update POPULAR_SNAPSHOT to the date you pulled the charts.
+
      4. Re-deploy (push to main).
      =================================================================== -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A curated, Canada-only guide to what's new on Netflix, Prime Video, Crave, and Disney+ this month.">
+<meta name="description" content="A curated, Canada-only guide to what's new and what's popular on Netflix, Prime Video, Crave, and Disney+ — plus a mood-based pick tool.">
 <title>What to Watch in Canada — Blondie Slays</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +94,7 @@
   }
   .hero .subline {
     margin: .7rem auto 0;
-    max-width: 560px;
+    max-width: 580px;
     font-size: .9rem;
     font-weight: 600;
     opacity: .95;
@@ -104,6 +122,26 @@
   .homebubble:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
   .homebubble b { color: var(--pink-dark); }
 
+  /* ---------- Tabs ---------- */
+  .tabs {
+    display: flex; justify-content: center; gap: .5rem;
+    flex-wrap: wrap;
+    margin: 0 auto 1.6rem;
+  }
+  .tab-btn {
+    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .6rem 1.3rem; cursor: pointer;
+    font: 800 .8rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .tab-btn:hover { transform: translateY(-1px); }
+  .tab-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .tab-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  .tabpanel { display: none; }
+  .tabpanel.active { display: block; }
+
   .toolbar {
     display: flex; flex-wrap: wrap; gap: .55rem;
     align-items: center; justify-content: center;
@@ -111,13 +149,16 @@
   }
   .filter-btn {
     border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
-    border-radius: 999px; padding: .5rem 1.05rem; cursor: pointer;
+    border-radius: 999px; padding: .5rem 1.05rem .5rem .9rem; cursor: pointer;
     font: 700 .76rem 'Montserrat', sans-serif; letter-spacing: .03em;
     box-shadow: var(--shadow-sm);
     transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
-    display: inline-flex; align-items: center; gap: .4rem;
+    display: inline-flex; align-items: center;
   }
-  .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pink-med); flex: none; }
+  .filter-btn .dot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--pink-med);
+    flex: none; display: inline-block; margin-right: .5rem;
+  }
   .filter-btn[data-p="netflix"] .dot { background: var(--netflix); }
   .filter-btn[data-p="prime"] .dot { background: var(--prime); }
   .filter-btn[data-p="crave"] .dot { background: var(--crave); }
@@ -169,6 +210,7 @@
     display: flex; flex-direction: column;
     animation: rise .4s ease both;
     border-top: 4px solid var(--pink-med);
+    position: relative;
   }
   .tile[data-p="netflix"] { border-top-color: var(--netflix); }
   .tile[data-p="prime"]   { border-top-color: var(--prime); }
@@ -187,6 +229,14 @@
   .platform-pill[data-p="disney"]  { background: var(--disney); }
   .kind-tag { font: 700 .64rem 'Montserrat', sans-serif; color: #b06a92; letter-spacing: .03em; }
 
+  .rank-badge {
+    position: absolute; top: -12px; left: 14px;
+    background: var(--pink-dark); color: #fff;
+    font: 800 .72rem 'Bebas Neue', sans-serif; letter-spacing: .04em;
+    padding: .25rem .6rem; border-radius: 999px;
+    box-shadow: 0 3px 8px rgba(190,24,93,.35);
+  }
+
   .tile .name { font-weight: 800; font-size: 1rem; color: var(--ink); line-height: 1.25; margin: 0 0 .3rem; }
   .tile .genre { font-size: .68rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 .5rem; }
   .tile .note { font-size: .82rem; color: #6b3f56; line-height: 1.45; margin: 0; flex: 1; }
@@ -197,13 +247,38 @@
   .footnote { text-align: center; font-size: .74rem; color: #c98bb0; margin-top: 2.6rem; font-weight: 600; line-height: 1.6; }
   .footnote a { color: var(--pink-dark); }
 
+  /* ---------- Vibe quiz ---------- */
+  .vibe-intro { text-align: center; max-width: 520px; margin: 0 auto 1.6rem; font-size: .88rem; color: #6b3f56; font-weight: 600; line-height: 1.5; }
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .8rem;
+    max-width: 780px;
+    margin: 0 auto 2rem;
+  }
+  .mood-btn {
+    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border-radius: 16px; padding: 1.1rem .8rem; cursor: pointer;
+    font: 800 .8rem 'Montserrat', sans-serif; letter-spacing: .02em;
+    box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column; align-items: center; gap: .4rem;
+    transition: transform .12s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+  }
+  .mood-btn .emoji { font-size: 1.7rem; }
+  .mood-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .mood-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .mood-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  .vibe-results { display: none; }
+  .vibe-results.show { display: block; }
+
   @media (prefers-reduced-motion: reduce) { .tile { animation: none; } }
 </style>
 
 <header class="hero">
   <p class="eyebrow">Canada Only · Updated Monthly</p>
   <h1>What to Watch</h1>
-  <p class="subline">A curated pick of what's new this month on Netflix, Prime Video, Crave, and Disney+ — for Canadian streamers only.</p>
+  <p class="subline">What's new, what's actually popular right now, and a quick way to find something that matches your mood — Netflix, Prime Video, Crave, and Disney+, Canadian streamers only.</p>
 </header>
 
 <main class="wrap">
@@ -213,98 +288,169 @@
     </a>
   </div>
 
-  <div class="searchbar">
-    <input id="q" type="search" placeholder="Search a title…" autocomplete="off">
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="new">New This Month</button>
+    <button class="tab-btn" data-tab="popular">What's Popular</button>
+    <button class="tab-btn" data-tab="vibe">Find Your Vibe</button>
   </div>
 
-  <div class="toolbar" id="toolbar">
-    <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
-    <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
-    <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
-    <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
-    <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
-  </div>
+  <!-- ===== NEW THIS MONTH ===== -->
+  <section class="tabpanel active" id="panel-new">
+    <div class="searchbar">
+      <input id="q-new" type="search" placeholder="Search a title…" autocomplete="off">
+    </div>
+    <div class="toolbar" id="toolbar-new">
+      <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
+      <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+      <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+      <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+      <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+    </div>
+    <p class="label" id="resultLabel-new"></p>
+    <div class="grid" id="grid-new"></div>
+    <div class="empty" id="empty-new" hidden>Nothing matches that search — try another title.</div>
+    <p class="footnote">
+      Curated picks of new Canadian streaming arrivals — not a live catalogue feed.
+      Sourced from official platform release calendars via
+      <a href="https://www.iphoneincanada.ca" target="_blank" rel="noopener">iPhone in Canada</a> and
+      <a href="https://mobilesyrup.com" target="_blank" rel="noopener">MobileSyrup</a>.
+      Titles and availability can change — always confirm in-app.
+    </p>
+  </section>
 
-  <p class="label" id="resultLabel"></p>
+  <!-- ===== WHAT'S POPULAR ===== -->
+  <section class="tabpanel" id="panel-popular">
+    <div class="searchbar">
+      <input id="q-popular" type="search" placeholder="Search a title…" autocomplete="off">
+    </div>
+    <div class="toolbar" id="toolbar-popular">
+      <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
+      <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+      <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+      <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+      <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+    </div>
+    <p class="label" id="resultLabel-popular"></p>
+    <div class="grid" id="grid-popular"></div>
+    <div class="empty" id="empty-popular" hidden>Nothing matches that search — try another title.</div>
+    <p class="footnote">
+      Real Top 10 chart rankings, not editorial picks. Netflix ranks from
+      <a href="https://www.netflix.com/tudum/top10/canada" target="_blank" rel="noopener">Netflix Tudum's official Canada chart</a>;
+      Prime Video, Crave, and Disney+ ranks are tracked by
+      <a href="https://flixpatrol.com/top10/streaming/canada/" target="_blank" rel="noopener">FlixPatrol</a>,
+      which is not officially published by those platforms. Rankings shift daily — this is a snapshot.
+    </p>
+  </section>
 
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" hidden>Nothing matches that search — try another title.</div>
+  <!-- ===== FIND YOUR VIBE ===== -->
+  <section class="tabpanel" id="panel-vibe">
+    <p class="vibe-intro">What are you in the mood for tonight? Pick a vibe and we'll pull matching picks from everything on this page.</p>
+    <div class="mood-grid" id="moodGrid">
+      <button class="mood-btn" data-mood="cozy"><span class="emoji">🕯️</span>Cozy &amp; Feel-Good</button>
+      <button class="mood-btn" data-mood="laugh"><span class="emoji">😂</span>Laugh Out Loud</button>
+      <button class="mood-btn" data-mood="edge"><span class="emoji">😬</span>Edge-of-Your-Seat</button>
+      <button class="mood-btn" data-mood="deep"><span class="emoji">🤔</span>Something to Think About</button>
+      <button class="mood-btn" data-mood="family"><span class="emoji">👨‍👩‍👧</span>Family Movie Night</button>
+      <button class="mood-btn" data-mood="reality"><span class="emoji">🏆</span>Reality &amp; Competition</button>
+    </div>
+    <p class="label vibe-results" id="resultLabel-vibe"></p>
+    <div class="grid vibe-results" id="grid-vibe"></div>
+    <div class="empty vibe-results" id="empty-vibe" hidden>Nothing tagged for that vibe yet — try another one.</div>
+  </section>
 
-  <p class="footnote">
-    Curated picks of new Canadian streaming arrivals — not a live catalogue feed.
-    Sourced from official platform release calendars via
-    <a href="https://www.iphoneincanada.ca" target="_blank" rel="noopener">iPhone in Canada</a> and
-    <a href="https://mobilesyrup.com" target="_blank" rel="noopener">MobileSyrup</a>.
-    Titles and availability can change — always confirm in-app.
+  <p class="footnote" style="margin-top:1.4rem;">
+    All three tabs are Canada-only. Titles, availability, and rankings can change without notice — always confirm in-app before you commit the evening.
   </p>
 </main>
 
 <script>
-const LAST_UPDATED = "July 2026";
+const NEW_UPDATED = "July 2026";
+const POPULAR_SNAPSHOT = "July 19, 2026";
 
 const PLATFORM_LABEL = { netflix: "Netflix", prime: "Prime Video", crave: "Crave", disney: "Disney+" };
+const MOOD_LABEL = { cozy: "Cozy & Feel-Good", laugh: "Laugh Out Loud", edge: "Edge-of-Your-Seat", deep: "Something to Think About", family: "Family Movie Night", reality: "Reality & Competition" };
 
-const TITLES = [
+const NEW = [
   // ---------- Netflix ----------
-  { t: "Enola Holmes 3", p: "netflix", k: "Movie", g: "Mystery", note: "Millie Bobby Brown returns for a third case in the Sherlock Holmes spin-off franchise.", when: "Jul 2026" },
-  { t: "Quarterback", p: "netflix", k: "Docuseries", g: "Sports", note: "Season 3 of the behind-the-scenes NFL docuseries.", when: "Jul 2026" },
-  { t: "Little House on the Prairie", p: "netflix", k: "Series", g: "Drama", note: "New adaptation filmed entirely in Winnipeg and rural Manitoba.", when: "Jul 2026" },
-  { t: "Ransom Canyon", p: "netflix", k: "Series", g: "Drama", note: "Season 2 of the ranch-set romantic drama.", when: "Jul 2026" },
-  { t: "The Hawk", p: "netflix", k: "Movie", g: "Comedy", note: "Will Ferrell headlines this new comedy film.", when: "Jul 2026" },
-  { t: "Survival of the Thickest", p: "netflix", k: "Series", g: "Comedy", note: "Michelle Buteau's series wraps up with its third and final season.", when: "Jul 2026" },
-  { t: "Heartstopper Forever", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026" },
-  { t: "The Wild Robot", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026" },
-  { t: "Resident Alien", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026" },
-  { t: "Fast & Furious Collection", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026" },
+  { t: "Enola Holmes 3", p: "netflix", k: "Movie", g: "Mystery", note: "Millie Bobby Brown returns for a third case in the Sherlock Holmes spin-off franchise.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Quarterback", p: "netflix", k: "Docuseries", g: "Sports", note: "Season 3 of the behind-the-scenes NFL docuseries.", when: "Jul 2026", mood: ["deep"] },
+  { t: "Little House on the Prairie", p: "netflix", k: "Series", g: "Drama", note: "New adaptation filmed entirely in Winnipeg and rural Manitoba.", when: "Jul 2026", mood: ["cozy","family"] },
+  { t: "Ransom Canyon", p: "netflix", k: "Series", g: "Drama", note: "Season 2 of the ranch-set romantic drama.", when: "Jul 2026", mood: ["cozy"] },
+  { t: "The Hawk", p: "netflix", k: "Movie", g: "Comedy", note: "Will Ferrell headlines this new comedy film.", when: "Jul 2026", mood: ["laugh","family"] },
+  { t: "Survival of the Thickest", p: "netflix", k: "Series", g: "Comedy", note: "Michelle Buteau's series wraps up with its third and final season.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Heartstopper Forever", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026", mood: ["cozy"] },
+  { t: "The Wild Robot", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026", mood: ["family","cozy"] },
+  { t: "Resident Alien", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026", mood: ["laugh","edge"] },
+  { t: "Fast & Furious Collection", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
 
   // ---------- Prime Video ----------
-  { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026" },
-  { t: "Young Farts Trailer Parts", p: "prime", k: "Series", g: "Comedy", note: "New original executive produced by Jacob Tierney.", when: "Jul 2026" },
-  { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New Prime original series.", when: "Jul 2026" },
-  { t: "The Super Mario Galaxy Movie", p: "prime", k: "Movie", g: "Animation", note: "The animated Mario sequel joins the catalogue.", when: "Jul 2026" },
-  { t: "Batman: Caped Crusader", p: "prime", k: "Series", g: "Animation", note: "Season 2 of the reimagined Batman animated series.", when: "Jul 2026" },
-  { t: "MaXXXine", p: "prime", k: "Movie", g: "Horror", note: "The final chapter of Ti West's X trilogy.", when: "Jul 2026" },
-  { t: "Flow", p: "prime", k: "Movie", g: "Animation", note: "The Oscar-winning, dialogue-free animated film.", when: "Jul 2026" },
-  { t: "A Different Man", p: "prime", k: "Movie", g: "Dark Comedy", note: "Introspective dark comedy drama.", when: "Jul 2026" },
-  { t: "Law & Order: SVU", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026" },
-  { t: "WNBA & NWSL", p: "prime", k: "Live", g: "Sports", note: "Live coverage of WNBA and NWSL matchups throughout the month.", when: "Jul 2026" },
+  { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026", mood: ["laugh","cozy"] },
+  { t: "Young Farts Trailer Parts", p: "prime", k: "Series", g: "Comedy", note: "New original executive produced by Jacob Tierney.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New Prime original series.", when: "Jul 2026", mood: ["edge"] },
+  { t: "The Super Mario Galaxy Movie", p: "prime", k: "Movie", g: "Animation", note: "The animated Mario sequel joins the catalogue.", when: "Jul 2026", mood: ["family"] },
+  { t: "Batman: Caped Crusader", p: "prime", k: "Series", g: "Animation", note: "Season 2 of the reimagined Batman animated series.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "MaXXXine", p: "prime", k: "Movie", g: "Horror", note: "The final chapter of Ti West's X trilogy.", when: "Jul 2026", mood: ["edge"] },
+  { t: "Flow", p: "prime", k: "Movie", g: "Animation", note: "The Oscar-winning, dialogue-free animated film.", when: "Jul 2026", mood: ["deep","family"] },
+  { t: "A Different Man", p: "prime", k: "Movie", g: "Dark Comedy", note: "Introspective dark comedy drama.", when: "Jul 2026", mood: ["deep"] },
+  { t: "Law & Order: SVU", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026", mood: ["edge"] },
+  { t: "WNBA & NWSL", p: "prime", k: "Live", g: "Sports", note: "Live coverage of WNBA and NWSL matchups throughout the month.", when: "Jul 2026", mood: ["reality"] },
 
   // ---------- Crave ----------
-  { t: "Fightland", p: "crave", k: "Series", g: "Sports Drama", note: "New Starz series produced by 50 Cent (Starz add-on required).", when: "Jul 2026" },
-  { t: "Nirvanna the Band the Show the Movie", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026" },
-  { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026" },
-  { t: "Stuart Fails to Save the Universe", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026" },
-  { t: "The Dessert", p: "crave", k: "Movie", g: "Comedy", note: "New comedy feature added this month.", when: "Jul 2026" },
-  { t: "Don't Even", p: "crave", k: "Series", g: "Comedy", note: "New comedy series addition.", when: "Jul 2026" },
+  { t: "Fightland", p: "crave", k: "Series", g: "Sports Drama", note: "New Starz series produced by 50 Cent (Starz add-on required).", when: "Jul 2026", mood: ["edge","reality"] },
+  { t: "Nirvanna the Band the Show the Movie", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026", mood: ["reality"] },
+  { t: "Stuart Fails to Save the Universe", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "The Dessert", p: "crave", k: "Movie", g: "Comedy", note: "New comedy feature added this month.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Don't Even", p: "crave", k: "Series", g: "Comedy", note: "New comedy series addition.", when: "Jul 2026", mood: ["laugh"] },
 
   // ---------- Disney+ ----------
-  { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 of the beloved animated revival.", when: "Jul 2026" },
-  { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "New entry in the Descendants movie franchise.", when: "Jul 2026" },
-  { t: "King of the Hill", p: "disney", k: "Series", g: "Animation", note: "Season 15 of the revived animated comedy.", when: "Jul 2026" },
-  { t: "Furious", p: "disney", k: "Series", g: "Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026" },
-  { t: "The Proud Family: Louder & Prouder", p: "disney", k: "Series", g: "Animation", note: "The animated comedy returns with new episodes.", when: "Jul 2026" },
-  { t: "Pompeii: Out of Time", p: "disney", k: "Docuseries", g: "History", note: "Tom Hiddleston hosts this historical documentary special.", when: "Jul 2026" },
-  { t: "Lollapalooza", p: "disney", k: "Live", g: "Music", note: "Live festival streams on July 30 and 31.", when: "Jul 2026" },
+  { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 of the beloved animated revival.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "New entry in the Descendants movie franchise.", when: "Jul 2026", mood: ["family","cozy"] },
+  { t: "King of the Hill", p: "disney", k: "Series", g: "Animation", note: "Season 15 of the revived animated comedy.", when: "Jul 2026", mood: ["laugh","cozy"] },
+  { t: "Furious", p: "disney", k: "Series", g: "Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026", mood: ["edge","deep"] },
+  { t: "The Proud Family: Louder & Prouder", p: "disney", k: "Series", g: "Animation", note: "The animated comedy returns with new episodes.", when: "Jul 2026", mood: ["laugh","family"] },
+  { t: "Pompeii: Out of Time", p: "disney", k: "Docuseries", g: "History", note: "Tom Hiddleston hosts this historical documentary special.", when: "Jul 2026", mood: ["deep"] },
+  { t: "Lollapalooza", p: "disney", k: "Live", g: "Music", note: "Live festival streams on July 30 and 31.", when: "Jul 2026", mood: ["reality"] },
 ];
 
-const grid = document.getElementById("grid");
-const empty = document.getElementById("empty");
-const resultLabel = document.getElementById("resultLabel");
-const toolbar = document.getElementById("toolbar");
-const searchInput = document.getElementById("q");
+const POPULAR = [
+  // ---------- Netflix (Top 10 Canada, Jul 19 2026) ----------
+  { t: "Desire", p: "netflix", k: "Movie", g: "Romance", note: "New romance drama holding the #1 movie spot this week.", rank: 1, chart: "Movies", mood: ["cozy"] },
+  { t: "The Hawk", p: "netflix", k: "Series", g: "Comedy", note: "Will Ferrell's new comedy is also topping the TV chart.", rank: 1, chart: "TV Shows", mood: ["laugh","family"] },
+  { t: "Little House on the Prairie", p: "netflix", k: "Series", g: "Drama", note: "Holding steady in the Top 3 for shows.", rank: 3, chart: "TV Shows", mood: ["cozy","family"] },
+  { t: "Speak No Evil", p: "netflix", k: "Movie", g: "Thriller", note: "The 2024 thriller remains a Top 5 movie fixture.", rank: 4, chart: "Movies", mood: ["edge"] },
+  { t: "Forever My Girl", p: "netflix", k: "Movie", g: "Romance", note: "A romance rewatch climbing the movie chart.", rank: 2, chart: "Movies", mood: ["cozy"] },
+  { t: "The Ultimatum: Marry or Move On", p: "netflix", k: "Series", g: "Reality", note: "The relationship reality show is back in the Top 2.", rank: 2, chart: "TV Shows", mood: ["reality"] },
 
-let activePlatform = "all";
+  // ---------- Prime Video (Top 10 Canada, Jul 19 2026) ----------
+  { t: "Afterburn", p: "prime", k: "Movie", g: "Action", note: "The #1 overall title on Prime Video this week.", rank: 1, chart: "Overall", mood: ["edge"] },
+  { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "The Legally Blonde prequel series is a Top 2 hit.", rank: 2, chart: "Overall", mood: ["laugh","cozy"] },
+  { t: "Project Hail Mary", p: "prime", k: "Movie", g: "Sci-Fi", note: "Topping the movie chart this week.", rank: 1, chart: "Movies", mood: ["deep","edge"] },
+  { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New original series debuting at #1 on TV.", rank: 1, chart: "TV Shows", mood: ["edge"] },
+  { t: "Off Campus", p: "prime", k: "Series", g: "Romance", note: "College romance series holding a Top 3 TV spot.", rank: 3, chart: "TV Shows", mood: ["cozy","laugh"] },
+  { t: "Reminders of Him", p: "prime", k: "Movie", g: "Drama", note: "Emotional drama climbing the movie chart.", rank: 3, chart: "Movies", mood: ["deep","cozy"] },
 
-function render() {
-  const q = searchInput.value.trim().toLowerCase();
-  const filtered = TITLES.filter(item => {
-    const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
-    const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
-    return matchesPlatform && matchesQuery;
-  });
+  // ---------- Disney+ (Top 10 Canada, Jul 19 2026) ----------
+  { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "The newest Descendants movie debuts at #1 overall.", rank: 1, chart: "Overall", mood: ["family","cozy"] },
+  { t: "Avatar: Fire and Ash", p: "disney", k: "Movie", g: "Sci-Fi", note: "Holding a Top 2 spot on the movie chart.", rank: 2, chart: "Movies", mood: ["edge","family"] },
+  { t: "Moana 2", p: "disney", k: "Movie", g: "Animation", note: "Still a Top 3 family favourite.", rank: 3, chart: "Movies", mood: ["family","cozy"] },
+  { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 is holding in the TV Top 5.", rank: 4, chart: "TV Shows", mood: ["edge","family"] },
+  { t: "Dancing with the Stars: The Next Pro", p: "disney", k: "Series", g: "Reality", note: "The #1 show on Disney+ this week.", rank: 1, chart: "TV Shows", mood: ["reality"] },
+  { t: "The Bear", p: "disney", k: "Series", g: "Drama Comedy", note: "Still pulling a Top 5 TV spot.", rank: 5, chart: "TV Shows", mood: ["deep","laugh"] },
 
-  grid.innerHTML = filtered.map(item => `
+  // ---------- Crave (Top 10 Canada, Jul 19 2026) ----------
+  { t: "RuPaul's Drag Race All Stars", p: "crave", k: "Series", g: "Reality", note: "The #1 title on Crave this week.", rank: 1, chart: "Overall", mood: ["reality","laugh"] },
+  { t: "House of the Dragon", p: "crave", k: "Series", g: "Fantasy Drama", note: "Holding steady at #2.", rank: 2, chart: "Overall", mood: ["edge","deep"] },
+  { t: "Canada's Drag Race: All Stars", p: "crave", k: "Series", g: "Reality", note: "The Canadian spin-off is a Top 3 hit.", rank: 3, chart: "Overall", mood: ["reality","laugh"] },
+  { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 is charting in the Top 6.", rank: 6, chart: "Overall", mood: ["reality"] },
+  { t: "Lee Cronin's The Mummy", p: "crave", k: "Movie", g: "Horror", note: "The horror reboot is a Top 7 title.", rank: 7, chart: "Overall", mood: ["edge"] },
+  { t: "The Running Man", p: "crave", k: "Movie", g: "Action", note: "The 2025 remake cracked the Top 10.", rank: 8, chart: "Overall", mood: ["edge"] },
+];
+
+function tileHTML(item, badgeHTML) {
+  return `
     <div class="tile" data-p="${item.p}">
+      ${badgeHTML || ""}
       <div class="top-row">
         <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
         <span class="kind-tag">${item.k}</span>
@@ -312,24 +458,123 @@ function render() {
       <p class="name">${item.t}</p>
       <p class="genre">${item.g}</p>
       <p class="note">${item.note}</p>
-      <p class="when">New ${item.when}</p>
+      <p class="when">${item._when || ""}</p>
     </div>
-  `).join("");
-
-  empty.hidden = filtered.length !== 0;
-  resultLabel.textContent = `${filtered.length} new this month · Last updated ${LAST_UPDATED}`;
+  `;
 }
 
-toolbar.addEventListener("click", (e) => {
-  const btn = e.target.closest(".filter-btn");
-  if (!btn) return;
-  toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  activePlatform = btn.dataset.p;
+/* ---------------- New This Month ---------------- */
+(function initNew() {
+  const grid = document.getElementById("grid-new");
+  const empty = document.getElementById("empty-new");
+  const resultLabel = document.getElementById("resultLabel-new");
+  const toolbar = document.getElementById("toolbar-new");
+  const searchInput = document.getElementById("q-new");
+  let activePlatform = "all";
+
+  function render() {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = NEW.filter(item => {
+      const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
+      const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
+      return matchesPlatform && matchesQuery;
+    });
+    grid.innerHTML = filtered.map(item => tileHTML({ ...item, _when: `New ${item.when}` })).join("");
+    empty.hidden = filtered.length !== 0;
+    resultLabel.textContent = `${filtered.length} new this month · Last updated ${NEW_UPDATED}`;
+  }
+
+  toolbar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activePlatform = btn.dataset.p;
+    render();
+  });
+  searchInput.addEventListener("input", render);
   render();
-});
+})();
 
-searchInput.addEventListener("input", render);
+/* ---------------- What's Popular ---------------- */
+(function initPopular() {
+  const grid = document.getElementById("grid-popular");
+  const empty = document.getElementById("empty-popular");
+  const resultLabel = document.getElementById("resultLabel-popular");
+  const toolbar = document.getElementById("toolbar-popular");
+  const searchInput = document.getElementById("q-popular");
+  let activePlatform = "all";
 
-render();
+  function render() {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = POPULAR.filter(item => {
+      const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
+      const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
+      return matchesPlatform && matchesQuery;
+    });
+    grid.innerHTML = filtered.map(item => {
+      const badge = `<span class="rank-badge">#${item.rank} · ${item.chart}</span>`;
+      return tileHTML({ ...item, _when: `Charting ${POPULAR_SNAPSHOT}` }, badge);
+    }).join("");
+    empty.hidden = filtered.length !== 0;
+    resultLabel.textContent = `${filtered.length} trending picks · Charts pulled ${POPULAR_SNAPSHOT}`;
+  }
+
+  toolbar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activePlatform = btn.dataset.p;
+    render();
+  });
+  searchInput.addEventListener("input", render);
+  render();
+})();
+
+/* ---------------- Find Your Vibe ---------------- */
+(function initVibe() {
+  const moodGrid = document.getElementById("moodGrid");
+  const grid = document.getElementById("grid-vibe");
+  const empty = document.getElementById("empty-vibe");
+  const resultLabel = document.getElementById("resultLabel-vibe");
+  const resultsEls = document.querySelectorAll(".vibe-results");
+  const ALL = NEW.concat(POPULAR);
+
+  moodGrid.addEventListener("click", (e) => {
+    const btn = e.target.closest(".mood-btn");
+    if (!btn) return;
+    moodGrid.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const mood = btn.dataset.mood;
+
+    const seen = new Set();
+    const matches = ALL.filter(item => {
+      if (!item.mood || !item.mood.includes(mood)) return false;
+      const key = item.t + "|" + item.p;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    resultsEls.forEach(el => el.classList.add("show"));
+    grid.innerHTML = matches.map(item => tileHTML({ ...item, _when: item.rank ? `Popular right now` : `New ${item.when}` })).join("");
+    empty.hidden = matches.length !== 0;
+    resultLabel.textContent = `${matches.length} picks for "${MOOD_LABEL[mood]}"`;
+  });
+})();
+
+/* ---------------- Tabs ---------------- */
+(function initTabs() {
+  const tabs = document.getElementById("tabs");
+  tabs.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab-btn");
+    if (!btn) return;
+    tabs.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    document.querySelectorAll(".tabpanel").forEach(p => p.classList.remove("active"));
+    document.getElementById("panel-" + tab).classList.add("active");
+  });
+})();
 </script>
