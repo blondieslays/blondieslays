@@ -442,7 +442,7 @@
   <h1>What to Watch</h1>
   <p class="subline">What's new, what's actually popular right now, what Elise is personally obsessed with, and a quick way to find something that matches your mood — Netflix, Prime Video, Crave, and Disney+, Canadian streamers only.</p>
   <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,32 C240,60 480,0 720,20 C960,40 1200,58 1440,26 L1440,60 L0,60 Z" fill="#FFF0F6"></path>
+    <path d="M0,32 C240,60 480,0 720,20 C960,40 1200,58 1440,26 L1440,60 L0,60 Z" fill="#000000"></path>
   </svg>
 </header>
 
@@ -573,6 +573,7 @@ const NEW = [
   { t: "The Wild Robot", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026", mood: ["family","cozy"] },
   { t: "Resident Alien", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026", mood: ["laugh","edge"] },
   { t: "Fast & Furious Collection", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Heroes", p: "netflix", k: "Series", g: "Sci-Fi Drama", note: "All four original seasons of the ensemble superhero drama land this month.", when: "Jul 2026", mood: ["edge","family"] },
 
   // ---------- Prime Video ----------
   { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026", mood: ["laugh","cozy"] },
@@ -587,10 +588,17 @@ const NEW = [
   { t: "A Different Man", p: "prime", k: "Movie", g: "Dark Comedy", note: "Introspective dark comedy drama.", when: "Jul 2026", mood: ["deep"] },
   { t: "Law & Order: SVU", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026", mood: ["edge"] },
   { t: "WNBA & NWSL", p: "prime", k: "Live", g: "Sports", note: "Live coverage of WNBA and NWSL matchups throughout the month.", when: "Jul 2026", mood: ["reality"] },
+  { t: "Gilmore Girls", p: "prime", k: "Series", g: "Comfort Drama", note: "All seven original seasons of the small-town mother-daughter classic.", when: "Jul 2026", mood: ["cozy","laugh"] },
+  { t: "Bottoms", p: "prime", k: "Movie", g: "Comedy", note: "Raunchy high-school comedy added for Pride Month carryover.", when: "Jul 2026", mood: ["laugh"] },
 
   // ---------- Crave ----------
   { t: "Fightland", p: "crave", k: "Series", g: "Sports Drama", note: "New Starz series produced by 50 Cent (Starz add-on required).", when: "Jul 2026", mood: ["edge","reality"] },
   { t: "The Real Murders of Atlanta", p: "crave", k: "Series", g: "True Crime", note: "Season 4 premiere (July 14) of the Oxygen True Crime docuseries.", when: "Jul 2026", mood: ["truecrime"] },
+  { t: "It Lives Inside", p: "crave", k: "Movie", g: "Horror", note: "A supernatural horror film about a demon unleashed from a jar — new to Crave this month.", when: "Jul 2026", mood: ["horror","edge"] },
+  { t: "Road to Avonlea", p: "crave", k: "Series", g: "Family Drama", note: "Seasons 1-4 of the beloved Canadian classic set on Prince Edward Island.", when: "Jul 2026", mood: ["cozy","family"] },
+  { t: "Field of Dreams", p: "crave", k: "Movie", g: "Family Drama", note: "The baseball classic — \"if you build it, he will come.\"", when: "Jul 2026", mood: ["cozy","family"] },
+  { t: "I Kissed A Girl", p: "crave", k: "Series", g: "Reality Dating", note: "Season 2, new episodes, of the queer dating reality show.", when: "Jul 2026", mood: ["reality"] },
+  { t: "Ocean's Twelve", p: "crave", k: "Movie", g: "Heist", note: "The slick ensemble heist sequel joins the Crave library.", when: "Jul 2026", mood: ["edge","laugh"] },
   { t: "Nirvanna the Band the Show the Movie", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026", mood: ["laugh"] },
   { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026", mood: ["reality"] },
   { t: "Stuart Fails to Save the Universe", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026", mood: ["laugh"] },
@@ -615,6 +623,9 @@ const POPULAR = [
   { t: "Speak No Evil", p: "netflix", k: "Movie", g: "Thriller", note: "The 2024 thriller remains a Top 5 movie fixture.", rank: 4, chart: "Movies", mood: ["edge","horror"] },
   { t: "Forever My Girl", p: "netflix", k: "Movie", g: "Romance", note: "A romance rewatch climbing the movie chart.", rank: 2, chart: "Movies", mood: ["cozy"] },
   { t: "The Ultimatum: Marry or Move On", p: "netflix", k: "Series", g: "Reality", note: "The relationship reality show is back in the Top 2.", rank: 2, chart: "TV Shows", mood: ["reality"] },
+  { t: "Death on the Nile", p: "netflix", k: "Movie", g: "Mystery", note: "The Agatha Christie mystery is a Top 6 movie fixture.", rank: 6, chart: "Movies", mood: ["edge","deep"] },
+  { t: "Companion", p: "netflix", k: "Movie", g: "Sci-Fi Thriller", note: "A twisty sci-fi thriller rounding out the Top 10.", rank: 10, chart: "Movies", mood: ["edge","deep"] },
+  { t: "Hot Ones: Extra Heat", p: "netflix", k: "Series", g: "Reality", note: "The spicy-wing interview show is a Top 5 TV hit.", rank: 5, chart: "TV Shows", mood: ["reality","laugh"] },
 
   // ---------- Prime Video (Top 10 Canada, Jul 19 2026) ----------
   { t: "Afterburn", p: "prime", k: "Movie", g: "Action", note: "The #1 overall title on Prime Video this week.", rank: 1, chart: "Overall", mood: ["edge"] },
@@ -623,6 +634,9 @@ const POPULAR = [
   { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New original series debuting at #1 on TV.", rank: 1, chart: "TV Shows", mood: ["edge"] },
   { t: "Off Campus", p: "prime", k: "Series", g: "Romance", note: "College romance series holding a Top 3 TV spot.", rank: 3, chart: "TV Shows", mood: ["cozy","laugh"] },
   { t: "Reminders of Him", p: "prime", k: "Movie", g: "Drama", note: "Emotional drama climbing the movie chart.", rank: 3, chart: "Movies", mood: ["deep","cozy"] },
+  { t: "Legally Blonde", p: "prime", k: "Movie", g: "Comedy", note: "The comfort-watch classic is a Top 6 movie fixture.", rank: 6, chart: "Movies", mood: ["cozy","laugh"] },
+  { t: "The Boys", p: "prime", k: "Series", g: "Superhero Satire", note: "Still pulling a Top 9 TV spot, over 100 days on the chart.", rank: 9, chart: "TV Shows", mood: ["edge"] },
+  { t: "Clarkson's Farm", p: "prime", k: "Series", g: "Reality", note: "Jeremy Clarkson's farming series holds a Top 8 TV spot.", rank: 8, chart: "TV Shows", mood: ["reality","laugh"] },
 
   // ---------- Disney+ (Top 10 Canada, Jul 19 2026) ----------
   { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "The newest Descendants movie debuts at #1 overall.", rank: 1, chart: "Overall", mood: ["family","cozy"] },
@@ -631,6 +645,10 @@ const POPULAR = [
   { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 is holding in the TV Top 5.", rank: 4, chart: "TV Shows", mood: ["edge","family"] },
   { t: "Dancing with the Stars: The Next Pro", p: "disney", k: "Series", g: "Reality", note: "The #1 show on Disney+ this week.", rank: 1, chart: "TV Shows", mood: ["reality"] },
   { t: "The Bear", p: "disney", k: "Series", g: "Drama Comedy", note: "Still pulling a Top 5 TV spot.", rank: 5, chart: "TV Shows", mood: ["deep","laugh"] },
+  { t: "Bluey Compilations", p: "disney", k: "Series", g: "Kids Animation", note: "The kids' favourite is a steady Top 2 TV hit.", rank: 2, chart: "TV Shows", mood: ["family","cozy"] },
+  { t: "The Testaments", p: "disney", k: "Series", g: "Dystopian Drama", note: "The Handmaid's Tale sequel series holds a Top 7 TV spot.", rank: 7, chart: "TV Shows", mood: ["deep","edge"] },
+  { t: "Ready or Not 2: Here I Come", p: "disney", k: "Movie", g: "Horror Comedy", note: "The horror-comedy sequel is a Top 5 movie.", rank: 5, chart: "Movies", mood: ["horror","laugh"] },
+  { t: "Avengers: Endgame", p: "disney", k: "Movie", g: "Superhero", note: "Still cracking the Top 10 movie chart.", rank: 10, chart: "Movies", mood: ["edge","family"] },
 
   // ---------- Crave (Top 10 Canada, Jul 19 2026) ----------
   { t: "RuPaul's Drag Race All Stars", p: "crave", k: "Series", g: "Reality", note: "The #1 title on Crave this week.", rank: 1, chart: "Overall", mood: ["reality","laugh"] },
@@ -639,6 +657,8 @@ const POPULAR = [
   { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 is charting in the Top 6.", rank: 6, chart: "Overall", mood: ["reality"] },
   { t: "Lee Cronin's The Mummy", p: "crave", k: "Movie", g: "Horror", note: "The horror reboot is a Top 7 title.", rank: 7, chart: "Overall", mood: ["edge","horror"] },
   { t: "The Running Man", p: "crave", k: "Movie", g: "Action", note: "The 2025 remake cracked the Top 10.", rank: 8, chart: "Overall", mood: ["edge"] },
+  { t: "Project Runway", p: "crave", k: "Series", g: "Reality Competition", note: "The design competition is a Top 5 hit this week.", rank: 5, chart: "Overall", mood: ["reality"] },
+  { t: "Love Island USA", p: "crave", k: "Series", g: "Reality Dating", note: "The dating-show juggernaut is a Top 4 hit via the Amazon Channels add-on.", rank: 4, chart: "Overall", mood: ["reality","laugh"] },
 ];
 
 /* ---------------- Elise's Picks ----------------
@@ -648,12 +668,20 @@ const POPULAR = [
 const ELISE_PICKS = [
   { t: "Apex", p: "netflix", k: "Movie", g: "Survival Thriller", note: "The one that started this list. A fugitive dropped on a private island and hunted for sport — relentless, no filler. Elise loved this one.", mood: ["edge"] },
   { t: "Speak No Evil", p: "netflix", k: "Movie", g: "Thriller", note: "Same knife-edge tension as Apex — a nice weekend visit that curdles fast.", mood: ["edge"] },
+  { t: "Don't Move", p: "netflix", k: "Movie", g: "Survival Thriller", note: "A grieving mother is injected with a paralytic by a killer in the woods — 20 minutes to fight back before her body gives out. Pure Apex energy.", mood: ["edge"] },
+  { t: "Beast", p: "netflix", k: "Movie", g: "Survival Thriller", note: "Idris Elba versus a rogue lion on a South African game reserve. Lean, mean, no wasted time.", mood: ["edge"] },
+  { t: "Send Help", p: "prime", k: "Movie", g: "Survival Thriller", note: "Two plane-crash survivors stranded on a deserted island, and the power dynamic flips fast. Rachel McAdams and Dylan O'Brien.", mood: ["edge"] },
+  { t: "The Grey", p: "prime", k: "Movie", g: "Survival Thriller", note: "Liam Neeson and a handful of oil-rig workers stranded in the Alaskan wilderness, hunted by wolves. A genre classic in this lane.", mood: ["edge"] },
   { t: "Project Hail Mary", p: "prime", k: "Movie", g: "Sci-Fi Survival", note: "A stranded-astronaut premise with the same man-vs-impossible-odds pull.", mood: ["edge","deep"] },
   { t: "MaXXXine", p: "prime", k: "Movie", g: "Horror", note: "Tense, stylish, unafraid to let things get uncomfortable — Apex-adjacent energy.", mood: ["edge","horror"] },
   { t: "House of the Dragon", p: "crave", k: "Series", g: "Fantasy Drama", note: "High-stakes and prestige-tense in a totally different genre, but scratches the same itch.", mood: ["edge","deep"] },
-  { t: "Lee Cronin's The Mummy", p: "crave", k: "Movie", g: "Horror", note: "Creeping dread horror reboot for when you want to be a little unsettled.", mood: ["edge","horror"] },
+  { t: "The Running Man", p: "crave", k: "Movie", g: "Dystopian Action", note: "People hunted for entertainment on live TV — about as literal an Apex parallel as it gets.", mood: ["edge"] },
+  { t: "Worst Neighbour Ever", p: "netflix", k: "Docuseries", g: "True Crime", note: "Same real-stakes tension as Apex, just true instead of fiction — neighbour disputes that go horribly wrong.", mood: ["edge","truecrime"] },
   { t: "Furious", p: "disney", k: "Series", g: "Psychological Thriller", note: "Emmy Rossum carries a slow-burn tension that pays off.", mood: ["edge","deep"] },
 ];
+/* Feedback log: Elise passed on Lee Cronin's The Mummy (Jul 2026) — noted for
+   future picks: she leans toward grounded/real-stakes tension over creature
+   horror or camp. */
 
 function tileHTML(item, badgeHTML) {
   return `
@@ -788,7 +816,7 @@ function tileHTML(item, badgeHTML) {
 
 /* ---------------- Is It Streaming in Canada? (live TMDB lookup) ----------------
    Free key, ~2 min to get: themoviedb.org/settings/api → paste below.        */
-const TMDB_API_KEY = ""; // <-- paste your free TMDB API key here
+const TMDB_API_KEY = "c5b3376f86593fde6e8b9d1999b41dec";
 const TMDB_BASE = "https://api.themoviedb.org/3";
 
 (function initChecker() {
