@@ -99,8 +99,6 @@
     --aqua:        #c8f0fb;
     --ink:         #3a1028;
     --card:        #ffffff;
-    --shadow:      0 8px 28px rgba(255, 20, 147, 0.14);
-    --shadow-sm:   0 3px 12px rgba(190, 24, 93, 0.12);
     --netflix:     #E50914;
     --prime:       #00A8E1;
     --crave:       #6c2bd9;
@@ -224,27 +222,28 @@
   /* ---------- Availability checker ---------- */
   .checker {
     max-width: 580px; margin: 0 auto 2.2rem;
-    background: #fff; border: 2px solid var(--pink-chip);
+    background: #fff; border: 2px solid #000;
     border-radius: 20px; padding: 1.3rem 1.4rem 1.5rem;
-    box-shadow: var(--shadow);
+    box-shadow: 4px 4px 0 #000;
   }
   .checker .label { margin-bottom: .3rem; }
   .checker .checker-sub { text-align: center; font-size: .76rem; color: #b06a92; font-weight: 600; margin: 0 0 1rem; }
   .checker-bar { display: flex; gap: .5rem; }
   .checker-bar input {
-    flex: 1; border: 2px solid var(--pink-med); background: #fff;
+    flex: 1; border: 2px solid #000; background: #fff;
     border-radius: 999px; padding: .7rem 1.1rem;
     font: 600 .88rem 'Montserrat', sans-serif; color: var(--ink); outline: none;
   }
   .checker-bar input:focus { border-color: var(--pink); }
   .checker-bar input::placeholder { color: #c98bb0; font-weight: 500; }
   .checker-bar button {
-    border: none; cursor: pointer; background: var(--pink); color: #fff;
+    border: 2px solid #000; cursor: pointer; background: var(--pink); color: #fff;
     border-radius: 999px; padding: 0 1.4rem;
     font: 800 .78rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 3px 3px 0 #000;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
   }
-  .checker-bar button:hover { background: var(--pink-dark); }
+  .checker-bar button:hover { background: var(--pink-dark); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 #000; }
   .checker-bar button:disabled { opacity: .6; cursor: default; }
   #check-result { margin-top: 1rem; min-height: 0; }
   .check-msg { font-size: .82rem; color: #6b3f56; font-weight: 600; text-align: center; margin: .4rem 0; line-height: 1.5; }
@@ -257,6 +256,7 @@
   .check-chip {
     font: 800 .68rem 'Montserrat', sans-serif; letter-spacing: .04em; text-transform: uppercase;
     padding: .35rem .8rem; border-radius: 999px; color: #fff;
+    border: 2px solid #000;
   }
   .check-chip[data-p="netflix"] { background: var(--netflix); }
   .check-chip[data-p="prime"]   { background: var(--prime); }
@@ -272,14 +272,14 @@
     margin: 0 auto 1.6rem;
   }
   .tab-btn {
-    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border: 2px solid #000; background: #fff; color: var(--pink-dark);
     border-radius: 999px; padding: .6rem 1.3rem; cursor: pointer;
     font: 800 .8rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: var(--shadow-sm);
-    transition: background .15s ease, color .15s ease, transform .1s ease;
+    box-shadow: 3px 3px 0 #000;
+    transition: background .15s ease, color .15s ease, transform .12s ease, box-shadow .12s ease;
   }
-  .tab-btn:hover { transform: translateY(-1px); }
-  .tab-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .tab-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; }
+  .tab-btn.active { background: var(--pink); border-color: #000; color: #fff; }
   .tab-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   .tabpanel { display: none; }
@@ -291,23 +291,24 @@
     margin: 0 auto 1.8rem;
   }
   .filter-btn {
-    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border: 2px solid #000; background: #fff; color: var(--pink-dark);
     border-radius: 999px; padding: .5rem 1.05rem .5rem .9rem; cursor: pointer;
     font: 700 .76rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: var(--shadow-sm);
-    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+    box-shadow: 2px 2px 0 #000;
+    transition: background .15s ease, color .15s ease, transform .12s ease, box-shadow .12s ease;
     display: inline-flex; align-items: center;
   }
   .filter-btn .dot {
     width: 9px; height: 9px; border-radius: 50%; background: var(--pink-med);
     flex: none; display: inline-block; margin-right: .5rem;
+    box-shadow: 0 0 0 1.5px #000;
   }
   .filter-btn[data-p="netflix"] .dot { background: var(--netflix); }
   .filter-btn[data-p="prime"] .dot { background: var(--prime); }
   .filter-btn[data-p="crave"] .dot { background: var(--crave); }
   .filter-btn[data-p="disney"] .dot { background: var(--disney); }
-  .filter-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-  .filter-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 #000; }
+  .filter-btn.active { background: var(--pink); border-color: #000; color: #fff; }
   .filter-btn.active .dot { background: #fff; }
   .filter-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
@@ -318,13 +319,13 @@
   }
   .searchbar input {
     flex: 1;
-    border: 2px solid var(--pink-med);
+    border: 2px solid #000;
     background: #fff;
     border-radius: 999px;
     padding: .75rem 1.1rem;
     font: 600 .9rem 'Montserrat', sans-serif;
     color: var(--ink);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 2px 2px 0 #000;
     outline: none;
   }
   .searchbar input:focus { border-color: var(--pink); }
@@ -349,10 +350,11 @@
     background: var(--card);
     border-radius: 16px;
     padding: 1.1rem 1.1rem 1.2rem;
-    box-shadow: var(--shadow);
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
     display: flex; flex-direction: column;
     animation: rise .4s ease both;
-    border-top: 4px solid var(--pink-med);
+    border-top: 5px solid var(--pink-med);
     position: relative;
   }
   .tile[data-p="netflix"] { border-top-color: var(--netflix); }
@@ -365,6 +367,7 @@
   .platform-pill {
     font: 800 .62rem 'Montserrat', sans-serif; letter-spacing: .06em; text-transform: uppercase;
     padding: .25rem .6rem; border-radius: 999px; color: #fff; white-space: nowrap;
+    border: 1.5px solid #000;
   }
   .platform-pill[data-p="netflix"] { background: var(--netflix); }
   .platform-pill[data-p="prime"]   { background: var(--prime); }
@@ -377,26 +380,28 @@
     background: var(--pink-dark); color: #fff;
     font: 800 .72rem 'Bebas Neue', sans-serif; letter-spacing: .04em;
     padding: .25rem .6rem; border-radius: 999px;
-    box-shadow: 0 3px 8px rgba(190,24,93,.35);
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0 #000;
   }
   .loved-badge {
     position: absolute; top: -12px; left: 14px;
     background: var(--pink); color: #fff;
     font: 800 .68rem 'Montserrat', sans-serif; letter-spacing: .03em;
     padding: .25rem .65rem; border-radius: 999px;
-    box-shadow: 0 3px 8px rgba(255,20,147,.35);
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0 #000;
   }
 
   .picks-intro {
     max-width: 640px; margin: 0 auto 1.8rem;
     display: flex; align-items: center; gap: 1rem;
-    background: #fff; border: 2px solid var(--pink-chip);
+    background: #fff; border: 2px solid #000;
     border-radius: 18px; padding: 1rem 1.3rem;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 4px 4px 0 #000;
   }
   .picks-avatar {
     width: 54px; height: 54px; border-radius: 50%; object-fit: cover;
-    flex: none; box-shadow: 0 0 0 3px var(--pink);
+    flex: none; box-shadow: 0 0 0 3px #000;
   }
   .picks-intro p { margin: 0; font-size: .84rem; color: #6b3f56; line-height: 1.5; font-weight: 600; }
   .picks-intro strong { color: var(--pink-dark); }
@@ -422,20 +427,21 @@
     margin: 0 auto 2rem;
   }
   .mood-btn {
-    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border: 2px solid #000; background: #fff; color: var(--pink-dark);
     border-radius: 16px; padding: 1.1rem .8rem; cursor: pointer;
     font: 800 .8rem 'Montserrat', sans-serif; letter-spacing: .02em;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 3px 3px 0 #000;
     display: flex; flex-direction: column; align-items: center; gap: .4rem;
-    transition: transform .12s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+    transition: transform .12s ease, box-shadow .12s ease, background .15s ease, color .15s ease;
   }
   .mood-btn .emoji { font-size: 1.7rem; }
-  .mood-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-  .mood-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .mood-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; }
+  .mood-btn.active { background: var(--pink); border-color: #000; color: #fff; }
   .mood-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   .vibe-results { display: none; }
   .vibe-results.show { display: block; }
+  #toolbar-vibe.vibe-results.show { display: flex; }
 
   @media (prefers-reduced-motion: reduce) { .tile { animation: none; } }
 </style>
@@ -576,6 +582,18 @@
       <button class="mood-btn" data-mood="reality"><span class="emoji">🏆</span>Reality &amp; Competition</button>
       <button class="mood-btn" data-mood="horror"><span class="emoji">🔪</span>Horror</button>
       <button class="mood-btn" data-mood="truecrime"><span class="emoji">🕵️</span>True Crime</button>
+      <button class="mood-btn" data-mood="action"><span class="emoji">💥</span>Action &amp; Adventure</button>
+      <button class="mood-btn" data-mood="scifi"><span class="emoji">🚀</span>Sci-Fi &amp; Fantasy</button>
+      <button class="mood-btn" data-mood="romance"><span class="emoji">💕</span>Romance</button>
+      <button class="mood-btn" data-mood="drama"><span class="emoji">🎭</span>Prestige Drama</button>
+      <button class="mood-btn" data-mood="doc"><span class="emoji">🎬</span>Documentaries</button>
+    </div>
+    <div class="toolbar vibe-results" id="toolbar-vibe">
+      <button class="filter-btn active" data-p="all"><span class="dot"></span>All Services</button>
+      <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+      <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+      <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+      <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
     </div>
     <p class="label vibe-results" id="resultLabel-vibe"></p>
     <div class="grid vibe-results" id="grid-vibe"></div>
@@ -592,7 +610,23 @@ const NEW_UPDATED = "July 2026";
 const POPULAR_SNAPSHOT = "July 19, 2026";
 
 const PLATFORM_LABEL = { netflix: "Netflix", prime: "Prime Video", crave: "Crave", disney: "Disney+" };
-const MOOD_LABEL = { cozy: "Cozy & Feel-Good", laugh: "Laugh Out Loud", edge: "Edge-of-Your-Seat", deep: "Something to Think About", family: "Family Movie Night", reality: "Reality & Competition", horror: "Horror", truecrime: "True Crime" };
+const MOOD_LABEL = { cozy: "Cozy & Feel-Good", laugh: "Laugh Out Loud", edge: "Edge-of-Your-Seat", deep: "Something to Think About", family: "Family Movie Night", reality: "Reality & Competition", horror: "Horror", truecrime: "True Crime", action: "Action & Adventure", scifi: "Sci-Fi & Fantasy", romance: "Romance", drama: "Prestige Drama", doc: "Documentaries" };
+// Keyword fallback so newer moods (action/scifi/romance/drama/doc) still surface
+// matches on titles that predate explicit mood tagging — matches on genre/kind text.
+const MOOD_KEYWORDS = {
+  action: ["action", "adventure"],
+  scifi: ["sci-fi", "fantasy"],
+  romance: ["romance", "romantic"],
+  drama: ["drama"],
+  doc: ["docuseries", "documentary"],
+};
+function matchesMood(item, mood) {
+  if (item.mood && item.mood.includes(mood)) return true;
+  const kw = MOOD_KEYWORDS[mood];
+  if (!kw) return false;
+  const hay = `${item.g || ""} ${item.k || ""}`.toLowerCase();
+  return kw.some(k => hay.includes(k));
+}
 
 const NEW = [
   // ---------- Netflix ----------
@@ -865,22 +899,23 @@ function tileHTML(item, badgeHTML) {
 /* ---------------- Find Your Vibe ---------------- */
 (function initVibe() {
   const moodGrid = document.getElementById("moodGrid");
+  const toolbar = document.getElementById("toolbar-vibe");
   const grid = document.getElementById("grid-vibe");
   const empty = document.getElementById("empty-vibe");
   const resultLabel = document.getElementById("resultLabel-vibe");
   const resultsEls = document.querySelectorAll(".vibe-results");
   const ALL = NEW.concat(POPULAR).concat(ELISE_PICKS).concat(HIDDEN_GEMS);
 
-  moodGrid.addEventListener("click", (e) => {
-    const btn = e.target.closest(".mood-btn");
-    if (!btn) return;
-    moodGrid.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    const mood = btn.dataset.mood;
+  let activeMood = null;
+  let activePlatform = "all";
+
+  function render() {
+    if (!activeMood) return;
 
     const seen = new Set();
     const matches = ALL.filter(item => {
-      if (!item.mood || !item.mood.includes(mood)) return false;
+      if (!matchesMood(item, activeMood)) return false;
+      if (activePlatform !== "all" && item.p !== activePlatform) return false;
       const key = item.t + "|" + item.p;
       if (seen.has(key)) return false;
       seen.add(key);
@@ -896,7 +931,26 @@ function tileHTML(item, badgeHTML) {
       return tileHTML({ ...item, _when: when });
     }).join("");
     empty.hidden = matches.length !== 0;
-    resultLabel.textContent = `${matches.length} picks for "${MOOD_LABEL[mood]}"`;
+    const platformNote = activePlatform === "all" ? "" : ` on ${PLATFORM_LABEL[activePlatform]}`;
+    resultLabel.textContent = `${matches.length} picks for "${MOOD_LABEL[activeMood]}"${platformNote}`;
+  }
+
+  moodGrid.addEventListener("click", (e) => {
+    const btn = e.target.closest(".mood-btn");
+    if (!btn) return;
+    moodGrid.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeMood = btn.dataset.mood;
+    render();
+  });
+
+  toolbar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activePlatform = btn.dataset.p;
+    render();
   });
 })();
 
