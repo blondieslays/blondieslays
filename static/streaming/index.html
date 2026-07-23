@@ -175,7 +175,11 @@
     font-size: clamp(2.4rem, 8vw, 4.2rem);
     line-height: 1;
     margin: 0;
-    text-shadow: 0 3px 0 var(--pink-dark), 0 12px 26px rgba(0,0,0,.18);
+    color: var(--pink);
+    -webkit-text-stroke: 2px #000;
+    text-shadow:
+      -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000,
+      0 12px 26px rgba(0,0,0,.35);
     letter-spacing: .01em;
   }
   .hero .subline {
@@ -192,25 +196,33 @@
 
   .wrap { max-width: 1080px; margin: 0 auto; padding: 1.6rem 1.1rem 3.5rem; }
 
-  .homebubble-wrap { display: flex; justify-content: flex-end; margin: -.3rem 0 .8rem; }
+  .homebubble-wrap { display: flex; justify-content: flex-end; margin: -.3rem 0 1.2rem; }
   .homebubble {
     position: relative;
-    display: block;
-    max-width: min(270px, 100%);
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    max-width: min(320px, 100%);
     text-decoration: none;
-    background: #fff;
-    color: var(--ink);
-    border: 2px solid var(--pink-med);
-    border-radius: 16px;
-    padding: .6rem 1.85rem .65rem .8rem;
-    font: 600 .71rem 'Montserrat', sans-serif;
-    line-height: 1.4;
-    box-shadow: 0 5px 14px rgba(190,24,93,.12);
-    transition: transform .14s ease, box-shadow .14s ease;
+    background: var(--pink);
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 999px;
+    padding: .7rem 1.3rem;
+    font: 800 .8rem 'Montserrat', sans-serif;
+    letter-spacing: .01em;
+    line-height: 1.35;
+    box-shadow: 3px 3px 0 #000;
+    transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
   }
-  .homebubble:hover { transform: translateY(-1px) rotate(-.4deg); box-shadow: 0 8px 18px rgba(255,20,147,.18); }
+  .homebubble .arrow {
+    font-size: 1.1rem;
+    line-height: 1;
+    flex: none;
+  }
+  .homebubble:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; background: var(--pink-dark); }
   .homebubble:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
-  .homebubble b { color: var(--pink-dark); }
+  .homebubble b { color: #fff; text-decoration: underline; }
 
   /* ---------- Availability checker ---------- */
   .checker {
@@ -393,6 +405,7 @@
   .picks-intro strong { color: var(--pink-dark); }
 
   .tile .name { font-weight: 800; font-size: 1rem; color: var(--ink); line-height: 1.25; margin: 0 0 .3rem; }
+  .tile .name .year { font-weight: 600; color: #b06a92; font-size: .82em; }
   .tile .genre { font-size: .68rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 .5rem; }
   .tile .note { font-size: .82rem; color: #6b3f56; line-height: 1.45; margin: 0; flex: 1; }
   .tile .when { margin-top: .7rem; font-size: .66rem; font-weight: 700; color: #c98bb0; letter-spacing: .03em; }
@@ -449,7 +462,8 @@
 <main class="wrap">
   <div class="homebubble-wrap">
     <a class="homebubble" href="/">
-      <span>Looking for custom tees instead? <b>Tap here to head back to Blondie Slays.</b></span>
+      <span class="arrow">←</span>
+      <span><b>Back to Blondie Slays</b></span>
     </a>
   </div>
 
@@ -585,102 +599,102 @@ const MOOD_LABEL = { cozy: "Cozy & Feel-Good", laugh: "Laugh Out Loud", edge: "E
 
 const NEW = [
   // ---------- Netflix ----------
-  { t: "Enola Holmes 3", p: "netflix", k: "Movie", g: "Mystery", note: "Millie Bobby Brown returns for a third case in the Sherlock Holmes spin-off franchise.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "Quarterback", p: "netflix", k: "Docuseries", g: "Sports", note: "Season 3 of the behind-the-scenes NFL docuseries.", when: "Jul 2026", mood: ["deep"] },
-  { t: "Little House on the Prairie", p: "netflix", k: "Series", g: "Drama", note: "New adaptation filmed entirely in Winnipeg and rural Manitoba.", when: "Jul 2026", mood: ["cozy","family"] },
-  { t: "Ransom Canyon", p: "netflix", k: "Series", g: "Drama", note: "Season 2 of the ranch-set romantic drama.", when: "Jul 2026", mood: ["cozy"] },
-  { t: "The Hawk", p: "netflix", k: "Movie", g: "Comedy", note: "Will Ferrell headlines this new comedy film.", when: "Jul 2026", mood: ["laugh","family"] },
-  { t: "Survival of the Thickest", p: "netflix", k: "Series", g: "Comedy", note: "Michelle Buteau's series wraps up with its third and final season.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "Heartstopper Forever", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026", mood: ["cozy"] },
-  { t: "The Wild Robot", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026", mood: ["family","cozy"] },
-  { t: "Resident Alien", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026", mood: ["laugh","edge"] },
-  { t: "Fast & Furious Collection", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "Heroes", p: "netflix", k: "Series", g: "Sci-Fi Drama", note: "All four original seasons of the ensemble superhero drama land this month.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Enola Holmes 3", y: "2026", p: "netflix", k: "Movie", g: "Mystery", note: "Millie Bobby Brown returns for a third case in the Sherlock Holmes spin-off franchise.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Quarterback", y: "2026", p: "netflix", k: "Docuseries", g: "Sports", note: "Season 3 of the behind-the-scenes NFL docuseries.", when: "Jul 2026", mood: ["deep"] },
+  { t: "Little House on the Prairie", y: "2026", p: "netflix", k: "Series", g: "Drama", note: "New adaptation filmed entirely in Winnipeg and rural Manitoba.", when: "Jul 2026", mood: ["cozy","family"] },
+  { t: "Ransom Canyon", y: "2026", p: "netflix", k: "Series", g: "Drama", note: "Season 2 of the ranch-set romantic drama.", when: "Jul 2026", mood: ["cozy"] },
+  { t: "The Hawk", y: "2026", p: "netflix", k: "Movie", g: "Comedy", note: "Will Ferrell headlines this new comedy film.", when: "Jul 2026", mood: ["laugh","family"] },
+  { t: "Survival of the Thickest", y: "2026", p: "netflix", k: "Series", g: "Comedy", note: "Michelle Buteau's series wraps up with its third and final season.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Heartstopper Forever", y: "2026", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026", mood: ["cozy"] },
+  { t: "The Wild Robot", y: "2024", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026", mood: ["family","cozy"] },
+  { t: "Resident Alien", y: "2026", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026", mood: ["laugh","edge"] },
+  { t: "Fast & Furious Collection", y: "2001–2023", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Heroes", y: "2006–2010", p: "netflix", k: "Series", g: "Sci-Fi Drama", note: "All four original seasons of the ensemble superhero drama land this month.", when: "Jul 2026", mood: ["edge","family"] },
 
   // ---------- Prime Video ----------
-  { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026", mood: ["laugh","cozy"] },
-  { t: "Young Farts Trailer Parts", p: "prime", k: "Series", g: "Comedy", note: "New original executive produced by Jacob Tierney.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New Prime original series.", when: "Jul 2026", mood: ["edge"] },
-  { t: "The Super Mario Galaxy Movie", p: "prime", k: "Movie", g: "Animation", note: "The animated Mario sequel joins the catalogue.", when: "Jul 2026", mood: ["family"] },
-  { t: "Batman: Caped Crusader", p: "prime", k: "Series", g: "Animation", note: "Season 2 of the reimagined Batman animated series.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "MaXXXine", p: "prime", k: "Movie", g: "Horror", note: "The final chapter of Ti West's X trilogy.", when: "Jul 2026", mood: ["edge","horror"] },
-  { t: "Worst Neighbour Ever", p: "netflix", k: "Docuseries", g: "True Crime", note: "4-part series on real neighbour disputes gone horribly wrong — fraud, revenge, and worse, told through interviews and body-cam footage.", when: "Jul 2026", mood: ["truecrime","edge"] },
-  { t: "A Toxic Love Story", p: "netflix", k: "Docuseries", g: "True Crime", note: "A true-crime doc unpacking a violent plot against an ex's new wife in a glossy California suburb.", when: "Jul 2026", mood: ["truecrime"] },
-  { t: "Flow", p: "prime", k: "Movie", g: "Animation", note: "The Oscar-winning, dialogue-free animated film.", when: "Jul 2026", mood: ["deep","family"] },
-  { t: "A Different Man", p: "prime", k: "Movie", g: "Dark Comedy", note: "Introspective dark comedy drama.", when: "Jul 2026", mood: ["deep"] },
-  { t: "Law & Order: SVU", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026", mood: ["edge"] },
+  { t: "Elle", y: "2026", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026", mood: ["laugh","cozy"] },
+  { t: "Young Farts Trailer Parts", y: "2026", p: "prime", k: "Series", g: "Comedy", note: "New original executive produced by Jacob Tierney.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Ride or Die", y: "2026", p: "prime", k: "Series", g: "Drama", note: "New Prime original series.", when: "Jul 2026", mood: ["edge"] },
+  { t: "The Super Mario Galaxy Movie", y: "2026", p: "prime", k: "Movie", g: "Animation", note: "The animated Mario sequel joins the catalogue.", when: "Jul 2026", mood: ["family"] },
+  { t: "Batman: Caped Crusader", y: "2026", p: "prime", k: "Series", g: "Animation", note: "Season 2 of the reimagined Batman animated series.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "MaXXXine", y: "2024", p: "prime", k: "Movie", g: "Horror", note: "The final chapter of Ti West's X trilogy.", when: "Jul 2026", mood: ["edge","horror"] },
+  { t: "Worst Neighbour Ever", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "4-part series on real neighbour disputes gone horribly wrong — fraud, revenge, and worse, told through interviews and body-cam footage.", when: "Jul 2026", mood: ["truecrime","edge"] },
+  { t: "A Toxic Love Story", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "A true-crime doc unpacking a violent plot against an ex's new wife in a glossy California suburb.", when: "Jul 2026", mood: ["truecrime"] },
+  { t: "Flow", y: "2024", p: "prime", k: "Movie", g: "Animation", note: "The Oscar-winning, dialogue-free animated film.", when: "Jul 2026", mood: ["deep","family"] },
+  { t: "A Different Man", y: "2024", p: "prime", k: "Movie", g: "Dark Comedy", note: "Introspective dark comedy drama.", when: "Jul 2026", mood: ["deep"] },
+  { t: "Law & Order: SVU", y: "1999–2026", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026", mood: ["edge"] },
   { t: "WNBA & NWSL", p: "prime", k: "Live", g: "Sports", note: "Live coverage of WNBA and NWSL matchups throughout the month.", when: "Jul 2026", mood: ["reality"] },
-  { t: "Gilmore Girls", p: "prime", k: "Series", g: "Comfort Drama", note: "All seven original seasons of the small-town mother-daughter classic.", when: "Jul 2026", mood: ["cozy","laugh"] },
-  { t: "Bottoms", p: "prime", k: "Movie", g: "Comedy", note: "Raunchy high-school comedy added for Pride Month carryover.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Gilmore Girls", y: "2000–2007", p: "prime", k: "Series", g: "Comfort Drama", note: "All seven original seasons of the small-town mother-daughter classic.", when: "Jul 2026", mood: ["cozy","laugh"] },
+  { t: "Bottoms", y: "2023", p: "prime", k: "Movie", g: "Comedy", note: "Raunchy high-school comedy added for Pride Month carryover.", when: "Jul 2026", mood: ["laugh"] },
 
   // ---------- Crave ----------
-  { t: "Fightland", p: "crave", k: "Series", g: "Sports Drama", note: "New Starz series produced by 50 Cent (Starz add-on required).", when: "Jul 2026", mood: ["edge","reality"] },
-  { t: "The Real Murders of Atlanta", p: "crave", k: "Series", g: "True Crime", note: "Season 4 premiere (July 14) of the Oxygen True Crime docuseries.", when: "Jul 2026", mood: ["truecrime"] },
-  { t: "It Lives Inside", p: "crave", k: "Movie", g: "Horror", note: "A supernatural horror film about a demon unleashed from a jar — new to Crave this month.", when: "Jul 2026", mood: ["horror","edge"] },
-  { t: "Road to Avonlea", p: "crave", k: "Series", g: "Family Drama", note: "Seasons 1-4 of the beloved Canadian classic set on Prince Edward Island.", when: "Jul 2026", mood: ["cozy","family"] },
-  { t: "Field of Dreams", p: "crave", k: "Movie", g: "Family Drama", note: "The baseball classic — \"if you build it, he will come.\"", when: "Jul 2026", mood: ["cozy","family"] },
-  { t: "I Kissed A Girl", p: "crave", k: "Series", g: "Reality Dating", note: "Season 2, new episodes, of the queer dating reality show.", when: "Jul 2026", mood: ["reality"] },
-  { t: "Ocean's Twelve", p: "crave", k: "Movie", g: "Heist", note: "The slick ensemble heist sequel joins the Crave library.", when: "Jul 2026", mood: ["edge","laugh"] },
-  { t: "Nirvanna the Band the Show the Movie", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026", mood: ["reality"] },
-  { t: "Stuart Fails to Save the Universe", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "The Dessert", p: "crave", k: "Movie", g: "Comedy", note: "New comedy feature added this month.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "Don't Even", p: "crave", k: "Series", g: "Comedy", note: "New comedy series addition.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Fightland", y: "2026", p: "crave", k: "Series", g: "Sports Drama", note: "New Starz series produced by 50 Cent (Starz add-on required).", when: "Jul 2026", mood: ["edge","reality"] },
+  { t: "The Real Murders of Atlanta", y: "2026", p: "crave", k: "Series", g: "True Crime", note: "Season 4 premiere (July 14) of the Oxygen True Crime docuseries.", when: "Jul 2026", mood: ["truecrime"] },
+  { t: "It Lives Inside", y: "2023", p: "crave", k: "Movie", g: "Horror", note: "A supernatural horror film about a demon unleashed from a jar — new to Crave this month.", when: "Jul 2026", mood: ["horror","edge"] },
+  { t: "Road to Avonlea", y: "1990–1996", p: "crave", k: "Series", g: "Family Drama", note: "Seasons 1-4 of the beloved Canadian classic set on Prince Edward Island.", when: "Jul 2026", mood: ["cozy","family"] },
+  { t: "Field of Dreams", y: "1989", p: "crave", k: "Movie", g: "Family Drama", note: "The baseball classic — \"if you build it, he will come.\"", when: "Jul 2026", mood: ["cozy","family"] },
+  { t: "I Kissed A Girl", y: "2026", p: "crave", k: "Series", g: "Reality Dating", note: "Season 2, new episodes, of the queer dating reality show.", when: "Jul 2026", mood: ["reality"] },
+  { t: "Ocean's Twelve", y: "2004", p: "crave", k: "Movie", g: "Heist", note: "The slick ensemble heist sequel joins the Crave library.", when: "Jul 2026", mood: ["edge","laugh"] },
+  { t: "Nirvanna the Band the Show the Movie", y: "2018", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "The Amazing Race Canada", y: "2026", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026", mood: ["reality"] },
+  { t: "Stuart Fails to Save the Universe", y: "2026", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "The Dessert", y: "2026", p: "crave", k: "Movie", g: "Comedy", note: "New comedy feature added this month.", when: "Jul 2026", mood: ["laugh"] },
+  { t: "Don't Even", y: "2026", p: "crave", k: "Series", g: "Comedy", note: "New comedy series addition.", when: "Jul 2026", mood: ["laugh"] },
 
   // ---------- Disney+ ----------
-  { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 of the beloved animated revival.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "New entry in the Descendants movie franchise.", when: "Jul 2026", mood: ["family","cozy"] },
-  { t: "King of the Hill", p: "disney", k: "Series", g: "Animation", note: "Season 15 of the revived animated comedy.", when: "Jul 2026", mood: ["laugh","cozy"] },
-  { t: "Furious", p: "disney", k: "Series", g: "Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026", mood: ["edge","deep"] },
-  { t: "The Proud Family: Louder & Prouder", p: "disney", k: "Series", g: "Animation", note: "The animated comedy returns with new episodes.", when: "Jul 2026", mood: ["laugh","family"] },
-  { t: "Pompeii: Out of Time", p: "disney", k: "Docuseries", g: "History", note: "Tom Hiddleston hosts this historical documentary special.", when: "Jul 2026", mood: ["deep"] },
+  { t: "X-Men '97", y: "2026", p: "disney", k: "Series", g: "Animation", note: "Season 2 of the beloved animated revival.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Descendants: Wicked Wonderland", y: "2026", p: "disney", k: "Movie", g: "Family", note: "New entry in the Descendants movie franchise.", when: "Jul 2026", mood: ["family","cozy"] },
+  { t: "King of the Hill", y: "2026", p: "disney", k: "Series", g: "Animation", note: "Season 15 of the revived animated comedy.", when: "Jul 2026", mood: ["laugh","cozy"] },
+  { t: "Furious", y: "2026", p: "disney", k: "Series", g: "Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026", mood: ["edge","deep"] },
+  { t: "The Proud Family: Louder & Prouder", y: "2026", p: "disney", k: "Series", g: "Animation", note: "The animated comedy returns with new episodes.", when: "Jul 2026", mood: ["laugh","family"] },
+  { t: "Pompeii: Out of Time", y: "2026", p: "disney", k: "Docuseries", g: "History", note: "Tom Hiddleston hosts this historical documentary special.", when: "Jul 2026", mood: ["deep"] },
   { t: "Lollapalooza", p: "disney", k: "Live", g: "Music", note: "Live festival streams on July 30 and 31.", when: "Jul 2026", mood: ["reality"] },
 ];
 
 const POPULAR = [
   // ---------- Netflix (Top 10 Canada, Jul 19 2026) ----------
-  { t: "Desire", p: "netflix", k: "Movie", g: "Romance", note: "New romance drama holding the #1 movie spot this week.", rank: 1, chart: "Movies", mood: ["cozy"] },
-  { t: "The Hawk", p: "netflix", k: "Series", g: "Comedy", note: "Will Ferrell's new comedy is also topping the TV chart.", rank: 1, chart: "TV Shows", mood: ["laugh","family"] },
-  { t: "Little House on the Prairie", p: "netflix", k: "Series", g: "Drama", note: "Holding steady in the Top 3 for shows.", rank: 3, chart: "TV Shows", mood: ["cozy","family"] },
-  { t: "Speak No Evil", p: "netflix", k: "Movie", g: "Thriller", note: "The 2024 thriller remains a Top 5 movie fixture.", rank: 4, chart: "Movies", mood: ["edge","horror"] },
-  { t: "Forever My Girl", p: "netflix", k: "Movie", g: "Romance", note: "A romance rewatch climbing the movie chart.", rank: 2, chart: "Movies", mood: ["cozy"] },
-  { t: "The Ultimatum: Marry or Move On", p: "netflix", k: "Series", g: "Reality", note: "The relationship reality show is back in the Top 2.", rank: 2, chart: "TV Shows", mood: ["reality"] },
-  { t: "Death on the Nile", p: "netflix", k: "Movie", g: "Mystery", note: "The Agatha Christie mystery is a Top 6 movie fixture.", rank: 6, chart: "Movies", mood: ["edge","deep"] },
-  { t: "Companion", p: "netflix", k: "Movie", g: "Sci-Fi Thriller", note: "A twisty sci-fi thriller rounding out the Top 10.", rank: 10, chart: "Movies", mood: ["edge","deep"] },
-  { t: "Hot Ones: Extra Heat", p: "netflix", k: "Series", g: "Reality", note: "The spicy-wing interview show is a Top 5 TV hit.", rank: 5, chart: "TV Shows", mood: ["reality","laugh"] },
+  { t: "Desire", y: "2026", p: "netflix", k: "Movie", g: "Romance", note: "New romance drama holding the #1 movie spot this week.", rank: 1, chart: "Movies", mood: ["cozy"] },
+  { t: "The Hawk", y: "2026", p: "netflix", k: "Series", g: "Comedy", note: "Will Ferrell's new comedy is also topping the TV chart.", rank: 1, chart: "TV Shows", mood: ["laugh","family"] },
+  { t: "Little House on the Prairie", y: "2026", p: "netflix", k: "Series", g: "Drama", note: "Holding steady in the Top 3 for shows.", rank: 3, chart: "TV Shows", mood: ["cozy","family"] },
+  { t: "Speak No Evil", y: "2024", p: "netflix", k: "Movie", g: "Thriller", note: "The 2024 thriller remains a Top 5 movie fixture.", rank: 4, chart: "Movies", mood: ["edge","horror"] },
+  { t: "Forever My Girl", y: "2018", p: "netflix", k: "Movie", g: "Romance", note: "A romance rewatch climbing the movie chart.", rank: 2, chart: "Movies", mood: ["cozy"] },
+  { t: "The Ultimatum: Marry or Move On", y: "2026", p: "netflix", k: "Series", g: "Reality", note: "The relationship reality show is back in the Top 2.", rank: 2, chart: "TV Shows", mood: ["reality"] },
+  { t: "Death on the Nile", y: "2022", p: "netflix", k: "Movie", g: "Mystery", note: "The Agatha Christie mystery is a Top 6 movie fixture.", rank: 6, chart: "Movies", mood: ["edge","deep"] },
+  { t: "Companion", y: "2025", p: "netflix", k: "Movie", g: "Sci-Fi Thriller", note: "A twisty sci-fi thriller rounding out the Top 10.", rank: 10, chart: "Movies", mood: ["edge","deep"] },
+  { t: "Hot Ones: Extra Heat", y: "2026", p: "netflix", k: "Series", g: "Reality", note: "The spicy-wing interview show is a Top 5 TV hit.", rank: 5, chart: "TV Shows", mood: ["reality","laugh"] },
 
   // ---------- Prime Video (Top 10 Canada, Jul 19 2026) ----------
-  { t: "Afterburn", p: "prime", k: "Movie", g: "Action", note: "The #1 overall title on Prime Video this week.", rank: 1, chart: "Overall", mood: ["edge"] },
-  { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "The Legally Blonde prequel series is a Top 2 hit.", rank: 2, chart: "Overall", mood: ["laugh","cozy"] },
-  { t: "Project Hail Mary", p: "prime", k: "Movie", g: "Sci-Fi", note: "Topping the movie chart this week.", rank: 1, chart: "Movies", mood: ["deep","edge"] },
-  { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New original series debuting at #1 on TV.", rank: 1, chart: "TV Shows", mood: ["edge"] },
-  { t: "Off Campus", p: "prime", k: "Series", g: "Romance", note: "College romance series holding a Top 3 TV spot.", rank: 3, chart: "TV Shows", mood: ["cozy","laugh"] },
-  { t: "Reminders of Him", p: "prime", k: "Movie", g: "Drama", note: "Emotional drama climbing the movie chart.", rank: 3, chart: "Movies", mood: ["deep","cozy"] },
-  { t: "Legally Blonde", p: "prime", k: "Movie", g: "Comedy", note: "The comfort-watch classic is a Top 6 movie fixture.", rank: 6, chart: "Movies", mood: ["cozy","laugh"] },
-  { t: "The Boys", p: "prime", k: "Series", g: "Superhero Satire", note: "Still pulling a Top 9 TV spot, over 100 days on the chart.", rank: 9, chart: "TV Shows", mood: ["edge"] },
-  { t: "Clarkson's Farm", p: "prime", k: "Series", g: "Reality", note: "Jeremy Clarkson's farming series holds a Top 8 TV spot.", rank: 8, chart: "TV Shows", mood: ["reality","laugh"] },
+  { t: "Afterburn", y: "2026", p: "prime", k: "Movie", g: "Action", note: "The #1 overall title on Prime Video this week.", rank: 1, chart: "Overall", mood: ["edge"] },
+  { t: "Elle", y: "2026", p: "prime", k: "Series", g: "Comedy", note: "The Legally Blonde prequel series is a Top 2 hit.", rank: 2, chart: "Overall", mood: ["laugh","cozy"] },
+  { t: "Project Hail Mary", y: "2026", p: "prime", k: "Movie", g: "Sci-Fi", note: "Topping the movie chart this week.", rank: 1, chart: "Movies", mood: ["deep","edge"] },
+  { t: "Ride or Die", y: "2026", p: "prime", k: "Series", g: "Drama", note: "New original series debuting at #1 on TV.", rank: 1, chart: "TV Shows", mood: ["edge"] },
+  { t: "Off Campus", y: "2026", p: "prime", k: "Series", g: "Romance", note: "College romance series holding a Top 3 TV spot.", rank: 3, chart: "TV Shows", mood: ["cozy","laugh"] },
+  { t: "Reminders of Him", y: "2026", p: "prime", k: "Movie", g: "Drama", note: "Emotional drama climbing the movie chart.", rank: 3, chart: "Movies", mood: ["deep","cozy"] },
+  { t: "Legally Blonde", y: "2001", p: "prime", k: "Movie", g: "Comedy", note: "The comfort-watch classic is a Top 6 movie fixture.", rank: 6, chart: "Movies", mood: ["cozy","laugh"] },
+  { t: "The Boys", y: "2019", p: "prime", k: "Series", g: "Superhero Satire", note: "Still pulling a Top 9 TV spot, over 100 days on the chart.", rank: 9, chart: "TV Shows", mood: ["edge"] },
+  { t: "Clarkson's Farm", y: "2021", p: "prime", k: "Series", g: "Reality", note: "Jeremy Clarkson's farming series holds a Top 8 TV spot.", rank: 8, chart: "TV Shows", mood: ["reality","laugh"] },
 
   // ---------- Disney+ (Top 10 Canada, Jul 19 2026) ----------
-  { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "The newest Descendants movie debuts at #1 overall.", rank: 1, chart: "Overall", mood: ["family","cozy"] },
-  { t: "Avatar: Fire and Ash", p: "disney", k: "Movie", g: "Sci-Fi", note: "Holding a Top 2 spot on the movie chart.", rank: 2, chart: "Movies", mood: ["edge","family"] },
-  { t: "Moana 2", p: "disney", k: "Movie", g: "Animation", note: "Still a Top 3 family favourite.", rank: 3, chart: "Movies", mood: ["family","cozy"] },
-  { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 is holding in the TV Top 5.", rank: 4, chart: "TV Shows", mood: ["edge","family"] },
-  { t: "Dancing with the Stars: The Next Pro", p: "disney", k: "Series", g: "Reality", note: "The #1 show on Disney+ this week.", rank: 1, chart: "TV Shows", mood: ["reality"] },
-  { t: "The Bear", p: "disney", k: "Series", g: "Drama Comedy", note: "Still pulling a Top 5 TV spot.", rank: 5, chart: "TV Shows", mood: ["deep","laugh"] },
-  { t: "Bluey Compilations", p: "disney", k: "Series", g: "Kids Animation", note: "The kids' favourite is a steady Top 2 TV hit.", rank: 2, chart: "TV Shows", mood: ["family","cozy"] },
-  { t: "The Testaments", p: "disney", k: "Series", g: "Dystopian Drama", note: "The Handmaid's Tale sequel series holds a Top 7 TV spot.", rank: 7, chart: "TV Shows", mood: ["deep","edge"] },
-  { t: "Ready or Not 2: Here I Come", p: "disney", k: "Movie", g: "Horror Comedy", note: "The horror-comedy sequel is a Top 5 movie.", rank: 5, chart: "Movies", mood: ["horror","laugh"] },
-  { t: "Avengers: Endgame", p: "disney", k: "Movie", g: "Superhero", note: "Still cracking the Top 10 movie chart.", rank: 10, chart: "Movies", mood: ["edge","family"] },
+  { t: "Descendants: Wicked Wonderland", y: "2026", p: "disney", k: "Movie", g: "Family", note: "The newest Descendants movie debuts at #1 overall.", rank: 1, chart: "Overall", mood: ["family","cozy"] },
+  { t: "Avatar: Fire and Ash", y: "2025", p: "disney", k: "Movie", g: "Sci-Fi", note: "Holding a Top 2 spot on the movie chart.", rank: 2, chart: "Movies", mood: ["edge","family"] },
+  { t: "Moana 2", y: "2024", p: "disney", k: "Movie", g: "Animation", note: "Still a Top 3 family favourite.", rank: 3, chart: "Movies", mood: ["family","cozy"] },
+  { t: "X-Men '97", y: "2026", p: "disney", k: "Series", g: "Animation", note: "Season 2 is holding in the TV Top 5.", rank: 4, chart: "TV Shows", mood: ["edge","family"] },
+  { t: "Dancing with the Stars: The Next Pro", y: "2026", p: "disney", k: "Series", g: "Reality", note: "The #1 show on Disney+ this week.", rank: 1, chart: "TV Shows", mood: ["reality"] },
+  { t: "The Bear", y: "2022", p: "disney", k: "Series", g: "Drama Comedy", note: "Still pulling a Top 5 TV spot.", rank: 5, chart: "TV Shows", mood: ["deep","laugh"] },
+  { t: "Bluey Compilations", y: "2018", p: "disney", k: "Series", g: "Kids Animation", note: "The kids' favourite is a steady Top 2 TV hit.", rank: 2, chart: "TV Shows", mood: ["family","cozy"] },
+  { t: "The Testaments", y: "2026", p: "disney", k: "Series", g: "Dystopian Drama", note: "The Handmaid's Tale sequel series holds a Top 7 TV spot.", rank: 7, chart: "TV Shows", mood: ["deep","edge"] },
+  { t: "Ready or Not 2: Here I Come", y: "2026", p: "disney", k: "Movie", g: "Horror Comedy", note: "The horror-comedy sequel is a Top 5 movie.", rank: 5, chart: "Movies", mood: ["horror","laugh"] },
+  { t: "Avengers: Endgame", y: "2019", p: "disney", k: "Movie", g: "Superhero", note: "Still cracking the Top 10 movie chart.", rank: 10, chart: "Movies", mood: ["edge","family"] },
 
   // ---------- Crave (Top 10 Canada, Jul 19 2026) ----------
-  { t: "RuPaul's Drag Race All Stars", p: "crave", k: "Series", g: "Reality", note: "The #1 title on Crave this week.", rank: 1, chart: "Overall", mood: ["reality","laugh"] },
-  { t: "House of the Dragon", p: "crave", k: "Series", g: "Fantasy Drama", note: "Holding steady at #2.", rank: 2, chart: "Overall", mood: ["edge","deep"] },
-  { t: "Canada's Drag Race: All Stars", p: "crave", k: "Series", g: "Reality", note: "The Canadian spin-off is a Top 3 hit.", rank: 3, chart: "Overall", mood: ["reality","laugh"] },
-  { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 is charting in the Top 6.", rank: 6, chart: "Overall", mood: ["reality"] },
-  { t: "Lee Cronin's The Mummy", p: "crave", k: "Movie", g: "Horror", note: "The horror reboot is a Top 7 title.", rank: 7, chart: "Overall", mood: ["edge","horror"] },
-  { t: "The Running Man", p: "crave", k: "Movie", g: "Action", note: "The 2025 remake cracked the Top 10.", rank: 8, chart: "Overall", mood: ["edge"] },
-  { t: "Project Runway", p: "crave", k: "Series", g: "Reality Competition", note: "The design competition is a Top 5 hit this week.", rank: 5, chart: "Overall", mood: ["reality"] },
-  { t: "Love Island USA", p: "crave", k: "Series", g: "Reality Dating", note: "The dating-show juggernaut is a Top 4 hit via the Amazon Channels add-on.", rank: 4, chart: "Overall", mood: ["reality","laugh"] },
+  { t: "RuPaul's Drag Race All Stars", y: "2026", p: "crave", k: "Series", g: "Reality", note: "The #1 title on Crave this week.", rank: 1, chart: "Overall", mood: ["reality","laugh"] },
+  { t: "House of the Dragon", y: "2022", p: "crave", k: "Series", g: "Fantasy Drama", note: "Holding steady at #2.", rank: 2, chart: "Overall", mood: ["edge","deep"] },
+  { t: "Canada's Drag Race: All Stars", y: "2026", p: "crave", k: "Series", g: "Reality", note: "The Canadian spin-off is a Top 3 hit.", rank: 3, chart: "Overall", mood: ["reality","laugh"] },
+  { t: "The Amazing Race Canada", y: "2026", p: "crave", k: "Series", g: "Reality", note: "Season 12 is charting in the Top 6.", rank: 6, chart: "Overall", mood: ["reality"] },
+  { t: "Lee Cronin's The Mummy", y: "2026", p: "crave", k: "Movie", g: "Horror", note: "The horror reboot is a Top 7 title.", rank: 7, chart: "Overall", mood: ["edge","horror"] },
+  { t: "The Running Man", y: "2025", p: "crave", k: "Movie", g: "Action", note: "The 2025 remake cracked the Top 10.", rank: 8, chart: "Overall", mood: ["edge"] },
+  { t: "Project Runway", y: "2026", p: "crave", k: "Series", g: "Reality Competition", note: "The design competition is a Top 5 hit this week.", rank: 5, chart: "Overall", mood: ["reality"] },
+  { t: "Love Island USA", y: "2026", p: "crave", k: "Series", g: "Reality Dating", note: "The dating-show juggernaut is a Top 4 hit via the Amazon Channels add-on.", rank: 4, chart: "Overall", mood: ["reality","laugh"] },
 ];
 
 /* ---------------- Elise's Picks ----------------
@@ -688,37 +702,40 @@ const POPULAR = [
    Elise mentions loving (or hating) something; each entry:
    { t, p, k, g, note: "why she loved it", mood: [...] }             */
 const ELISE_PICKS = [
-  { t: "Apex", p: "netflix", k: "Movie", g: "Survival Thriller", note: "The one that started this list. A fugitive dropped on a private island and hunted for sport — relentless, no filler. Elise loved this one.", mood: ["edge"] },
-  { t: "Speak No Evil", p: "netflix", k: "Movie", g: "Thriller", note: "Same knife-edge tension as Apex — a nice weekend visit that curdles fast.", mood: ["edge"] },
-  { t: "Don't Move", p: "netflix", k: "Movie", g: "Survival Thriller", note: "A grieving mother is injected with a paralytic by a killer in the woods — 20 minutes to fight back before her body gives out. Pure Apex energy.", mood: ["edge"] },
-  { t: "Beast", p: "netflix", k: "Movie", g: "Survival Thriller", note: "Idris Elba versus a rogue lion on a South African game reserve. Lean, mean, no wasted time.", mood: ["edge"] },
-  { t: "Send Help", p: "prime", k: "Movie", g: "Survival Thriller", note: "Two plane-crash survivors stranded on a deserted island, and the power dynamic flips fast. Rachel McAdams and Dylan O'Brien.", mood: ["edge"] },
-  { t: "The Grey", p: "prime", k: "Movie", g: "Survival Thriller", note: "Liam Neeson and a handful of oil-rig workers stranded in the Alaskan wilderness, hunted by wolves. A genre classic in this lane.", mood: ["edge"] },
-  { t: "Project Hail Mary", p: "prime", k: "Movie", g: "Sci-Fi Survival", note: "A stranded-astronaut premise with the same man-vs-impossible-odds pull.", mood: ["edge","deep"] },
-  { t: "MaXXXine", p: "prime", k: "Movie", g: "Horror", note: "Tense, stylish, unafraid to let things get uncomfortable — Apex-adjacent energy.", mood: ["edge","horror"] },
-  { t: "House of the Dragon", p: "crave", k: "Series", g: "Fantasy Drama", note: "High-stakes and prestige-tense in a totally different genre, but scratches the same itch.", mood: ["edge","deep"] },
-  { t: "The Running Man", p: "crave", k: "Movie", g: "Dystopian Action", note: "People hunted for entertainment on live TV — about as literal an Apex parallel as it gets.", mood: ["edge"] },
-  { t: "Worst Neighbour Ever", p: "netflix", k: "Docuseries", g: "True Crime", note: "Same real-stakes tension as Apex, just true instead of fiction — neighbour disputes that go horribly wrong.", mood: ["edge","truecrime"] },
-  { t: "Furious", p: "disney", k: "Series", g: "Psychological Thriller", note: "Emmy Rossum carries a slow-burn tension that pays off.", mood: ["edge","deep"] },
+  { t: "Apex", y: "2024", p: "netflix", k: "Movie", g: "Survival Thriller", note: "The one that started this list. A fugitive dropped on a private island and hunted for sport — relentless, no filler. Elise loved this one.", mood: ["edge"] },
+  { t: "Speak No Evil", y: "2024", p: "netflix", k: "Movie", g: "Thriller", note: "Same knife-edge tension as Apex — a nice weekend visit that curdles fast.", mood: ["edge"] },
+  { t: "Don't Move", y: "2024", p: "netflix", k: "Movie", g: "Survival Thriller", note: "A grieving mother is injected with a paralytic by a killer in the woods — 20 minutes to fight back before her body gives out. Pure Apex energy.", mood: ["edge"] },
+  { t: "Beast", y: "2022", p: "netflix", k: "Movie", g: "Survival Thriller", note: "Idris Elba versus a rogue lion on a South African game reserve. Lean, mean, no wasted time.", mood: ["edge"] },
+  { t: "Send Help", y: "2026", p: "prime", k: "Movie", g: "Survival Thriller", note: "Two plane-crash survivors stranded on a deserted island, and the power dynamic flips fast. Rachel McAdams and Dylan O'Brien.", mood: ["edge"] },
+  { t: "MaXXXine", y: "2024", p: "prime", k: "Movie", g: "Horror", note: "Tense, stylish, unafraid to let things get uncomfortable — Apex-adjacent energy.", mood: ["edge","horror"] },
+  { t: "Furious", y: "2026", p: "disney", k: "Series", g: "Psychological Thriller", note: "Emmy Rossum carries a slow-burn tension that pays off.", mood: ["edge","deep"] },
+  { t: "Worst Neighbour Ever", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real neighbour disputes gone horribly wrong, told through interviews and body-cam footage.", mood: ["edge","truecrime"] },
+  { t: "A Toxic Love Story", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "A real-footage true-crime doc unpacking a violent plot against an ex's new wife in a glossy California suburb.", mood: ["truecrime"] },
+  { t: "The Real Murders of Atlanta", y: "2026", p: "crave", k: "Series", g: "True Crime", note: "Real interviews and case footage — the Oxygen True Crime docuseries returns for Season 4.", mood: ["truecrime"] },
+  { t: "The Murder of Rachel Nickell", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real-footage documentary on the investigative failures and eventual breakthrough behind a notorious case.", mood: ["truecrime","deep"] },
+  { t: "Maternal Instinct", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "Documentary on the 2020 Taylor Parker case in Texas — real interviews, no dramatization.", mood: ["truecrime","deep"] },
+  { t: "FBI True", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real FBI agents sit down and recount their own toughest cases, straight to camera — Season 8.", mood: ["truecrime"] },
 ];
-/* Feedback log: Elise passed on Lee Cronin's The Mummy (Jul 2026) — noted for
-   future picks: she leans toward grounded/real-stakes tension over creature
-   horror or camp. */
+/* Feedback log: Elise passed on Lee Cronin's The Mummy (creature horror/camp)
+   and on The Grey, Project Hail Mary, House of the Dragon, and The Running Man
+   (not into those, even though thematically adjacent to Apex). She's leaning
+   hard into true crime, specifically real-footage/interview-style docs over
+   dramatized reenactments — keep sourcing more of those. */
 
 /* ---------------- Hidden Gems ----------------
    Deep-cut catalogue titles, not tied to "new" or "trending" — weighted
    Prime/Disney+ per Elise's request. Add more any time; each entry:
    { t, p, k, g, note, mood: [...] }                                    */
 const HIDDEN_GEMS = [
-  { t: "Buried", p: "prime", k: "Movie", g: "Survival Thriller", note: "Ryan Reynolds, alone, in a coffin, for the whole runtime. Claustrophobic in the best way — pure Apex-style tension with zero budget for anything but dread.", mood: ["edge"] },
-  { t: "Dark Nature", p: "prime", k: "Movie", g: "Wilderness Horror", note: "A women's wilderness-therapy retreat goes very wrong. Slow-build survival horror that catalogue-browsers walk right past.", mood: ["edge","horror"] },
-  { t: "Coherence", p: "prime", k: "Movie", g: "Sci-Fi Thriller", note: "A dinner party unravels into a mind-bending reality-fracture thriller — shot for almost nothing, tighter than movies ten times its budget.", mood: ["edge","deep"] },
-  { t: "Synchronic", p: "prime", k: "Movie", g: "Sci-Fi Thriller", note: "Anthony Mackie, a strange new drug, and time itself breaking down. Genuinely underseen.", mood: ["edge","deep"] },
-  { t: "The Fly", p: "disney", k: "Movie", g: "Body Horror", note: "Cronenberg's body-horror classic — a teleportation experiment goes catastrophically wrong. Still unsettling decades later.", mood: ["horror","edge"] },
-  { t: "Crimson Tide", p: "disney", k: "Movie", g: "Submarine Thriller", note: "Denzel Washington and Gene Hackman lock horns on a nuclear sub with the fate of the world on the line. Relentless, airtight tension.", mood: ["edge","deep"] },
-  { t: "The Empty Man", p: "disney", k: "Movie", g: "Cult Horror", note: "An ex-cop's missing-persons case unravels into a cult conspiracy. Flopped in theatres, quietly became a horror-community favourite since.", mood: ["horror","edge","deep"] },
-  { t: "What Lies Beneath", p: "disney", k: "Movie", g: "Supernatural Thriller", note: "Harrison Ford and Michelle Pfeiffer in a haunted-marriage thriller that's creepier than it gets credit for.", mood: ["horror","edge"] },
-  { t: "Alien", p: "disney", k: "Movie", g: "Sci-Fi Horror", note: "The original — a crew picked off one by one in deep space. If you've only seen the sequels, this one's colder and slower and worse for it (in the best way).", mood: ["horror","edge","deep"] },
+  { t: "Buried", y: "2010", p: "prime", k: "Movie", g: "Survival Thriller", note: "Ryan Reynolds, alone, in a coffin, for the whole runtime. Claustrophobic in the best way — pure Apex-style tension with zero budget for anything but dread.", mood: ["edge"] },
+  { t: "Dark Nature", y: "2022", p: "prime", k: "Movie", g: "Wilderness Horror", note: "A women's wilderness-therapy retreat goes very wrong. Slow-build survival horror that catalogue-browsers walk right past.", mood: ["edge","horror"] },
+  { t: "Coherence", y: "2013", p: "prime", k: "Movie", g: "Sci-Fi Thriller", note: "A dinner party unravels into a mind-bending reality-fracture thriller — shot for almost nothing, tighter than movies ten times its budget.", mood: ["edge","deep"] },
+  { t: "Synchronic", y: "2019", p: "prime", k: "Movie", g: "Sci-Fi Thriller", note: "Anthony Mackie, a strange new drug, and time itself breaking down. Genuinely underseen.", mood: ["edge","deep"] },
+  { t: "The Fly", y: "1986", p: "disney", k: "Movie", g: "Body Horror", note: "Cronenberg's body-horror classic — a teleportation experiment goes catastrophically wrong. Still unsettling decades later.", mood: ["horror","edge"] },
+  { t: "Crimson Tide", y: "1995", p: "disney", k: "Movie", g: "Submarine Thriller", note: "Denzel Washington and Gene Hackman lock horns on a nuclear sub with the fate of the world on the line. Relentless, airtight tension.", mood: ["edge","deep"] },
+  { t: "The Empty Man", y: "2020", p: "disney", k: "Movie", g: "Cult Horror", note: "An ex-cop's missing-persons case unravels into a cult conspiracy. Flopped in theatres, quietly became a horror-community favourite since.", mood: ["horror","edge","deep"] },
+  { t: "What Lies Beneath", y: "2000", p: "disney", k: "Movie", g: "Supernatural Thriller", note: "Harrison Ford and Michelle Pfeiffer in a haunted-marriage thriller that's creepier than it gets credit for.", mood: ["horror","edge"] },
+  { t: "Alien", y: "1979", p: "disney", k: "Movie", g: "Sci-Fi Horror", note: "The original — a crew picked off one by one in deep space. If you've only seen the sequels, this one's colder and slower and worse for it (in the best way).", mood: ["horror","edge","deep"] },
 ];
 
 function tileHTML(item, badgeHTML) {
@@ -729,7 +746,7 @@ function tileHTML(item, badgeHTML) {
         <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
         <span class="kind-tag">${item.k}</span>
       </div>
-      <p class="name">${item.t}</p>
+      <p class="name">${item.t}${item.y ? ` <span class="year">(${item.y})</span>` : ""}</p>
       <p class="genre">${item.g}</p>
       <p class="note">${item.note}</p>
       <p class="when">${item._when || ""}</p>
