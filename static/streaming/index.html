@@ -1,0 +1,335 @@
+<!-- ===================================================================
+     Blondie Slays — What to Watch in Canada
+     Lives at:  static/streaming/index.html  →  served at /streaming/
+     (static/ files are copied as-is, so this bypasses the theme wrapper,
+     same pattern as /pokemon/)
+
+     HOW TO UPDATE (do this monthly)
+     --------------------------------
+     1. Search "new on Netflix Canada <month> <year>", and the same for
+        Prime Video Canada, Crave Canada, and Disney+ Canada — iPhoneinCanada,
+        MobileSyrup, and whatsondisneyplus.com publish these every month.
+     2. Add/replace entries in the TITLES array below. Each entry:
+        { t: "Title", p: "netflix|prime|crave|disney", k: "Movie|Series|Docuseries|Live",
+          g: "Genre", note: "one-line description", when: "Jul 2026" }
+     3. Update the LAST_UPDATED string near the top of TITLES.
+     4. Re-deploy (push to main).
+     =================================================================== -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A curated, Canada-only guide to what's new on Netflix, Prime Video, Crave, and Disney+ this month.">
+<title>What to Watch in Canada — Blondie Slays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --pink:        #FF1493;
+    --pink-bg:     #FFF0F6;
+    --pink-med:    #f9a8d4;
+    --pink-dark:   #be185d;
+    --pink-chip:   #FFD1E8;
+    --aqua:        #c8f0fb;
+    --ink:         #3a1028;
+    --card:        #ffffff;
+    --shadow:      0 8px 28px rgba(255, 20, 147, 0.14);
+    --shadow-sm:   0 3px 12px rgba(190, 24, 93, 0.12);
+    --netflix:     #E50914;
+    --prime:       #00A8E1;
+    --crave:       #6c2bd9;
+    --disney:      #113CCF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--pink-bg);
+    color: var(--ink);
+    font-family: 'Montserrat', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: clamp(2.2rem, 6vw, 3.4rem) 1.2rem clamp(2.6rem, 7vw, 4rem);
+    background: linear-gradient(160deg, var(--pink) 0%, #ff5fb0 45%, var(--aqua) 130%);
+    color: #fff;
+  }
+  .hero .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: .22em;
+    font-size: clamp(.85rem, 2.2vw, 1.05rem);
+    text-transform: uppercase;
+    opacity: .92;
+    margin: 0 0 .4rem;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 3px 0 var(--pink-dark), 0 12px 26px rgba(0,0,0,.18);
+    letter-spacing: .01em;
+  }
+  .hero .subline {
+    margin: .7rem auto 0;
+    max-width: 560px;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: .95;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 1.6rem 1.1rem 3.5rem; }
+
+  .homebubble-wrap { display: flex; justify-content: flex-end; margin: -.3rem 0 .8rem; }
+  .homebubble {
+    position: relative;
+    display: block;
+    max-width: min(270px, 100%);
+    text-decoration: none;
+    background: #fff;
+    color: var(--ink);
+    border: 2px solid var(--pink-med);
+    border-radius: 16px;
+    padding: .6rem 1.85rem .65rem .8rem;
+    font: 600 .71rem 'Montserrat', sans-serif;
+    line-height: 1.4;
+    box-shadow: 0 5px 14px rgba(190,24,93,.12);
+    transition: transform .14s ease, box-shadow .14s ease;
+  }
+  .homebubble:hover { transform: translateY(-1px) rotate(-.4deg); box-shadow: 0 8px 18px rgba(255,20,147,.18); }
+  .homebubble:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+  .homebubble b { color: var(--pink-dark); }
+
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: .55rem;
+    align-items: center; justify-content: center;
+    margin: 0 auto 1.8rem;
+  }
+  .filter-btn {
+    border: 2px solid var(--pink-med); background: #fff; color: var(--pink-dark);
+    border-radius: 999px; padding: .5rem 1.05rem; cursor: pointer;
+    font: 700 .76rem 'Montserrat', sans-serif; letter-spacing: .03em;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+    display: inline-flex; align-items: center; gap: .4rem;
+  }
+  .filter-btn .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pink-med); flex: none; }
+  .filter-btn[data-p="netflix"] .dot { background: var(--netflix); }
+  .filter-btn[data-p="prime"] .dot { background: var(--prime); }
+  .filter-btn[data-p="crave"] .dot { background: var(--crave); }
+  .filter-btn[data-p="disney"] .dot { background: var(--disney); }
+  .filter-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+  .filter-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .filter-btn.active .dot { background: #fff; }
+  .filter-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+
+  .searchbar {
+    display: flex; gap: .5rem;
+    margin: 0 auto 1.8rem;
+    max-width: 480px;
+  }
+  .searchbar input {
+    flex: 1;
+    border: 2px solid var(--pink-med);
+    background: #fff;
+    border-radius: 999px;
+    padding: .75rem 1.1rem;
+    font: 600 .9rem 'Montserrat', sans-serif;
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+    outline: none;
+  }
+  .searchbar input:focus { border-color: var(--pink); }
+  .searchbar input::placeholder { color: #c98bb0; font-weight: 500; }
+
+  .label {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: .1em;
+    font-size: .82rem;
+    color: var(--pink-dark);
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 1.2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .tile {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 1.1rem 1.1rem 1.2rem;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+    animation: rise .4s ease both;
+    border-top: 4px solid var(--pink-med);
+  }
+  .tile[data-p="netflix"] { border-top-color: var(--netflix); }
+  .tile[data-p="prime"]   { border-top-color: var(--prime); }
+  .tile[data-p="crave"]   { border-top-color: var(--crave); }
+  .tile[data-p="disney"]  { border-top-color: var(--disney); }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .tile .top-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .5rem; }
+  .platform-pill {
+    font: 800 .62rem 'Montserrat', sans-serif; letter-spacing: .06em; text-transform: uppercase;
+    padding: .25rem .6rem; border-radius: 999px; color: #fff; white-space: nowrap;
+  }
+  .platform-pill[data-p="netflix"] { background: var(--netflix); }
+  .platform-pill[data-p="prime"]   { background: var(--prime); }
+  .platform-pill[data-p="crave"]   { background: var(--crave); }
+  .platform-pill[data-p="disney"]  { background: var(--disney); }
+  .kind-tag { font: 700 .64rem 'Montserrat', sans-serif; color: #b06a92; letter-spacing: .03em; }
+
+  .tile .name { font-weight: 800; font-size: 1rem; color: var(--ink); line-height: 1.25; margin: 0 0 .3rem; }
+  .tile .genre { font-size: .68rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 .5rem; }
+  .tile .note { font-size: .82rem; color: #6b3f56; line-height: 1.45; margin: 0; flex: 1; }
+  .tile .when { margin-top: .7rem; font-size: .66rem; font-weight: 700; color: #c98bb0; letter-spacing: .03em; }
+
+  .empty { text-align: center; color: #b06a92; font-weight: 600; padding: 3rem 1rem; }
+
+  .footnote { text-align: center; font-size: .74rem; color: #c98bb0; margin-top: 2.6rem; font-weight: 600; line-height: 1.6; }
+  .footnote a { color: var(--pink-dark); }
+
+  @media (prefers-reduced-motion: reduce) { .tile { animation: none; } }
+</style>
+
+<header class="hero">
+  <p class="eyebrow">Canada Only · Updated Monthly</p>
+  <h1>What to Watch</h1>
+  <p class="subline">A curated pick of what's new this month on Netflix, Prime Video, Crave, and Disney+ — for Canadian streamers only.</p>
+</header>
+
+<main class="wrap">
+  <div class="homebubble-wrap">
+    <a class="homebubble" href="/">
+      <span>Looking for custom tees instead? <b>Tap here to head back to Blondie Slays.</b></span>
+    </a>
+  </div>
+
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="Search a title…" autocomplete="off">
+  </div>
+
+  <div class="toolbar" id="toolbar">
+    <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
+    <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+    <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+    <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+    <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+  </div>
+
+  <p class="label" id="resultLabel"></p>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>Nothing matches that search — try another title.</div>
+
+  <p class="footnote">
+    Curated picks of new Canadian streaming arrivals — not a live catalogue feed.
+    Sourced from official platform release calendars via
+    <a href="https://www.iphoneincanada.ca" target="_blank" rel="noopener">iPhone in Canada</a> and
+    <a href="https://mobilesyrup.com" target="_blank" rel="noopener">MobileSyrup</a>.
+    Titles and availability can change — always confirm in-app.
+  </p>
+</main>
+
+<script>
+const LAST_UPDATED = "July 2026";
+
+const PLATFORM_LABEL = { netflix: "Netflix", prime: "Prime Video", crave: "Crave", disney: "Disney+" };
+
+const TITLES = [
+  // ---------- Netflix ----------
+  { t: "Enola Holmes 3", p: "netflix", k: "Movie", g: "Mystery", note: "Millie Bobby Brown returns for a third case in the Sherlock Holmes spin-off franchise.", when: "Jul 2026" },
+  { t: "Quarterback", p: "netflix", k: "Docuseries", g: "Sports", note: "Season 3 of the behind-the-scenes NFL docuseries.", when: "Jul 2026" },
+  { t: "Little House on the Prairie", p: "netflix", k: "Series", g: "Drama", note: "New adaptation filmed entirely in Winnipeg and rural Manitoba.", when: "Jul 2026" },
+  { t: "Ransom Canyon", p: "netflix", k: "Series", g: "Drama", note: "Season 2 of the ranch-set romantic drama.", when: "Jul 2026" },
+  { t: "The Hawk", p: "netflix", k: "Movie", g: "Comedy", note: "Will Ferrell headlines this new comedy film.", when: "Jul 2026" },
+  { t: "Survival of the Thickest", p: "netflix", k: "Series", g: "Comedy", note: "Michelle Buteau's series wraps up with its third and final season.", when: "Jul 2026" },
+  { t: "Heartstopper Forever", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026" },
+  { t: "The Wild Robot", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026" },
+  { t: "Resident Alien", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026" },
+  { t: "Fast & Furious Collection", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026" },
+
+  // ---------- Prime Video ----------
+  { t: "Elle", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026" },
+  { t: "Young Farts Trailer Parts", p: "prime", k: "Series", g: "Comedy", note: "New original executive produced by Jacob Tierney.", when: "Jul 2026" },
+  { t: "Ride or Die", p: "prime", k: "Series", g: "Drama", note: "New Prime original series.", when: "Jul 2026" },
+  { t: "The Super Mario Galaxy Movie", p: "prime", k: "Movie", g: "Animation", note: "The animated Mario sequel joins the catalogue.", when: "Jul 2026" },
+  { t: "Batman: Caped Crusader", p: "prime", k: "Series", g: "Animation", note: "Season 2 of the reimagined Batman animated series.", when: "Jul 2026" },
+  { t: "MaXXXine", p: "prime", k: "Movie", g: "Horror", note: "The final chapter of Ti West's X trilogy.", when: "Jul 2026" },
+  { t: "Flow", p: "prime", k: "Movie", g: "Animation", note: "The Oscar-winning, dialogue-free animated film.", when: "Jul 2026" },
+  { t: "A Different Man", p: "prime", k: "Movie", g: "Dark Comedy", note: "Introspective dark comedy drama.", when: "Jul 2026" },
+  { t: "Law & Order: SVU", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026" },
+  { t: "WNBA & NWSL", p: "prime", k: "Live", g: "Sports", note: "Live coverage of WNBA and NWSL matchups throughout the month.", when: "Jul 2026" },
+
+  // ---------- Crave ----------
+  { t: "Fightland", p: "crave", k: "Series", g: "Sports Drama", note: "New Starz series produced by 50 Cent (Starz add-on required).", when: "Jul 2026" },
+  { t: "Nirvanna the Band the Show the Movie", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026" },
+  { t: "The Amazing Race Canada", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026" },
+  { t: "Stuart Fails to Save the Universe", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026" },
+  { t: "The Dessert", p: "crave", k: "Movie", g: "Comedy", note: "New comedy feature added this month.", when: "Jul 2026" },
+  { t: "Don't Even", p: "crave", k: "Series", g: "Comedy", note: "New comedy series addition.", when: "Jul 2026" },
+
+  // ---------- Disney+ ----------
+  { t: "X-Men '97", p: "disney", k: "Series", g: "Animation", note: "Season 2 of the beloved animated revival.", when: "Jul 2026" },
+  { t: "Descendants: Wicked Wonderland", p: "disney", k: "Movie", g: "Family", note: "New entry in the Descendants movie franchise.", when: "Jul 2026" },
+  { t: "King of the Hill", p: "disney", k: "Series", g: "Animation", note: "Season 15 of the revived animated comedy.", when: "Jul 2026" },
+  { t: "Furious", p: "disney", k: "Series", g: "Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026" },
+  { t: "The Proud Family: Louder & Prouder", p: "disney", k: "Series", g: "Animation", note: "The animated comedy returns with new episodes.", when: "Jul 2026" },
+  { t: "Pompeii: Out of Time", p: "disney", k: "Docuseries", g: "History", note: "Tom Hiddleston hosts this historical documentary special.", when: "Jul 2026" },
+  { t: "Lollapalooza", p: "disney", k: "Live", g: "Music", note: "Live festival streams on July 30 and 31.", when: "Jul 2026" },
+];
+
+const grid = document.getElementById("grid");
+const empty = document.getElementById("empty");
+const resultLabel = document.getElementById("resultLabel");
+const toolbar = document.getElementById("toolbar");
+const searchInput = document.getElementById("q");
+
+let activePlatform = "all";
+
+function render() {
+  const q = searchInput.value.trim().toLowerCase();
+  const filtered = TITLES.filter(item => {
+    const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
+    const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
+    return matchesPlatform && matchesQuery;
+  });
+
+  grid.innerHTML = filtered.map(item => `
+    <div class="tile" data-p="${item.p}">
+      <div class="top-row">
+        <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
+        <span class="kind-tag">${item.k}</span>
+      </div>
+      <p class="name">${item.t}</p>
+      <p class="genre">${item.g}</p>
+      <p class="note">${item.note}</p>
+      <p class="when">New ${item.when}</p>
+    </div>
+  `).join("");
+
+  empty.hidden = filtered.length !== 0;
+  resultLabel.textContent = `${filtered.length} new this month · Last updated ${LAST_UPDATED}`;
+}
+
+toolbar.addEventListener("click", (e) => {
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  activePlatform = btn.dataset.p;
+  render();
+});
+
+searchInput.addEventListener("input", render);
+
+render();
+</script>
