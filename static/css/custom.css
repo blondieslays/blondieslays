@@ -129,25 +129,13 @@
 #shirt-builder .custom-order-intro { display: block !important; text-align: center !important; background: #FFF0F6 !important; border: 1px solid #f9a8d4 !important; border-radius: 8px !important; color: #be185d !important; font-size: 0.85rem !important; padding: 8px 16px !important; max-width: 600px !important; margin: 0 auto 2rem auto !important; line-height: 1.5 !important; }
 .bldr { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 860px; margin: 0 auto; align-items: start; }
 .slide-side { display: flex; flex-direction: column; gap: .75rem; }
-.slide-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; color: #aaa; font-size: 13px; background: #f9f9f9; min-height: 280px; text-align: center; padding: 1rem; }
-.slide-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; }
-.snav-btn { background: none; border: 1.5px solid #ddd; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 16px; color: #666; display: flex; align-items: center; justify-content: center; transition: border-color .12s, color .12s; }
-.snav-btn:hover { border-color: #FF1493; color: #FF1493; }
-.bsdot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; cursor: pointer; transition: background .12s; }
-.bsdot.on { background: #FF1493; }
-.slide-dots { display: flex; gap: 6px; }
 .slide-label { font-size: 12px; color: #888; text-align: center; }
 .ctrl-side { display: flex; flex-direction: column; gap: 1.1rem; }
 .bcl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #666; margin-bottom: 5px; display: block; }
-.bswatches { display: flex; flex-wrap: wrap; gap: 7px; }
-.bsw { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2.5px solid transparent; transition: border-color .12s, transform .12s; }
-.bsw:hover { transform: scale(1.15); }
-.bsw.on { border-color: #FF1493 !important; transform: scale(1.1); }
 .btd { background: conic-gradient(#f9a8d4 0deg,#a5f3fc 90deg,#bbf7d0 180deg,#fde68a 270deg,#f9a8d4 360deg) !important; }
 .btd-note { font-size: 11px; color: #3a7fa3; background: #eef7fc; border-radius: 6px; padding: 5px 9px; border: 1px solid #89c4e1; margin-top: 3px; }
 .btxt-in { width: 100%; padding: 8px 11px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
 .btxt-in:focus { border-color: #FF1493; }
-.bvc-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .bvc { padding: 4px 10px; border: 1.5px solid #ddd; border-radius: 20px; cursor: pointer; font-size: 12px; background: #fff; color: #666; transition: all .12s; }
 .bvc.on { border-color: #FF1493; color: #FF1493; font-weight: 700; }
 .bfont-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
@@ -159,12 +147,6 @@
 
 @media (max-width: 768px) { .bldr { grid-template-columns: 1fr; } }
 
-.bvinyl-font-row { display: flex; gap: 1.5rem; align-items: flex-start; }
-.bvinyl-col { flex: 1.2; min-width: 0; }
-.bfont-col { flex: 1; min-width: 0; }
-.bfont-col .bfo { padding: 6px 10px; font-size: 13px; }
-@media (max-width: 768px) { .bvinyl-font-row { flex-direction: column; gap: 1rem; } }
-
 .bplacement-row { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 6px !important; }
 .bpl { padding: 4px 10px !important; border: 1.5px solid #ddd; border-radius: 20px !important; cursor: pointer; font-size: 11px !important; background: #fff; color: #666; transition: all .12s; white-space: nowrap !important; }
 .bpl.on { border-color: #FF1493; color: #FF1493; font-weight: 700; }
@@ -173,8 +155,6 @@
 .builder-combo-note, .btd-note { background: #eef7fc !important; border: 1px solid #89c4e1 !important; color: #3a7fa3 !important; border-radius: 8px !important; }
 .builder-combo-note::before { content: '' !important; }
 
-.bvc-special-label, .bswatch-special-label { font-size: 11px; color: #3a7fa3; background: #eef7fc; border: 1px solid #89c4e1; border-radius: 6px; padding: 4px 10px; margin: 6px 0 4px; display: inline-block; }
-.bvc-metallic { background: linear-gradient(135deg, #f5f0d0, #d4af37, #f5f0d0) !important; }
 .bvc-glitter { background: linear-gradient(135deg, #fff, #d4af37, #fff) !important; }
 .bvc-holo { background: linear-gradient(135deg, #f9a8d4, #a5f3fc, #c4b5fd, #f9a8d4) !important; }
 
@@ -216,9 +196,6 @@
 .mockup-carousel { display: flex; flex-direction: column; gap: .75rem; }
 .mockup-frame { border: none; border-radius: 16px; overflow: hidden; background: #f9f9f9; aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; box-shadow: 0 16px 36px rgba(190,24,93,.15), 0 4px 12px rgba(0,0,0,.05); }
 .mockup-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.mockup-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; color: #aaa; font-size: 13px; text-align: center; padding: 1rem; }
-.mockup-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; }
-.mockup-dots { display: flex; gap: 6px; }
 
 /* ── BSA Services Section ─────────────────────── */
 .bsa-services-section { background: #FFF0F6; padding: 5rem 0; }
@@ -247,10 +224,6 @@ a#hero-builder-btn:hover {
   background: #FF1493 !important;
   color: #ffffff !important;
 }
-
-/* Builder slide — show full image, no crop */
-.slide-wrap { position: relative; border: 4px solid #FF1493; border-radius: 16px; background: #fff; aspect-ratio: 8/9; width: 100%; height: auto; }
-.slide-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 /* ── Nav + hero buttons: shared geometry ─────────────── */
 #dl-nav-btn,
