@@ -99,6 +99,9 @@
     --aqua:        #c8f0fb;
     --ink:         #3a1028;
     --card:        #ffffff;
+    --shadow:      0 10px 26px rgba(255, 20, 147, 0.14);
+    --shadow-sm:   0 3px 12px rgba(190, 24, 93, 0.10);
+    --line:        #f4d3e4;
     --netflix:     #E50914;
     --prime:       #00A8E1;
     --crave:       #6c2bd9;
@@ -201,13 +204,13 @@
     text-decoration: none;
     background: var(--pink);
     color: #fff;
-    border: 2px solid #000;
+    border: none;
     border-radius: 999px;
     padding: .7rem 1.3rem;
     font: 800 .8rem 'Montserrat', sans-serif;
     letter-spacing: .01em;
     line-height: 1.35;
-    box-shadow: 3px 3px 0 #000;
+    box-shadow: var(--shadow-sm);
     transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
   }
   .homebubble .arrow {
@@ -215,35 +218,36 @@
     line-height: 1;
     flex: none;
   }
-  .homebubble:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; background: var(--pink-dark); }
+  .homebubble:hover { transform: translateY(-2px); box-shadow: var(--shadow); background: var(--pink-dark); }
   .homebubble:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
   .homebubble b { color: #fff; text-decoration: underline; }
 
   /* ---------- Availability checker ---------- */
   .checker {
     max-width: 580px; margin: 0 auto 2.2rem;
-    background: #fff; border: 2px solid #000;
+    background: #fff; border: 1px solid var(--line);
     border-radius: 20px; padding: 1.3rem 1.4rem 1.5rem;
-    box-shadow: 4px 4px 0 #000;
+    box-shadow: var(--shadow-sm);
   }
   .checker .label { margin-bottom: .3rem; }
   .checker .checker-sub { text-align: center; font-size: .76rem; color: #b06a92; font-weight: 600; margin: 0 0 1rem; }
   .checker-bar { display: flex; gap: .5rem; }
   .checker-bar input {
-    flex: 1; border: 2px solid #000; background: #fff;
+    flex: 1; border: 1.5px solid var(--pink-chip); background: #fff;
     border-radius: 999px; padding: .7rem 1.1rem;
     font: 600 .88rem 'Montserrat', sans-serif; color: var(--ink); outline: none;
+    transition: border-color .12s ease;
   }
   .checker-bar input:focus { border-color: var(--pink); }
   .checker-bar input::placeholder { color: #c98bb0; font-weight: 500; }
   .checker-bar button {
-    border: 2px solid #000; cursor: pointer; background: var(--pink); color: #fff;
+    border: none; cursor: pointer; background: var(--pink); color: #fff;
     border-radius: 999px; padding: 0 1.4rem;
     font: 800 .78rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: 3px 3px 0 #000;
+    box-shadow: var(--shadow-sm);
     transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
   }
-  .checker-bar button:hover { background: var(--pink-dark); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 #000; }
+  .checker-bar button:hover { background: var(--pink-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
   .checker-bar button:disabled { opacity: .6; cursor: default; }
   #check-result { margin-top: 1rem; min-height: 0; }
   .check-msg { font-size: .82rem; color: #6b3f56; font-weight: 600; text-align: center; margin: .4rem 0; line-height: 1.5; }
@@ -256,7 +260,6 @@
   .check-chip {
     font: 800 .68rem 'Montserrat', sans-serif; letter-spacing: .04em; text-transform: uppercase;
     padding: .35rem .8rem; border-radius: 999px; color: #fff;
-    border: 2px solid #000;
   }
   .check-chip[data-p="netflix"] { background: var(--netflix); }
   .check-chip[data-p="prime"]   { background: var(--prime); }
@@ -272,14 +275,14 @@
     margin: 0 auto 1.6rem;
   }
   .tab-btn {
-    border: 2px solid #000; background: #fff; color: var(--pink-dark);
+    border: 1.5px solid var(--pink-chip); background: #fff; color: var(--pink-dark);
     border-radius: 999px; padding: .6rem 1.3rem; cursor: pointer;
     font: 800 .8rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: 3px 3px 0 #000;
-    transition: background .15s ease, color .15s ease, transform .12s ease, box-shadow .12s ease;
+    box-shadow: var(--shadow-sm);
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .12s ease, box-shadow .12s ease;
   }
-  .tab-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; }
-  .tab-btn.active { background: var(--pink); border-color: #000; color: #fff; }
+  .tab-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tab-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
   .tab-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   .tabpanel { display: none; }
@@ -291,24 +294,23 @@
     margin: 0 auto 1.8rem;
   }
   .filter-btn {
-    border: 2px solid #000; background: #fff; color: var(--pink-dark);
+    border: 1.5px solid var(--pink-chip); background: #fff; color: var(--pink-dark);
     border-radius: 999px; padding: .5rem 1.05rem .5rem .9rem; cursor: pointer;
     font: 700 .76rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    box-shadow: 2px 2px 0 #000;
-    transition: background .15s ease, color .15s ease, transform .12s ease, box-shadow .12s ease;
+    box-shadow: none;
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .12s ease, box-shadow .12s ease;
     display: inline-flex; align-items: center;
   }
   .filter-btn .dot {
     width: 9px; height: 9px; border-radius: 50%; background: var(--pink-med);
     flex: none; display: inline-block; margin-right: .5rem;
-    box-shadow: 0 0 0 1.5px #000;
   }
   .filter-btn[data-p="netflix"] .dot { background: var(--netflix); }
   .filter-btn[data-p="prime"] .dot { background: var(--prime); }
   .filter-btn[data-p="crave"] .dot { background: var(--crave); }
   .filter-btn[data-p="disney"] .dot { background: var(--disney); }
-  .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 #000; }
-  .filter-btn.active { background: var(--pink); border-color: #000; color: #fff; }
+  .filter-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+  .filter-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
   .filter-btn.active .dot { background: #fff; }
   .filter-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
@@ -319,14 +321,15 @@
   }
   .searchbar input {
     flex: 1;
-    border: 2px solid #000;
+    border: 1.5px solid var(--pink-chip);
     background: #fff;
     border-radius: 999px;
     padding: .75rem 1.1rem;
     font: 600 .9rem 'Montserrat', sans-serif;
     color: var(--ink);
-    box-shadow: 2px 2px 0 #000;
+    box-shadow: none;
     outline: none;
+    transition: border-color .12s ease;
   }
   .searchbar input:focus { border-color: var(--pink); }
   .searchbar input::placeholder { color: #c98bb0; font-weight: 500; }
@@ -350,13 +353,15 @@
     background: var(--card);
     border-radius: 16px;
     padding: 1.1rem 1.1rem 1.2rem;
-    border: 2px solid #000;
-    box-shadow: 3px 3px 0 #000;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
     display: flex; flex-direction: column;
     animation: rise .4s ease both;
-    border-top: 5px solid var(--pink-med);
+    border-top: 4px solid var(--pink-med);
     position: relative;
+    transition: transform .15s ease, box-shadow .15s ease;
   }
+  .tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
   .tile[data-p="netflix"] { border-top-color: var(--netflix); }
   .tile[data-p="prime"]   { border-top-color: var(--prime); }
   .tile[data-p="crave"]   { border-top-color: var(--crave); }
@@ -367,7 +372,6 @@
   .platform-pill {
     font: 800 .62rem 'Montserrat', sans-serif; letter-spacing: .06em; text-transform: uppercase;
     padding: .25rem .6rem; border-radius: 999px; color: #fff; white-space: nowrap;
-    border: 1.5px solid #000;
   }
   .platform-pill[data-p="netflix"] { background: var(--netflix); }
   .platform-pill[data-p="prime"]   { background: var(--prime); }
@@ -380,28 +384,26 @@
     background: var(--pink-dark); color: #fff;
     font: 800 .72rem 'Bebas Neue', sans-serif; letter-spacing: .04em;
     padding: .25rem .6rem; border-radius: 999px;
-    border: 2px solid #000;
-    box-shadow: 2px 2px 0 #000;
+    box-shadow: 0 2px 8px rgba(190, 24, 93, 0.35);
   }
   .loved-badge {
     position: absolute; top: -12px; left: 14px;
     background: var(--pink); color: #fff;
     font: 800 .68rem 'Montserrat', sans-serif; letter-spacing: .03em;
     padding: .25rem .65rem; border-radius: 999px;
-    border: 2px solid #000;
-    box-shadow: 2px 2px 0 #000;
+    box-shadow: 0 2px 8px rgba(255, 20, 147, 0.35);
   }
 
   .picks-intro {
     max-width: 640px; margin: 0 auto 1.8rem;
     display: flex; align-items: center; gap: 1rem;
-    background: #fff; border: 2px solid #000;
+    background: #fff; border: 1px solid var(--line);
     border-radius: 18px; padding: 1rem 1.3rem;
-    box-shadow: 4px 4px 0 #000;
+    box-shadow: var(--shadow-sm);
   }
   .picks-avatar {
     width: 54px; height: 54px; border-radius: 50%; object-fit: cover;
-    flex: none; box-shadow: 0 0 0 3px #000;
+    flex: none; box-shadow: 0 0 0 3px var(--pink);
   }
   .picks-intro p { margin: 0; font-size: .84rem; color: #6b3f56; line-height: 1.5; font-weight: 600; }
   .picks-intro strong { color: var(--pink-dark); }
@@ -427,16 +429,16 @@
     margin: 0 auto 2rem;
   }
   .mood-btn {
-    border: 2px solid #000; background: #fff; color: var(--pink-dark);
+    border: 1.5px solid var(--pink-chip); background: #fff; color: var(--pink-dark);
     border-radius: 16px; padding: 1.1rem .8rem; cursor: pointer;
     font: 800 .8rem 'Montserrat', sans-serif; letter-spacing: .02em;
-    box-shadow: 3px 3px 0 #000;
+    box-shadow: var(--shadow-sm);
     display: flex; flex-direction: column; align-items: center; gap: .4rem;
-    transition: transform .12s ease, box-shadow .12s ease, background .15s ease, color .15s ease;
+    transition: transform .12s ease, box-shadow .12s ease, background .15s ease, color .15s ease, border-color .15s ease;
   }
   .mood-btn .emoji { font-size: 1.7rem; }
-  .mood-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; }
-  .mood-btn.active { background: var(--pink); border-color: #000; color: #fff; }
+  .mood-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .mood-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
   .mood-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   .vibe-results { display: none; }
