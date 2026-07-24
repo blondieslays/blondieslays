@@ -55,10 +55,14 @@
 <meta property="og:title" content="What to Watch in Canada — Blondie Slays">
 <meta property="og:description" content="What's new and what's actually popular on Netflix, Prime Video, Crave, and Disney+ in Canada — plus Elise's personal picks and a mood-based pick tool.">
 <meta property="og:url" content="https://blondieslays.ca/streaming/">
-<meta property="og:image" content="https://blondieslays.ca/images/social/cover-photo.png">
+<meta property="og:image" content="https://blondieslays.ca/images/social/streaming-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="What to Watch in Canada — Netflix, Prime Video, Crave, and Disney+, updated monthly.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="What to Watch in Canada — Blondie Slays">
 <meta name="twitter:description" content="What's new and what's actually popular on Netflix, Prime Video, Crave, and Disney+ in Canada — plus Elise's personal picks and a mood-based pick tool.">
+<meta name="twitter:image" content="https://blondieslays.ca/images/social/streaming-cover.png">
 
 <!-- Structured data: WebPage + BreadcrumbList, linked to the site-wide Organization/WebSite -->
 <script type="application/ld+json">
@@ -71,6 +75,7 @@
       "url": "https://blondieslays.ca/streaming/",
       "name": "What to Watch in Canada — Blondie Slays",
       "description": "A curated, Canada-only guide to what's new and what's popular on Netflix, Prime Video, Crave, and Disney+ — plus Elise's personal picks and a mood-based pick tool.",
+      "image": "https://blondieslays.ca/images/social/streaming-cover.png",
       "isPartOf": { "@id": "https://blondieslays.ca/#website" },
       "about": { "@id": "https://blondieslays.ca/#org" },
       "inLanguage": "en-CA"
@@ -346,32 +351,41 @@
 
   .label {
     font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: .1em;
+    letter-spacing: .14em;
     font-size: .82rem;
     color: var(--pink-dark);
     text-transform: uppercase;
     text-align: center;
-    margin: 0 0 1.2rem;
+    margin: 0 0 1.6rem;
+    display: flex; align-items: center; justify-content: center; gap: .8rem;
   }
+  .label::before, .label::after {
+    content: "";
+    flex: 1 1 60px;
+    max-width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pink-chip));
+  }
+  .label::after { background: linear-gradient(90deg, var(--pink-chip), transparent); }
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.3rem;
   }
   .tile {
     background: var(--card);
-    border-radius: 16px;
-    padding: 1.1rem 1.1rem 1.2rem;
+    border-radius: 18px;
+    padding: 1.25rem 1.3rem 1.35rem;
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
     display: flex; flex-direction: column;
     animation: rise .4s ease both;
     border-top: 4px solid var(--pink-med);
     position: relative;
-    transition: transform .15s ease, box-shadow .15s ease;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
-  .tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--pink-chip); }
   .tile[data-p="netflix"] { border-top-color: var(--netflix); }
   .tile[data-p="prime"]   { border-top-color: var(--prime); }
   .tile[data-p="crave"]   { border-top-color: var(--crave); }
@@ -418,11 +432,14 @@
   .picks-intro p { margin: 0; font-size: .84rem; color: #6b3f56; line-height: 1.5; font-weight: 600; }
   .picks-intro strong { color: var(--pink-dark); }
 
-  .tile .name { font-weight: 800; font-size: 1rem; color: var(--ink); line-height: 1.25; margin: 0 0 .3rem; }
-  .tile .name .year { font-weight: 600; color: #b06a92; font-size: .82em; }
-  .tile .genre { font-size: .68rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 .5rem; }
-  .tile .note { font-size: .82rem; color: #6b3f56; line-height: 1.45; margin: 0; flex: 1; }
-  .tile .when { margin-top: .7rem; font-size: .66rem; font-weight: 700; color: #c98bb0; letter-spacing: .03em; }
+  .tile .name { font-weight: 800; font-size: 1.06rem; letter-spacing: -.01em; color: var(--ink); line-height: 1.22; margin: 0 0 .28rem; }
+  .tile .name .year { font-weight: 600; color: #b06a92; font-size: .8em; }
+  .tile .genre { font-size: .66rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 .55rem; }
+  .tile .note {
+    font-size: .82rem; color: #6b3f56; line-height: 1.48; margin: 0; flex: 1;
+    display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .tile .when { margin-top: .85rem; padding-top: .7rem; border-top: 1px dashed var(--line); font-size: .64rem; font-weight: 700; color: #c98bb0; letter-spacing: .04em; }
 
   .empty { text-align: center; color: #b06a92; font-weight: 600; padding: 3rem 1rem; }
 
