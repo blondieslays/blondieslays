@@ -379,7 +379,6 @@
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
     display: flex; flex-direction: column;
-    overflow: hidden;
     animation: rise .4s ease both;
     border-top: 4px solid var(--pink-med);
     position: relative;
@@ -396,6 +395,7 @@
   .tile-poster-wrap {
     position: relative; width: 100%; aspect-ratio: 2 / 3; flex: none;
     background: var(--pink-bg); overflow: hidden;
+    border-radius: 17px 17px 0 0;
   }
   .tile-poster-wrap.loading {
     background: linear-gradient(100deg, var(--pink-bg) 25%, var(--pink-chip) 45%, var(--pink-bg) 65%);
@@ -440,18 +440,18 @@
   .tile-body { padding: .9rem 1.1rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
 
   .rank-badge {
-    position: absolute; top: -10px; left: 12px; z-index: 3;
-    background: var(--pink-dark); color: #fff;
-    font: 800 .72rem 'Bebas Neue', sans-serif; letter-spacing: .04em;
-    padding: .25rem .6rem; border-radius: 999px;
-    box-shadow: 0 2px 8px rgba(190, 24, 93, 0.35);
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%); z-index: 3;
+    background: var(--pink-dark); color: #fff; white-space: nowrap;
+    font: 800 .64rem 'Bebas Neue', sans-serif; letter-spacing: .03em;
+    padding: .22rem .55rem; border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(190, 24, 93, 0.4);
   }
   .loved-badge {
-    position: absolute; top: -10px; left: 12px; z-index: 3;
-    background: var(--pink); color: #fff;
-    font: 800 .68rem 'Montserrat', sans-serif; letter-spacing: .03em;
-    padding: .25rem .65rem; border-radius: 999px;
-    box-shadow: 0 2px 8px rgba(255, 20, 147, 0.35);
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%); z-index: 3;
+    background: var(--pink); color: #fff; white-space: nowrap;
+    font: 800 .58rem 'Montserrat', sans-serif; letter-spacing: .02em;
+    padding: .22rem .6rem; border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(255, 20, 147, 0.4);
   }
 
   .picks-intro {
@@ -839,6 +839,32 @@ const HIDDEN_GEMS = [
   { t: "The Empty Man", y: "2020", p: "disney", k: "Movie", g: "Cult Horror", note: "An ex-cop's missing-persons case unravels into a cult conspiracy. Flopped in theatres, quietly became a horror-community favourite since.", mood: ["horror","edge","deep"] },
   { t: "What Lies Beneath", y: "2000", p: "netflix", k: "Movie", g: "Supernatural Thriller", note: "Harrison Ford and Michelle Pfeiffer in a haunted-marriage thriller that's creepier than it gets credit for.", mood: ["horror","edge"] },
   { t: "Alien", y: "1979", p: "disney", k: "Movie", g: "Sci-Fi Horror", note: "The original — a crew picked off one by one in deep space. If you've only seen the sequels, this one's colder and slower and worse for it (in the best way).", mood: ["horror","edge","deep"] },
+
+  // ---------- Prime Video ----------
+  { t: "The Vast of Night", y: "2020", p: "prime", k: "Movie", g: "Sci-Fi Mystery", note: "A radio DJ and a switchboard operator stumble onto something otherworldly over one quiet New Mexico night. Told almost entirely through dialogue and it still crackles with tension.", mood: ["edge","deep"] },
+  { t: "The Endless", y: "2017", p: "prime", k: "Movie", g: "Sci-Fi Horror", note: "From the same directing duo behind Synchronic — two brothers return to the UFO death cult they escaped a decade ago. Low-budget, high-concept, deeply unsettling.", mood: ["edge","horror","deep"] },
+  { t: "Nobody", y: "2021", p: "prime", k: "Movie", g: "Action Thriller", note: "Bob Odenkirk as a mild-mannered dad with a very violent past that catches up fast. Lean, brutal, and way better than the trailer suggests.", mood: ["edge"] },
+  { t: "Green Room", y: "2015", p: "prime", k: "Movie", g: "Survival Horror", note: "A punk band gets trapped backstage at a neo-Nazi skinhead bar after witnessing a murder. Patrick Stewart is genuinely terrifying. Brutal, claustrophobic, unforgettable.", mood: ["edge","horror"] },
+  { t: "The Guest", y: "2014", p: "prime", k: "Movie", g: "Thriller", note: "A charming stranger claiming to be a dead soldier's army buddy moves in with his grieving family — and something's very wrong with him. Slick, stylish, and quietly unhinged.", mood: ["edge","deep"] },
+  { t: "Nightcrawler", y: "2014", p: "prime", k: "Movie", g: "Neo-Noir Thriller", note: "Jake Gyllenhaal as a hollowed-out freelance crime journalist who'll do anything for the shot. One of the most purely unsettling character studies of the decade.", mood: ["edge","deep"] },
+
+  // ---------- Disney+ ----------
+  { t: "Flight of the Navigator", y: "1986", p: "disney", k: "Movie", g: "Sci-Fi Family", note: "A kid vanishes for eight years, comes back not having aged a day, and finds a spaceship in his head. Peak '80s family sci-fi that never gets talked about enough.", mood: ["family","deep"] },
+  { t: "The Great Mouse Detective", y: "1986", p: "disney", k: "Movie", g: "Animated Mystery", note: "A Sherlock Holmes riff starring mice, and one of the most purely fun entries in the Disney animated catalogue. Criminally overlooked next to the '90s classics.", mood: ["family","laugh"] },
+  { t: "Heavyweights", y: "1995", p: "disney", k: "Movie", g: "Comedy", note: "A fat camp gets taken over by a deranged fitness guru. Judd Apatow co-wrote it and it shows — genuinely funny, not just a nostalgia watch.", mood: ["laugh","family"] },
+  { t: "Prometheus", y: "2012", p: "disney", k: "Movie", g: "Sci-Fi Horror", note: "The Alien prequel — a crew chases the origins of humanity to a distant moon and finds something that should've stayed buried. Divisive on release, better than its reputation.", mood: ["horror","edge","deep"] },
+  { t: "Meet the Robinsons", y: "2007", p: "disney", k: "Movie", g: "Animated Sci-Fi", note: "A time-traveling orphan story about choosing optimism anyway. One of Disney Animation's most emotionally sharp, least-remembered films.", mood: ["family","deep"] },
+  { t: "The Rocketeer", y: "1991", p: "disney", k: "Movie", g: "Adventure", note: "A stunt pilot straps on a jetpack and gets tangled up with Nazi spies in 1930s Hollywood. Pure pulp-adventure charm that Disney never really followed up on.", mood: ["family","edge"] },
+
+  // ---------- Netflix ----------
+  { t: "I Don't Feel at Home in This World Anymore", y: "2017", p: "netflix", k: "Movie", g: "Dark Comedy Crime", note: "A depressed woman tracks down the burglars who robbed her with the help of her deeply unhinged neighbour. Sundance Grand Jury Prize winner, still underseen.", mood: ["laugh","edge"] },
+  { t: "The Guilty", y: "2021", p: "netflix", k: "Movie", g: "Crime Thriller", note: "Jake Gyllenhaal, one location, one phone line, and a kidnapping unfolding in real time. All tension, no filler.", mood: ["edge","deep"] },
+  { t: "I'm Thinking of Ending Things", y: "2020", p: "netflix", k: "Movie", g: "Psychological Drama", note: "Charlie Kaufman at his most unsettling — a woman meets her boyfriend's parents and reality starts to fold in on itself. Not a comfort watch, but it stays with you.", mood: ["deep","horror"] },
+  { t: "Windfall", y: "2022", p: "netflix", k: "Movie", g: "Crime Thriller", note: "A man breaks into a tech billionaire's vacation home, and it goes sideways the second the owners show up early. Tight three-hander, all nerve.", mood: ["edge","deep"] },
+
+  // ---------- Crave ----------
+  { t: "Judas and the Black Messiah", y: "2021", p: "crave", k: "Movie", g: "Historical Drama", note: "LaKeith Stanfield and Daniel Kaluuya in the true story of the FBI informant who infiltrated the Black Panther Party. Won two Oscars and still doesn't get talked about enough.", mood: ["deep","truecrime"] },
+  { t: "Booksmart", y: "2019", p: "crave", k: "Movie", g: "Comedy", note: "Two overachieving best friends try to cram four years of fun into one night before graduation. Olivia Wilde's directing debut — sharper and funnier than it got credit for.", mood: ["laugh"] },
 ];
 
 function notifyTilesRendered() {
