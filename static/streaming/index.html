@@ -708,7 +708,7 @@ const NEW = [
   { t: "Heartstopper Forever", y: "2026", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026", mood: ["cozy"] },
   { t: "The Wild Robot", y: "2024", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026", mood: ["family","cozy"] },
   { t: "Resident Alien", y: "2026", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026", mood: ["laugh","edge"] },
-  { t: "Fast & Furious Collection", y: "2001–2023", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
+  { t: "Fast & Furious Collection", pt: "The Fast and the Furious", y: "2001–2023", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
   { t: "Heroes", y: "2006–2010", p: "netflix", k: "Series", g: "Sci-Fi Drama", note: "All four original seasons of the ensemble superhero drama land this month.", when: "Jul 2026", mood: ["edge","family"] },
 
   // ---------- Prime Video ----------
@@ -777,7 +777,7 @@ const POPULAR = [
   { t: "X-Men '97", y: "2026", p: "disney", k: "Series", g: "Animation", note: "Season 2 is holding in the TV Top 5.", rank: 4, chart: "TV Shows", mood: ["edge","family"] },
   { t: "Dancing with the Stars: The Next Pro", y: "2026", p: "disney", k: "Series", g: "Reality", note: "The #1 show on Disney+ this week.", rank: 1, chart: "TV Shows", mood: ["reality"] },
   { t: "The Bear", y: "2022", p: "disney", k: "Series", g: "Drama Comedy", note: "Still pulling a Top 5 TV spot.", rank: 5, chart: "TV Shows", mood: ["deep","laugh"] },
-  { t: "Bluey Compilations", y: "2018", p: "disney", k: "Series", g: "Kids Animation", note: "The kids' favourite is a steady Top 2 TV hit.", rank: 2, chart: "TV Shows", mood: ["family","cozy"] },
+  { t: "Bluey Compilations", pt: "Bluey", y: "2018", p: "disney", k: "Series", g: "Kids Animation", note: "The kids' favourite is a steady Top 2 TV hit.", rank: 2, chart: "TV Shows", mood: ["family","cozy"] },
   { t: "The Testaments", y: "2026", p: "disney", k: "Series", g: "Dystopian Drama", note: "The Handmaid's Tale sequel series holds a Top 7 TV spot.", rank: 7, chart: "TV Shows", mood: ["deep","edge"] },
   { t: "Ready or Not 2: Here I Come", y: "2026", p: "disney", k: "Movie", g: "Horror Comedy", note: "The horror-comedy sequel is a Top 5 movie.", rank: 5, chart: "Movies", mood: ["horror","laugh"] },
   { t: "Avengers: Endgame", y: "2019", p: "disney", k: "Movie", g: "Superhero", note: "Still cracking the Top 10 movie chart.", rank: 10, chart: "Movies", mood: ["edge","family"] },
@@ -880,13 +880,18 @@ function noPosterHTML() {
 }
 function tileHTML(item, badgeHTML) {
   const isLive = item.k === "Live";
-  const posterKey = escAttr(`${item.t}__${item.y || ""}__${item.k}`);
+  // "pt" (poster title) lets a card search TMDB under a different, more
+  // specific title than the one shown to the user — needed for franchise
+  // bundles like "Fast & Furious Collection" that aren't a single TMDB
+  // title themselves and would otherwise never match a poster.
+  const posterTitle = item.pt || item.t;
+  const posterKey = escAttr(`${posterTitle}__${item.y || ""}__${item.k}`);
   const watchUrl = PLATFORM_SEARCH_URL[item.p] ? PLATFORM_SEARCH_URL[item.p](item.t) : null;
   const platformName = PLATFORM_LABEL[item.p] || "";
   return `
     <a class="tile has-link" data-p="${item.p}" href="${escAttr(watchUrl)}" target="_blank" rel="noopener noreferrer">
       ${badgeHTML || ""}
-      <div class="tile-poster-wrap${isLive ? "" : " loading"}" data-poster-key="${posterKey}" data-title="${escAttr(item.t)}" data-year="${escAttr(item.y)}" data-kind="${escAttr(item.k)}">
+      <div class="tile-poster-wrap${isLive ? "" : " loading"}" data-poster-key="${posterKey}" data-title="${escAttr(posterTitle)}" data-year="${escAttr(item.y)}" data-kind="${escAttr(item.k)}">
         <div class="tile-badges-row">
           <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
           <span class="kind-tag">${item.k}</span>
