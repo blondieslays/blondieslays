@@ -384,7 +384,17 @@
     position: relative;
     transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
+  .tile { text-decoration: none; color: inherit; cursor: default; }
   .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--pink-chip); }
+  .tile.has-link { cursor: pointer; }
+  .tile.has-link .tile-poster-wrap::before {
+    content: "↗"; position: absolute; bottom: .55rem; right: .55rem; z-index: 2;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(0,0,0,.6); color: #fff; font: 800 .85rem/1 'Montserrat', sans-serif;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(.75); transition: opacity .15s ease, transform .15s ease;
+  }
+  .tile.has-link:hover .tile-poster-wrap::before { opacity: 1; transform: scale(1); }
   .tile[data-p="netflix"] { border-top-color: var(--netflix); }
   .tile[data-p="prime"]   { border-top-color: var(--prime); }
   .tile[data-p="crave"]   { border-top-color: var(--crave); }
@@ -880,7 +890,7 @@ function tileHTML(item, badgeHTML) {
   const isLive = item.k === "Live";
   const posterKey = escAttr(`${item.t}__${item.y || ""}__${item.k}`);
   return `
-    <div class="tile" data-p="${item.p}">
+    <a class="tile" data-p="${item.p}" target="_blank" rel="noopener noreferrer">
       ${badgeHTML || ""}
       <div class="tile-poster-wrap${isLive ? "" : " loading"}" data-poster-key="${posterKey}" data-title="${escAttr(item.t)}" data-year="${escAttr(item.y)}" data-kind="${escAttr(item.k)}">
         <div class="tile-badges-row">
@@ -895,7 +905,7 @@ function tileHTML(item, badgeHTML) {
         <p class="note">${item.note}</p>
         <p class="when">${item._when || ""}</p>
       </div>
-    </div>
+    </a>
   `;
 }
 
@@ -1078,22 +1088,26 @@ function tileHTML(item, badgeHTML) {
 const TMDB_API_KEY = "c5b3376f86593fde6e8b9d1999b41dec";
 const TMDB_BASE = "https://api.themoviedb.org/3";
 
-/* ---------------- Poster art (lazy TMDB lookups, cached) ----------------
+/* ---------------- Poster art + platform links (lazy TMDB lookups, cached) ----------------
    Every card gets a real poster/thumbnail pulled live from TMDB the first
    time it scrolls into view, then cached in localStorage so repeat visits
-   don't re-fetch. "Live" items (WNBA/NWSL, Lollapalooza) have no poster to
-   fetch and get a placeholder. If a title can't be matched, or the fetch
-   fails, it falls back to the same placeholder gracefully. */
+   don't re-fetch. Each card also becomes clickable, opening the same
+   Canadian JustWatch listing page the "Is It Streaming in Canada?" checker
+   above uses — one click through to wherever it's actually streaming.
+   "Live" items (WNBA/NWSL, Lollapalooza) have no title page to fetch and
+   stay as plain (non-clickable) cards. If a title can't be matched, or a
+   fetch fails, it falls back to the placeholder / stays non-clickable
+   gracefully — never links anywhere unverified. */
 (function initPosters() {
   if (!TMDB_API_KEY) return;
-  const CACHE_KEY = "bsa_poster_cache_v1";
+  const CACHE_KEY = "bsa_poster_cache_v2";
   let cache = {};
   try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)) || {}; } catch (e) { cache = {}; }
   function saveCache() {
     try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch (e) { /* storage full/unavailable — fine, just skip caching */ }
   }
 
-  async function searchPoster(title, year, kind) {
+  async function fetchTitleData(title, year, kind) {
     const type = kind === "Movie" ? "movie" : "tv";
     const yearParam = type === "movie" ? "year" : "first_air_date_year";
     const firstYear = year ? year.split(/[–\-]/)[0].trim() : "";
@@ -1107,9 +1121,21 @@ const TMDB_BASE = "https://api.themoviedb.org/3";
     try {
       let hit = await search(true);
       if (!hit) hit = await search(false);
-      return hit && hit.poster_path ? hit.poster_path : null;
+      if (!hit) return { poster: null, link: null };
+
+      let link = null;
+      try {
+        const provRes = await fetch(`${TMDB_BASE}/${type}/${hit.id}/watch/providers?api_key=${TMDB_API_KEY}`);
+        if (provRes.ok) {
+          const provData = await provRes.json();
+          const ca = (provData.results || {}).CA;
+          if (ca && ca.link) link = ca.link;
+        }
+      } catch (e) { /* couldn't get the link — poster can still work without it */ }
+
+      return { poster: hit.poster_path || null, link };
     } catch (e) {
-      return null;
+      return { poster: null, link: null };
     }
   }
 
@@ -1120,20 +1146,27 @@ const TMDB_BASE = "https://api.themoviedb.org/3";
 
   async function loadPoster(wrap) {
     const key = wrap.dataset.posterKey;
-    let posterPath = cache[key];
-    if (posterPath === undefined) {
-      posterPath = await searchPoster(wrap.dataset.title, wrap.dataset.year, wrap.dataset.kind);
-      cache[key] = posterPath;
+    let data = cache[key];
+    if (data === undefined) {
+      data = await fetchTitleData(wrap.dataset.title, wrap.dataset.year, wrap.dataset.kind);
+      cache[key] = data;
       saveCache();
     }
-    if (!posterPath) { showFallback(wrap); return; }
+
+    const tile = wrap.closest(".tile");
+    if (tile && data && data.link) {
+      tile.href = data.link;
+      tile.classList.add("has-link");
+    }
+
+    if (!data || !data.poster) { showFallback(wrap); return; }
     const img = document.createElement("img");
     img.className = "tile-poster";
     img.alt = `${wrap.dataset.title} poster`;
     img.loading = "lazy";
     img.onload = () => { wrap.classList.remove("loading"); img.classList.add("loaded"); };
     img.onerror = () => { img.remove(); showFallback(wrap); };
-    img.src = `https://image.tmdb.org/t/p/w342${posterPath}`;
+    img.src = `https://image.tmdb.org/t/p/w342${data.poster}`;
     wrap.appendChild(img);
   }
 
