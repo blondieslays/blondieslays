@@ -376,10 +376,10 @@
   .tile {
     background: var(--card);
     border-radius: 18px;
-    padding: 1.25rem 1.3rem 1.35rem;
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
     display: flex; flex-direction: column;
+    overflow: hidden;
     animation: rise .4s ease both;
     border-top: 4px solid var(--pink-med);
     position: relative;
@@ -392,26 +392,62 @@
   .tile[data-p="disney"]  { border-top-color: var(--disney); }
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-  .tile .top-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .5rem; }
+  /* ---------- Poster art (lazy TMDB lookups) ---------- */
+  .tile-poster-wrap {
+    position: relative; width: 100%; aspect-ratio: 2 / 3; flex: none;
+    background: var(--pink-bg); overflow: hidden;
+  }
+  .tile-poster-wrap.loading {
+    background: linear-gradient(100deg, var(--pink-bg) 25%, var(--pink-chip) 45%, var(--pink-bg) 65%);
+    background-size: 250% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -150% 0; } }
+  .tile-poster-wrap::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 38%);
+  }
+  .tile-poster {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity .4s ease;
+  }
+  .tile-poster.loaded { opacity: 1; }
+  .no-poster {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: var(--pink-med); background: var(--pink-bg);
+  }
+  .no-poster svg { width: 30%; height: 30%; opacity: .6; }
+
+  .tile-badges-row {
+    position: absolute; top: .6rem; left: .6rem; right: .6rem; z-index: 2;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: .4rem;
+  }
   .platform-pill {
     font: 800 .62rem 'Montserrat', sans-serif; letter-spacing: .06em; text-transform: uppercase;
     padding: .25rem .6rem; border-radius: 999px; color: #fff; white-space: nowrap;
+    box-shadow: 0 1px 5px rgba(0,0,0,.3);
   }
   .platform-pill[data-p="netflix"] { background: var(--netflix); }
   .platform-pill[data-p="prime"]   { background: var(--prime); }
   .platform-pill[data-p="crave"]   { background: var(--crave); }
   .platform-pill[data-p="disney"]  { background: var(--disney); }
-  .kind-tag { font: 700 .64rem 'Montserrat', sans-serif; color: #b06a92; letter-spacing: .03em; }
+  .kind-tag {
+    font: 700 .6rem 'Montserrat', sans-serif; letter-spacing: .04em; text-transform: uppercase;
+    color: #fff; background: rgba(0,0,0,.4); padding: .25rem .5rem; border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .tile-body { padding: .9rem 1.1rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
 
   .rank-badge {
-    position: absolute; top: -12px; left: 14px;
+    position: absolute; top: -10px; left: 12px; z-index: 3;
     background: var(--pink-dark); color: #fff;
     font: 800 .72rem 'Bebas Neue', sans-serif; letter-spacing: .04em;
     padding: .25rem .6rem; border-radius: 999px;
     box-shadow: 0 2px 8px rgba(190, 24, 93, 0.35);
   }
   .loved-badge {
-    position: absolute; top: -12px; left: 14px;
+    position: absolute; top: -10px; left: 12px; z-index: 3;
     background: var(--pink); color: #fff;
     font: 800 .68rem 'Montserrat', sans-serif; letter-spacing: .03em;
     padding: .25rem .65rem; border-radius: 999px;
@@ -805,18 +841,34 @@ const HIDDEN_GEMS = [
   { t: "Alien", y: "1979", p: "disney", k: "Movie", g: "Sci-Fi Horror", note: "The original — a crew picked off one by one in deep space. If you've only seen the sequels, this one's colder and slower and worse for it (in the best way).", mood: ["horror","edge","deep"] },
 ];
 
+function notifyTilesRendered() {
+  document.dispatchEvent(new Event("bsa:tiles-rendered"));
+}
+function escAttr(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+function noPosterHTML() {
+  return `<div class="no-poster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="5.5" width="19" height="14" rx="2.2"/><path d="M2.5 9.3h19M8 5.5v3.8M16 5.5v3.8"/></svg></div>`;
+}
 function tileHTML(item, badgeHTML) {
+  const isLive = item.k === "Live";
+  const posterKey = escAttr(`${item.t}__${item.y || ""}__${item.k}`);
   return `
     <div class="tile" data-p="${item.p}">
       ${badgeHTML || ""}
-      <div class="top-row">
-        <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
-        <span class="kind-tag">${item.k}</span>
+      <div class="tile-poster-wrap${isLive ? "" : " loading"}" data-poster-key="${posterKey}" data-title="${escAttr(item.t)}" data-year="${escAttr(item.y)}" data-kind="${escAttr(item.k)}">
+        <div class="tile-badges-row">
+          <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
+          <span class="kind-tag">${item.k}</span>
+        </div>
+        ${isLive ? noPosterHTML() : ""}
       </div>
-      <p class="name">${item.t}${item.y ? ` <span class="year">(${item.y})</span>` : ""}</p>
-      <p class="genre">${item.g}</p>
-      <p class="note">${item.note}</p>
-      <p class="when">${item._when || ""}</p>
+      <div class="tile-body">
+        <p class="name">${item.t}${item.y ? ` <span class="year">(${item.y})</span>` : ""}</p>
+        <p class="genre">${item.g}</p>
+        <p class="note">${item.note}</p>
+        <p class="when">${item._when || ""}</p>
+      </div>
     </div>
   `;
 }
@@ -840,6 +892,7 @@ function tileHTML(item, badgeHTML) {
     grid.innerHTML = filtered.map(item => tileHTML({ ...item, _when: `New ${item.when}` })).join("");
     empty.hidden = filtered.length !== 0;
     resultLabel.textContent = `${filtered.length} new this month · Last updated ${NEW_UPDATED}`;
+    notifyTilesRendered();
   }
 
   toolbar.addEventListener("click", (e) => {
@@ -876,6 +929,7 @@ function tileHTML(item, badgeHTML) {
     }).join("");
     empty.hidden = filtered.length !== 0;
     resultLabel.textContent = `${filtered.length} trending picks · Charts pulled ${POPULAR_SNAPSHOT}`;
+    notifyTilesRendered();
   }
 
   toolbar.addEventListener("click", (e) => {
@@ -897,6 +951,7 @@ function tileHTML(item, badgeHTML) {
     const badge = `<span class="loved-badge">🖤 Elise loved this</span>`;
     return tileHTML({ ...item, _when: "Personal pick" }, badge);
   }).join("");
+  notifyTilesRendered();
 })();
 
 /* ---------------- Hidden Gems ---------------- */
@@ -918,6 +973,7 @@ function tileHTML(item, badgeHTML) {
     grid.innerHTML = filtered.map(item => tileHTML({ ...item, _when: "Hidden gem" })).join("");
     empty.hidden = filtered.length !== 0;
     resultLabel.textContent = `${filtered.length} deep cuts worth digging for`;
+    notifyTilesRendered();
   }
 
   toolbar.addEventListener("click", (e) => {
@@ -967,6 +1023,7 @@ function tileHTML(item, badgeHTML) {
       return tileHTML({ ...item, _when: when });
     }).join("");
     empty.hidden = matches.length !== 0;
+    notifyTilesRendered();
     const platformNote = activePlatform === "all" ? "" : ` on ${PLATFORM_LABEL[activePlatform]}`;
     resultLabel.textContent = `${matches.length} picks for "${MOOD_LABEL[activeMood]}"${platformNote}`;
   }
@@ -994,6 +1051,108 @@ function tileHTML(item, badgeHTML) {
    Free key, ~2 min to get: themoviedb.org/settings/api → paste below.        */
 const TMDB_API_KEY = "c5b3376f86593fde6e8b9d1999b41dec";
 const TMDB_BASE = "https://api.themoviedb.org/3";
+
+/* ---------------- Poster art (lazy TMDB lookups, cached) ----------------
+   Every card gets a real poster/thumbnail pulled live from TMDB the first
+   time it scrolls into view, then cached in localStorage so repeat visits
+   don't re-fetch. "Live" items (WNBA/NWSL, Lollapalooza) have no poster to
+   fetch and get a placeholder. If a title can't be matched, or the fetch
+   fails, it falls back to the same placeholder gracefully. */
+(function initPosters() {
+  if (!TMDB_API_KEY) return;
+  const CACHE_KEY = "bsa_poster_cache_v1";
+  let cache = {};
+  try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)) || {}; } catch (e) { cache = {}; }
+  function saveCache() {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch (e) { /* storage full/unavailable — fine, just skip caching */ }
+  }
+
+  async function searchPoster(title, year, kind) {
+    const type = kind === "Movie" ? "movie" : "tv";
+    const yearParam = type === "movie" ? "year" : "first_air_date_year";
+    const firstYear = year ? year.split(/[–\-]/)[0].trim() : "";
+    async function search(withYear) {
+      const url = `${TMDB_BASE}/search/${type}?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(title)}&include_adult=false${withYear && firstYear ? `&${yearParam}=${encodeURIComponent(firstYear)}` : ""}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("search failed");
+      const data = await res.json();
+      return (data.results || [])[0];
+    }
+    try {
+      let hit = await search(true);
+      if (!hit) hit = await search(false);
+      return hit && hit.poster_path ? hit.poster_path : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function showFallback(wrap) {
+    wrap.classList.remove("loading");
+    if (!wrap.querySelector(".no-poster")) wrap.insertAdjacentHTML("beforeend", noPosterHTML());
+  }
+
+  async function loadPoster(wrap) {
+    const key = wrap.dataset.posterKey;
+    let posterPath = cache[key];
+    if (posterPath === undefined) {
+      posterPath = await searchPoster(wrap.dataset.title, wrap.dataset.year, wrap.dataset.kind);
+      cache[key] = posterPath;
+      saveCache();
+    }
+    if (!posterPath) { showFallback(wrap); return; }
+    const img = document.createElement("img");
+    img.className = "tile-poster";
+    img.alt = `${wrap.dataset.title} poster`;
+    img.loading = "lazy";
+    img.onload = () => { wrap.classList.remove("loading"); img.classList.add("loaded"); };
+    img.onerror = () => { img.remove(); showFallback(wrap); };
+    img.src = `https://image.tmdb.org/t/p/w342${posterPath}`;
+    wrap.appendChild(img);
+  }
+
+  const queue = [];
+  let active = 0;
+  const MAX_CONCURRENT = 4;
+  function pump() {
+    while (active < MAX_CONCURRENT && queue.length) {
+      const wrap = queue.shift();
+      active++;
+      loadPoster(wrap).catch(() => showFallback(wrap)).finally(() => { active--; pump(); });
+    }
+  }
+
+  const queued = new WeakSet();
+  const hasIO = typeof IntersectionObserver !== "undefined";
+  const observer = hasIO ? new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const wrap = entry.target;
+      observer.unobserve(wrap);
+      if (queued.has(wrap)) return;
+      queued.add(wrap);
+      queue.push(wrap);
+      pump();
+    });
+  }, { rootMargin: "500px 0px" }) : null;
+
+  function observeAll() {
+    document.querySelectorAll(".tile-poster-wrap.loading").forEach(wrap => {
+      if (queued.has(wrap)) return;
+      if (hasIO) {
+        observer.observe(wrap);
+      } else {
+        // no IntersectionObserver support — just load everything up front
+        queued.add(wrap);
+        queue.push(wrap);
+        pump();
+      }
+    });
+  }
+
+  observeAll();
+  document.addEventListener("bsa:tiles-rendered", observeAll);
+})();
 
 (function initChecker() {
   const input = document.getElementById("check-q");
