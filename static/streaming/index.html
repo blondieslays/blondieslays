@@ -1141,7 +1141,7 @@ const TMDB_BASE = "https://api.themoviedb.org/3";
     img.loading = "lazy";
     img.onload = () => { wrap.classList.remove("loading"); img.classList.add("loaded"); };
     img.onerror = () => { img.remove(); showFallback(wrap); };
-    img.src = `https://image.tmdb.org/t/p/w342${data.poster}`;
+    img.src = `https://image.tmdb.org/t/p/w342${posterPath}`;
     wrap.appendChild(img);
   }
 
