@@ -633,7 +633,19 @@
       <img src="/images/me.png" alt="" class="picks-avatar">
       <p>These are the ones I've actually loved — not chart data, just my personal taste. Started with <strong>Apex</strong> because I couldn't stop thinking about it. Tell me what hits and what misses and I'll keep tuning this list.</p>
     </div>
+    <div class="searchbar">
+      <input id="q-picks" type="search" placeholder="Search a title…" autocomplete="off">
+    </div>
+    <div class="toolbar" id="toolbar-picks">
+      <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
+      <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+      <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+      <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+      <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+    </div>
+    <p class="label" id="resultLabel-picks"></p>
     <div class="grid" id="grid-picks"></div>
+    <div class="empty" id="empty-picks" hidden>Nothing matches that search — try another title.</div>
     <p class="footnote">
       A living list, not an algorithm — updated whenever Elise tells us what she's loved lately.
     </p>
@@ -835,6 +847,80 @@ const ELISE_PICKS = [
   { t: "The Tinder Swindler", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "A conman uses dating apps to con women out of millions. Told entirely through the women who tracked him down.", mood: ["truecrime"] },
   { t: "Conversations with a Killer: The Ted Bundy Tapes", y: "2019", p: "netflix", k: "Docuseries", g: "True Crime", note: "Built from over 100 hours of real death-row interview tapes. No reenactments — just Bundy, in his own words.", mood: ["truecrime","deep"] },
   { t: "The Jinx: The Life and Deaths of Robert Durst", y: "2015", p: "crave", k: "Docuseries", g: "True Crime", note: "The real-footage true-crime doc that ends with the subject unknowingly confessing on a hot mic. Genuinely stunning.", mood: ["truecrime","deep"] },
+
+  // ---------- July 2026 expansion pass — every title below re-verified
+  // against JustWatch Canada / the platform's own CA listing for
+  // subscription (not rent/buy) inclusion before being added. ----------
+  { t: "Wild Wild Country", y: "2018", p: "netflix", k: "Docuseries", g: "True Crime", note: "All real archival footage of the Rajneeshpuram commune — no reenactments, just wild 80s news clips and interviews with people who lived it.", mood: ["truecrime","deep"] },
+  { t: "The Keepers", y: "2017", p: "netflix", k: "Docuseries", g: "True Crime", note: "A slow-burn real-footage investigation into a nun's unsolved murder and a cover-up — heavy, no dramatization, just survivors and amateur sleuths.", mood: ["truecrime","deep"] },
+  { t: "Making a Murderer", y: "2015", p: "netflix", k: "Docuseries", g: "True Crime", note: "The one that started the true-crime docuseries boom — real courtroom footage and interviews, no actors playing anyone.", mood: ["truecrime","deep"] },
+  { t: "Abducted in Plain Sight", y: "2017", p: "netflix", k: "Movie", g: "True Crime", note: "Real interviews with the family, and it's genuinely unbelievable — no reenactment needed because the story alone is wild.", mood: ["truecrime"] },
+  { t: "The Trials of Gabriel Fernandez", y: "2020", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage docuseries on a devastating child abuse case and the systemic failures around it — tough watch, all authentic interviews.", mood: ["truecrime","deep"] },
+  { t: "Night Stalker: The Hunt for a Serial Killer", y: "2021", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real detective interviews chasing Richard Ramirez through 1985 LA — archival footage, no actors.", mood: ["truecrime","edge"] },
+  { t: "The Ripper", y: "2020", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real news footage and interviews on the Yorkshire Ripper manhunt, including how police botched it — all documentary, no reenactment.", mood: ["truecrime","deep"] },
+  { t: "Crime Scene: The Times Square Killer", y: "2021", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage look at 1970s-80s NYC and the Torso Killer — gritty archival material, no dramatized scenes.", mood: ["truecrime","edge"] },
+  { t: "The Sons of Sam: A Descent Into Darkness", y: "2021", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real interviews and archival footage following a journalist's obsessive theory about the Son of Sam killings — documentary style throughout.", mood: ["truecrime","deep"] },
+  { t: "Girl in the Picture", y: "2022", p: "netflix", k: "Movie", g: "True Crime", note: "Real footage documentary unraveling a woman's true identity after her mysterious death — twists on twists, no actors.", mood: ["truecrime","deep"] },
+  { t: "Amanda Knox", y: "2016", p: "netflix", k: "Movie", g: "True Crime", note: "Amanda Knox herself sits down for this one, plus the prosecutor and journalists — straight documentary, no reenactments.", mood: ["truecrime"] },
+  { t: "Casting JonBenet", y: "2017", p: "netflix", k: "Movie", g: "True Crime", note: "An unusual real-footage approach — local actors auditioning to play people in the case, all real commentary, no scripted drama.", mood: ["truecrime","deep"] },
+  { t: "The Confession Tapes", y: "2017", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real interrogation footage examining coerced confessions — pure documentary, lets the actual tapes do the talking.", mood: ["truecrime","deep"] },
+  { t: "I Am a Killer", y: "2018", p: "netflix", k: "Docuseries", g: "True Crime", note: "Death row inmates telling their own stories on camera — no actors, just unfiltered real interviews.", mood: ["truecrime","edge"] },
+  { t: "The Pharmacist", y: "2020", p: "netflix", k: "Docuseries", g: "True Crime", note: "A grieving father turns amateur investigator to bring down a pill mill doctor — all real footage, no reenactments.", mood: ["truecrime","deep"] },
+  { t: "Murder Among the Mormons", y: "2021", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage docuseries on a forgery scandal that turned into a bombing spree — genuinely bizarre true story, no actors.", mood: ["truecrime"] },
+  { t: "Killer Sally", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Sally McNeil tells her own story on camera about the murder that ended her marriage — real interviews, no dramatization.", mood: ["truecrime"] },
+  { t: "Bad Vegan", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage chaos about a vegan restaurateur, a con man, and a plan to make her dog immortal — you couldn't script this, and they didn't.", mood: ["truecrime"] },
+  { t: "Fear City: New York vs The Mafia", y: "2020", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real FBI footage and interviews on the takedown of NYC's five mafia families — straight documentary.", mood: ["truecrime","deep"] },
+  { t: "Trainwreck: Woodstock '99", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real festival footage and interviews on how Woodstock '99 spiraled into riots — no reenactments, just the chaos as it happened.", mood: ["truecrime","edge"] },
+  { t: "Trainwreck: The Astroworld Tragedy", y: "2025", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage from festivalgoers plus 911 calls and survivor interviews on the Astroworld crowd crush — heavy, documentary-style.", mood: ["truecrime","deep"] },
+  { t: "American Murder: The Family Next Door", y: "2020", p: "netflix", k: "Movie", g: "True Crime", note: "Told entirely through real texts, police footage, and home videos — no actors, no narration, just the actual record.", mood: ["truecrime","deep"] },
+  { t: "Conversations with a Killer: The John Wayne Gacy Tapes", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real archival recordings of Gacy himself plus expert interviews — documentary through and through.", mood: ["truecrime","edge"] },
+  { t: "Conversations with a Killer: The Jeffrey Dahmer Tapes", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real unearthed recordings of Dahmer with his own legal team — if you want the actual footage instead of the dramatized Netflix series, this is it.", mood: ["truecrime","edge"] },
+  { t: "Killer Inside: The Mind of Aaron Hernandez", y: "2020", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real interviews with teammates and insiders tracing Hernandez's fall from NFL star to convicted killer — documentary, no reenactments.", mood: ["truecrime","deep"] },
+  { t: "Web of Make Believe: Death, Lies and the Internet", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage anthology on internet-enabled crimes like swatting and cyber harassment — all documentary interviews.", mood: ["truecrime","edge"] },
+  { t: "Depp v Heard", y: "2023", p: "netflix", k: "Docuseries", g: "Courtroom Documentary", note: "Built entirely from real courtroom footage of the actual trial — no reenactments, just the testimony as it happened.", mood: ["truecrime"] },
+  { t: "The Devil Next Door", y: "2019", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real trial footage from the Cleveland grandfather accused of being 'Ivan the Terrible' — documentary, no actors.", mood: ["truecrime","deep"] },
+  { t: "Time: The Kalief Browder Story", y: "2017", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real home video and interviews telling Kalief Browder's story — devastating and entirely non-dramatized.", mood: ["truecrime","deep"] },
+  { t: "Athlete A", y: "2020", p: "netflix", k: "Movie", g: "True Crime", note: "Real interviews with the gymnasts and reporters who exposed Larry Nassar — straight documentary, no dramatization.", mood: ["truecrime","deep"] },
+  { t: "Procession", y: "2021", p: "netflix", k: "Movie", g: "True Crime", note: "Real survivors of clergy abuse process their trauma on camera through their own short films — unconventional but 100% real footage, no actors standing in.", mood: ["truecrime","deep"] },
+  { t: "Capturing the Killer Nurse", y: "2022", p: "netflix", k: "Movie", g: "True Crime", note: "Real footage on how investigators finally caught nurse Charles Cullen — documentary, no reenactments.", mood: ["truecrime","edge"] },
+  { t: "Chimp Crazy", y: "2024", p: "crave", k: "Docuseries", g: "True Crime", note: "Real footage following an exotic-animal broker's standoff with authorities over her pet chimp — unhinged real people, no scripting.", mood: ["truecrime","edge"] },
+  { t: "Dirty Money", y: "2018", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real footage anthology on corporate greed and financial crime, from Alex Gibney — documentary interviews and paper trails, no dramatization.", mood: ["truecrime","deep"] },
+  { t: "What Jennifer Did", y: "2024", p: "netflix", k: "Movie", g: "True Crime", note: "A Canadian case (Markham, Ontario) told through real police footage and interviews — no reenactments, just the unraveling investigation.", mood: ["truecrime","deep"] },
+  { t: "Unknown Number: The High School Catfish", y: "2025", p: "netflix", k: "Movie", g: "True Crime", note: "Real footage documentary on a teen catfishing/harassment case with a genuinely shocking reveal — no actors, all real people.", mood: ["truecrime","edge"] },
+  { t: "Get Gotti", y: "2023", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real FBI and mob-side interviews on the takedown of John Gotti — documentary, no dramatized courtroom scenes.", mood: ["truecrime"] },
+  { t: "The Vow", y: "2020", p: "crave", k: "Docuseries", g: "True Crime", note: "Real interviews and footage tracking former NXIVM members as they turn on the cult and its leader. No reenactments, just raw first-person accounts.", mood: ["truecrime","deep"] },
+  { t: "Q: Into the Storm", y: "2021", p: "crave", k: "Docuseries", g: "True Crime", note: "A six-part dive into the QAnon conspiracy with real interviews and on-the-ground footage as the filmmaker tries to unmask Q.", mood: ["truecrime","deep"] },
+  { t: "I Love You, Now Die: The Commonwealth v. Michelle Carter", y: "2019", p: "crave", k: "Docuseries", g: "True Crime", note: "Two-part doc built from real courtroom footage, texts, and interviews about the infamous texting suicide case. Zero dramatization.", mood: ["truecrime","deep"] },
+  { t: "Crazy, Not Insane", y: "2020", p: "crave", k: "Movie", g: "True Crime", note: "Alex Gibney's real-footage look at a psychiatrist who studied convicted killers' minds for decades. All archival interviews, no actors.", mood: ["truecrime","deep"] },
+  { t: "Beware the Slenderman", y: "2016", p: "crave", k: "Movie", g: "True Crime", note: "Real footage and interviews unpacking the Slender Man stabbing case involving two 12-year-olds. Straight documentary, no reenactments.", mood: ["truecrime","edge"] },
+  { t: "The Case Against Adnan Syed", y: "2019", p: "crave", k: "Docuseries", g: "True Crime", note: "The Serial podcast case gets the real-footage doc treatment, with new interviews and evidence from the Hae Min Lee murder investigation.", mood: ["truecrime","deep"] },
+  { t: "McMillions", y: "2020", p: "crave", k: "Docuseries", g: "True Crime", note: "Six-part real-footage doc on the wild true story behind the McDonald's Monopoly scam. All actual interviews with FBI agents and grifters.", mood: ["truecrime"] },
+  { t: "The Jinx: Part Two", y: "2024", p: "crave", k: "Docuseries", g: "True Crime", note: "The Robert Durst saga continues with real prison calls, new interviews, and footage picking up where the Emmy-winning original left off.", mood: ["truecrime","deep"] },
+  { t: "Savior Complex", y: "2023", p: "crave", k: "Docuseries", g: "True Crime", note: "Real-footage doc on the missionary accused of playing doctor to sick kids in Uganda without any medical training. Interviews, not reenactments.", mood: ["truecrime","deep"] },
+  { t: "Telemarketers", y: "2023", p: "crave", k: "Docuseries", g: "True Crime", note: "Two office buddies expose a shady telemarketing scam with decades of real home-video footage they shot themselves. Genuinely wild and all real.", mood: ["truecrime"] },
+  { t: "Mind Over Murder", y: "2022", p: "crave", k: "Docuseries", g: "True Crime", note: "Real interviews revisit the bizarre 1985 Beatrice Six murder confessions, questioning what actually happened. No dramatized scenes.", mood: ["truecrime","deep"] },
+  { t: "The Staircase", y: "2004", p: "netflix", k: "Docuseries", g: "True Crime", note: "The original real-footage courtroom doc that basically invented modern true crime bingeing. Not to be confused with the 2022 scripted version.", mood: ["truecrime","deep"] },
+  { t: "Last Call: When a Serial Killer Stalked Queer New York", y: "2023", p: "crave", k: "Docuseries", g: "True Crime", note: "Real interviews and archival footage on the serial killer who preyed on gay men in early-90s NYC nightlife. Heavy, all-real doc.", mood: ["truecrime","deep","edge"] },
+  { t: "Phoenix Rising", y: "2022", p: "crave", k: "Docuseries", g: "True Crime", note: "Evan Rachel Wood's real-footage doc about surviving abuse and pushing for the Phoenix Act. First-person interviews throughout, no reenactments.", mood: ["truecrime","deep"] },
+  { t: "Burden of Proof", y: "2023", p: "crave", k: "Docuseries", g: "True Crime", note: "Filmed over seven real years, this doc follows a brother's search for the truth about his sister's 1987 disappearance. All real footage.", mood: ["truecrime","deep"] },
+  { t: "Take Care of Maya", y: "2023", p: "netflix", k: "Movie", g: "True Crime", note: "Real-footage doc on a Florida family's fight against child protective services after their daughter's chronic pain diagnosis was doubted. Gut-wrenching and all real.", mood: ["truecrime","deep"] },
+  { t: "The Menendez Brothers", y: "2024", p: "netflix", k: "Movie", g: "True Crime", note: "Lyle and Erik Menendez tell their side via real prison audio interviews, alongside lawyers, journalists, and jurors. Straight documentary, no actors playing the brothers.", mood: ["truecrime","deep"] },
+  { t: "The Program: Cons, Cults, and Kidnapping", y: "2024", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real survivors of a troubled-teen boarding school speak out about the abuse they endured. All interviews and real footage, no dramatization.", mood: ["truecrime","deep","edge"] },
+  { t: "Awake", y: "2021", p: "netflix", k: "Movie", g: "Survival Thriller", note: "The world goes dark, nobody can sleep anymore, and everyone's slowly losing it — one mom has to get her kids somewhere safe before the madness catches up.", mood: ["edge","horror"] },
+  { t: "Gerald's Game", y: "2017", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A sex game goes wrong, she's handcuffed alone to a bed in a remote lake house, and her own mind starts turning on her. Mike Flanagan at his most claustrophobic.", mood: ["horror","edge"] },
+  { t: "Bird Box", y: "2018", p: "netflix", k: "Movie", g: "Survival Thriller", note: "Something outside makes you lose your mind the second you look at it, so Sandra Bullock has to get two kids down a river blindfolded. Peak dread-scroll viewing.", mood: ["edge","horror"] },
+  { t: "Missing", y: "2023", p: "netflix", k: "Movie", g: "Screenlife Thriller", note: "Her mom vanishes on vacation, so a teenager solves it all from her laptop — Find My Friends, hacked emails, the works. Told entirely through screens and it still gets your pulse up.", mood: ["edge"] },
+  { t: "Buried", y: "2010", p: "crave", k: "Movie", g: "Survival Thriller", note: "Ryan Reynolds wakes up in a coffin, six feet under, with a lighter, a phone, and almost no air. The entire movie never leaves the box. Unbearable in the best way.", mood: ["edge"] },
+  { t: "The Shallows", y: "2016", p: "crave", k: "Movie", g: "Survival Thriller", note: "A surfer gets stranded 200 yards from shore with a great white circling and the tide against her. Blake Lively vs. a shark, no backup coming.", mood: ["edge","horror"] },
+  { t: "47 Meters Down", y: "2017", p: "crave", k: "Movie", g: "Survival Thriller", note: "Two sisters get stuck in a shark cage at the bottom of the ocean with the oxygen running out. Claustrophobic, cold, and mean about it.", mood: ["edge","horror"] },
+  { t: "It Follows", y: "2014", p: "prime", k: "Movie", g: "Psychological Horror", note: "Something is always walking toward you, slowly, and it never stops — and now it's coming for her. One of the most purely dread-soaked horror films of the decade.", mood: ["horror","edge"] },
+  { t: "Smile", y: "2022", p: "crave", k: "Movie", g: "Psychological Horror", note: "A therapist witnesses something horrific, and then people around her start smiling at her in ways that are very much not okay. Slow-burn dread with a killer final stretch.", mood: ["horror"] },
+  { t: "Trap", y: "2024", p: "netflix", k: "Movie", g: "Cat-and-Mouse Thriller", note: "A dad takes his teen daughter to a pop concert and slowly realizes the whole arena is a trap built specifically to catch him. Shyamalan doing pure paranoid tension.", mood: ["edge"] },
+  { t: "Longlegs", y: "2024", p: "prime", k: "Movie", g: "Psychological Horror", note: "An FBI agent chases occult clues left by a serial killer who might not be entirely human. Nicolas Cage is genuinely unsettling in this one.", mood: ["horror","edge"] },
+  { t: "Blink Twice", y: "2024", p: "crave", k: "Movie", g: "Psychological Thriller", note: "A tech billionaire whisks a cocktail waitress off to his private island for the dream vacation — and then the days start blurring together in ways that feel very wrong.", mood: ["edge","horror"] },
+  { t: "Heretic", y: "2024", p: "crave", k: "Movie", g: "Home Invasion Thriller", note: "Two young missionaries knock on the wrong door and end up locked in a game of cat-and-mouse with a very charming, very disturbing Hugh Grant.", mood: ["horror","edge"] },
+  { t: "It's What's Inside", y: "2024", p: "netflix", k: "Movie", g: "Body Horror", note: "A pre-wedding reunion turns into a body-swapping psychological meltdown when an old friend shows up with a very mysterious suitcase.", mood: ["horror","edge"] },
+  { t: "Companion", y: "2025", p: "crave", k: "Movie", g: "Sci-Fi Horror", note: "A weekend at a friend's lake house turns into a nightmare when it becomes clear not everyone there is entirely human. From the producer of Barbarian — twisty and vicious.", mood: ["horror","edge"] },
 ];
 /* Feedback log: Elise passed on Lee Cronin's The Mummy (creature horror/camp)
    and on The Grey, Project Hail Mary, House of the Dragon, and The Running Man
@@ -1025,11 +1111,38 @@ function tileHTML(item, badgeHTML) {
 /* ---------------- Elise's Picks ---------------- */
 (function initPicks() {
   const grid = document.getElementById("grid-picks");
-  grid.innerHTML = ELISE_PICKS.map(item => {
+  const empty = document.getElementById("empty-picks");
+  const resultLabel = document.getElementById("resultLabel-picks");
+  const toolbar = document.getElementById("toolbar-picks");
+  const searchInput = document.getElementById("q-picks");
+  let activePlatform = "all";
+
+  function render() {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = ELISE_PICKS.filter(item => {
+      const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
+      const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
+      return matchesPlatform && matchesQuery;
+    });
     const badge = `<span class="loved-badge">🖤 Elise loved this</span>`;
-    return tileHTML({ ...item, _when: "Personal pick" }, badge);
-  }).join("");
-  notifyTilesRendered();
+    grid.innerHTML = filtered.map(item => tileHTML({ ...item, _when: "Personal pick" }, badge)).join("");
+    empty.hidden = filtered.length !== 0;
+    resultLabel.textContent = activePlatform === "all"
+      ? `${filtered.length} personal picks`
+      : `${filtered.length} personal picks on ${PLATFORM_LABEL[activePlatform]}`;
+    notifyTilesRendered();
+  }
+
+  toolbar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activePlatform = btn.dataset.p;
+    render();
+  });
+  searchInput.addEventListener("input", render);
+  render();
 })();
 
 /* ---------------- Hidden Gems ---------------- */
@@ -1140,7 +1253,7 @@ const TMDB_BASE = "https://api.themoviedb.org/3";
    the fetch fails, it falls back to the same placeholder gracefully. */
 (function initPosters() {
   if (!TMDB_API_KEY) return;
-  const CACHE_KEY = "bsa_poster_cache_v2";
+  const CACHE_KEY = "bsa_poster_cache_v3";
   let cache = {};
   try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)) || {}; } catch (e) { cache = {}; }
   function saveCache() {
@@ -1148,19 +1261,27 @@ const TMDB_BASE = "https://api.themoviedb.org/3";
   }
 
   async function fetchPoster(title, year, kind) {
-    const type = kind === "Movie" ? "movie" : "tv";
-    const yearParam = type === "movie" ? "year" : "first_air_date_year";
     const firstYear = year ? year.split(/[–\-]/)[0].trim() : "";
-    async function search(withYear) {
+    async function searchType(type, withYear) {
+      const yearParam = type === "movie" ? "year" : "first_air_date_year";
       const url = `${TMDB_BASE}/search/${type}?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(title)}&include_adult=false${withYear && firstYear ? `&${yearParam}=${encodeURIComponent(firstYear)}` : ""}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("search failed");
       const data = await res.json();
       return (data.results || [])[0];
     }
+    // Many "Docuseries"-tagged entries are actually single documentary FILMS
+    // in TMDB (e.g. The Tinder Swindler), not TV — and vice versa. Rather than
+    // trust the `kind` label, try the expected type first, then fall back to
+    // the opposite type before giving up, so a wrong guess never means a
+    // missing poster.
+    const primary = kind === "Movie" ? "movie" : "tv";
+    const secondary = primary === "movie" ? "tv" : "movie";
     try {
-      let hit = await search(true);
-      if (!hit) hit = await search(false);
+      let hit = await searchType(primary, true);
+      if (!hit) hit = await searchType(primary, false);
+      if (!hit) hit = await searchType(secondary, true);
+      if (!hit) hit = await searchType(secondary, false);
       return hit && hit.poster_path ? hit.poster_path : null;
     } catch (e) {
       return null;
