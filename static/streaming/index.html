@@ -686,11 +686,21 @@ const PLATFORM_LABEL = { netflix: "Netflix", prime: "Prime Video", crave: "Crave
 // Links go straight to the real platform's own Canadian site — a search for
 // the title, not a third-party aggregator — so clicking a card gets you to
 // where you can actually press play, not one more page to click through.
+// Each pattern below was checked against the platform's actual URL structure
+// (not just assumed): Netflix and Prime Video's formats are confirmed via
+// Wikidata's official "search engine URL" property for each service; Crave's
+// is confirmed from real indexed crave.ca/en/search/{term} pages (it's a
+// path segment, not a query string — ?q= silently redirects to the homepage).
+// Disney+ has no confirmed public deep-link search route — disneyplus.com/search
+// 404s (caught by Elise) and no working alternative could be verified without
+// a live browser session, so it falls back to the Disney+ Canada homepage
+// until a real pattern is confirmed. Swap this back to a search URL the
+// moment one's verified working.
 const PLATFORM_SEARCH_URL = {
   netflix: t => `https://www.netflix.com/search?q=${encodeURIComponent(t)}`,
-  prime:   t => `https://www.primevideo.com/search?phrase=${encodeURIComponent(t)}`,
-  crave:   t => `https://www.crave.ca/en/search?q=${encodeURIComponent(t)}`,
-  disney:  t => `https://www.disneyplus.com/search?q=${encodeURIComponent(t)}`,
+  prime:   t => `https://www.primevideo.com/search/?phrase=${encodeURIComponent(t)}`,
+  crave:   t => `https://www.crave.ca/en/search/${encodeURIComponent(t)}`,
+  disney:  () => `https://www.disneyplus.com/en-ca`,
 };
 const MOOD_LABEL = { cozy: "Cozy & Feel-Good", laugh: "Laugh Out Loud", edge: "Edge-of-Your-Seat", deep: "Something to Think About", family: "Family Movie Night", horror: "Horror", truecrime: "True Crime" };
 function matchesMood(item, mood) {
