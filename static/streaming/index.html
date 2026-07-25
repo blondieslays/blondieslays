@@ -237,6 +237,13 @@
   .homebubble:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
   .homebubble b { color: #fff; text-decoration: underline; }
 
+  /* ---------- Couch note (small personal aside, doubles as affiliate disclosure) ---------- */
+  .couch-note {
+    text-align: center; max-width: 560px; margin: 0 auto 1.6rem;
+    font: 600 .78rem/1.6 'Montserrat', sans-serif; color: #a86487;
+  }
+  .couch-note a { color: var(--pink-dark); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
   /* ---------- Availability checker ---------- */
   .checker {
     max-width: 580px; margin: 0 auto 2.2rem;
@@ -548,6 +555,10 @@
       <span><b>Back to Blondie Slays</b></span>
     </a>
   </div>
+
+  <!-- TODO (Elise): swap AFFILIATE_LINK_SIMONS for your real Simons CA affiliate
+       link once your application at simons.ca/en/affiliate-program is approved. -->
+  <p class="couch-note">Marathoning this list in something comfy from <a href="AFFILIATE_LINK_SIMONS" target="_blank" rel="noopener sponsored">Simons</a> — this page has a couple of affiliate links, meaning I may earn a small commission if you shop through them, at no extra cost to you.</p>
 
   <section class="checker">
     <p class="label">Is It Streaming In Canada?</p>
