@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {{- /* Hugo-managed pages (home, /downloads/, etc.) */ -}}
   {{ range .Data.Pages }}
-  {{- if .Permalink }}
+  {{- if and .Permalink (ne .Layout "thank-you") }}
   <url>
     <loc>{{ .Permalink }}</loc>
     {{- if not .Lastmod.IsZero }}
