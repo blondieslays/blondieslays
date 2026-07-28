@@ -111,6 +111,7 @@
     --prime:       #00A8E1;
     --crave:       #6c2bd9;
     --disney:      #113CCF;
+    --theatres:    #C9A227;
   }
 
   * { box-sizing: border-box; }
@@ -331,6 +332,7 @@
   .filter-btn[data-p="prime"] .dot { background: var(--prime); }
   .filter-btn[data-p="crave"] .dot { background: var(--crave); }
   .filter-btn[data-p="disney"] .dot { background: var(--disney); }
+  .filter-btn[data-p="theatres"] .dot { background: var(--theatres); }
   .filter-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
   .filter-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
   .filter-btn.active .dot { background: #fff; }
@@ -342,6 +344,7 @@
   .filter-btn[data-p="prime"].active   { background: var(--prime);   border-color: var(--prime); }
   .filter-btn[data-p="crave"].active   { background: var(--crave);   border-color: var(--crave); }
   .filter-btn[data-p="disney"].active  { background: var(--disney);  border-color: var(--disney); }
+  .filter-btn[data-p="theatres"].active { background: var(--theatres); border-color: var(--theatres); }
   .filter-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   .searchbar {
@@ -405,6 +408,7 @@
   .tile[data-p="prime"]   { border-top-color: var(--prime); }
   .tile[data-p="crave"]   { border-top-color: var(--crave); }
   .tile[data-p="disney"]  { border-top-color: var(--disney); }
+  .tile[data-p="theatres"] { border-top-color: var(--theatres); }
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
   /* ---------- Poster art (lazy TMDB lookups) ---------- */
@@ -447,6 +451,7 @@
   .platform-pill[data-p="prime"]   { background: var(--prime); }
   .platform-pill[data-p="crave"]   { background: var(--crave); }
   .platform-pill[data-p="disney"]  { background: var(--disney); }
+  .platform-pill[data-p="theatres"] { background: var(--theatres); }
   .kind-tag {
     font: 700 .6rem 'Montserrat', sans-serif; letter-spacing: .04em; text-transform: uppercase;
     color: #fff; background: rgba(0,0,0,.4); padding: .25rem .5rem; border-radius: 999px;
@@ -693,6 +698,7 @@
       <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
       <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
       <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+      <button class="filter-btn" data-p="theatres"><span class="dot"></span>In Theatres</button>
     </div>
     <p class="label" id="resultLabel-soon"></p>
     <div class="grid" id="grid-soon"></div>
@@ -735,7 +741,7 @@
 const NEW_UPDATED = "July 2026";
 const POPULAR_SNAPSHOT = "July 19, 2026";
 
-const PLATFORM_LABEL = { netflix: "Netflix", prime: "Prime Video", crave: "Crave", disney: "Disney+" };
+const PLATFORM_LABEL = { netflix: "Netflix", prime: "Prime Video", crave: "Crave", disney: "Disney+", theatres: "In Theatres" };
 // Links go straight to the real platform's own Canadian site — a search for
 // the title, not a third-party aggregator — so clicking a card gets you to
 // where you can actually press play, not one more page to click through.
@@ -1008,33 +1014,15 @@ const HIDDEN_GEMS = [
   { t: "Life", y: "2017", p: "crave", k: "Movie", g: "Sci-Fi Horror", note: "The ISS crew finds proof of life on Mars, brings it aboard, and immediately regrets every decision that led here. Claustrophobic space horror, no mercy.", mood: ["edge","horror"] },
   { t: "Sanctuary", y: "2022", p: "prime", k: "Movie", g: "Psychological Thriller", note: "A hotel heir and his longtime dominatrix renegotiate their arrangement in one room — and it turns into a ruthless power struggle where nobody's safe.", mood: ["edge","deep"] },
   { t: "Deep Water", y: "2022", p: "prime", k: "Movie", g: "Psychological Thriller", note: "A husband lets his wife's affairs slide to dodge divorce — until her lovers start turning up dead. Marriage as psychological warfare.", mood: ["deep","edge"] },
-  { t: "Run", y: "2020", p: "netflix", k: "Movie", g: "Psychological Thriller", note: "A homeschooled teen in a wheelchair notices her mother's story doesn't add up, and every discovery turns home into more of a cage.", mood: ["edge","deep"] },
-  { t: "Come True", y: "2020", p: "prime", k: "Movie", g: "Sci-Fi Horror", note: "A teen runaway joins a sleep study to escape her nightmares, only to find the study is pulling them straight out of her head and into the room.", mood: ["deep","horror"] },
   { t: "The Night House", y: "2021", p: "disney", k: "Movie", g: "Psychological Horror", note: "A widow finds blueprints for a hidden mirror-image house her husband secretly built — and whatever's inside wants her to join him.", mood: ["deep","horror"] },
   { t: "The Menu", y: "2022", p: "disney", k: "Movie", g: "Horror Comedy", note: "An exclusive island restaurant, a chef with a god complex, and a tasting menu that's really a countdown to something much worse than a bad review.", mood: ["edge","horror"] },
-  { t: "Kimi", y: "2022", p: "crave", k: "Movie", g: "Tech Thriller", note: "An agoraphobic tech worker overhears a murder on a smart-speaker recording and has to leave her apartment — the one thing she's avoided for a year — to prove it happened.", mood: ["edge","deep"] },
 
   // ---------- Jul 2026 mood-diversity pass — Elise asked to extend Hidden
   // Gems into cozy/laugh/family/reality too, explicitly "not the obvious"
   // picks. Genuinely underseen/cult titles only, verified subscription-only
   // on JustWatch Canada, not the first thing anyone would name in each mood. ----------
-  { t: "Paddleton", y: "2019", p: "netflix", k: "Movie", g: "Comedy-Drama", note: "Mark Duplass and Ray Romano as two lonely neighbours on a low-key road trip — funnier and sadder than it has any right to be.", mood: ["cozy"] },
-  { t: "My Old Lady", y: "2014", p: "netflix", k: "Movie", g: "Drama-Comedy", note: "Kevin Kline inherits a Paris apartment with a 90-year-old sitting tenant he can't evict — dry, warm, very Parisian.", mood: ["cozy"] },
   { t: "A Man Called Ove", y: "2015", p: "netflix", k: "Movie", g: "Comedy-Drama", note: "Swedish sleeper about the grumpiest man on the block getting slowly won over by his new neighbours. Made the whole internet cry quietly.", mood: ["cozy"] },
-  { t: "The Half of It", y: "2020", p: "netflix", k: "Movie", g: "Coming-of-Age", note: "Gentle small-town love triangle with way more heart than the premise suggests. Criminally under-watched.", mood: ["cozy"] },
-  { t: "Love & Friendship", y: "2016", p: "prime", k: "Movie", g: "Period Comedy", note: "Kate Beckinsale as a scheming Regency-era widow, based on obscure early Jane Austen. Sharper and funnier than any Austen adaptation has business being.", mood: ["laugh"] },
-  { t: "Party Down", y: "2009", p: "crave", k: "Series", g: "Workplace Comedy", note: "Failed actors working as caterers in L.A. — one of the great overlooked cult sitcoms, still quotable a decade later.", mood: ["laugh"] },
-  { t: "The Other Two", y: "2019", p: "crave", k: "Series", g: "Comedy", note: "Two adult siblings watch their kid brother become a pop star overnight. Vicious, very online, weirdly slept-on.", mood: ["laugh"] },
-  { t: "In a World...", y: "2013", p: "netflix", k: "Movie", g: "Comedy", note: "Lake Bell fighting her way into the boys'-club world of movie-trailer voiceover work. Smart, weird, actually funny.", mood: ["laugh"] },
-  { t: "Song of the Sea", y: "2014", p: "crave", k: "Movie", g: "Animated Fantasy", note: "Hand-drawn Irish folklore film about a boy and his selkie sister. Gorgeous, gentle, nowhere near as famous as it deserves.", mood: ["family"] },
   { t: "Klaus", y: "2019", p: "netflix", k: "Movie", g: "Animated Adventure", note: "Origin story for Santa Claus that somehow got an Oscar nod and still nobody's seen it. Gorgeous animation, real heart.", mood: ["family"] },
-  { t: "The Willoughbys", y: "2020", p: "netflix", k: "Movie", g: "Animated Comedy", note: "Dark, weird, very funny animated tale about kids scheming to ship off their awful parents. Not for babies, great for everyone else.", mood: ["family"] },
-  { t: "Wish Dragon", y: "2021", p: "netflix", k: "Movie", g: "Animated Adventure", note: "A broke college kid finds a genie-dragon in a teapot in modern Shanghai. Aladdin-adjacent and easy to have missed entirely.", mood: ["family"] },
-  { t: "The Sea Beast", y: "2022", p: "netflix", k: "Movie", g: "Animated Adventure", note: "Sea monster hunters vs. an actual sea monster, with way more soul than the trailer let on. Quietly one of Netflix's best animated originals.", mood: ["family"] },
-  { t: "Terrace House: Opening New Doors", y: "2017", p: "netflix", k: "Docuseries", g: "Reality", note: "Six strangers, one house, zero scripted drama — the anti-Love Island. Weirdly hypnotic once it clicks.", mood: ["reality"] },
-  { t: "Blown Away", y: "2019", p: "netflix", k: "Series", g: "Reality Competition", note: "Glassblowers competing in a Hamilton, Ontario warehouse. Sounds niche, becomes appointment viewing fast.", mood: ["reality"] },
-  { t: "Snowflake Mountain", y: "2022", p: "netflix", k: "Series", g: "Reality", note: "Ten spoiled young adults get dumped in the wilderness with no phones and no parents. Extremely satisfying chaos.", mood: ["reality"] },
-  { t: "Baking Impossible", y: "2021", p: "netflix", k: "Series", g: "Reality Competition", note: "Bakers paired with engineers to build edible structures that have to survive a stress test. Nobody talks about this show and it's great.", mood: ["reality"] },
 ];
 
 /* ---------------- Coming Soon ----------------
@@ -1049,6 +1037,20 @@ const HIDDEN_GEMS = [
    actually on Netflix/Prime/Crave/Disney+ in Canada, they're on
    Discovery+ and Hayu, so this section leans on similar chaos-driven
    relationship reality that IS confirmed for one of the four platforms).
+   Expanded Jul 28 2026: Elise asked for more, specifically more true
+   crime coming to Netflix and horror coming to theatres (referencing
+   "Other Mommy" in October). A "theatres" pseudo-platform was added
+   (p: "theatres") for movies with a confirmed theatrical date but no
+   streaming date yet — it's not one of the four tracked apps, so it gets
+   its own filter chip/color instead of pretending it's on one of them.
+   On the true-crime search: dug through Tudum, What's-on-Netflix's full
+   Aug 2026 calendar, and outlet trackers — the only two real-footage
+   (non-scripted) true crime titles actually dated for Netflix right now
+   are the Idaho Murders and Trustor Scandal docs already below. Several
+   others are either scripted dramatizations (Monster: Lizzie Borden, The
+   Bombing of Pan Am 103) or don't have a confirmed date/trailer yet
+   (Freefall: A Reckoning for Boeing, Chompoo: Lost & Forgotten) — will
+   keep watching and add them once they're actually confirmed.
    { t, y, p, k, g, note, mood, release: "Netflix — Fall 2026", trailer: "https://youtube.com/..." } */
 const COMING_SOON = [
   { t: "Obsession", y: "2026", p: "netflix", k: "Movie", g: "Horror", note: "A lonely guy breaks a mysterious toy to win his crush's heart — and finds out his wish comes with a dark, sinister price. $750K indie horror phenomenon, 94% on Rotten Tomatoes.", release: "Netflix — Fall 2026", trailer: "https://www.youtube.com/watch?v=3zEfbM2L9Eg", mood: ["horror","edge"] },
@@ -1057,8 +1059,14 @@ const COMING_SOON = [
   { t: "Let's Marry Harry", y: "2026", p: "netflix", k: "Series", g: "Relationship Reality", note: "Perfect Match's Harry Jowsey hands his love life to his ex and his best friends to pick his future wife. Bachelor-style chaos guaranteed.", release: "Netflix — Aug 5, 2026", trailer: "https://www.youtube.com/watch?v=nsAuYuhHrYk", mood: ["reality"] },
   { t: "The Shards", y: "2026", p: "disney", k: "Series", g: "Psychological Horror", note: "1980s LA prep-school kids' lives unravel when a magnetic, mysterious new student arrives right as a serial killer starts stalking the city.", release: "Disney+ — Aug 5, 2026", trailer: "https://www.youtube.com/watch?v=Zpm9HUOrZIc", mood: ["horror","edge","deep"] },
   { t: "The Last House", y: "2026", p: "netflix", k: "Movie", g: "Survival Thriller", note: "A family of four is suddenly sealed inside their own house with no way out — and a mysterious threat closing in.", release: "Netflix — Aug 7, 2026", trailer: "https://www.youtube.com/watch?v=MLxgaz2Zp1k", mood: ["edge","horror"] },
+  { t: "Insidious: Out of the Further", y: "2026", p: "theatres", k: "Movie", g: "Horror", note: "Sixth entry in the franchise — a young mom discovers she can slip into the Further, and now something's leaking out of it into her family's real life. Lin Shaye's back.", release: "In Theatres — Aug 21, 2026", trailer: "https://www.youtube.com/watch?v=cILS_HGZAgg", mood: ["horror","edge"] },
   { t: "The Whisper Man", y: "2026", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A widowed crime writer's son is abducted, and the case seems tied to a convicted serial killer known as \"The Whisper Man.\" Robert De Niro co-stars.", release: "Netflix — Aug 28, 2026", trailer: "https://www.youtube.com/watch?v=WWdio6Hke-M", mood: ["horror","deep","edge"] },
   { t: "The Runner", y: "2026", p: "prime", k: "Movie", g: "Survival Thriller", note: "A lawyer's son is kidnapped and she has one hour to race across London on foot, following a stranger's merciless instructions, to save him. Gal Gadot stars.", release: "Prime Video — Sep 2, 2026", trailer: "https://www.youtube.com/watch?v=ovF0SS-lxi4", mood: ["edge","deep"] },
+  { t: "Other Mommy", y: "2026", p: "theatres", k: "Movie", g: "Horror", note: "Jessica Chastain plays dual roles as a mom who starts acting like a stranger — from James Wan's Atomic Monster and Blumhouse, based on the novel Incidents Around the House.", release: "In Theatres — Oct 9, 2026", trailer: "https://www.youtube.com/watch?v=qRWKbbjk0J0", mood: ["horror","edge","deep"] },
+  { t: "Clayface", y: "2026", p: "theatres", k: "Movie", g: "Superhero Horror", note: "DC body-horror origin story — a washed-up actor takes a black-market face treatment and turns into a shapeshifting monster hungry for revenge.", release: "In Theatres — Oct 23, 2026", trailer: "https://www.youtube.com/watch?v=O3w9bt4fTdE", mood: ["horror","edge"] },
+  { t: "Ebenezer", y: "2026", p: "theatres", k: "Movie", g: "Gothic Horror", note: "Ti West turns A Christmas Carol into full gothic horror, with Johnny Depp as a genuinely terrifying Scrooge and Ian McKellen as Marley.", release: "In Theatres — Nov 13, 2026", trailer: "https://www.youtube.com/watch?v=EsiZ04_lc-A", mood: ["horror","edge","deep"] },
+  { t: "Return of the Living Dead", y: "2026", p: "theatres", k: "Movie", g: "Zombie Horror", note: "A new Trioxin leak hits a small Pennsylvania town at Christmas 1985, sparking a fresh zombie outbreak in this long-awaited franchise follow-up.", release: "In Theatres — Nov 13, 2026", trailer: "https://www.youtube.com/watch?v=CzWPpaPwykA", mood: ["horror","edge"] },
+  { t: "Werwulf", y: "2026", p: "theatres", k: "Movie", g: "Folk Horror", note: "Robert Eggers' gothic werewolf tale set in 13th-century England, with Aaron Taylor-Johnson, Lily-Rose Depp, and Willem Dafoe — the follow-up to Nosferatu.", release: "In Theatres — Dec 25, 2026", trailer: "https://www.youtube.com/watch?v=PKexNKOFLTo", mood: ["horror","edge","deep"] },
 ];
 
 function notifyTilesRendered() {
@@ -1265,7 +1273,7 @@ function tileHTML(item, badgeHTML, cta) {
     grid.innerHTML = filtered.map(item => tileHTML(
       { ...item, _when: item.release },
       "",
-      { label: "Watch Trailer", url: item.trailer, pillLabel: `Coming to ${PLATFORM_LABEL[item.p] || ""}` }
+      { label: "Watch Trailer", url: item.trailer, pillLabel: item.p === "theatres" ? "In Theatres" : `Coming to ${PLATFORM_LABEL[item.p] || ""}` }
     )).join("");
     empty.hidden = filtered.length !== 0;
     resultLabel.textContent = `${filtered.length} on the way`;
