@@ -334,6 +334,14 @@
   .filter-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
   .filter-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; }
   .filter-btn.active .dot { background: #fff; }
+  /* Platform filter buttons go solid in that platform's own brand colour when
+     active — same colours as the poster pills (Crave purple, Netflix red,
+     Prime blue, Disney+ navy) — instead of the generic site pink, so the
+     active filter reads at a glance. */
+  .filter-btn[data-p="netflix"].active { background: var(--netflix); border-color: var(--netflix); }
+  .filter-btn[data-p="prime"].active   { background: var(--prime);   border-color: var(--prime); }
+  .filter-btn[data-p="crave"].active   { background: var(--crave);   border-color: var(--crave); }
+  .filter-btn[data-p="disney"].active  { background: var(--disney);  border-color: var(--disney); }
   .filter-btn:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
 
   .searchbar {
@@ -576,6 +584,7 @@
     <button class="tab-btn" data-tab="popular">What's Popular</button>
     <button class="tab-btn" data-tab="picks">Elise's Picks</button>
     <button class="tab-btn" data-tab="gems">Hidden Gems</button>
+    <button class="tab-btn" data-tab="soon">Coming Soon</button>
     <button class="tab-btn" data-tab="vibe">Find Your Vibe</button>
   </div>
 
@@ -672,6 +681,27 @@
     </p>
   </section>
 
+  <!-- ===== COMING SOON ===== -->
+  <section class="tabpanel" id="panel-soon">
+    <p class="vibe-intro">Not streaming yet — announced, on the way, or just dated for one of the four platforms. Tap a card to watch the real trailer on YouTube.</p>
+    <div class="searchbar">
+      <input id="q-soon" type="search" placeholder="Search a title…" autocomplete="off">
+    </div>
+    <div class="toolbar" id="toolbar-soon">
+      <button class="filter-btn active" data-p="all"><span class="dot"></span>All</button>
+      <button class="filter-btn" data-p="netflix"><span class="dot"></span>Netflix</button>
+      <button class="filter-btn" data-p="prime"><span class="dot"></span>Prime Video</button>
+      <button class="filter-btn" data-p="crave"><span class="dot"></span>Crave</button>
+      <button class="filter-btn" data-p="disney"><span class="dot"></span>Disney+</button>
+    </div>
+    <p class="label" id="resultLabel-soon"></p>
+    <div class="grid" id="grid-soon"></div>
+    <div class="empty" id="empty-soon" hidden>Nothing matches that search — try another title.</div>
+    <p class="footnote">
+      Release dates and platforms are announced/confirmed as of publishing but can shift — always double-check closer to the date. Trailer links go straight to the official YouTube upload.
+    </p>
+  </section>
+
   <!-- ===== FIND YOUR VIBE ===== -->
   <section class="tabpanel" id="panel-vibe">
     <p class="vibe-intro">What are you in the mood for tonight? Pick a vibe and we'll pull matching picks from everything on this page.</p>
@@ -731,51 +761,13 @@ function matchesMood(item, mood) {
 }
 
 const NEW = [
-  // ---------- Netflix ----------
-  { t: "Enola Holmes 3", y: "2026", p: "netflix", k: "Movie", g: "Mystery", note: "Millie Bobby Brown returns for a third case in the Sherlock Holmes spin-off franchise.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "Little House on the Prairie", y: "2026", p: "netflix", k: "Series", g: "Drama", note: "New adaptation filmed entirely in Winnipeg and rural Manitoba.", when: "Jul 2026", mood: ["cozy","family"] },
-  { t: "Ransom Canyon", y: "2026", p: "netflix", k: "Series", g: "Drama", note: "Season 2 of the ranch-set romantic drama.", when: "Jul 2026", mood: ["cozy"] },
-  { t: "The Hawk", y: "2026", p: "netflix", k: "Movie", g: "Comedy", note: "Will Ferrell headlines this new comedy film.", when: "Jul 2026", mood: ["laugh","family"] },
-  { t: "Survival of the Thickest", y: "2026", p: "netflix", k: "Series", g: "Comedy", note: "Michelle Buteau's series wraps up with its third and final season.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "Heartstopper Forever", y: "2026", p: "netflix", k: "Movie", g: "Romance", note: "The farewell movie closing out the Heartstopper story.", when: "Jul 2026", mood: ["cozy"] },
-  { t: "The Wild Robot", y: "2024", p: "netflix", k: "Movie", g: "Animation", note: "The acclaimed animated feature arrives on the service.", when: "Jul 2026", mood: ["family","cozy"] },
-  { t: "Resident Alien", y: "2026", p: "netflix", k: "Series", g: "Sci-Fi Comedy", note: "Season 3 of the small-town alien-doctor comedy.", when: "Jul 2026", mood: ["laugh","edge"] },
-  { t: "Fast & Furious Collection", pt: "The Fast and the Furious", y: "2001–2023", p: "netflix", k: "Movie", g: "Action", note: "Nine films from the Fast & Furious franchise land at the end of the month.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "Heroes", y: "2006–2010", p: "netflix", k: "Series", g: "Sci-Fi Drama", note: "All four original seasons of the ensemble superhero drama land this month.", when: "Jul 2026", mood: ["edge","family"] },
-
-  // ---------- Prime Video ----------
-  { t: "Elle", y: "2026", p: "prime", k: "Series", g: "Comedy", note: "A Legally Blonde prequel series starring Lexie Minetree.", when: "Jul 2026", mood: ["laugh","cozy"] },
-  { t: "Young Farts Trailer Parts", y: "2026", p: "prime", k: "Series", g: "Comedy", note: "New original executive produced by Jacob Tierney.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "Ride or Die", y: "2026", p: "prime", k: "Series", g: "Drama", note: "New Prime original series.", when: "Jul 2026", mood: ["edge"] },
-  { t: "Batman: Caped Crusader", y: "2026", p: "prime", k: "Series", g: "Animation", note: "Season 2 of the reimagined Batman animated series.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "MaXXXine", y: "2024", p: "crave", k: "Movie", g: "Horror", note: "The final chapter of Ti West's X trilogy.", when: "Jul 2026", mood: ["edge","horror"] },
-  { t: "Worst Neighbor Ever", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "4-part series on real neighbour disputes gone horribly wrong — fraud, revenge, and worse, told through interviews and body-cam footage.", when: "Jul 2026", mood: ["truecrime","edge"] },
-  { t: "A Toxic Love Story", y: "2026", p: "netflix", k: "Movie", g: "True Crime", note: "A true-crime doc unpacking a violent plot against an ex's new wife in a glossy California suburb.", when: "Jul 2026", mood: ["truecrime"] },
-  { t: "Law & Order: SVU", y: "1999–2026", p: "prime", k: "Series", g: "Crime Drama", note: "Seven back seasons land on the service.", when: "Jul 2026", mood: ["edge"] },
-  { t: "Gilmore Girls", y: "2000–2007", p: "prime", k: "Series", g: "Comfort Drama", note: "All seven original seasons of the small-town mother-daughter classic.", when: "Jul 2026", mood: ["cozy","laugh"] },
-  { t: "Bottoms", y: "2023", p: "prime", k: "Movie", g: "Comedy", note: "Raunchy high-school comedy added for Pride Month carryover.", when: "Jul 2026", mood: ["laugh"] },
-
-  // ---------- Crave ----------
-  { t: "Murder in Glitterball City", y: "2026", p: "crave", k: "Series", g: "True Crime", note: "New true-crime series built from interrogation footage, real interviews, and courtroom material.", when: "Jul 2026", mood: ["truecrime"] },
+  // ---------- Jul 2026 taste pass — Elise cut this list down to just what
+  // actually fits her (see feedback log below in ELISE_PICKS). Going
+  // forward, "New This Month" only carries true-crime, survival-thriller,
+  // psych-horror, or messy-relationship-reality arrivals — not a full
+  // monthly roundup of everything new on the four platforms. ----------
+  { t: "Furious", y: "2026", p: "disney", k: "Series", g: "Psychological Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026", mood: ["edge","deep"] },
   { t: "It Lives Inside", y: "2023", p: "crave", k: "Movie", g: "Horror", note: "A supernatural horror film about a demon unleashed from a jar — new to Crave this month.", when: "Jul 2026", mood: ["horror","edge"] },
-  { t: "Road to Avonlea", y: "1990–1996", p: "crave", k: "Series", g: "Family Drama", note: "Seasons 1-4 of the beloved Canadian classic set on Prince Edward Island.", when: "Jul 2026", mood: ["cozy","family"] },
-  { t: "Field of Dreams", y: "1989", p: "crave", k: "Movie", g: "Family Drama", note: "The baseball classic — \"if you build it, he will come.\"", when: "Jul 2026", mood: ["cozy","family"] },
-  { t: "I Kissed A Girl", y: "2026", p: "crave", k: "Series", g: "Reality Dating", note: "Season 2, new episodes, of the queer dating reality show.", when: "Jul 2026", mood: ["reality"] },
-  { t: "Ocean's Twelve", y: "2004", p: "crave", k: "Movie", g: "Heist", note: "The slick ensemble heist sequel joins the Crave library.", when: "Jul 2026", mood: ["edge","laugh"] },
-  { t: "Nirvanna the Band the Show the Movie", y: "2018", p: "crave", k: "Movie", g: "Comedy", note: "Canadian streaming debut of the cult favourite.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "The Amazing Race Canada", y: "2026", p: "crave", k: "Series", g: "Reality", note: "Season 12 of the Canadian competition series.", when: "Jul 2026", mood: ["reality"] },
-  { t: "Stuart Fails to Save the Universe", y: "2026", p: "crave", k: "Series", g: "Comedy", note: "Big Bang Theory spin-off following Stuart Bloom, premieres July 23.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "The Dessert", y: "2026", p: "crave", k: "Movie", g: "Comedy", note: "New comedy feature added this month.", when: "Jul 2026", mood: ["laugh"] },
-  { t: "Don't Even", y: "2026", p: "crave", k: "Series", g: "Comedy", note: "New comedy series addition.", when: "Jul 2026", mood: ["laugh"] },
-
-  // ---------- Disney+ ----------
-  { t: "X-Men '97", y: "2026", p: "disney", k: "Series", g: "Animation", note: "Season 2 of the beloved animated revival.", when: "Jul 2026", mood: ["edge","family"] },
-  { t: "Descendants: Wicked Wonderland", y: "2026", p: "disney", k: "Movie", g: "Family", note: "New entry in the Descendants movie franchise.", when: "Jul 2026", mood: ["family","cozy"] },
-  { t: "King of the Hill", y: "2026", p: "disney", k: "Series", g: "Animation", note: "Season 15 of the revived animated comedy.", when: "Jul 2026", mood: ["laugh","cozy"] },
-  { t: "Furious", y: "2026", p: "disney", k: "Series", g: "Thriller", note: "Emmy Rossum stars in this new psychological thriller series.", when: "Jul 2026", mood: ["edge","deep"] },
-  { t: "The Proud Family: Louder & Prouder", y: "2026", p: "disney", k: "Series", g: "Animation", note: "The animated comedy returns with new episodes.", when: "Jul 2026", mood: ["laugh","family"] },
-  { t: "Pompeii: Out of Time", y: "2026", p: "disney", k: "Docuseries", g: "History", note: "Tom Hiddleston hosts this historical documentary special.", when: "Jul 2026", mood: ["deep"] },
-  { t: "Lollapalooza", p: "disney", k: "Live", g: "Music", note: "Live festival streams on July 30 and 31.", when: "Jul 2026", mood: ["reality"] },
 ];
 
 const POPULAR = [
@@ -893,18 +885,11 @@ const ELISE_PICKS = [
   { t: "Take Care of Maya", y: "2023", p: "netflix", k: "Movie", g: "True Crime", note: "Real-footage doc on a Florida family's fight against child protective services after their daughter's chronic pain diagnosis was doubted. Gut-wrenching and all real.", mood: ["truecrime","deep"] },
   { t: "The Menendez Brothers", y: "2024", p: "netflix", k: "Movie", g: "True Crime", note: "Lyle and Erik Menendez tell their side via real prison audio interviews, alongside lawyers, journalists, and jurors. Straight documentary, no actors playing the brothers.", mood: ["truecrime","deep"] },
   { t: "The Program: Cons, Cults, and Kidnapping", y: "2024", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real survivors of a troubled-teen boarding school speak out about the abuse they endured. All interviews and real footage, no dramatization.", mood: ["truecrime","deep","edge"] },
-  { t: "Awake", y: "2021", p: "netflix", k: "Movie", g: "Survival Thriller", note: "The world goes dark, nobody can sleep anymore, and everyone's slowly losing it — one mom has to get her kids somewhere safe before the madness catches up.", mood: ["edge","horror"] },
-  { t: "Gerald's Game", y: "2017", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A sex game goes wrong, she's handcuffed alone to a bed in a remote lake house, and her own mind starts turning on her. Mike Flanagan at his most claustrophobic.", mood: ["horror","edge"] },
-  { t: "Bird Box", y: "2018", p: "netflix", k: "Movie", g: "Survival Thriller", note: "Something outside makes you lose your mind the second you look at it, so Sandra Bullock has to get two kids down a river blindfolded. Peak dread-scroll viewing.", mood: ["edge","horror"] },
-  { t: "Missing", y: "2023", p: "netflix", k: "Movie", g: "Screenlife Thriller", note: "Her mom vanishes on vacation, so a teenager solves it all from her laptop — Find My Friends, hacked emails, the works. Told entirely through screens and it still gets your pulse up.", mood: ["edge"] },
   { t: "Buried", y: "2010", p: "crave", k: "Movie", g: "Survival Thriller", note: "Ryan Reynolds wakes up in a coffin, six feet under, with a lighter, a phone, and almost no air. The entire movie never leaves the box. Unbearable in the best way.", mood: ["edge"] },
   { t: "The Shallows", y: "2016", p: "crave", k: "Movie", g: "Survival Thriller", note: "A surfer gets stranded 200 yards from shore with a great white circling and the tide against her. Blake Lively vs. a shark, no backup coming.", mood: ["edge","horror"] },
-  { t: "47 Meters Down", y: "2017", p: "crave", k: "Movie", g: "Survival Thriller", note: "Two sisters get stuck in a shark cage at the bottom of the ocean with the oxygen running out. Claustrophobic, cold, and mean about it.", mood: ["edge","horror"] },
   { t: "It Follows", y: "2014", p: "prime", k: "Movie", g: "Psychological Horror", note: "Something is always walking toward you, slowly, and it never stops — and now it's coming for her. One of the most purely dread-soaked horror films of the decade.", mood: ["horror","edge"] },
-  { t: "Smile", y: "2022", p: "crave", k: "Movie", g: "Psychological Horror", note: "A therapist witnesses something horrific, and then people around her start smiling at her in ways that are very much not okay. Slow-burn dread with a killer final stretch.", mood: ["horror"] },
   { t: "Trap", y: "2024", p: "netflix", k: "Movie", g: "Cat-and-Mouse Thriller", note: "A dad takes his teen daughter to a pop concert and slowly realizes the whole arena is a trap built specifically to catch him. Shyamalan doing pure paranoid tension.", mood: ["edge"] },
   { t: "Longlegs", y: "2024", p: "prime", k: "Movie", g: "Psychological Horror", note: "An FBI agent chases occult clues left by a serial killer who might not be entirely human. Nicolas Cage is genuinely unsettling in this one.", mood: ["horror","edge"] },
-  { t: "Blink Twice", y: "2024", p: "crave", k: "Movie", g: "Psychological Thriller", note: "A tech billionaire whisks a cocktail waitress off to his private island for the dream vacation — and then the days start blurring together in ways that feel very wrong.", mood: ["edge","horror"] },
   { t: "Heretic", y: "2024", p: "crave", k: "Movie", g: "Home Invasion Thriller", note: "Two young missionaries knock on the wrong door and end up locked in a game of cat-and-mouse with a very charming, very disturbing Hugh Grant.", mood: ["horror","edge"] },
   { t: "It's What's Inside", y: "2024", p: "netflix", k: "Movie", g: "Body Horror", note: "A pre-wedding reunion turns into a body-swapping psychological meltdown when an old friend shows up with a very mysterious suitcase.", mood: ["horror","edge"] },
   { t: "Companion", y: "2025", p: "crave", k: "Movie", g: "Sci-Fi Horror", note: "A weekend at a friend's lake house turns into a nightmare when it becomes clear not everyone there is entirely human. From the producer of Barbarian — twisty and vicious.", mood: ["horror","edge"] },
@@ -913,21 +898,10 @@ const ELISE_PICKS = [
   // taste-refinement pass (see feedback log above): real-footage/serious
   // true crime, plus survival-thriller & psych-horror MOVIES only. ----------
   { t: "Fyre", y: "2019", p: "netflix", k: "Movie", g: "True Crime", note: "All real footage of the Fyre Festival disaster unraveling in real time, straight from the influencers and organizers who lived it. No actors, just chaos.", mood: ["truecrime","edge"] },
-  { t: "The Confession Killer", y: "2019", p: "netflix", k: "Docuseries", g: "True Crime", note: "Archival interrogation tapes of Henry Lee Lucas confessing to hundreds of murders he didn't commit, told entirely through real footage and the investigators who got played.", mood: ["truecrime","deep"] },
   { t: "The Disappearance of Madeleine McCann", y: "2019", p: "netflix", k: "Docuseries", g: "True Crime", note: "Eight parts built on real news footage and over a hundred hours of actual interviews with investigators, journalists, and the family. Heavy, unresolved, no theatrics.", mood: ["truecrime","deep"] },
-  { t: "Sophie: A Murder in West Cork", y: "2021", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real interviews with the West Cork community and Sophie Toscan du Plantier's family, plus actual courtroom footage from the ongoing fight for justice.", mood: ["truecrime","deep"] },
-  { t: "Missing: The Lucie Blackman Case", y: "2023", p: "netflix", k: "Movie", g: "True Crime", note: "Archival footage and on-camera interviews with detectives, journalists, and Lucie's own father, no sensationalizing, just a father's decades-long search laid out straight.", mood: ["truecrime","deep"] },
-  { t: "Our Father", y: "2022", p: "netflix", k: "Movie", g: "True Crime", note: "Real home videos, DNA test reveals, and survivor interviews expose a fertility doctor who secretly fathered dozens of his patients' kids. All archival, no reenactment.", mood: ["truecrime","deep"] },
-  { t: "Bad Surgeon: Love Under the Knife", y: "2023", p: "netflix", k: "Docuseries", g: "True Crime", note: "The NBC producer he deceived tells it all on camera, backed by real medical footage of a surgeon whose windpipe transplants kept killing patients.", mood: ["truecrime","deep"] },
-  { t: "Sins of Our Mother", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real archival footage and interviews trace Lori Vallow's descent into doomsday cult belief and the deaths of her own kids. Grim, straight reporting, no actors.", mood: ["truecrime","deep"] },
-  { t: "Trust No One: The Hunt for the Crypto King", y: "2022", p: "netflix", k: "Movie", g: "True Crime", note: "Real investors chase down what happened to $250 million and the Canadian crypto founder who allegedly took it to his grave. All interviews and real footage.", mood: ["truecrime","edge"] },
-  { t: "American Conspiracy: The Octopus Murders", y: "2024", p: "netflix", k: "Docuseries", g: "True Crime", note: "A real journalist investigates a real unsolved death tied to a decades-old conspiracy, built from actual archival documents and on-camera interviews, not reenactments.", mood: ["truecrime","deep"] },
-  { t: "American Manhunt: O.J. Simpson", y: "2025", p: "netflix", k: "Docuseries", g: "True Crime", note: "New real interviews with Kim Goldman, Mark Fuhrman, and Kato Kaelin plus actual courtroom and news footage from the trial that split the country.", mood: ["truecrime","deep"] },
-  { t: "Madoff: The Monster of Wall Street", y: "2023", p: "netflix", k: "Docuseries", g: "True Crime", note: "Victims, whistleblowers, and former employees lay out the largest Ponzi scheme in history on camera — real footage and interviews driving the whole thing.", mood: ["truecrime","deep"] },
   { t: "The Platform", y: "2019", p: "netflix", k: "Movie", g: "Survival Thriller", note: "Trapped in a vertical prison where food falls floor by floor from above — by the time it reaches you, there's nothing left. Class warfare, but make it gruesome.", mood: ["edge","horror"] },
   { t: "Talk to Me", y: "2023", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A group of teens use an embalmed hand to summon spirits for cheap thrills, until one of them lets something in that doesn't want to leave.", mood: ["horror","edge"] },
   { t: "Ready or Not", y: "2019", p: "disney", k: "Movie", g: "Horror Comedy", note: "Marry into the wrong rich family and get a wedding-night hide-and-seek where the losers die. Run, bride, run.", mood: ["edge","horror"] },
-  { t: "His House", y: "2020", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A refugee couple gets a house in England and finds something followed them out of their past. Grief has never looked this monstrous.", mood: ["deep","horror"] },
 
   // ---------- Jul 2026 replacement pass — swapped in after Elise flagged
   // several titles by circling screenshots (see feedback log above);
@@ -937,12 +911,8 @@ const ELISE_PICKS = [
   { t: "American Murder: Laci Peterson", y: "2024", p: "netflix", k: "Docuseries", g: "True Crime", note: "Built entirely from news footage, interrogation tapes, and courtroom cameras — no reenactments, just the actual Scott Peterson case unfolding.", mood: ["truecrime","deep"] },
   { t: "A Deadly American Marriage", y: "2025", p: "netflix", k: "Docuseries", g: "True Crime", note: "Jason Corbett's killing, told through first-person interviews with everyone involved — his kids, his widow, her father. No dramatization, just people talking.", mood: ["truecrime","deep"] },
   { t: "I Just Killed My Dad", y: "2022", p: "netflix", k: "Docuseries", g: "True Crime", note: "A teenager shoots his father and never denies it — the doc digs into why, using real courtroom and family footage. Quietly devastating.", mood: ["truecrime","deep"] },
-  { t: "The Strangers", y: "2008", p: "crave", k: "Movie", g: "Home Invasion Horror", note: "A couple at a remote vacation house gets terrorized by three masked strangers for no reason at all. Bare-bones and brutal.", mood: ["horror","edge"] },
   { t: "Fractured", y: "2019", p: "netflix", k: "Movie", g: "Psychological Thriller", note: "A man's wife and daughter vanish from an ER and the hospital swears they were never there. Single-location paranoia that keeps twisting.", mood: ["edge","deep"] },
   { t: "Secret Obsession", y: "2019", p: "netflix", k: "Movie", g: "Stalker Thriller", note: "An amnesia victim slowly realizes the 'devoted husband' nursing her back to health might not be who he says he is. Classic charming-stranger-turns-dangerous setup.", mood: ["edge","deep"] },
-  { t: "The Open House", y: "2018", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A mother and son move into an empty vacation home and someone — or something — won't leave them alone. Isolated house, no way out.", mood: ["horror","edge"] },
-  { t: "Cadaver", y: "2020", p: "netflix", k: "Movie", g: "Survival Horror", note: "A starving family goes to a hotel dinner-theatre show for a free meal and gets trapped in something much worse. Norwegian, single-location, deeply grim.", mood: ["horror","edge"] },
-  { t: "Obsession", y: "2023", p: "netflix", k: "Series", g: "Erotic Thriller", note: "A respected London surgeon's affair with his son's fiancée spirals into an obsession that threatens to blow up both their lives. Tense, uncomfortable, hard to look away from.", mood: ["edge","deep"] },
 ];
 /* Feedback log: Elise passed on Lee Cronin's The Mummy (creature horror/camp)
    and on The Grey, Project Hail Mary, House of the Dragon, and The Running Man
@@ -982,7 +952,34 @@ const ELISE_PICKS = [
    serious tone, and (b) tense survival-thriller or psychological-horror
    MOVIES (single location, trapped/hunted/charming-stranger premises) —
    skip family films, straight comedy, scripted historical/political drama,
-   and non-documentary crime series regardless of how well-reviewed. */
+   and non-documentary crime series regardless of how well-reviewed.
+   Volume-correction pass (Jul 2026): Elise cut 22 more titles straight out
+   of Elise's Picks in one pass — including several that fit the taste
+   profile above perfectly (Bird Box, Gerald's Game, 47 Meters Down, Smile,
+   Missing, Awake). Lesson: this isn't only about genre fit — the list had
+   simply gotten too big. When it's bloated, cut hard and rebuild smaller
+   rather than trying to judge each title's individual merit; a shorter,
+   higher-conviction list beats an exhaustive one. Also trimmed New This
+   Month down to just Furious and It Lives Inside for the same reason —
+   that tab is no longer a full monthly roundup, it only carries arrivals
+   that already match her taste.
+   Obsession mix-up (Jul 2026): when Elise said she loved "Obsession," she
+   meant the 2026 Curry Barker horror movie (One Wish Willow, Focus
+   Features, 94% RT) — NOT the 2023 Netflix erotic-thriller series (Damage
+   adaptation, Richard Armitage) that was live on the site under the same
+   title. The 2023 series has been removed; the correct 2026 film is in
+   Coming Soon below since it isn't on a tracked platform yet (Netflix,
+   Fall 2026). Lesson: for common one-word titles, confirm the year/premise
+   before adding, since collisions like this are easy to make silently.
+   New taste signal (Jul 2026): Elise also loves the 90 Day Fiancé and
+   Below Deck franchises — messy, dramatic, real-people relationship
+   reality TV. Neither is actually on Netflix/Prime/Crave/Disney+ in
+   Canada (90 Day Fiancé is Discovery+/Citytv+, Below Deck is Hayu), so
+   they can't be added honestly to a page scoped to those four platforms.
+   Coming Soon leans on similar chaos-driven relationship reality that IS
+   confirmed for one of the four (e.g. Let's Marry Harry on Netflix) as
+   the closest available match — revisit if Elise wants the platform scope
+   itself expanded to include Discovery+/Hayu down the line. */
 
 /* ---------------- Hidden Gems ----------------
    Deep-cut catalogue titles, not tied to "new" or "trending" — weighted
@@ -1073,6 +1070,30 @@ const HIDDEN_GEMS = [
   { t: "Baking Impossible", y: "2021", p: "netflix", k: "Series", g: "Reality Competition", note: "Bakers paired with engineers to build edible structures that have to survive a stress test. Nobody talks about this show and it's great.", mood: ["reality"] },
 ];
 
+/* ---------------- Coming Soon ----------------
+   Not streaming yet on any of the four tracked platforms — either
+   unreleased or confirmed for a future streaming date. Links go to the
+   real official trailer on YouTube instead of a platform watch page,
+   since there's nothing to press play on yet. Each entry needs a real,
+   verified trailer URL — never guess one. Added Jul 2026 after Elise
+   asked for a preview of what's coming that matches her taste: true
+   crime, survival-thriller/psych-horror movies, and messy-relationship
+   reality (her words: "I love 90 Day Fiancé and Below Deck" — neither is
+   actually on Netflix/Prime/Crave/Disney+ in Canada, they're on
+   Discovery+ and Hayu, so this section leans on similar chaos-driven
+   relationship reality that IS confirmed for one of the four platforms).
+   { t, y, p, k, g, note, mood, release: "Netflix — Fall 2026", trailer: "https://youtube.com/..." } */
+const COMING_SOON = [
+  { t: "Obsession", y: "2026", p: "netflix", k: "Movie", g: "Horror", note: "A lonely guy breaks a mysterious toy to win his crush's heart — and finds out his wish comes with a dark, sinister price. $750K indie horror phenomenon, 94% on Rotten Tomatoes.", release: "Netflix — Fall 2026", trailer: "https://www.youtube.com/watch?v=3zEfbM2L9Eg", mood: ["horror","edge"] },
+  { t: "The Idaho Murders: College Nightmare", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "Real-footage docuseries on the Bryan Kohberger University of Idaho stabbings, with unprecedented police-footage access and family interviews.", release: "Netflix — Jul 29, 2026", trailer: "https://www.youtube.com/watch?v=OrUb7JYjAk8", mood: ["truecrime","deep"] },
+  { t: "Inside the Trustor Scandal", y: "2026", p: "netflix", k: "Docuseries", g: "True Crime", note: "A financier evades authorities for 30 years after a $70M Swedish investment-fraud heist — now he's finally talking, on camera.", release: "Netflix — Aug 5, 2026", trailer: "https://www.youtube.com/watch?v=Ia_cAr_IM54", mood: ["truecrime","deep"] },
+  { t: "Let's Marry Harry", y: "2026", p: "netflix", k: "Series", g: "Relationship Reality", note: "Perfect Match's Harry Jowsey hands his love life to his ex and his best friends to pick his future wife. Bachelor-style chaos guaranteed.", release: "Netflix — Aug 5, 2026", trailer: "https://www.youtube.com/watch?v=nsAuYuhHrYk", mood: ["reality"] },
+  { t: "The Shards", y: "2026", p: "disney", k: "Series", g: "Psychological Horror", note: "1980s LA prep-school kids' lives unravel when a magnetic, mysterious new student arrives right as a serial killer starts stalking the city.", release: "Disney+ — Aug 5, 2026", trailer: "https://www.youtube.com/watch?v=Zpm9HUOrZIc", mood: ["horror","edge","deep"] },
+  { t: "The Last House", y: "2026", p: "netflix", k: "Movie", g: "Survival Thriller", note: "A family of four is suddenly sealed inside their own house with no way out — and a mysterious threat closing in.", release: "Netflix — Aug 7, 2026", trailer: "https://www.youtube.com/watch?v=MLxgaz2Zp1k", mood: ["edge","horror"] },
+  { t: "The Whisper Man", y: "2026", p: "netflix", k: "Movie", g: "Psychological Horror", note: "A widowed crime writer's son is abducted, and the case seems tied to a convicted serial killer known as \"The Whisper Man.\" Robert De Niro co-stars.", release: "Netflix — Aug 28, 2026", trailer: "https://www.youtube.com/watch?v=WWdio6Hke-M", mood: ["horror","deep","edge"] },
+  { t: "The Runner", y: "2026", p: "prime", k: "Movie", g: "Survival Thriller", note: "A lawyer's son is kidnapped and she has one hour to race across London on foot, following a stranger's merciless instructions, to save him. Gal Gadot stars.", release: "Prime Video — Sep 2, 2026", trailer: "https://www.youtube.com/watch?v=ovF0SS-lxi4", mood: ["edge","deep"] },
+];
+
 function notifyTilesRendered() {
   document.dispatchEvent(new Event("bsa:tiles-rendered"));
 }
@@ -1082,7 +1103,7 @@ function escAttr(s) {
 function noPosterHTML() {
   return `<div class="no-poster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="5.5" width="19" height="14" rx="2.2"/><path d="M2.5 9.3h19M8 5.5v3.8M16 5.5v3.8"/></svg></div>`;
 }
-function tileHTML(item, badgeHTML) {
+function tileHTML(item, badgeHTML, cta) {
   const isLive = item.k === "Live";
   // "pt" (poster title) lets a card search TMDB under a different, more
   // specific title than the one shown to the user — needed for franchise
@@ -1090,14 +1111,17 @@ function tileHTML(item, badgeHTML) {
   // title themselves and would otherwise never match a poster.
   const posterTitle = item.pt || item.t;
   const posterKey = escAttr(`${posterTitle}__${item.y || ""}__${item.k}`);
-  const watchUrl = PLATFORM_SEARCH_URL[item.p] ? PLATFORM_SEARCH_URL[item.p](item.t) : null;
-  const platformName = PLATFORM_LABEL[item.p] || "";
+  // `cta` lets a caller override the card's link + button label — used by
+  // Coming Soon, where there's nothing to "watch" yet, just a trailer.
+  const watchUrl = cta ? cta.url : (PLATFORM_SEARCH_URL[item.p] ? PLATFORM_SEARCH_URL[item.p](item.t) : null);
+  const ctaLabel = cta ? cta.label : `Watch on ${PLATFORM_LABEL[item.p] || ""}`;
+  const pillLabel = cta ? (cta.pillLabel || PLATFORM_LABEL[item.p]) : PLATFORM_LABEL[item.p];
   return `
     <a class="tile has-link" data-p="${item.p}" href="${escAttr(watchUrl)}" target="_blank" rel="noopener noreferrer">
       ${badgeHTML || ""}
       <div class="tile-poster-wrap${isLive ? "" : " loading"}" data-poster-key="${posterKey}" data-title="${escAttr(posterTitle)}" data-year="${escAttr(item.y)}" data-kind="${escAttr(item.k)}">
         <div class="tile-badges-row">
-          <span class="platform-pill" data-p="${item.p}">${PLATFORM_LABEL[item.p]}</span>
+          <span class="platform-pill" data-p="${item.p}">${pillLabel}</span>
           <span class="kind-tag">${item.k}</span>
         </div>
         ${isLive ? noPosterHTML() : ""}
@@ -1107,7 +1131,7 @@ function tileHTML(item, badgeHTML) {
         <p class="genre">${item.g}</p>
         <p class="note">${item.note}</p>
         <p class="when">${item._when || ""}</p>
-        <span class="watch-cta"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5z"/></svg>Watch on ${platformName}</span>
+        <span class="watch-cta"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5z"/></svg>${ctaLabel}</span>
       </div>
     </a>
   `;
@@ -1240,6 +1264,44 @@ function tileHTML(item, badgeHTML) {
     grid.innerHTML = filtered.map(item => tileHTML({ ...item, _when: "Hidden gem" })).join("");
     empty.hidden = filtered.length !== 0;
     resultLabel.textContent = `${filtered.length} deep cuts worth digging for`;
+    notifyTilesRendered();
+  }
+
+  toolbar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    toolbar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activePlatform = btn.dataset.p;
+    render();
+  });
+  searchInput.addEventListener("input", render);
+  render();
+})();
+
+/* ---------------- Coming Soon ---------------- */
+(function initComingSoon() {
+  const grid = document.getElementById("grid-soon");
+  const empty = document.getElementById("empty-soon");
+  const resultLabel = document.getElementById("resultLabel-soon");
+  const toolbar = document.getElementById("toolbar-soon");
+  const searchInput = document.getElementById("q-soon");
+  let activePlatform = "all";
+
+  function render() {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = COMING_SOON.filter(item => {
+      const matchesPlatform = activePlatform === "all" || item.p === activePlatform;
+      const matchesQuery = !q || item.t.toLowerCase().includes(q) || item.g.toLowerCase().includes(q) || item.note.toLowerCase().includes(q);
+      return matchesPlatform && matchesQuery;
+    });
+    grid.innerHTML = filtered.map(item => tileHTML(
+      { ...item, _when: item.release },
+      "",
+      { label: "Watch Trailer", url: item.trailer, pillLabel: `Coming to ${PLATFORM_LABEL[item.p] || ""}` }
+    )).join("");
+    empty.hidden = filtered.length !== 0;
+    resultLabel.textContent = `${filtered.length} on the way`;
     notifyTilesRendered();
   }
 
