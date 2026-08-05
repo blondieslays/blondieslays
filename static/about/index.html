@@ -147,8 +147,9 @@
   }
   .work-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--pink-med); }
   .work-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: #FFF0F6; display: block; }
-  .work-card-placeholder { width: 100%; aspect-ratio: 3 / 4; display: flex; align-items: center; justify-content: center; text-align: center; background: #FFF0F6; border-bottom: 2px dashed var(--pink-med); }
-  .work-card-placeholder span { font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .05em; padding: 0 1rem; }
+  .work-card-placeholder { width: 100%; aspect-ratio: 3 / 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; text-align: center; background: linear-gradient(150deg, #fff 0%, var(--pink-bg) 100%); border-bottom: 2px solid var(--pink-chip); }
+  .work-card-placeholder .wcp-icon { width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .work-card-placeholder span { font-family: 'Montserrat', sans-serif; font-size: .74rem; font-weight: 700; color: var(--pink-dark); text-transform: uppercase; letter-spacing: .05em; padding: 0 1rem; }
   .work-card-body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
   .work-card h3 { font-size: 1.35rem; color: var(--ink); margin-bottom: .45rem; }
   .work-card p { font-size: .87rem; color: #6b4357; flex: 1; }
@@ -396,7 +397,7 @@
         </div>
 
         <div class="work-card">
-          <div class="work-card-placeholder"><span>Photo coming soon</span></div>
+          <div class="work-card-placeholder"><span class="wcp-icon" aria-hidden="true">📷</span><span>Photo coming soon</span></div>
           <div class="work-card-body">
             <h3>Wedding Mirror &amp; Window Decals</h3>
             <p>Custom vinyl decals for mirrors, windows, and welcome signage &mdash; names, dates, and seating charts cut and applied to order.</p>
@@ -583,6 +584,18 @@
           <h3>Facebook</h3>
           <p>Updates, local Sarnia-Lambton news, and a closer look at the studio.</p>
           <a class="v-link" href="https://www.facebook.com/blondieslays/" target="_blank" rel="noopener">Like the page &rarr;</a>
+        </div>
+        <div class="venture">
+          <span class="v-tag aq">Just for Fun</span>
+          <h3>What I&#39;m Watching</h3>
+          <p>A running list of what&#39;s currently on my screen &mdash; shows, movies, and whatever I&#39;m bingeing this week.</p>
+          <a class="v-link" href="/streaming/">See what to watch &rarr;</a>
+        </div>
+        <div class="venture">
+          <span class="v-tag aq">Just for Fun</span>
+          <h3>My Pok&eacute;mon Collection</h3>
+          <p>A little side hobby &mdash; my card collection with live market values, just for fun.</p>
+          <a class="v-link" href="/pokemon/">Browse the collection &rarr;</a>
         </div>
       </div>
     </section>
