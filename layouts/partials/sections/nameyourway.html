@@ -25,7 +25,7 @@
     /* ── Divider ──────────────────────────────────────────── */
     .nyw-divider { display: flex; align-items: center; gap: 1rem; max-width: 1040px; margin: 3rem auto 2.6rem; }
     .nyw-divider::before, .nyw-divider::after { content: ""; flex: 1; height: 1px; background: #f0d0de; }
-    .nyw-divider span { width: 8px; height: 8px; border-radius: 50%; background: #FF1493; flex-shrink: 0; }
+    .nyw-divider span { width: 12px; height: 12px; border-radius: 50%; background: #FF1493; border: 2px solid #000; flex-shrink: 0; }
 
     /* ── Why Custom Orders ────────────────────────────────── */
     .wco-head { text-align: center; max-width: 620px; margin: 0 auto 2.3rem; }
@@ -33,18 +33,21 @@
     .wco-title { font-family: 'Bebas Neue', sans-serif; font-weight: 400; letter-spacing: .03em; text-transform: uppercase; font-size: 2.3rem; color: #be185d; margin: 0 0 .75rem; }
     .wco-sub { font-family: Montserrat, sans-serif; font-size: .95rem; color: #5a5a5a; line-height: 1.7; margin: 0; }
 
-    .wco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
-    @media (max-width: 860px) { .wco-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; gap: 1.1rem; } }
+    .wco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+    @media (max-width: 860px) { .wco-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; gap: 1.3rem; } }
 
-    .wco-card { position: relative; background: #fff; border: 1px solid #f5d9e7; border-radius: 18px; padding: 1.9rem 1.5rem 1.6rem; box-shadow: 0 10px 26px rgba(190,24,93,.08); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
-    .wco-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(190,24,93,.14); border-color: #f9a8d4; }
-    .wco-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; line-height: 1; color: #FFD1E8; margin-bottom: .5rem; letter-spacing: .02em; }
-    .wco-card h3 { font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.02rem; color: #be185d; margin: 0 0 .55rem; }
-    .wco-card p { font-family: Montserrat, sans-serif; font-size: .87rem; line-height: 1.65; color: #5a5a5a; margin: 0; }
+    .wco-card { position: relative; background: #fff; border: 2px solid #000; border-radius: 14px; padding: 1.9rem 1.5rem 1.6rem; box-shadow: 6px 6px 0 var(--accent); transition: transform .15s ease, box-shadow .15s ease; }
+    .wco-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--accent); }
+    .wco-card:nth-child(1) { --accent: #FF1493; }
+    .wco-card:nth-child(2) { --accent: #0E93A6; }
+    .wco-card:nth-child(3) { --accent: #7C4DFF; }
+    .wco-num { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); border: 2px solid #000; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; margin-bottom: .9rem; }
+    .wco-card h3 { font-family: Montserrat, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: .98rem; color: #000; margin: 0 0 .55rem; }
+    .wco-card p { font-family: Montserrat, sans-serif; font-size: .87rem; line-height: 1.65; color: #444; margin: 0; }
 
-    .wco-cta-wrap { text-align: center; margin-top: 2.2rem; }
-    .wco-cta { display: inline-flex; align-items: center; font-family: Montserrat, sans-serif; font-weight: 700; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; color: #be185d; background: #fff; border: 2px solid #FF1493; padding: .7rem 1.8rem; border-radius: 999px; text-decoration: none; transition: all .15s ease; }
-    .wco-cta:hover { background: #FF1493; color: #fff; transform: translateY(-2px); }
+    .wco-cta-wrap { text-align: center; margin-top: 2.4rem; }
+    .wco-cta { display: inline-flex; align-items: center; font-family: Montserrat, sans-serif; font-weight: 800; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: #FF1493; border: 2px solid #000; padding: .8rem 2.1rem; border-radius: 999px; text-decoration: none; box-shadow: 5px 5px 0 #000; transition: all .15s ease; }
+    .wco-cta:hover { background: #000; color: #fff; transform: translate(-2px, -2px); box-shadow: 7px 7px 0 #FF1493; }
 
     /* ── Tools / affiliate note ───────────────────────────── */
     .wco-tools { text-align: center; max-width: 600px; margin: 2.4rem auto 0; padding-top: 1.5rem; border-top: 1px solid #f5e0ea; }
