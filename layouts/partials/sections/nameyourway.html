@@ -1,47 +1,114 @@
 <section id="name-your-way" class="nyw-section">
   <style>
-    .nyw-section { background:#FFF0F6; padding: 3rem 1.5rem; }
-    .nyw-inner { max-width:1040px; margin:0 auto; }
-    .nyw-title { font-family:'Bebas Neue',sans-serif; font-weight:400; letter-spacing:.03em; text-transform:uppercase; font-size:2.3rem; color:#be185d; text-align:center; margin:0 0 2rem; }
+    .nyw-section { background: linear-gradient(165deg, #ffffff 0%, #fff8fb 45%, #FFF0F6 100%); padding: 3.5rem 1.5rem 3rem; }
+    .nyw-inner { max-width: 1080px; margin: 0 auto; }
 
-    /* Photo left, story + CTA right */
-    .nyw-grid { display:grid; grid-template-columns: minmax(220px,300px) 1fr; gap:2.5rem; align-items:center; }
-    @media (max-width:768px) { .nyw-grid { grid-template-columns:1fr; } }
+    /* ── Intro: photo + your name your way copy ─────────────── */
+    .nyw-grid { display: grid; grid-template-columns: minmax(220px, 280px) 1fr; gap: 2.75rem; align-items: center; }
+    @media (max-width: 768px) { .nyw-grid { grid-template-columns: 1fr; } }
 
-    .nyw-photo-wrap { display:flex; justify-content:center; }
-    .nyw-photo-card { background:#fff; padding:14px; border-radius:16px; box-shadow:0 18px 38px rgba(190,24,93,.18), 0 4px 12px rgba(0,0,0,.04); transition:transform .2s ease, box-shadow .2s ease; }
-    .nyw-photo-card:hover { transform:translateY(-4px); box-shadow:0 22px 44px rgba(190,24,93,.24), 0 6px 16px rgba(0,0,0,.06); }
-    .nyw-photo-card img { display:block; width:100%; max-width:280px; aspect-ratio:3/4; height:auto; object-fit:cover; border-radius:10px; }
+    .nyw-photo-wrap { display: flex; justify-content: center; }
+    .nyw-photo-card { background: #fff; padding: 14px; border-radius: 16px; box-shadow: 0 18px 38px rgba(190,24,93,.18), 0 4px 12px rgba(0,0,0,.04); transition: transform .2s ease, box-shadow .2s ease; }
+    .nyw-photo-card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px rgba(190,24,93,.24), 0 6px 16px rgba(0,0,0,.06); }
+    .nyw-photo-card img { display: block; width: 100%; max-width: 280px; aspect-ratio: 3/4; height: auto; object-fit: cover; border-radius: 10px; }
 
-    .nyw-content { display:flex; flex-direction:column; gap:1.5rem; }
-    .nyw-block-eyebrow { display:block; font-family:Montserrat,sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#FF1493; margin-bottom:.45rem; }
+    .nyw-content { display: flex; flex-direction: column; gap: 1.4rem; }
+    .nyw-block-eyebrow { display: block; font-family: Montserrat, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #FF1493; margin-bottom: .35rem; }
+    .nyw-title { font-family: 'Bebas Neue', sans-serif; font-weight: 400; letter-spacing: .03em; text-transform: uppercase; font-size: 2.2rem; color: #be185d; margin: 0; line-height: 1.05; }
+    .nyw-text { font-family: Montserrat, sans-serif; font-size: .95rem; color: #5a5a5a; line-height: 1.7; margin: 0; }
+    .nyw-text strong { color: #be185d; }
 
-    .nyw-text { font-family:Montserrat,sans-serif; font-size:.95rem; color:#5a5a5a; line-height:1.7; margin:0; }
-    .nyw-text strong { color:#be185d; }
+    .nyw-cta-wrap { text-align: left; margin-top: .2rem; }
+    .nyw-cta { display: inline-flex; align-items: center; font-family: Montserrat, sans-serif; font-weight: 700; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: #FF1493; padding: .75rem 1.9rem; border-radius: 999px; text-decoration: none; box-shadow: 0 10px 24px rgba(255,20,147,.28); transition: all .15s ease; }
+    .nyw-cta:hover { background: #d1147d; transform: translateY(-2px); color: #fff; }
 
-    .nyw-cta-wrap { text-align:left; margin-top:.5rem; }
-    .nyw-cta { display:inline-flex; align-items:center; font-family:Montserrat,sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:#FF1493; padding:.75rem 1.9rem; border-radius:999px; text-decoration:none; box-shadow:0 10px 24px rgba(255,20,147,.28); transition:all .15s ease; }
-    .nyw-cta:hover { background:#d1147d; transform:translateY(-2px); color:#fff; }
+    /* ── Divider ──────────────────────────────────────────── */
+    .nyw-divider { display: flex; align-items: center; gap: 1rem; max-width: 1040px; margin: 3rem auto 2.6rem; }
+    .nyw-divider::before, .nyw-divider::after { content: ""; flex: 1; height: 1px; background: #f0d0de; }
+    .nyw-divider span { width: 8px; height: 8px; border-radius: 50%; background: #FF1493; flex-shrink: 0; }
+
+    /* ── Why Custom Orders ────────────────────────────────── */
+    .wco-head { text-align: center; max-width: 620px; margin: 0 auto 2.3rem; }
+    .wco-eyebrow { display: block; font-family: Montserrat, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #FF1493; margin-bottom: .5rem; }
+    .wco-title { font-family: 'Bebas Neue', sans-serif; font-weight: 400; letter-spacing: .03em; text-transform: uppercase; font-size: 2.3rem; color: #be185d; margin: 0 0 .75rem; }
+    .wco-sub { font-family: Montserrat, sans-serif; font-size: .95rem; color: #5a5a5a; line-height: 1.7; margin: 0; }
+
+    .wco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    @media (max-width: 860px) { .wco-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; gap: 1.1rem; } }
+
+    .wco-card { position: relative; background: #fff; border: 1px solid #f5d9e7; border-radius: 18px; padding: 1.9rem 1.5rem 1.6rem; box-shadow: 0 10px 26px rgba(190,24,93,.08); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+    .wco-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(190,24,93,.14); border-color: #f9a8d4; }
+    .wco-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; line-height: 1; color: #FFD1E8; margin-bottom: .5rem; letter-spacing: .02em; }
+    .wco-card h3 { font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.02rem; color: #be185d; margin: 0 0 .55rem; }
+    .wco-card p { font-family: Montserrat, sans-serif; font-size: .87rem; line-height: 1.65; color: #5a5a5a; margin: 0; }
+
+    .wco-cta-wrap { text-align: center; margin-top: 2.2rem; }
+    .wco-cta { display: inline-flex; align-items: center; font-family: Montserrat, sans-serif; font-weight: 700; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; color: #be185d; background: #fff; border: 2px solid #FF1493; padding: .7rem 1.8rem; border-radius: 999px; text-decoration: none; transition: all .15s ease; }
+    .wco-cta:hover { background: #FF1493; color: #fff; transform: translateY(-2px); }
+
+    /* ── Tools / affiliate note ───────────────────────────── */
+    .wco-tools { text-align: center; max-width: 600px; margin: 2.4rem auto 0; padding-top: 1.5rem; border-top: 1px solid #f5e0ea; }
+    .wco-tools p { font-family: Montserrat, sans-serif; font-size: .82rem; line-height: 1.7; color: #8a5470; margin: 0; }
+    .wco-tools a { color: #be185d; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
   </style>
+
   <div class="nyw-inner">
-    <h2 class="nyw-title">Your Name. Your Saying. Your Way.</h2>
+
+    <!-- Intro: photo + your name your way -->
     <div class="nyw-grid">
       <div class="nyw-photo-wrap">
         <div class="nyw-photo-card">
           <img loading="lazy" src="/images/products/custom-saying-2.png" alt="Custom saying tee — Actually,">
         </div>
       </div>
-
       <div class="nyw-content">
         <div>
           <span class="nyw-block-eyebrow">What I Do</span>
-          <p class="nyw-text">From custom names to your favourite saying, every piece is designed and pressed in-studio using Cricut and heat press techniques. Whatever you're picturing, we'll help you bring it to life.</p>
+          <h2 class="nyw-title">Your Name. Your Saying. Your Way.</h2>
         </div>
-
+        <p class="nyw-text">From custom names to your favourite saying, every piece is designed and pressed in-studio using Cricut and heat press techniques &mdash; no two-dye-lot minimums, no leftover stock. Whatever you're picturing, we'll help you bring it to life.</p>
         <div class="nyw-cta-wrap">
           <a class="nyw-cta" href="/build/">Design Your Own &rarr;</a>
         </div>
       </div>
     </div>
+
+    <div class="nyw-divider"><span></span></div>
+
+    <!-- Why Custom Orders -->
+    <div class="wco-head">
+      <span class="wco-eyebrow">The Blondie Slays Difference</span>
+      <h2 class="wco-title">Why Custom Orders?</h2>
+      <p class="wco-sub">No warehouse, no guesswork, no giant minimum order. Every piece is made only once it's ordered &mdash; which means small businesses, creators, and teams can launch real merch without the risk.</p>
+    </div>
+
+    <div class="wco-grid">
+      <div class="wco-card">
+        <div class="wco-num">01</div>
+        <h3>No Big Minimums</h3>
+        <p>Order one piece or a hundred. There's no inventory to buy into upfront &mdash; just what you actually need, so a new brand or small team can start small and scale up.</p>
+      </div>
+      <div class="wco-card">
+        <div class="wco-num">02</div>
+        <h3>Made To Order</h3>
+        <p>Nothing sits pre-made on a shelf. Each piece is designed and pressed after you order, so it's less waste for the planet and exactly right for you.</p>
+      </div>
+      <div class="wco-card">
+        <div class="wco-num">03</div>
+        <h3>Built To Last</h3>
+        <p>Heat-set and pressed right here in Sarnia using techniques built for real wear and wash. Cold wash, hang dry, and the design holds its punch for years.</p>
+      </div>
+    </div>
+
+    <div class="wco-cta-wrap">
+      <a class="wco-cta" href="/team-orders/">See How It Works &rarr;</a>
+    </div>
+
+    <!-- TODO (Elise): swap AFFILIATE_LINK_CRICUT for your real Cricut affiliate
+         link once your application via the Impact network is approved. -->
+    <div class="wco-tools">
+      <p>Every design starts on a <a href="AFFILIATE_LINK_CRICUT" target="_blank" rel="noopener sponsored">Cricut</a> machine and their vinyl &mdash; it's what makes the clean lines possible. This is an affiliate link, so I may earn a small commission if you shop through it, at no extra cost to you.</p>
+    </div>
+
   </div>
 </section>
