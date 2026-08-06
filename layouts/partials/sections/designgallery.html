@@ -1,0 +1,45 @@
+{{/*
+  Design showcase / shop gallery.
+  Reused on the homepage, /build/, and /team-orders/ with different copy.
+  Params: id, heading, subtitle
+*/}}
+{{ $designs := slice
+  (dict
+    "slug" "actually"
+    "title" "Actually,"
+    "tagline" "Front: “Actually,” · Back: “bye.”"
+    "front" "/images/products/actually-front.jpg"
+    "back" "/images/products/actually-back.jpg"
+  )
+  (dict
+    "slug" "probably-late"
+    "title" "Probably Late"
+    "tagline" "Strawberries up front · “for something.” on the back"
+    "front" "/images/products/probably-late-front.jpg"
+    "back" "/images/products/probably-late-back.jpg"
+  )
+  (dict
+    "slug" "slay"
+    "title" "Slay"
+    "tagline" "Front: “Slay” · Back: “All Day.”"
+    "front" "/images/products/slay-front.jpg"
+    "back" "/images/products/slay-back.jpg"
+  )
+  (dict
+    "slug" "summer"
+    "title" "Summer Should Be Fun"
+    "tagline" "One-of-a-kind design, front only"
+    "front" "/images/products/summer-front.jpg"
+  )
+-}}
+<section id="{{ .id | default "shop-designs" }}" class="design-gallery-section">
+  <div class="container">
+    <h3 class="text-center design-gallery-title classic-title">{{ .heading | default "Shop The Designs" }}</h3>
+    {{ if .subtitle }}<p class="text-center design-gallery-subtitle">{{ .subtitle }}</p>{{ end }}
+    <div class="design-gallery-grid">
+      {{ range $designs }}
+        {{ partial "components/design-card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>

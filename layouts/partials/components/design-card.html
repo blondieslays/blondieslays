@@ -1,0 +1,39 @@
+{{/*
+  Design card component.
+  Expects a dict: slug, title, front, back (optional), tagline (optional)
+*/}}
+<div class="design-card" data-slug="{{ .slug }}">
+  <div class="design-card-image-wrap">
+    <img
+      class="design-card-img"
+      src="{{ .front | relURL }}"
+      data-front="{{ .front | relURL }}"
+      {{ if .back }}data-back="{{ .back | relURL }}"{{ end }}
+      alt="{{ .title }} — front"
+      loading="lazy"
+    >
+    {{ if .back }}
+    <button type="button" class="design-toggle-btn">&#8635; View Back</button>
+    {{ end }}
+  </div>
+  <div class="design-card-body">
+    <h4 class="design-card-title">{{ .title }}</h4>
+    {{ if .tagline }}<p class="design-card-tagline">{{ .tagline }}</p>{{ end }}
+    <div class="design-card-controls">
+      <select class="design-size-select" aria-label="Size for {{ .title }}">
+        <option>S</option>
+        <option selected>M</option>
+        <option>L</option>
+        <option>XL</option>
+        <option>2XL</option>
+      </select>
+      <button
+        type="button"
+        class="design-add-btn"
+        data-slug="{{ .slug }}"
+        data-title="{{ .title }}"
+        data-image="{{ .front | relURL }}"
+      >Add to Cart</button>
+    </div>
+  </div>
+</div>
