@@ -40,11 +40,11 @@
 #hero h1 { font-family: 'Caveat', cursive !important; font-weight: 700 !important; letter-spacing: 0 !important; color: #FF1493 !important; font-size: 4rem !important; line-height: 1.05 !important; }
 #hero h2 { font-size: 1.4rem !important; font-weight: 500 !important; letter-spacing: 0 !important; color: #5a5a5a !important; }
 #hero p.hero-content { color: #5a5a5a !important; }
-#hero { overflow: hidden !important; padding-bottom: 5rem !important; margin-bottom: 0 !important; }
+#hero { overflow: hidden !important; padding-bottom: 2rem !important; margin-bottom: 0 !important; }
 
 /* Full-viewport hero on desktop — minimal, text-only, vertically centered */
 #hero {
-  min-height: 92vh;
+  min-height: 88vh;
   display: flex !important;
   align-items: center !important;
   background:
@@ -74,7 +74,7 @@
 .hero-minimal .subtitle {
   display: inline-flex !important;
   align-items: center !important;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
   padding: .4rem 1rem !important;
   border-radius: 999px !important;
   border: 1.5px solid #f9a8d4 !important;
@@ -94,8 +94,8 @@
   justify-content: center !important;
   flex-wrap: wrap !important;
   gap: .6rem !important;
-  margin-top: 2.5rem !important;
-  padding-top: 1.5rem !important;
+  margin-top: 2rem !important;
+  padding-top: 1.25rem !important;
   border-top: 1px solid #f5dce8 !important;
   width: 100%;
   max-width: 520px;
