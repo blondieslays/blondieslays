@@ -1,6 +1,8 @@
 {{ if .Site.Params.hero.enable | default false }}
 {{- $hero := .Site.Language.Params.hero | default .Site.Params.hero -}}
 <section id="hero" class="pt-5 pb-0">
+    <img src="/images/lightning.svg" alt="" aria-hidden="true" class="hero-deco hero-deco-left d-none d-xl-block">
+    <img src="/images/lightning.svg" alt="" aria-hidden="true" class="hero-deco hero-deco-right d-none d-xl-block">
     <div class="container pb-0 px-3 px-sm-5 px-md-5 px-lg-5 pt-lg-3">
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-12 col-lg-9 col-xl-8 content text-center hero-minimal {{ if .Site.Params.animate }}animate{{ end }}" id="primary-font">

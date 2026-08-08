@@ -37,28 +37,32 @@
 }
 
 /* ── Hero ─────────────────────────────────────── */
-#hero h1 { font-family: 'Caveat', cursive !important; font-weight: 700 !important; letter-spacing: 0 !important; color: #FF1493 !important; font-size: 4rem !important; line-height: 1.05 !important; }
-#hero h2 { font-size: 1.4rem !important; font-weight: 500 !important; letter-spacing: 0 !important; color: #5a5a5a !important; }
-#hero p.hero-content { color: #5a5a5a !important; }
-#hero { overflow: hidden !important; padding-bottom: 2rem !important; margin-bottom: 0 !important; }
+/* Explicit margins on h1/h2/p — without these the browser's default UA
+   margin (0.67em / 0.83em, scaled off each element's OWN font-size) applies.
+   At a 7rem h1 that default is ~75px top AND bottom on its own — the single
+   biggest hidden source of "empty" space in the old layout. */
+#hero h1 { font-family: 'Caveat', cursive !important; font-weight: 700 !important; letter-spacing: 0 !important; color: #FF1493 !important; font-size: 4rem !important; line-height: 1.05 !important; margin: 0 0 .6rem 0 !important; }
+#hero h2 { font-size: 1.4rem !important; font-weight: 500 !important; letter-spacing: 0 !important; color: #5a5a5a !important; margin: 0 0 .9rem 0 !important; }
+#hero p.hero-content { color: #5a5a5a !important; margin: 0 !important; }
+#hero { overflow: hidden !important; margin-bottom: 0 !important; position: relative !important; }
 
 /* Content-driven hero — fixed, generous padding rather than viewport-height
    centering. A vh-locked box leaves dead space when the content is short
    (text-only hero); padding sizes the box to what's actually there. */
 #hero {
-  padding-top: 6.5rem !important;
-  padding-bottom: 5rem !important;
+  padding-top: 4.5rem !important;
+  padding-bottom: 3.25rem !important;
   background:
     radial-gradient(circle at 18% 20%, rgba(255,20,147,.07), transparent 42%),
     radial-gradient(circle at 84% 78%, rgba(200,240,251,.55), transparent 46%),
     #FFFBFD !important;
 }
 @media (max-width: 991px) {
-  #hero { padding-top: 3.5rem !important; padding-bottom: 3rem !important; }
+  #hero { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
 }
 @media (min-width: 992px) {
-  #hero h1 { font-size: 7rem !important; }
-  #hero h2 { font-size: 1.75rem !important; }
+  #hero h1 { font-size: 6.4rem !important; }
+  #hero h2 { font-size: 1.7rem !important; }
 }
 
 @media (max-width: 768px) {
@@ -70,6 +74,23 @@
 /* Minimal text-only hero: centered copy block, generous breathing room */
 .hero-minimal { display: flex !important; flex-direction: column !important; align-items: center !important; }
 .hero-minimal p.hero-content { max-width: 600px !important; margin: 0 auto !important; }
+
+/* Decorative flanking marks — on very wide screens the centered text
+   column leaves a lot of open canvas either side; a faint brand mark
+   (reused lightning bolt from the logo) gives it texture instead of
+   dead air, without competing with the copy. */
+.hero-deco {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 130px;
+  opacity: .06;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-deco-left { left: 4%; }
+.hero-deco-right { right: 4%; transform: translateY(-50%) scaleX(-1); }
+#hero .container { position: relative; z-index: 1; }
 
 /* Eyebrow badge above the headline — small anchor of texture/colour up top */
 .hero-minimal .subtitle {
@@ -281,6 +302,10 @@ a[href="/lets-build-something/"] { background: #FF1493 !important; color: #fff !
 a[href="/lets-build-something/"]:hover { background: #000 !important; color: #fff !important; }
 /* ── Navbar ───────────────────────────────────── */
 nav, .navbar, #profileHeader nav { background-color: #FFF8F5 !important; }
+/* Permanent hairline so the nav reads as fixed chrome even before the
+   scroll-triggered shadow kicks in — otherwise its blush tone sits flush
+   against the hero's near-white top edge with no boundary at all. */
+#profileHeader { border-bottom: 1px solid rgba(190,24,93,.08) !important; }
 body.page-downloads nav, body.page-downloads .navbar { background-color: #ffffff !important; }
 a.nav-link[href="#contact"] { color: #FF1493 !important; font-weight: 600 !important; }
 #dl-nav-btn { font-size: 0.75rem !important; padding: 0.4rem 1rem !important; box-shadow: none !important; color: #ffffff !important; }
