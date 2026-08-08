@@ -42,22 +42,26 @@
 #hero p.hero-content { color: #5a5a5a !important; }
 #hero { overflow: hidden !important; padding-bottom: 5rem !important; margin-bottom: 0 !important; }
 
-/* Full-viewport hero on desktop — content vertically centered so the
-   headline + photo fill the screen instead of sitting in a fixed box */
+/* Full-viewport hero on desktop — minimal, text-only, vertically centered */
 #hero { min-height: 100vh; display: flex !important; align-items: center !important; }
 @media (max-width: 991px) {
   #hero { min-height: auto; padding-top: 3rem !important; }
 }
 @media (min-width: 992px) {
-  #hero h1 { font-size: 5.5rem !important; }
-  #hero h2 { font-size: 1.65rem !important; }
+  #hero h1 { font-size: 7rem !important; }
+  #hero h2 { font-size: 1.75rem !important; }
 }
 
 @media (max-width: 768px) {
-  #hero h1 { font-size: 3rem !important; }
+  #hero h1 { font-size: 3.2rem !important; }
 }
-#hero .row { align-items: flex-start !important; }
+#hero .row { align-items: center !important; }
 #hero .col-sm-12.col-md-9.pt-5 { padding-top: 0 !important; }
+
+/* Minimal text-only hero: centered copy block, generous breathing room */
+.hero-minimal { display: flex !important; flex-direction: column !important; align-items: center !important; }
+.hero-minimal .subtitle { display: block !important; margin-bottom: .5rem !important; }
+.hero-minimal p.hero-content { max-width: 600px !important; margin: 0 auto !important; }
 
 .hero-carousel-wrap { display: flex; justify-content: center; align-items: flex-start; height: 100%; padding-top: 1rem; overflow: hidden; max-height: 500px; }
 .hero-swiper { width: 100%; max-width: 360px; overflow: hidden; }
@@ -398,10 +402,6 @@ a#hero-builder-btn:hover {
   height: 34px !important;
   object-fit: contain;
 }
-
-/* ── Hero promo video ── */
-.hero-video-wrap { width: 100%; }
-.hero-video { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 36px rgba(190,24,93,.15), 0 4px 12px rgba(0,0,0,.05); display: block; background: #FFF0F6; }
 
 /* ── Design Gallery / Shop cards ───────────────── */
 .design-gallery-section { padding: 4rem 0; border-top: 1px solid #f0f0f0; }
