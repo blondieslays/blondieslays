@@ -42,6 +42,17 @@
 #hero p.hero-content { color: #5a5a5a !important; }
 #hero { overflow: hidden !important; padding-bottom: 5rem !important; margin-bottom: 0 !important; }
 
+/* Full-viewport hero on desktop — content vertically centered so the
+   headline + photo fill the screen instead of sitting in a fixed box */
+#hero { min-height: 100vh; display: flex !important; align-items: center !important; }
+@media (max-width: 991px) {
+  #hero { min-height: auto; padding-top: 3rem !important; }
+}
+@media (min-width: 992px) {
+  #hero h1 { font-size: 5.5rem !important; }
+  #hero h2 { font-size: 1.65rem !important; }
+}
+
 @media (max-width: 768px) {
   #hero h1 { font-size: 3rem !important; }
 }
@@ -219,12 +230,6 @@ body.page-downloads nav, body.page-downloads .navbar { background-color: #ffffff
 a.nav-link[href="#contact"] { color: #FF1493 !important; font-weight: 600 !important; }
 #dl-nav-btn { font-size: 0.75rem !important; padding: 0.4rem 1rem !important; box-shadow: none !important; color: #ffffff !important; }
 
-/* Hero builder button — hover only (sizing via inline style) */
-a#hero-builder-btn:hover {
-  background: #FF1493 !important;
-  color: #ffffff !important;
-}
-
 /* ── Nav + hero buttons: shared geometry ─────────────── */
 #dl-nav-btn,
 #bulk-nav-btn,
@@ -249,13 +254,14 @@ a#hero-builder-btn {
   box-shadow: none !important;
   text-decoration: none !important;
 }
-/* Secondary (outline): Design Your Tee */
+/* Primary (filled): Start Your Order — the hero's one conversion action */
 a#hero-builder-btn {
-  background: #ffffff !important;
-  color: #FF1493 !important;
+  background: #FF1493 !important;
+  color: #ffffff !important;
 }
 a#hero-builder-btn:hover {
-  background: #FF1493 !important;
+  background: #d1147d !important;
+  border-color: #d1147d !important;
   color: #ffffff !important;
 }
 /* Primary (filled): Digital Downloads + Bulk Orders */
