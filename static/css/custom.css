@@ -42,18 +42,19 @@
 #hero p.hero-content { color: #5a5a5a !important; }
 #hero { overflow: hidden !important; padding-bottom: 2rem !important; margin-bottom: 0 !important; }
 
-/* Full-viewport hero on desktop — minimal, text-only, vertically centered */
+/* Content-driven hero — fixed, generous padding rather than viewport-height
+   centering. A vh-locked box leaves dead space when the content is short
+   (text-only hero); padding sizes the box to what's actually there. */
 #hero {
-  min-height: 88vh;
-  display: flex !important;
-  align-items: center !important;
+  padding-top: 6.5rem !important;
+  padding-bottom: 5rem !important;
   background:
     radial-gradient(circle at 18% 20%, rgba(255,20,147,.07), transparent 42%),
     radial-gradient(circle at 84% 78%, rgba(200,240,251,.55), transparent 46%),
     #FFFBFD !important;
 }
 @media (max-width: 991px) {
-  #hero { min-height: auto; padding-top: 3rem !important; }
+  #hero { padding-top: 3.5rem !important; padding-bottom: 3rem !important; }
 }
 @media (min-width: 992px) {
   #hero h1 { font-size: 7rem !important; }
@@ -308,10 +309,16 @@ a#hero-builder-btn {
   box-shadow: none !important;
   text-decoration: none !important;
 }
-/* Primary (filled): Start Your Order — the hero's one conversion action */
+/* Primary (filled): Start Your Order — the hero's one conversion action.
+   Same shape language as the nav pills, scaled up since this is the hero's
+   single primary CTA and needs more visual weight than a nav button. */
 a#hero-builder-btn {
   background: #FF1493 !important;
   color: #ffffff !important;
+}
+#hero a#hero-builder-btn {
+  font-size: 0.85rem !important;
+  padding: 0.8rem 2.1rem !important;
 }
 a#hero-builder-btn:hover {
   background: #d1147d !important;
