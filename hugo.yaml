@@ -76,8 +76,8 @@ params:
     enable: true
     intro: "CUSTOM HTV APPAREL"
     title: "Make it real.<br>Make it yours."
-    subtitle: "Custom HTV apparel, made in Sarnia, Ontario."
-    content: "Pick your colours, choose your font, and add your text — Elise will press and ship your custom tee within 48 hours. One-off pieces, team orders, and branded merch welcome."
+    subtitle: "Made in Sarnia, Ontario."
+    content: "Pick your colours, font, and text — Elise presses and ships your custom tee within 48 hours. One-off pieces, team orders, and branded merch welcome."
     bottomImage:
       enable: false
 
