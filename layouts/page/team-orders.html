@@ -47,6 +47,15 @@
   .classic-title.custom-order-title { font-family: 'Bebas Neue', sans-serif !important; font-weight: 400 !important; text-transform: uppercase !important; letter-spacing: 2px !important; color: #be185d !important; font-size: 2.6rem !important; }
   .to-section-sub { font-family:Montserrat,sans-serif; font-size:.9rem; color:#888; text-align:center; margin: 0 0 2rem; }
 
+  /* How It Works — 3-step process strip, sets the flow right under the hero */
+  .to-steps { max-width: 1040px; margin: 0 auto; padding: .5rem 1.5rem 3rem; }
+  .to-steps-inner { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; }
+  .to-step { text-align:center; padding: 0 .75rem; position:relative; }
+  .to-step-num { display:inline-flex; align-items:center; justify-content:center; width:2.4rem; height:2.4rem; border-radius:50%; background:#FF1493; color:#fff; font-family:'Bebas Neue',sans-serif; font-size:1.2rem; margin-bottom:.65rem; box-shadow:0 6px 14px rgba(255,20,147,.28); }
+  .to-step h4 { font-family:Montserrat,sans-serif; font-weight:700; font-size:.85rem; color:#be185d; margin:0 0 .35rem; text-transform:uppercase; letter-spacing:.04em; }
+  .to-step p { font-family:Montserrat,sans-serif; font-size:.82rem; color:#888; line-height:1.55; margin:0; }
+  @media (max-width:780px) { .to-steps-inner { grid-template-columns:1fr; gap:1.75rem; } }
+
   /* Offer cards */
   .to-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
   .to-card { background:#fff; border:1px solid #f5e4ec; border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(255,20,147,.06); }
@@ -80,6 +89,11 @@
   .to-price-band { text-align:center; background:#FF1493; color:#fff; padding: 2rem 1.5rem; border-radius: 16px; margin: 0 auto; max-width: 1040px; box-shadow: 0 14px 32px rgba(255,20,147,.24); }
   .to-price-band .amt { font-family:'Bebas Neue',sans-serif; font-size:2.6rem; letter-spacing:.02em; }
   .to-price-band p { font-family:Montserrat,sans-serif; font-size:.88rem; opacity:.92; margin:.4rem 0 0; }
+  .to-price-band a { color:#fff; text-decoration:underline; font-weight:700; }
+
+  /* Divider before the "browse instead" section, to visually separate it from the primary conversion flow */
+  .to-alt-divider { max-width:1040px; margin:0 auto; padding:0 1.5rem; }
+  .to-alt-divider hr { border:none; border-top:1px dashed #f0c6dc; margin:0; }
 
   @media (max-width: 780px) {
     .to-cards { grid-template-columns: 1fr; }
@@ -94,7 +108,27 @@
   <a class="to-cta" href="#team-order">Get a Quote &darr;</a>
 </section>
 
-<section class="to-section">
+<section class="to-steps">
+  <div class="to-steps-inner">
+    <div class="to-step">
+      <span class="to-step-num">1</span>
+      <h4>Tell Us What You Need</h4>
+      <p>Fill out the quote form below with your team, event, or business details.</p>
+    </div>
+    <div class="to-step">
+      <span class="to-step-num">2</span>
+      <h4>Get Your Free Quote</h4>
+      <p>Elise replies within 48 hours with pricing and a secure PayPal invoice.</p>
+    </div>
+    <div class="to-step">
+      <span class="to-step-num">3</span>
+      <h4>Approve &amp; We Print</h4>
+      <p>Nothing to pay until you say go &mdash; then it's designed, pressed, and shipped.</p>
+    </div>
+  </div>
+</section>
+
+<section class="to-section" style="padding-top:0;">
   <h2 class="to-section-title classic">What We Make</h2>
   <p class="to-section-sub">One-off pieces, team sets, or standing orders &mdash; all produced in-house.</p>
   <div class="to-cards">
@@ -121,8 +155,6 @@
     </div>
   </div>
 </section>
-
-{{- partial "sections/designgallery.html" (dict "id" "shop-designs" "heading" "Designs Your Team Can Order" "subtitle" "A few of our go-to pieces — add them to your cart to build out your team or event order, sizes and quantities included.") -}}
 
 <section class="to-section to-cnpl">
   <h2 class="to-section-title">Working With The CNPL</h2>
@@ -151,5 +183,10 @@
 <div style="height:1rem;"></div>
 
 {{ partial "sections/teamorder.html" . }}
+
+<div style="height:1rem;"></div>
+<div class="to-alt-divider"><hr></div>
+
+{{- partial "sections/designgallery.html" (dict "id" "shop-designs" "heading" "Don't Need Something Custom?" "subtitle" "Browse a few of our go-to designs and add them straight to your cart &mdash; sizes and quantities included, no quote required.") -}}
 
 {{ end }}
