@@ -85,11 +85,12 @@
     .to-cnpl-proof { max-width:260px; }
   }
 
-  /* Pricing anchor */
-  .to-price-band { text-align:center; background:#FF1493; color:#fff; padding: 2rem 1.5rem; border-radius: 16px; margin: 0 auto; max-width: 1040px; box-shadow: 0 14px 32px rgba(255,20,147,.24); }
-  .to-price-band .amt { font-family:'Bebas Neue',sans-serif; font-size:2.6rem; letter-spacing:.02em; }
-  .to-price-band p { font-family:Montserrat,sans-serif; font-size:.88rem; opacity:.92; margin:.4rem 0 0; }
-  .to-price-band a { color:#fff; text-decoration:underline; font-weight:700; }
+  /* Pricing pill — lives inside the quote-form card now instead of its own banner section */
+  .to-price-pill { display:inline-block; background:#FFF0F6; color:#be185d; border:1px solid #f9a8d4; border-radius:999px; padding:.35rem 1rem; font-family:Montserrat,sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.03em; margin-bottom:.9rem; }
+
+  /* Softer, less shouty field labels for the quote form on this page */
+  #team-order .order-form label { font-weight:600 !important; text-transform:none !important; letter-spacing:0 !important; color:#a3396e !important; font-size:.8rem !important; }
+  #team-order .custom-order-intro { max-width:480px !important; font-size:.92rem !important; }
 
   /* Divider before the "browse instead" section, to visually separate it from the primary conversion flow */
   .to-alt-divider { max-width:1040px; margin:0 auto; padding:0 1.5rem; }
@@ -127,6 +128,12 @@
     </div>
   </div>
 </section>
+
+<div style="height:.5rem;"></div>
+
+{{ partial "sections/teamorder.html" . }}
+
+<div style="height:.5rem;"></div>
 
 <section class="to-section" style="padding-top:0;">
   <h2 class="to-section-title classic">What We Make</h2>
@@ -175,17 +182,8 @@
   <p style="text-align:center; margin-top:2rem;"><a href="/about/#featured-work" style="font-family:Montserrat,sans-serif; font-weight:700; font-size:.85rem; color:#FF1493; text-decoration:underline;">See more of our work &rarr;</a></p>
 </section>
 
-<div class="to-price-band">
-  <span class="amt">Starting at $20/shirt</span>
-  <p>Bulk pricing gets better the more you order &mdash; get a free, no-obligation quote below.</p>
-</div>
-
-<div style="height:1rem;"></div>
-
-{{ partial "sections/teamorder.html" . }}
-
-<div style="height:1rem;"></div>
 <div class="to-alt-divider"><hr></div>
+<div style="height:1rem;"></div>
 
 {{- partial "sections/designgallery.html" (dict "id" "shop-designs" "heading" "Don't Need Something Custom?" "subtitle" "Browse a few of our go-to designs and add them straight to your cart &mdash; sizes and quantities included, no quote required.") -}}
 
