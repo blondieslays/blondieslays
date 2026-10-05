@@ -1,7 +1,10 @@
 {{/*
   Design card component.
   Expects a dict: slug, title, front, back (optional), tagline (optional)
+  Optional: price (shown under title), onesize (true = no size picker),
+            altlabel (button text for the 2nd photo, default "View Back")
 */}}
+{{ $alt := .altlabel | default "View Back" }}
 <div class="design-card" data-slug="{{ .slug }}">
   <div class="design-card-image-wrap">
     <img
@@ -13,13 +16,15 @@
       loading="lazy"
     >
     {{ if .back }}
-    <button type="button" class="design-toggle-btn">&#8635; View Back</button>
+    <button type="button" class="design-toggle-btn" data-label-alt="{{ $alt }}">&#8635; {{ $alt }}</button>
     {{ end }}
   </div>
   <div class="design-card-body">
     <h4 class="design-card-title">{{ .title }}</h4>
+    {{ if .price }}<p class="design-card-price">{{ .price }}</p>{{ end }}
     {{ if .tagline }}<p class="design-card-tagline">{{ .tagline }}</p>{{ end }}
     <div class="design-card-controls">
+      {{ if not .onesize }}
       <select class="design-size-select" aria-label="Size for {{ .title }}">
         <option>S</option>
         <option selected>M</option>
@@ -27,12 +32,14 @@
         <option>XL</option>
         <option>2XL</option>
       </select>
+      {{ end }}
       <button
         type="button"
         class="design-add-btn"
         data-slug="{{ .slug }}"
         data-title="{{ .title }}"
         data-image="{{ .front | relURL }}"
+        {{ if .onesize }}data-size="One size"{{ end }}
       >Add to Cart</button>
     </div>
   </div>

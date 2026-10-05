@@ -41,6 +41,7 @@
               <option>Hat / Cap</option>
               <option>Tote Bag</option>
               <option>Towel</option>
+              <option>Keychain</option>
               <option>Other</option>
             </select>
           </div>
@@ -139,6 +140,17 @@
 
   function val(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
   function showErr(msg){ errBox.textContent = msg; errBox.style.display = 'block'; errBox.scrollIntoView({behavior:'smooth', block:'center'}); }
+
+  // ── Preselect item from ?item= (e.g. homepage keychain hero) ──
+  (function(){
+    var item = new URLSearchParams(location.search).get('item');
+    var sel = document.getElementById('to-garment');
+    if (item && sel) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].text.toLowerCase() === item.toLowerCase()) { sel.selectedIndex = i; break; }
+      }
+    }
+  })();
 
   // ── Colour swatches (multi-select) ──────────────────────
   var swatchWrap = document.getElementById('to-swatches');

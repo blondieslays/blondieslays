@@ -1,0 +1,108 @@
+{{/*
+  Keychain shop — homepage section the top banner links to (#keychains).
+  Add a new keychain by copying one dict below and dropping its photos
+  (800x900 jpg: <name>.jpg on marble + <name>-styled.jpg) into static/images/keychains/.
+*/}}
+{{ $keychains := slice
+  (dict
+    "slug" "keychain-ghost"
+    "title" "Ghost Keychain"
+    "price" "$5"
+    "tagline" "White ghost with a cut-out smile &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/ghost.jpg"
+    "back" "/images/keychains/ghost-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-pumpkin"
+    "title" "Pumpkin Keychain"
+    "price" "$5"
+    "tagline" "Orange pumpkin with a curly vine &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/pumpkin.jpg"
+    "back" "/images/keychains/pumpkin-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-cat"
+    "title" "Black Cat Keychain"
+    "price" "$5"
+    "tagline" "Little black cat, cut-out eyes and whiskers &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/cat.jpg"
+    "back" "/images/keychains/cat-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-moon"
+    "title" "Gold Moon Keychain"
+    "price" "$5"
+    "tagline" "Textured gold crescent moon &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/moon.jpg"
+    "back" "/images/keychains/moon-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-donut"
+    "title" "Donut Keychain"
+    "price" "$5"
+    "tagline" "Pink frosted donut with sprinkles &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/donut.jpg"
+    "back" "/images/keychains/donut-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-ice-cream"
+    "title" "Ice Cream Keychain"
+    "price" "$5"
+    "tagline" "Strawberry scoop on a sugar cone &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/ice-cream.jpg"
+    "back" "/images/keychains/ice-cream-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-duck"
+    "title" "Duck Keychain"
+    "price" "$5"
+    "tagline" "Classic yellow rubber duck &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/duck.jpg"
+    "back" "/images/keychains/duck-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-strawberry"
+    "title" "Strawberry Keychain"
+    "price" "$5"
+    "tagline" "Red strawberry with a glitter-green top &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/strawberry.jpg"
+    "back" "/images/keychains/strawberry-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+  (dict
+    "slug" "keychain-mushroom"
+    "title" "Mushroom Keychain"
+    "price" "$5"
+    "tagline" "Red spotted toadstool &middot; clear acrylic, gold clasp"
+    "front" "/images/keychains/mushroom.jpg"
+    "back" "/images/keychains/mushroom-styled.jpg"
+    "altlabel" "See It Styled"
+    "onesize" true
+  )
+-}}
+<section id="keychains" class="design-gallery-section keychain-shop-section">
+  <div class="container">
+    <h3 class="text-center design-gallery-title classic-title">Shop Keychains</h3>
+    <p class="text-center design-gallery-subtitle">Just in! $5 each &mdash; spooky season picks and sweet treats. Add your favourites to the cart. Want a custom one? <a href="/team-orders/?item=keychain#team-order">Tell Elise what you&rsquo;re picturing.</a></p>
+    <div class="design-gallery-grid keychain-grid">
+      {{ range $keychains }}
+        {{ partial "components/design-card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>
