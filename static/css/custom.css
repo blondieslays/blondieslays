@@ -709,3 +709,23 @@ body:has(#keychains) .kc-banner-photo img { object-position: center 55% !importa
 body:has(#keychains) .ct-section { background: var(--fall-oat) !important; border-top: 1px solid var(--fall-sand); }
 body:has(#keychains) .ct-title { color: var(--fall-cocoa) !important; }
 body:has(#keychains) .ct-content, body:has(#keychains) .ct-section p { color: var(--fall-taupe) !important; }
+
+/* ── Bigger logo + split keychain banner (Oct 5) ── */
+.navbar { padding-top: .6rem !important; padding-bottom: .6rem !important; }
+.navbar-brand img { height: 84px !important; max-width: 300px !important; }
+@media (max-width: 575px) { .navbar-brand img { height: 58px !important; } }
+
+/* Photo and copy as two separate cards */
+body:has(#keychains) .kc-banner { background: none !important; border: 0 !important; box-shadow: none !important; overflow: visible !important; gap: 1.5rem; border-radius: 0 !important; }
+body:has(#keychains) .kc-banner:hover { transform: none !important; box-shadow: none !important; }
+body:has(#keychains) .kc-banner-copy,
+body:has(#keychains) .kc-banner-photo { border-radius: 20px; border: 1px solid var(--fall-sand); box-shadow: 0 18px 44px rgba(74,59,49,.10); transition: transform .18s ease, box-shadow .18s ease; }
+body:has(#keychains) .kc-banner-copy { background: #fff; }
+body:has(#keychains) .kc-banner:hover .kc-banner-copy,
+body:has(#keychains) .kc-banner:hover .kc-banner-photo { transform: translateY(-3px); box-shadow: 0 24px 50px rgba(74,59,49,.16); }
+.kc-collection { font-family: Montserrat, sans-serif; font-weight: 800; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: #B5835A; margin: .2rem 0 .1rem; }
+.kc-banner-sub { font-family: Montserrat, sans-serif; font-size: .92rem; line-height: 1.6; color: #8C7B6B; max-width: 320px; margin: 0 auto .9rem; }
+@media (max-width: 767px) {
+  body:has(#keychains) .kc-banner { gap: 1rem; }
+  body:has(#keychains) .kc-banner-photo { aspect-ratio: 4 / 3; }
+}
