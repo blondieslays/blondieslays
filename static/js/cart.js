@@ -24,6 +24,9 @@
     renderBadge();
     renderDrawerItems();
   }
+  function sizeLabel(size) {
+    return /^one size$/i.test(size || "") ? "One size" : "Size " + size;
+  }
   function cartCount(cart) {
     return (cart || getCart()).reduce(function (n, item) { return n + item.qty; }, 0);
   }
@@ -76,7 +79,7 @@
           '<img src="' + item.image + '" alt="' + item.title + '">' +
           '<div class="cart-item-info">' +
             '<p class="cart-item-title">' + item.title + '</p>' +
-            '<p class="cart-item-meta">Size ' + item.size + '</p>' +
+            '<p class="cart-item-meta">' + sizeLabel(item.size) + '</p>' +
             '<div class="cart-item-row">' +
               '<button type="button" class="cart-qty-btn" data-i="' + i + '" data-d="-1">&minus;</button>' +
               '<span class="cart-qty-val">' + item.qty + '</span>' +
@@ -157,7 +160,8 @@
     btn.id = "cart-nav-btn";
     btn.href = "#";
     btn.setAttribute("aria-label", "View cart");
-    btn.innerHTML = '<span class="cart-icon">&#128717;</span><span class="cart-badge" id="cart-badge" style="display:none;">0</span>';
+    btn.className = "bsa-nav-btn bsa-nav-btn--white";
+    btn.innerHTML = '<span class="cart-label">Cart</span><span class="cart-badge" id="cart-badge" style="display:none;">0</span>';
     btn.addEventListener("click", function (e) {
       e.preventDefault();
       toggleDrawer();
@@ -171,7 +175,7 @@
     var cart = getCart();
     if (cart.length === 0) return "";
     var lines = cart.map(function (item) {
-      return "- " + item.title + " (Size " + item.size + ") x" + item.qty;
+      return "- " + item.title + " (" + sizeLabel(item.size) + ") x" + item.qty;
     });
     return "From the design shop cart:\n" + lines.join("\n") + "\n\n";
   }
@@ -220,11 +224,11 @@
         if (showingBack) {
           img.src = img.dataset.front;
           img.dataset.showingBack = "0";
-          toggleBtn.innerHTML = "&#8635; View Back";
+          toggleBtn.innerHTML = "&#8635; " + (toggleBtn.dataset.labelAlt || "View Back");
         } else {
           img.src = img.dataset.back;
           img.dataset.showingBack = "1";
-          toggleBtn.innerHTML = "&#8635; View Front";
+          toggleBtn.innerHTML = "&#8635; " + (toggleBtn.dataset.labelAlt && toggleBtn.dataset.labelAlt !== "View Back" ? "Main Photo" : "View Front");
         }
         return;
       }
@@ -237,7 +241,7 @@
           slug: addBtn.dataset.slug,
           title: addBtn.dataset.title,
           image: addBtn.dataset.image,
-          size: sizeSelect ? sizeSelect.value : "M"
+          size: sizeSelect ? sizeSelect.value : (addBtn.dataset.size || "M")
         });
         var original = addBtn.textContent;
         addBtn.textContent = "Added! ✓";

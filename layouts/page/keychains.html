@@ -1,0 +1,60 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "head" }}<meta name="description" content="{{ .Description }}">{{ end }}
+
+{{ define "main" }}
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+{{ $items := site.Data.keychains.items }}
+{{ $fall := where $items "collection" "fall" }}
+{{ $sweet := where $items "collection" "sweet" }}
+
+<section class="kcp-hero">
+  <div class="container">
+    <div class="kcp-hero-grid">
+      <div class="kcp-hero-copy">
+        <span class="kc-new-badge">&#10024; New &middot; Just In</span>
+        <h1 class="kcp-title">Keychains</h1>
+        <p class="kcp-sub">Clear acrylic discs, gold clasps, and a little personality. <strong>$5 each</strong> &mdash; hand-made in Sarnia.</p>
+        <div class="kcp-actions">
+          <a href="#fall" class="bsa-btn bsa-btn--pink">Fall &amp; Halloween</a>
+          <a href="#sweet" class="bsa-btn bsa-btn--teal">Sweet &amp; Cute</a>
+        </div>
+      </div>
+      <div class="kcp-hero-photo">
+        <img src="/images/keychains/keychain-hero-fall.jpg" alt="Black cat, pumpkin and ghost acrylic keychains with gold clasps on fall pumpkins" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fall" class="design-gallery-section keychain-shop-section kcp-group">
+  <div class="container">
+    <span class="bsa-eyebrow">&#10022; Spooky Season</span>
+    <h2 class="text-center design-gallery-title classic-title">Fall &amp; Halloween Collection</h2>
+    <div class="design-gallery-grid keychain-grid">
+      {{ range $fall }}{{ partial "components/design-card.html" . }}{{ end }}
+    </div>
+  </div>
+</section>
+
+<section id="sweet" class="design-gallery-section keychain-shop-section kcp-group kcp-group--alt">
+  <div class="container">
+    <span class="bsa-eyebrow">&#10022; All Year Round</span>
+    <h2 class="text-center design-gallery-title classic-title">Sweet &amp; Cute</h2>
+    <div class="design-gallery-grid keychain-grid">
+      {{ range $sweet }}{{ partial "components/design-card.html" . }}{{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="kcp-custom">
+  <div class="container">
+    <div class="kcp-custom-card">
+      <span class="bsa-eyebrow">&#10022; Made For You</span>
+      <h2 class="kcp-custom-title">Want a custom keychain?</h2>
+      <p>Names, initials, team logos, party favours &mdash; tell Elise what you&rsquo;re picturing and she&rsquo;ll make it happen.</p>
+      <a href="/team-orders/?item=keychain#team-order" class="bsa-btn bsa-btn--pink">Request a Custom Keychain &rarr;</a>
+    </div>
+  </div>
+</section>
+{{ end }}

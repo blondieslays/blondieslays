@@ -729,3 +729,119 @@ body:has(#keychains) .kc-banner:hover .kc-banner-photo { transform: translateY(-
   body:has(#keychains) .kc-banner { gap: 1rem; }
   body:has(#keychains) .kc-banner-photo { aspect-ratio: 4 / 3; }
 }
+
+/* ══ Logo-style buttons + new-logo vibe (Oct 5) ═══════════════════
+   Palette pulled from the Blondie wordmark:
+   teal #2AF1D6 · hot pink #FF1493 · deep pink #CF005E · gold #FFD21F */
+:root { --bsa-teal: #2AF1D6; --bsa-pink: #FF1493; --bsa-deep: #CF005E; --bsa-gold: #FFD21F; }
+
+.bsa-nav-btn, .bsa-btn {
+  display: inline-flex !important; align-items: center; justify-content: center; gap: .4rem;
+  font-family: Montserrat, sans-serif !important; font-weight: 800 !important; font-size: .74rem !important;
+  letter-spacing: .07em; text-transform: uppercase; line-height: 1 !important;
+  padding: .6rem 1.15rem !important; border-radius: 999px !important;
+  border: 2px solid var(--bsa-pink) !important; text-decoration: none !important;
+  transition: transform .12s ease, box-shadow .12s ease !important; white-space: nowrap; cursor: pointer;
+}
+.bsa-nav-btn { align-self: center !important; margin-left: .7rem !important; }
+.bsa-nav-btn--pink, .bsa-btn--pink { background: var(--bsa-pink) !important; color: #fff !important; box-shadow: 3px 3px 0 var(--bsa-teal) !important; }
+.bsa-nav-btn--teal, .bsa-btn--teal { background: var(--bsa-teal) !important; color: var(--bsa-deep) !important; box-shadow: 3px 3px 0 var(--bsa-pink) !important; }
+.bsa-nav-btn--white, .bsa-btn--white { background: #fff !important; color: var(--bsa-pink) !important; box-shadow: 3px 3px 0 var(--bsa-teal) !important; }
+.bsa-nav-btn:hover, .bsa-btn:hover { transform: translate(-1px,-1px); }
+.bsa-nav-btn--pink:hover, .bsa-btn--pink:hover, .bsa-nav-btn--white:hover, .bsa-btn--white:hover { box-shadow: 5px 5px 0 var(--bsa-teal) !important; }
+.bsa-nav-btn--teal:hover, .bsa-btn--teal:hover { box-shadow: 5px 5px 0 var(--bsa-pink) !important; }
+
+/* Cart: text button + gold count bubble (replaces the bag icon) */
+#cart-nav-btn { position: relative; width: auto !important; height: auto !important; }
+#cart-nav-btn .cart-badge { position: static !important; background: var(--bsa-gold) !important; color: var(--bsa-deep) !important; box-shadow: none !important; min-width: 18px; height: 18px; font-size: .66rem; margin-left: .1rem; }
+#about-nav-btn { border-color: #f9a8d4 !important; }
+
+/* Mobile menu: stack buttons full-width with breathing room */
+
+
+/* Gold sparkle eyebrow above section titles */
+.bsa-eyebrow { display: block; text-align: center; font-family: Montserrat, sans-serif; font-weight: 800; font-size: .76rem; letter-spacing: .16em; text-transform: uppercase; color: var(--bsa-deep); margin-bottom: .4rem; }
+.bsa-eyebrow::first-letter { color: #E0A800; }
+
+/* Section titles get the logo's teal drop-shadow */
+body:has(#keychains) .design-gallery-title,
+.kcp-group .design-gallery-title {
+  color: var(--bsa-pink) !important; text-shadow: 2px 2px 0 var(--bsa-teal);
+}
+
+/* Homepage buttons → logo style */
+body:has(#keychains) .kc-banner-btn,
+body:has(#keychains) .design-add-btn,
+body:has(#keychains) .nyw-cta,
+body:has(#keychains) .wco-cta,
+body:has(#keychains) .oc-btn,
+body:has(#keychains) .ct-btn,
+body:has(#keychains) .order-submit-btn,
+.kcp-group .design-add-btn {
+  background: var(--bsa-pink) !important; color: #fff !important; border: 2px solid var(--bsa-pink) !important;
+  border-radius: 999px !important; box-shadow: 3px 3px 0 var(--bsa-teal) !important; font-weight: 800 !important;
+  transition: transform .12s ease, box-shadow .12s ease !important;
+}
+body:has(#keychains) .kc-banner:hover .kc-banner-btn,
+body:has(#keychains) .design-add-btn:hover, body:has(#keychains) .nyw-cta:hover, body:has(#keychains) .wco-cta:hover,
+body:has(#keychains) .oc-btn:hover, body:has(#keychains) .ct-btn:hover, body:has(#keychains) .order-submit-btn:hover,
+.kcp-group .design-add-btn:hover { transform: translate(-1px,-1px) !important; box-shadow: 5px 5px 0 var(--bsa-teal) !important; background: var(--bsa-pink) !important; }
+body:has(#keychains) a#hero-builder-btn { background: #fff !important; border: 2px solid var(--bsa-pink) !important; color: var(--bsa-pink) !important; border-radius: 999px !important; box-shadow: 3px 3px 0 var(--bsa-teal) !important; padding: .6rem 1.2rem !important; font-weight: 800 !important; }
+body:has(#keychains) .design-toggle-btn { border-radius: 999px !important; }
+
+/* Swap the caramel/sage accents for the logo's teal & gold */
+body:has(#keychains) .kc-collection { color: var(--bsa-deep) !important; }
+body:has(#keychains) .wco-card:nth-child(2) { --accent: #12B8A2 !important; --tint: rgba(42,241,214,.18) !important; --tint-strong: rgba(42,241,214,.28) !important; }
+body:has(#keychains) .wco-card:nth-child(3) { --accent: #E0A800 !important; --tint: rgba(255,210,31,.18) !important; --tint-strong: rgba(255,210,31,.28) !important; }
+body:has(#keychains) .wco-doodle--2 { color: #12B8A2 !important; }
+body:has(#keychains) .oc-card.oc-secondary { background: #EFFFFC !important; border-color: var(--bsa-teal) !important; box-shadow: 0 10px 30px rgba(42,241,214,.16) !important; }
+body:has(#keychains) .oc-card.oc-secondary .oc-eyebrow { color: #0F9C89 !important; }
+body:has(#keychains) .oc-card.oc-secondary .oc-btn { background: var(--bsa-teal) !important; color: var(--bsa-deep) !important; border-color: var(--bsa-pink) !important; box-shadow: 3px 3px 0 var(--bsa-pink) !important; }
+body:has(#keychains) .hero-minimal .subtitle { border: 1.5px solid var(--bsa-teal) !important; background: #fff !important; color: var(--bsa-deep) !important; }
+
+/* Homepage featured keychains: "shop all" link */
+.kc-shop-all-wrap { text-align: center; margin-top: 2.25rem; }
+
+/* ── /keychains/ page ── */
+body:has(.kcp-hero) { background: #FFFCF7; }
+.kcp-hero { padding: 3rem 0 2.5rem; background: #FFFCF7; }
+.kcp-hero-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; max-width: 1100px; margin: 0 auto; align-items: stretch; }
+.kcp-hero-copy { background: #fff; border: 1px solid #EADFCF; border-radius: 20px; box-shadow: 0 18px 44px rgba(74,59,49,.10); padding: 2.5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.kcp-title { font-family: 'Caveat', cursive !important; font-weight: 700 !important; font-size: 4.6rem !important; color: var(--bsa-pink) !important; line-height: .95 !important; margin: .2rem 0 .6rem !important; }
+.kcp-sub { font-family: Montserrat, sans-serif; color: #8C7B6B; font-size: .98rem; line-height: 1.6; max-width: 340px; margin: 0 0 1.4rem; }
+.kcp-sub strong { color: var(--bsa-deep); }
+.kcp-actions { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+.kcp-hero-photo { border-radius: 20px; overflow: hidden; border: 1px solid #EADFCF; box-shadow: 0 18px 44px rgba(74,59,49,.10); min-height: 340px; }
+.kcp-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.kcp-group { background: #FFFCF7; scroll-margin-top: 110px; border-top: 1px solid #EADFCF !important; }
+.kcp-group--alt { background: #F8F2E9; }
+.kcp-group .keychain-grid { max-width: 1100px !important; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; }
+.kcp-group .design-card { background: #FFFDF9 !important; border-color: #EADFCF !important; }
+.kcp-group .design-card-price { color: var(--bsa-pink) !important; }
+.kcp-custom { padding: 3.5rem 0 4rem; background: #FFFCF7; }
+.kcp-custom-card { max-width: 640px; margin: 0 auto; text-align: center; background: #fff; border: 2px solid var(--bsa-pink); border-radius: 20px; box-shadow: 6px 6px 0 var(--bsa-teal); padding: 2.25rem 1.75rem; }
+.kcp-custom-title { font-family: 'Caveat', cursive !important; font-weight: 700 !important; font-size: 2.8rem !important; color: var(--bsa-pink) !important; margin: 0 0 .5rem !important; }
+.kcp-custom-card p { font-family: Montserrat, sans-serif; color: #8C7B6B; line-height: 1.6; margin: 0 auto 1.3rem; max-width: 460px; }
+@media (max-width: 767px) {
+  .kcp-hero-grid { grid-template-columns: 1fr; }
+  .kcp-hero-photo { order: -1; min-height: 0; aspect-ratio: 4 / 3; }
+  .kcp-title { font-size: 3.6rem !important; }
+}
+
+/* ID-level overrides so the older #bulk/#designer nav rules don't win */
+#keychains-nav-btn, #bulk-nav-btn, #designer-nav-btn, #cart-nav-btn {
+  font-weight: 800 !important; font-size: .74rem !important; letter-spacing: .07em !important;
+  padding: .6rem 1.15rem !important; border-radius: 999px !important; border: 2px solid #FF1493 !important;
+  margin-left: .7rem !important; transition: transform .12s ease, box-shadow .12s ease !important;
+}
+#keychains-nav-btn, #keychains-nav-btn:hover { background: #FF1493 !important; color: #fff !important; box-shadow: 3px 3px 0 #2AF1D6 !important; }
+#bulk-nav-btn, #bulk-nav-btn:hover { background: #2AF1D6 !important; color: #CF005E !important; border-color: #FF1493 !important; box-shadow: 3px 3px 0 #FF1493 !important; }
+#designer-nav-btn, #designer-nav-btn:link, #designer-nav-btn:visited, #designer-nav-btn:hover, #designer-nav-btn:active,
+#cart-nav-btn, #cart-nav-btn:hover { background: #fff !important; color: #FF1493 !important; border-color: #FF1493 !important; box-shadow: 3px 3px 0 #2AF1D6 !important; }
+#keychains-nav-btn:hover, #designer-nav-btn:hover, #cart-nav-btn:hover { box-shadow: 5px 5px 0 #2AF1D6 !important; transform: translate(-1px,-1px); }
+#bulk-nav-btn:hover { box-shadow: 5px 5px 0 #FF1493 !important; transform: translate(-1px,-1px); }
+@media (max-width: 991px) {
+  #keychains-nav-btn, #bulk-nav-btn, #designer-nav-btn, #cart-nav-btn {
+    margin: .45rem 0 !important; width: 220px !important; max-width: 80vw !important; padding: .75rem 1.1rem !important;
+  }
+}

@@ -1,108 +1,20 @@
 {{/*
-  Keychain shop — homepage section the top banner links to (#keychains).
-  Add a new keychain by copying one dict below and dropping its photos
-  (800x900 jpg: <name>.jpg on marble + <name>-styled.jpg) into static/images/keychains/.
+  Homepage "featured keychains" section (#keychains). Shows items with
+  featured: true from data/keychains.yaml, plus a link to the full /keychains/ page.
 */}}
-{{ $keychains := slice
-  (dict
-    "slug" "keychain-ghost"
-    "title" "Ghost Keychain"
-    "price" "$5"
-    "tagline" "White ghost with a cut-out smile · clear acrylic, gold clasp"
-    "front" "/images/keychains/ghost.jpg"
-    "back" "/images/keychains/ghost-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-pumpkin"
-    "title" "Pumpkin Keychain"
-    "price" "$5"
-    "tagline" "Orange pumpkin with a curly vine · clear acrylic, gold clasp"
-    "front" "/images/keychains/pumpkin.jpg"
-    "back" "/images/keychains/pumpkin-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-cat"
-    "title" "Black Cat Keychain"
-    "price" "$5"
-    "tagline" "Little black cat, cut-out eyes and whiskers · clear acrylic, gold clasp"
-    "front" "/images/keychains/cat.jpg"
-    "back" "/images/keychains/cat-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-moon"
-    "title" "Gold Moon Keychain"
-    "price" "$5"
-    "tagline" "Textured gold crescent moon · clear acrylic, gold clasp"
-    "front" "/images/keychains/moon.jpg"
-    "back" "/images/keychains/moon-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-donut"
-    "title" "Donut Keychain"
-    "price" "$5"
-    "tagline" "Pink frosted donut with sprinkles · clear acrylic, gold clasp"
-    "front" "/images/keychains/donut.jpg"
-    "back" "/images/keychains/donut-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-ice-cream"
-    "title" "Ice Cream Keychain"
-    "price" "$5"
-    "tagline" "Strawberry scoop on a sugar cone · clear acrylic, gold clasp"
-    "front" "/images/keychains/ice-cream.jpg"
-    "back" "/images/keychains/ice-cream-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-duck"
-    "title" "Duck Keychain"
-    "price" "$5"
-    "tagline" "Classic yellow rubber duck · clear acrylic, gold clasp"
-    "front" "/images/keychains/duck.jpg"
-    "back" "/images/keychains/duck-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-strawberry"
-    "title" "Strawberry Keychain"
-    "price" "$5"
-    "tagline" "Red strawberry with a glitter-green top · clear acrylic, gold clasp"
-    "front" "/images/keychains/strawberry.jpg"
-    "back" "/images/keychains/strawberry-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
-  (dict
-    "slug" "keychain-mushroom"
-    "title" "Mushroom Keychain"
-    "price" "$5"
-    "tagline" "Red spotted toadstool · clear acrylic, gold clasp"
-    "front" "/images/keychains/mushroom.jpg"
-    "back" "/images/keychains/mushroom-styled.jpg"
-    "altlabel" "See It Styled"
-    "onesize" true
-  )
--}}
+{{ $featured := where site.Data.keychains.items "featured" true }}
 <section id="keychains" class="design-gallery-section keychain-shop-section">
   <div class="container">
-    <h3 class="text-center design-gallery-title classic-title">Shop Keychains</h3>
-    <p class="text-center design-gallery-subtitle">Just in! $5 each &mdash; spooky season picks and sweet treats. Add your favourites to the cart. Want a custom one? <a href="/team-orders/?item=keychain#team-order">Tell Elise what you&rsquo;re picturing.</a></p>
+    <span class="bsa-eyebrow">&#10022; Fall &amp; Halloween Collection</span>
+    <h3 class="text-center design-gallery-title classic-title">Featured Keychains</h3>
+    <p class="text-center design-gallery-subtitle">Just in! $5 each &mdash; spooky season picks, hand-made in Sarnia. Add your favourites to the cart.</p>
     <div class="design-gallery-grid keychain-grid">
-      {{ range $keychains }}
+      {{ range $featured }}
         {{ partial "components/design-card.html" . }}
       {{ end }}
+    </div>
+    <div class="kc-shop-all-wrap">
+      <a href="/keychains/" class="bsa-btn bsa-btn--pink">Shop All {{ len site.Data.keychains.items }} Keychains &rarr;</a>
     </div>
   </div>
 </section>

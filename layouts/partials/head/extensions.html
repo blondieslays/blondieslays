@@ -21,21 +21,17 @@
     var nav = document.querySelector("ul.navbar-nav.ms-auto, nav .navbar-nav, nav ul.navbar-nav");
     if (!nav) nav = document.querySelector("nav");
     if (nav) {
-      // Bulk Orders nav button
-      var bulk = document.createElement("a");
-      bulk.id = "bulk-nav-btn";
-      bulk.href = "/team-orders/";
-      bulk.textContent = "Bulk Orders";
-      styleBtn(bulk, "margin-left:0.75rem;");
-      nav.appendChild(bulk);
-
-      // Shirt Designer nav button
-      var designer = document.createElement("a");
-      designer.id = "designer-nav-btn";
-      designer.href = "/build/";
-      designer.textContent = "Shirt Designer";
-      styleBtn(designer, "margin-left:0.75rem;");
-      nav.appendChild(designer);
+      // Logo-style nav buttons (styled in custom.css → "Logo-style buttons")
+      function navBtn(id, href, html, variant) {
+        var el = document.createElement("a");
+        el.id = id; el.href = href; el.innerHTML = html;
+        el.className = "bsa-nav-btn bsa-nav-btn--" + variant;
+        nav.appendChild(el);
+        return el;
+      }
+      navBtn("keychains-nav-btn", "/keychains/", "&#10022; Keychains", "pink");
+      navBtn("bulk-nav-btn", "/team-orders/", "Bulk Orders", "teal");
+      navBtn("designer-nav-btn", "/build/", "Shirt Designer", "white");
 
       // "Meet Elise" profile chip — circular photo + name, not a filled button
       var about = document.createElement("a");

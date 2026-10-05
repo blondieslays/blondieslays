@@ -1,0 +1,93 @@
+# Keychain catalogue — used by the homepage (featured: true) and /keychains/ (all).
+# Add one: copy a block, drop <slug>.jpg + <slug>-styled.jpg (800x900) in static/images/keychains/.
+items:
+  - slug: "keychain-ghost"
+    title: "Ghost Keychain"
+    price: "$5"
+    tagline: "White ghost with a cut-out smile · clear acrylic, gold clasp"
+    front: "/images/keychains/ghost.jpg"
+    back: "/images/keychains/ghost-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "fall"
+    featured: true
+  - slug: "keychain-pumpkin"
+    title: "Pumpkin Keychain"
+    price: "$5"
+    tagline: "Orange pumpkin with a curly vine · clear acrylic, gold clasp"
+    front: "/images/keychains/pumpkin.jpg"
+    back: "/images/keychains/pumpkin-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "fall"
+    featured: true
+  - slug: "keychain-cat"
+    title: "Black Cat Keychain"
+    price: "$5"
+    tagline: "Little black cat, cut-out eyes and whiskers · clear acrylic, gold clasp"
+    front: "/images/keychains/cat.jpg"
+    back: "/images/keychains/cat-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "fall"
+    featured: true
+  - slug: "keychain-moon"
+    title: "Gold Moon Keychain"
+    price: "$5"
+    tagline: "Textured gold crescent moon · clear acrylic, gold clasp"
+    front: "/images/keychains/moon.jpg"
+    back: "/images/keychains/moon-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "fall"
+    featured: true
+  - slug: "keychain-donut"
+    title: "Donut Keychain"
+    price: "$5"
+    tagline: "Pink frosted donut with sprinkles · clear acrylic, gold clasp"
+    front: "/images/keychains/donut.jpg"
+    back: "/images/keychains/donut-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "sweet"
+    featured: false
+  - slug: "keychain-ice-cream"
+    title: "Ice Cream Keychain"
+    price: "$5"
+    tagline: "Strawberry scoop on a sugar cone · clear acrylic, gold clasp"
+    front: "/images/keychains/ice-cream.jpg"
+    back: "/images/keychains/ice-cream-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "sweet"
+    featured: false
+  - slug: "keychain-duck"
+    title: "Duck Keychain"
+    price: "$5"
+    tagline: "Classic yellow rubber duck · clear acrylic, gold clasp"
+    front: "/images/keychains/duck.jpg"
+    back: "/images/keychains/duck-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "sweet"
+    featured: false
+  - slug: "keychain-strawberry"
+    title: "Strawberry Keychain"
+    price: "$5"
+    tagline: "Red strawberry with a glitter-green top · clear acrylic, gold clasp"
+    front: "/images/keychains/strawberry.jpg"
+    back: "/images/keychains/strawberry-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "sweet"
+    featured: false
+  - slug: "keychain-mushroom"
+    title: "Mushroom Keychain"
+    price: "$5"
+    tagline: "Red spotted toadstool · clear acrylic, gold clasp"
+    front: "/images/keychains/mushroom.jpg"
+    back: "/images/keychains/mushroom-styled.jpg"
+    altlabel: "See It Styled"
+    onesize: true
+    collection: "sweet"
+    featured: false
